@@ -1,37 +1,33 @@
-library(readxl)
-MASTER_Coding_180802_AB <- read_excel("/Volumes/Research/SLaM/SLaM Coding/MASTER_Coding_180802_AB.xlsx")
-View(MASTER_Coding_180802_AB)
-getwd()
-setwd("afp://DroboPro-FS._afpovertcp._tcp.local/Research/SLaM")
-setwd("/Users/labuser/Documents")
-getwd
-getwd()
+> library(readr)
+> MASTER_Coding_180802_239PM_AB <- read_csv("~/Documents/R/MASTER_Coding_180802_239PM_AB.csv")
+#first import dataset as a csv file
 setwd("/Users/labuser/Documents/R")
-getwd()
-MC <- read.xlsx("MASTER_Coding_180802_AB")
-MC <- read.xlsx("MASTER_Coding_180802_AB.xlsx", na.strings = "N/A")
-MC <- read.csv("MASTER_Coding_180802_AB.csv", na.strings = "N/A")
-MC <- read.csv("MASTER_Coding_180802_AB.csv", na.strings = "N/A")
+getwd
+MC <- read.csv("MASTER_Coding_180802_239PM_AB.csv", na.strings = "N/A")
+#saves MC as an object 
+MCTest <- read.csv("MASTER_Coding_180802_239PM_AB.csv", na.strings = "N/A")
+#object will use to adjust the data
 View(MC)
 str(MC)
-str(MC$EC_Coded.)
-summary(MC$EC_Coded.)
-str(MC$Group_4cat)
-str(MC$GiveN_Small_Ceiling)
-MC$Age
+#check the structure of the data set to make sure correct categories (factor, int)
+str(MC$Age)
 summary(MC$Age)
+MC$Age
 MC[13,]
+#shows what is in the thirteen rows 
 MC[13,6]
+#produces what is in that cell 
 ncol(MC)
+#number of columns in spreadsheet 
 MC_subset <- MC[,1:23]
 View(MC_subset)
-MC_subset <- subset(MC,MC$GiveN_Coded.=="Yes" & MC$EC_Coded.=="Yes" & MC$GiveN_ALL_ceiling_conservative)!="" & MC$Age<7)
+#this makes it so we only have the first 23 columns in the spreadsheet, helpful when only want certain columns and have a particularly large file 
 MC_subset <- subset(MC,MC$GiveN_Coded.=="Yes" & MC$EC_Coded.=="Yes" & MC$GiveN_ALL_ceiling_conservative!="" & MC$Age<7)
+#creating this object to only include information where Give N is coded, where GiveN conservative is not empty, and where the age is <7 
 MC_subset <- MC_subset[1:23]
 View (MC_subset)
-Language_Timing <- as.factor(factor(as.character(MC_subset$Group_2cat), levels = c ("Early, "Later), exclude = ""))
 Language_Timing <- as.factor(factor(as.character(MC_subset$Group_2cat), levels = c ("Early", "Later"), exclude = ""))
 Language_Timing
 Language_Modality <- ifelse(MC_subset$Group_4cat == "English Early" | MC_subset$Group_4cat== "English Later", c("English"), c("ASL"))
 Language_Modality
-savehistory("dataout.txt")
+#if else statement, beginning is looking for wherever it has English Early or English Later, it will code it as English, and then for everything else will code as ASL
