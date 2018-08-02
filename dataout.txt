@@ -1,0 +1,37 @@
+library(readxl)
+MASTER_Coding_180802_AB <- read_excel("/Volumes/Research/SLaM/SLaM Coding/MASTER_Coding_180802_AB.xlsx")
+View(MASTER_Coding_180802_AB)
+getwd()
+setwd("afp://DroboPro-FS._afpovertcp._tcp.local/Research/SLaM")
+setwd("/Users/labuser/Documents")
+getwd
+getwd()
+setwd("/Users/labuser/Documents/R")
+getwd()
+MC <- read.xlsx("MASTER_Coding_180802_AB")
+MC <- read.xlsx("MASTER_Coding_180802_AB.xlsx", na.strings = "N/A")
+MC <- read.csv("MASTER_Coding_180802_AB.csv", na.strings = "N/A")
+MC <- read.csv("MASTER_Coding_180802_AB.csv", na.strings = "N/A")
+View(MC)
+str(MC)
+str(MC$EC_Coded.)
+summary(MC$EC_Coded.)
+str(MC$Group_4cat)
+str(MC$GiveN_Small_Ceiling)
+MC$Age
+summary(MC$Age)
+MC[13,]
+MC[13,6]
+ncol(MC)
+MC_subset <- MC[,1:23]
+View(MC_subset)
+MC_subset <- subset(MC,MC$GiveN_Coded.=="Yes" & MC$EC_Coded.=="Yes" & MC$GiveN_ALL_ceiling_conservative)!="" & MC$Age<7)
+MC_subset <- subset(MC,MC$GiveN_Coded.=="Yes" & MC$EC_Coded.=="Yes" & MC$GiveN_ALL_ceiling_conservative!="" & MC$Age<7)
+MC_subset <- MC_subset[1:23]
+View (MC_subset)
+Language_Timing <- as.factor(factor(as.character(MC_subset$Group_2cat), levels = c ("Early, "Later), exclude = ""))
+Language_Timing <- as.factor(factor(as.character(MC_subset$Group_2cat), levels = c ("Early", "Later"), exclude = ""))
+Language_Timing
+Language_Modality <- ifelse(MC_subset$Group_4cat == "English Early" | MC_subset$Group_4cat== "English Later", c("English"), c("ASL"))
+Language_Modality
+savehistory("dataout.txt")
