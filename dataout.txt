@@ -31,9 +31,9 @@ View(MC)
 
 #4. Subset overall data with particular parameters (i.e. including P, coded, test using, age range)
 MC_GiveN <- subset(MC, MC$GiveN_Coded. == "Yes" & MC$EC_Coded. == "Yes" & MC$GiveN_ALL_ceiling_conservative !="" & MC$Age<7 & MC$Including_in_study == "Yes")
+View(MC_GiveN) #will display the data
 
 #5. Check the structure of the dataframe and look over MC_subset for any errors 
-View(MC_GiveN) #will display the data
 typeof(MC_GiveN) #checks what format it is in [[****currently is a list, would like it to be a dataframe****]]
 str(MC_GiveN) #Age & SES - num, Give N - int (but then later 'factorize' them) 
 
