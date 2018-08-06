@@ -39,8 +39,6 @@ str(MC_GiveN) #Age & SES - num, Give N - int (but then later 'factorize' them)
 
 #6. Create & Add Modality and Timing Variables
 Language_Timing <- as.factor(factor(as.character(MC_GiveN$Group_2cat), levels = c ("Early", "Later"), exclude = ""))
-Language_Timing <- factor(as.character(MC_GiveN$Group_2cat), levels = c("Early", "Later")) 
-#*****run both above codes, which one is better?*****
 Language_Timing
 
 Language_Modality <- ifelse(MC_GiveN$Group_4cat == "English Early" | MC_GiveN$Group_4cat== "English Later", c("English"), c("ASL"))
