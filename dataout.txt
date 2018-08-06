@@ -45,6 +45,9 @@ Language_Modality <- ifelse(MC_GiveN$Group_4cat == "English Early" | MC_GiveN$Gr
 Language_Modality
 #if else statement, beginning is looking for wherever it has English Early or English Later, it will code it as English, and then for everything else will code as ASL, using c() to code as a factor and not character
 
+MC_GiveN <- cbind(MC_GiveN, Language_Modality, Language_Timing) #adds variables to dataframe
+View(MC_GiveN)
+
 #7. Create Subsets 
 MC_EE <- subset(MC_GiveN, MC_GiveN$Group_4cat == "English Early")
 View(MC_GiveN_EE)
