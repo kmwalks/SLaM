@@ -1,33 +1,55 @@
-> library(readr)
-> MASTER_Coding_180802_239PM_AB <- read_csv("~/Documents/R/MASTER_Coding_180802_239PM_AB.csv")
-#first import dataset as a csv file
+#1. Install and Load Libraries 
+
+install.packages("tidyverse") # includes ggplot2
+install.packages("ggplot2") # for general plots
+install.packages("beeswarm") # for beeswarm plots
+install.packages("colorspace") # for fixing colors in beeswarm plots
+install.packages("stargazer") # for pretty regression output tables
+install.packages("MASS") # for polr package
+install.packages("generalhoslem") # for testing model fit (lipsitz test and two others)
+install.packages("qwraps2") # for summary_table use
+install.packages("quantreg") # testing quantile plots (geom_quantile) and quantile regressions
+
+library(tidyverse) 
+library(ggplot2) 
+library(beeswarm)
+library(colorspace) 
+library(stargazer) 
+library(MASS) 
+library(generalhoslem) 
+library(qwraps2) 
+library(quantreg) 
+
+#2. Check and Set Working Directory
 setwd("/Users/labuser/Documents/R")
-getwd
-MC <- read.csv("MASTER_Coding_180802_239PM_AB.csv", na.strings = "N/A")
-#saves MC as an object 
-MCTest <- read.csv("MASTER_Coding_180802_239PM_AB.csv", na.strings = "N/A")
-#object will use to adjust the data
+getwd() #to see where is set to
+
+#3. Import Data [[make sure is most recent version and saved as csv]]
+MC <- read.csv("MASTER_Coding_180806_AB.csv", na.strings = "N/A")
 View(MC)
-str(MC)
-#check the structure of the data set to make sure correct categories (factor, int)
-str(MC$Age)
-summary(MC$Age)
-MC$Age
-MC[13,]
-#shows what is in the thirteen rows 
-MC[13,6]
-#produces what is in that cell 
-ncol(MC)
-#number of columns in spreadsheet 
-MC_subset <- MC[,1:23]
-View(MC_subset)
-#this makes it so we only have the first 23 columns in the spreadsheet, helpful when only want certain columns and have a particularly large file 
-MC_subset <- subset(MC,MC$GiveN_Coded.=="Yes" & MC$EC_Coded.=="Yes" & MC$GiveN_ALL_ceiling_conservative!="" & MC$Age<7)
-#creating this object to only include information where Give N is coded, where GiveN conservative is not empty, and where the age is <7 
-MC_subset <- MC_subset[1:23]
-View (MC_subset)
-Language_Timing <- as.factor(factor(as.character(MC_subset$Group_2cat), levels = c ("Early", "Later"), exclude = ""))
+# <- saves MC as an object, read.csv() imports it 
+
+#4. Subset overall data with particular parameters (i.e. including P, coded, test using, age range)
+MC_GiveN <- subset(MC, MC$GiveN_Coded. == "Yes" & MC$EC_Coded. == "Yes" & MC$GiveN_ALL_ceiling_conservative !="" & MC$Age<7 & MC$Including_in_study == "Yes")
+
+#5. Check the structure of the dataframe and look over MC_subset for any errors 
+View(MC_GiveN) #will display the data
+typeof(MC_GiveN) #checks what format it is in [[****currently is a list, would like it to be a dataframe****]]
+str(MC_GiveN) #Age & SES - num, Give N - int (but then later 'factorize' them) 
+
+#6. Create & Add Modality and Timing Variables
+Language_Timing <- as.factor(factor(as.character(MC_GiveN$Group_2cat), levels = c ("Early", "Later"), exclude = ""))
+Language_Timing <- factor(as.character(MC_GiveN$Group_2cat), levels = c("Early", "Later")) 
+#*****run both above codes, which one is better?*****
 Language_Timing
-Language_Modality <- ifelse(MC_subset$Group_4cat == "English Early" | MC_subset$Group_4cat== "English Later", c("English"), c("ASL"))
+
+Language_Modality <- ifelse(MC_GiveN$Group_4cat == "English Early" | MC_GiveN$Group_4cat== "English Later", c("English"), c("ASL"))
 Language_Modality
-#if else statement, beginning is looking for wherever it has English Early or English Later, it will code it as English, and then for everything else will code as ASL
+#if else statement, beginning is looking for wherever it has English Early or English Later, it will code it as English, and then for everything else will code as ASL, using c() to code as a factor and not character
+
+#7. Create Subsets 
+MC_EE <- subset(MC_GiveN, MC_GiveN$Group_4cat == "English Early")
+View(MC_GiveN_EE)
+MC_AE <- subset(MC_GiveN, MC_GiveN$Group_4cat == "ASL Early")
+MC_EL <- subset(MC_GiveN, MC_GiveN$Group_4cat == "English Later")
+MC_AL <- subset(MC_GiveN, MC_GiveN$Group_4cat == "ASL Later")
