@@ -16,3 +16,18 @@ ggplot(data=MC_GiveN) + geom_point(mapping=aes(x=Age, y=GiveN_ALL_ceiling_conser
     #ALTERNATIVE CODE FORMAT FOR GGPLOT: ggplot(data=AE) + geom_point(mapping=aes(x=AE$Age, y=GiveN_conserv_AE, shape=Modality_AE, color=Modality_AE))
     ASLEarly +labs(x = "Age (years)", y = "Give-N Highest Quantity Correct")
 
+    #ENGLISH & ASL
+    GiveN_EarlyExposed <- subset(MC_GiveN, MC_GiveN$Group_4cat == "English Early" | MC_GiveN$Group_4cat == "ASL Early")
+    LanguageGroup <- as.factor(factor(as.character(GiveN_EarlyExposed$Group_4cat), levels = c("English Early", "ASL Early"), labels = c("English", "ASL"), exclude=NA)) 
+    GiveN_conserv_EarlyExposed <- as.factor(GiveN_EarlyExposed$GiveN_ALL_ceiling_conservative)
+    GiveN_EarlyExposed <- cbind(GiveN_EarlyExposed, LanguageGroup, GiveN_conserv_EarlyExposed)
+    View(GiveN_EarlyExposed)
+    LangGrp_EarlyExposed <- GiveN_EarlyExposed$LanguageGroup
+    ggplot(GiveN_EarlyExposed, aes(x=GiveN_EarlyExposed$Age, y=GiveN_conserv_EarlyExposed)) + geom_point(aes(shape=LangGrp_EarlyExposed , color=LangGrp_EarlyExposed))
+    Early_Exposed <- ggplot(GiveN_EarlyExposed, aes(x=GiveN_EarlyExposed$Age, y=GiveN_conserv_EarlyExposed)) + geom_point(aes(shape=LangGrp_EarlyExposed , color=LangGrp_EarlyExposed))
+    Early_Exposed + labs(x = "Age (years)", y = "Give-N Highest Quantity Correct")
+    
+ 
+#TIMING
+    #EARLY ONLY
+    
