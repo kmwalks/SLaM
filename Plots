@@ -1,0 +1,13 @@
+#OVERALL DATA
+ggplot(data=MC_GiveN) + geom_point(mapping=aes(x=Age, y=GiveN_ALL_ceiling_conservative)) 
+#MODALITY
+    #ENGLISH ONLY
+    Modality_EE <- EE$Language_Modality
+    GiveN_conserv_EE <- as.factor(EE$GiveN_ALL_ceiling_conservative)
+    ggplot(EE, aes(x=EE$Age, y=GiveN_conserv_EE)) + geom_point(aes(shape=Modality_EE, color=Modality_EE)) #set up prior to writing as an object
+    EnglishEarly <- ggplot(EE, aes(x=EE$Age, y=GiveN_conserv_EE)) + geom_point(aes(shape=Modality_EE, color=Modality_EE))
+    EnglishEarly + labs(x = "Age (years)", y = "Give-N Highest Quantity Correct") #add x and y labels 
+    
+    #ASL ONLY
+    
+
