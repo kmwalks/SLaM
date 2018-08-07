@@ -49,8 +49,8 @@ MC_GiveN <- cbind(MC_GiveN, Language_Modality, Language_Timing) #adds variables 
 View(MC_GiveN)
 
 #7. Create Subsets 
-MC_EE <- subset(MC_GiveN, MC_GiveN$Group_4cat == "English Early")
+EE <- subset(MC_GiveN, MC_GiveN$Group_4cat == "English Early")
 View(MC_EE)
-MC_AE <- subset(MC_GiveN, MC_GiveN$Group_4cat == "ASL Early")
-MC_EL <- subset(MC_GiveN, MC_GiveN$Group_4cat == "English Later")
-MC_AL <- subset(MC_GiveN, MC_GiveN$Group_4cat == "ASL Later")
+AE <- subset(MC_GiveN, MC_GiveN$Group_4cat == "ASL Early")
+EL <- subset(MC_GiveN, MC_GiveN$Group_4cat == "English Later")
+AL <- subset(MC_GiveN, MC_GiveN$Group_4cat == "ASL Later")
