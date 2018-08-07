@@ -1,5 +1,7 @@
 #OVERALL DATA
 ggplot(data=MC_GiveN) + geom_point(mapping=aes(x=Age, y=GiveN_ALL_ceiling_conservative)) 
+
+
 #MODALITY
     #ENGLISH ONLY
     Modality_EE <- EE$Language_Modality
@@ -39,4 +41,11 @@ ggplot(data=MC_GiveN) + geom_point(mapping=aes(x=Age, y=GiveN_ALL_ceiling_conser
     EarlyTiming + labs(x = "Age (years)", y = "Give-N Highest Quantity Correct")
 
     #EARLY AND LATER
+    GiveN_conserv <- as.factor(MC_GiveN$GiveN_ALL_ceiling_conservative) #factorize
+    TimingGroup <- subset(MC_GiveN, MC_GiveN$Group_2cat == "Early" | MC_GiveN$Group_2cat == "Later") #create new subset
+    TimingGroup <- cbind(TimingGroup, GiveN_conserv) #add variables to dataframe
+    TimeGrp <- TimingGroup$Language_Timing 
+    ggplot(TimingGroup, aes(x=TimingGroup$Age, y=TimingGroup$GiveN_conserv)) + geom_point(aes(shape=TimeGrp, color=TimeGrp))
+    BothTiming <- ggplot(TimingGroup, aes(x=TimingGroup$Age, y=TimingGroup$GiveN_conserv)) + geom_point(aes(shape=TimeGrp, color=TimeGrp))
+    BothTiming + labs(x = "Age (years)", y = "Give-N Highest Quantity Correct")
     
