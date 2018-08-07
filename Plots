@@ -14,5 +14,5 @@ ggplot(data=MC_GiveN) + geom_point(mapping=aes(x=Age, y=GiveN_ALL_ceiling_conser
     ggplot(AE, aes(x=AE$Age, y=GiveN_conserv_AE)) + geom_point(aes(shape=Modality_AE, color=Modality_AE))
     ASLEarly <-ggplot(AE, aes(x=AE$Age, y=GiveN_conserv_AE)) + geom_point(aes(shape=Modality_AE, color=Modality_AE))
     #ALTERNATIVE CODE FORMAT FOR GGPLOT: ggplot(data=AE) + geom_point(mapping=aes(x=AE$Age, y=GiveN_conserv_AE, shape=Modality_AE, color=Modality_AE))
-
+    ASLEarly +labs(x = "Age (years)", y = "Give-N Highest Quantity Correct")
 
