@@ -30,4 +30,13 @@ ggplot(data=MC_GiveN) + geom_point(mapping=aes(x=Age, y=GiveN_ALL_ceiling_conser
  
 #TIMING
     #EARLY ONLY
+    GiveN_EarlyExposed <- subset(MC_GiveN, MC_GiveN$Group_4cat == "English Early" | MC_GiveN$Group_4cat == "ASL Early")
+    Timing_Early <- GiveN_EarlyExposed$Language_Timing
+    GiveN_EarlyExposed <- cbind(GiveN_EarlyExposed, Timing_Early) 
+    GiveN_conserv_EarlyExposed <- as.factor(GiveN_EarlyExposed$GiveN_ALL_ceiling_conservative)
+    ggplot(GiveN_EarlyExposed, aes(x=GiveN_EarlyExposed$Age, y=GiveN_conserv_EarlyExposed)) + geom_point(aes(shape=Timing_Early , color=Timing_Early))
+    EarlyTiming <- ggplot(GiveN_EarlyExposed, aes(x=GiveN_EarlyExposed$Age, y=GiveN_conserv_EarlyExposed)) + geom_point(aes(shape=Timing_Early , color=Timing_Early))
+    EarlyTiming + labs(x = "Age (years)", y = "Give-N Highest Quantity Correct")
+
+    #EARLY AND LATER
     
