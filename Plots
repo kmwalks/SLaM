@@ -6,7 +6,6 @@ size = #within geom point, change size of points
     #figure out how to change x and y axes (is another +) 
     #how to change text size/font of labels 
 
-
 #OVERALL DATA
         # Create scatter plot
         ggplot(data=MC_GiveN) + geom_point(mapping=aes(x=Age, y=GiveN_ALL_ceiling_conservative)) 
