@@ -1,13 +1,27 @@
 #OVERALL DATA
 ggplot(data=MC_GiveN) + geom_point(mapping=aes(x=Age, y=GiveN_ALL_ceiling_conservative)) 
 
+
+
+
 #MODALITY
     #ENGLISH ONLY
-    Modality_EE <- EE$Language_Modality
-    GiveN_conserv_EE <- as.factor(EE$GiveN_ALL_ceiling_conservative)
-    ggplot(EE, aes(x=EE$Age, y=GiveN_conserv_EE)) + geom_point(aes(shape=Modality_EE, color=Modality_EE)) #set up prior to writing as an object
-    EnglishEarly <- ggplot(EE, aes(x=EE$Age, y=GiveN_conserv_EE)) + geom_point(aes(shape=Modality_EE, color=Modality_EE))
+                #Create variables
+                    Age_EE <- EE$Age
+                    GN_EE <- EE$GiveN_ALL_ceiling_conservative
+                    Modality_EE <- EE$Language_Modality
+    GiveN_conserv_EE <- as.factor(EE$GiveN_ALL_ceiling_conservative) #DO NOT FACTORIZE
+    EnglishEarly <- ggplot(EE, aes(x=Age_EE, y=GN_EE)) + geom_point(aes(shape=Modality_EE, color=Modality_EE)) #plot will not show up at this point, but will when call it in subsequent lines or when call EnglishEarly
     EnglishEarly + labs(x = "Age (years)", y = "Give-N Highest Quantity Correct") #add x and y labels 
+   
+   ggplot(EE, aes(x=Age_EE, y=GiveN_conserv_EE)) + geom_point(aes(shape=Modality_EE, color=Modality_EE)) #factorized changes the shape
+    
+    #all-in-one code: ggplot(EE, aes(x=Age_EE, y=GN_EE)) + geom_point(aes(shape=Modality_EE, color=Modality_EE)) + labs(x = "Age (years)", y = "Give-N Highest Quantity Correct")
+    
+    scale_shape_manual() #function to edit the shape, + after
+    scale_color_manual() #edits color
+    #set legend within these 
+    
     
     #ASL ONLY
     Modality_AE <- AE$Language_Modality
