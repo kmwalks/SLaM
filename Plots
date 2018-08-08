@@ -18,9 +18,13 @@ ggplot(data=MC_GiveN) + geom_point(mapping=aes(x=Age, y=GiveN_ALL_ceiling_conser
     
     #all-in-one code: ggplot(EE, aes(x=Age_EE, y=GN_EE)) + geom_point(aes(shape=Modality_EE, color=Modality_EE)) + labs(x = "Age (years)", y = "Give-N Highest Quantity Correct")
     
+    size = #within geom point, change size of points 
     scale_shape_manual() #function to edit the shape, + after
     scale_color_manual() #edits color
+    position = "jitter" #within geom point, offsets overlapping points 
     #set legend within these 
+    #figure out how to change x and y axes (is another +) 
+    #how to change text size/font of labels 
     
     
     #ASL ONLY
@@ -32,14 +36,13 @@ ggplot(data=MC_GiveN) + geom_point(mapping=aes(x=Age, y=GiveN_ALL_ceiling_conser
     ASLEarly +labs(x = "Age (years)", y = "Give-N Highest Quantity Correct")
 
     #ENGLISH & ASL
+            #Create variables 
+            Age_EarlyBoth <- GiveN_EarlyExposed$Age
+            GN_EarlyBoth <- GiveN_EarlyExposed$GiveN_ALL_ceiling_conservative
+            LangGrp_EarlyExposed <- GiveN_EarlyExposed$Group_4cat
+    
     GiveN_EarlyExposed <- subset(MC_GiveN, MC_GiveN$Group_4cat == "English Early" | MC_GiveN$Group_4cat == "ASL Early")
-    LanguageGroup <- as.factor(factor(as.character(GiveN_EarlyExposed$Group_4cat), levels = c("English Early", "ASL Early"), labels = c("English", "ASL"), exclude=NA)) 
-    GiveN_conserv_EarlyExposed <- as.factor(GiveN_EarlyExposed$GiveN_ALL_ceiling_conservative)
-    GiveN_EarlyExposed <- cbind(GiveN_EarlyExposed, LanguageGroup, GiveN_conserv_EarlyExposed)
-    View(GiveN_EarlyExposed)
-    LangGrp_EarlyExposed <- GiveN_EarlyExposed$LanguageGroup
-    ggplot(GiveN_EarlyExposed, aes(x=GiveN_EarlyExposed$Age, y=GiveN_conserv_EarlyExposed)) + geom_point(aes(shape=LangGrp_EarlyExposed , color=LangGrp_EarlyExposed))
-    Early_Exposed <- ggplot(GiveN_EarlyExposed, aes(x=GiveN_EarlyExposed$Age, y=GiveN_conserv_EarlyExposed)) + geom_point(aes(shape=LangGrp_EarlyExposed , color=LangGrp_EarlyExposed))
+    Early_Exposed <- ggplot(GiveN_EarlyExposed, aes(x=Age_EarlyBoth, y=GN_EarlyBoth)) + geom_point(aes(shape=LangGrp_EarlyExposed , color=LangGrp_EarlyExposed))
     Early_Exposed + labs(x = "Age (years)", y = "Give-N Highest Quantity Correct")
     
  
