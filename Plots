@@ -1,64 +1,70 @@
-#OVERALL DATA
-ggplot(data=MC_GiveN) + geom_point(mapping=aes(x=Age, y=GiveN_ALL_ceiling_conservative)) 
-
-#MODALITY
-    #ENGLISH ONLY
-                #Create variables
-                Age_EE <- EE$Age
-                GN_EE <- EE$GiveN_ALL_ceiling_conservative
-                Modality_EE <- EE$Language_Modality
-    GiveN_conserv_EE <- as.factor(EE$GiveN_ALL_ceiling_conservative) #DO NOT FACTORIZE
-    EnglishEarly <- ggplot(EE, aes(x=Age_EE, y=GN_EE)) + geom_point(aes(shape=Modality_EE, color=Modality_EE)) #plot will not show up at this point, but will when call it in subsequent lines or when call EnglishEarly
-    EnglishEarly + labs(x = "Age (years)", y = "Give-N Highest Quantity Correct") #add x and y labels 
-   
-   ggplot(EE, aes(x=Age_EE, y=GiveN_conserv_EE)) + geom_point(aes(shape=Modality_EE, color=Modality_EE)) #factorized changes the shape
-    
-    #all-in-one code: ggplot(EE, aes(x=Age_EE, y=GN_EE)) + geom_point(aes(shape=Modality_EE, color=Modality_EE)) + labs(x = "Age (years)", y = "Give-N Highest Quantity Correct")
-    
-    size = #within geom point, change size of points 
+size = #within geom point, change size of points 
     scale_shape_manual() #function to edit the shape, + after
     scale_color_manual() #edits color
     position = "jitter" #within geom point, offsets overlapping points 
     #set legend within these 
     #figure out how to change x and y axes (is another +) 
     #how to change text size/font of labels 
-    
+
+
+#OVERALL DATA
+ggplot(data=MC_GiveN) + geom_point(mapping=aes(x=Age, y=GiveN_ALL_ceiling_conservative)) 
+
+#MODALITY
+    #ENGLISH ONLY
+        #Create variables
+        Age_EE <- EE$Age
+        GN_EE <- EE$GiveN_ALL_ceiling_conservative
+        Modality_EE <- EE$Language_Modality
+EnglishEarly <- ggplot(EE, aes(x=Age_EE, y=GN_EE)) + geom_point(aes(shape=Modality_EE, color=Modality_EE)) #plot will not show up at this point, but will when call it in subsequent lines or when call EnglishEarly
+EnglishEarly + labs(x = "Age (years)", y = "Give-N Highest Quantity Correct") #add x and y labels 
+#all-in-one code: ggplot(EE, aes(x=Age_EE, y=GN_EE)) + geom_point(aes(shape=Modality_EE, color=Modality_EE)) + labs(x = "Age (years)", y = "Give-N Highest Quantity Correct")
     
     #ASL ONLY
-    Modality_AE <- AE$Language_Modality
-    GiveN_conserv_AE <- as.factor(AE$GiveN_ALL_ceiling_conservative)
-    ggplot(AE, aes(x=AE$Age, y=GiveN_conserv_AE)) + geom_point(aes(shape=Modality_AE, color=Modality_AE))
-    ASLEarly <-ggplot(AE, aes(x=AE$Age, y=GiveN_conserv_AE)) + geom_point(aes(shape=Modality_AE, color=Modality_AE))
-    #ALTERNATIVE CODE FORMAT FOR GGPLOT: ggplot(data=AE) + geom_point(mapping=aes(x=AE$Age, y=GiveN_conserv_AE, shape=Modality_AE, color=Modality_AE))
-    ASLEarly +labs(x = "Age (years)", y = "Give-N Highest Quantity Correct")
-
-    #ENGLISH & ASL
-            #Create variables 
-            Age_EarlyBoth <- GiveN_EarlyExposed$Age
-            GN_EarlyBoth <- GiveN_EarlyExposed$GiveN_ALL_ceiling_conservative
-            LangGrp_EarlyExposed <- GiveN_EarlyExposed$Group_4cat
+        #Create variables
+        Age_AE <- AE$Age
+        GN_AE <- AE$GiveN_ALL_ceiling_conservative
+        Modality_AE <- AE$Language_Modality 
+ASLEarly <-ggplot(AE, aes(x=Age_AE, y=GN_AE)) + geom_point(aes(shape=Modality_AE, color=Modality_AE))
+ASLEarly +labs(x = "Age (years)", y = "Give-N Highest Quantity Correct")
+#ALTERNATIVE CODE FORMAT FOR GGPLOT: ggplot(data=AE) + geom_point(mapping=aes(x=Age_AE, y=GN_AE, shape=Modality_AE, color=Modality_AE))
     
-    GiveN_EarlyExposed <- subset(MC_GiveN, MC_GiveN$Group_4cat == "English Early" | MC_GiveN$Group_4cat == "ASL Early")
-    Early_Exposed <- ggplot(GiveN_EarlyExposed, aes(x=Age_EarlyBoth, y=GN_EarlyBoth)) + geom_point(aes(shape=LangGrp_EarlyExposed , color=LangGrp_EarlyExposed))
-    Early_Exposed + labs(x = "Age (years)", y = "Give-N Highest Quantity Correct")
+    #ENGLISH & ASL
+        #Create subset
+        GiveN_EarlyExposed <- subset(MC_GiveN, MC_GiveN$Group_4cat == "English Early" | MC_GiveN$Group_4cat == "ASL Early")
+        
+        #Create variables 
+        Age_EarlyBoth <- GiveN_EarlyExposed$Age
+        GN_EarlyBoth <- GiveN_EarlyExposed$GiveN_ALL_ceiling_conservative
+        Modality_EarlyBoth <- GiveN_EarlyExposed$Group_4cat
+        
+        #Create plot
+        Early_Exposed <- ggplot(GiveN_EarlyExposed, aes(x=Age_EarlyBoth, y=GN_EarlyBoth)) + geom_point(aes(shape=Modality_EarlyBoth, color=Modality_EarlyBoth))
+        Early_Exposed + labs(x = "Age (years)", y = "Give-N Highest Quantity Correct")
     
  
 #TIMING
     #EARLY ONLY
-    GiveN_EarlyExposed <- subset(MC_GiveN, MC_GiveN$Group_4cat == "English Early" | MC_GiveN$Group_4cat == "ASL Early")
-    Timing_Early <- GiveN_EarlyExposed$Language_Timing
-    GiveN_EarlyExposed <- cbind(GiveN_EarlyExposed, Timing_Early) 
-    GiveN_conserv_EarlyExposed <- as.factor(GiveN_EarlyExposed$GiveN_ALL_ceiling_conservative)
-    ggplot(GiveN_EarlyExposed, aes(x=GiveN_EarlyExposed$Age, y=GiveN_conserv_EarlyExposed)) + geom_point(aes(shape=Timing_Early , color=Timing_Early))
+        #Create subset
+        GiveN_EarlyExposed <- subset(MC_GiveN, MC_GiveN$Group_4cat == "English Early" | MC_GiveN$Group_4cat == "ASL Early")
+        
+        #Create variables
+        Timing_Early <- GiveN_EarlyExposed$Language_Timing
+        
+
+    
+    
+    GiveN_EarlyExposed <- cbind(GiveN_EarlyExposed, Timing_Early)
     EarlyTiming <- ggplot(GiveN_EarlyExposed, aes(x=GiveN_EarlyExposed$Age, y=GiveN_conserv_EarlyExposed)) + geom_point(aes(shape=Timing_Early , color=Timing_Early))
     EarlyTiming + labs(x = "Age (years)", y = "Give-N Highest Quantity Correct")
 
     #EARLY AND LATER
-    GiveN_conserv <- as.factor(MC_GiveN$GiveN_ALL_ceiling_conservative) #factorize
+        #Create variables
+        TimeGrp <- TimingGroup$Language_Timing #CHECK THIS. DO LIKE LAST ONE... NOT THINK HAVE TO CREATE NEW VARIABLE!
+    
     TimingGroup <- subset(MC_GiveN, MC_GiveN$Group_2cat == "Early" | MC_GiveN$Group_2cat == "Later") #create new subset
     TimingGroup <- cbind(TimingGroup, GiveN_conserv) #add variables to dataframe
-    TimeGrp <- TimingGroup$Language_Timing 
-    ggplot(TimingGroup, aes(x=TimingGroup$Age, y=TimingGroup$GiveN_conserv)) + geom_point(aes(shape=TimeGrp, color=TimeGrp))
+    
     BothTiming <- ggplot(TimingGroup, aes(x=TimingGroup$Age, y=TimingGroup$GiveN_conserv)) + geom_point(aes(shape=TimeGrp, color=TimeGrp))
     BothTiming + labs(x = "Age (years)", y = "Give-N Highest Quantity Correct")
     
