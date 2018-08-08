@@ -50,7 +50,7 @@ View(MC_GiveN)
 
 #7. Create Subsets 
 EE <- subset(MC_GiveN, MC_GiveN$Group_4cat == "English Early")
-View(MC_EE)
+View(EE)
 AE <- subset(MC_GiveN, MC_GiveN$Group_4cat == "ASL Early")
 EL <- subset(MC_GiveN, MC_GiveN$Group_4cat == "English Later")
 AL <- subset(MC_GiveN, MC_GiveN$Group_4cat == "ASL Later")
