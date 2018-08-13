@@ -60,7 +60,7 @@
         #Create variables
         Age_TimeBoth <- TimingGroup$Age
         GN_TimeBoth <-  TimingGroup$GiveN_ALL_ceiling_conservative
-        TimeGrp <- TimingGroup$Language_Timing #CHECK THIS. DO LIKE LAST ONE... NOT THINK HAVE TO CREATE NEW VARIABLE!
+        TimeGrp <- TimingGroup$Language_Timing 
     
         #Create scatter plot 
         BothTiming <- ggplot(TimingGroup, aes(x=Age_TimeBoth, y=GN_TimeBoth)) + geom_point(aes(shape=TimeGrp, color=TimeGrp))
