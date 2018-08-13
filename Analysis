@@ -1,0 +1,12 @@
+#Descriptive Statistics
+  #Subset group want ex. EE
+  #summary of variable want within that group ex. summary(EE$Sex) 
+  
+#General Linear Model/Regression
+  #GiveN
+  GiveN_conserv_reg <- glm(MC_GiveN$GiveN_ALL_ceiling_conservative ~ MC_GiveN$Age + MC_GiveN$SES_range_8_to_66 + MC_GiveN$Group_4cat + MC_GiveN$Sex, data=MC_GiveN)
+  summary(GiveN_conserv_reg)
+  
+  #Elicited Counting w/ Objects
+  EC_wobjects_reg <- glm(MC_GiveN$Highest_Count_wobj ~ MC_GiveN$Age + MC_GiveN$SES_range_8_to_66 + MC_GiveN$Group_4cat + MC_GiveN$Sex, data=MC_GiveN)
+  summary(EC_wobjects_reg)
