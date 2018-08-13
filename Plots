@@ -1,11 +1,3 @@
-size = #within geom point, change size of points 
-    scale_shape_manual() #function to edit the shape, + after
-    scale_color_manual() #edits color
-    position = "jitter" #within geom point, offsets overlapping points 
-    #set legend within these 
-    #figure out how to change x and y axes (is another +) 
-    #how to change text size/font of labels 
-
 #OVERALL DATA
         # Create scatter plot
         ggplot(data=MC_GiveN) + geom_point(mapping=aes(x=Age, y=GiveN_ALL_ceiling_conservative)) 
