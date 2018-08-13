@@ -1,6 +1,17 @@
+#Things to remember
+        #Keep parallel structure consistent! 
+
 #OVERALL DATA
-        # Create scatter plot
+        #Create scatter plot
         ggplot(data=MC_GiveN) + geom_point(mapping=aes(x=Age, y=GiveN_ALL_ceiling_conservative)) 
+        #Code below is with design elements added
+                #Create variables
+                All_Age <- MC_GiveN$Age
+                All_GiveN <- MC_GiveN$GiveN_ALL_ceiling_conservative
+                AllGroups <- MC_GiveN$Group_4cat
+                #Create scatter plot
+                AllPlot <- ggplot(MC_GiveN, aes(x=All_Age, y=All_GiveN)) + geom_point(aes(shape=AllGroups, color=AllGroups), position="jitter", size=2.5) + labs(x="Age (years)", y="Give-N Highest Quantity Correct") + scale_shape_manual(name="Experimental\nGroups", labels=c("ASL Early", "ASL Later", "English Early", "English Later"), values=c(1, 16, 2, 17)) + scale_color_manual(name="Experimental\nGroups", labels=c("ASL Early", "ASL Later", "English Early", "English Later"), values=c("hotpink","mediumaquamarine", "hotpink", "mediumaquamarine")) + theme(text = element_text(size=16, family="Times New Roman")) + coord_cartesian(xlim = c(3, 7), ylim= c(0,16))  
+        
 
 #MODALITY
     #ENGLISH ONLY
@@ -65,7 +76,10 @@
         #Create scatter plot 
         BothTiming <- ggplot(TimingGroup, aes(x=Age_TimeBoth, y=GN_TimeBoth)) + geom_point(aes(shape=TimeGrp, color=TimeGrp))
         BothTiming + labs(x = "Age (years)", y = "Give-N Highest Quantity Correct")
-
+                #Code below is with design elements added
+                ggplot(MC_GiveN, aes(x=Age, y=GN_TimeBoth)) + geom_point(aes(shape=TimeGrp, color=TimeGrp), position="jitter", size=1.6) + labs(x="Age (years)", y="Give-N highest quantity correct") + scale_shape_manual(name="Language\nTiming", labels=c("Early", "Later"), values=c(19, 15)) + scale_color_manual(name="Language\nTiming", labels=c("Early", "Later"), values=c("darkslateblue","darkorange")) + theme(text = element_text(size=16, family="Times New Roman")) + coord_cartesian(xlim = c(3, 7), ylim= c(0,16)) 
     
     
-    
+#Other Plots
+        #Violin Plot
+        ggplot(MC_GiveN, aes(x=TimeGrp, y=Age)) + geom_violin() + labs(x="Language Timing")
