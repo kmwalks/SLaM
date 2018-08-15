@@ -6,25 +6,24 @@
         ggplot(data=MC_GiveN) + geom_point(mapping=aes(x=Age, y=GiveN_ALL_ceiling_conservative)) 
         #Code below is with design elements added
                 #Create variables
-                All_Age <- MC_GiveN$Age
-                All_GiveN <- MC_GiveN$GiveN_ALL_ceiling_conservative
-                AllGroups <- MC_GiveN$LanguageGroup
-                Modality <- MC_GiveN$Language_Modality
-                Timing <- MC_GiveN$Language_Timing
-                LanguageGroup <- as.factor(factor(as.character(MC_GiveN$Group_4cat), levels = c("English Early", "ASL Early", "English Later", "ASL Later"), exclude=NA))
+                        All_Age <- MC_GiveN$Age
+                        All_GiveN <- MC_GiveN$GiveN_ALL_ceiling_conservative
+                        AllGroups <- MC_GiveN$LanguageGroup
+                        Modality <- MC_GiveN$Language_Modality
+                        Timing <- MC_GiveN$Language_Timing
+                        LanguageGroup <- as.factor(factor(as.character(MC_GiveN$Group_4cat), levels = c("English Early", "ASL Early", "English Later", "ASL Later"), exclude=NA))
                 #Add variable to dataframe
-                MC_GiveN <- cbind(MC_GiveN, LanguageGroup)
+                        MC_GiveN <- cbind(MC_GiveN, LanguageGroup)
                 #Create scatter plot
-                        #Scatterplot using all groups as legend 
-                AllPlot <- ggplot(MC_GiveN, aes(x=All_Age, y=All_GiveN)) + geom_point(aes(shape=AllGroups, color=AllGroups), position="jitter", size=2.5) + labs(x="Age (years)", y="Give-N Highest Quantity Correct") + scale_shape_manual(name="Experimental\nGroups", labels=c("English Early", "ASL Early", "English Later", "ASL Later"), values=c(8, 16, 15, 17)) + scale_color_manual(name="Experimental\nGroups", labels=c("English Early", "ASL Early", "English Later", "ASL Later"), values=c("mediumvioletred","grey67", "forestgreen", "tan2")) + theme(text = element_text(size=16, family="Times New Roman")) + coord_cartesian(xlim = c(3, 7), ylim= c(0,16))  
                         #Scatterplot with 2 legends for timing and modality
-AllPlot <- ggplot(MC_GiveN, aes(x=All_Age, y=All_GiveN)) + geom_point(aes(shape=Timing, color=Modality), position="jitter", size=2.5) + labs(x="Age (years)", y="Give-N Highest Quantity Correct") + scale_shape_manual(name="Timing of\nLanguage Exposure", labels=c("Early", "Later"), values=c(16,17)) + scale_color_manual(name="Language\nModality", labels=c("ASL ", "English"), values=c("forestgreen", "tan2")) + theme(text = element_text(size=16, family="Times New Roman")) + coord_cartesian(xlim = c(3, 7), ylim= c(0,16)) 
-              #Scatterplot with different jitter        
-AllPlot <- ggplot(MC_GiveN, aes(x=All_Age, y=All_GiveN)) + geom_point(aes(shape=AllGroups, color=AllGroups), position="jitter", size=2.5) + labs(x="Age (years)", y="Give-N Highest Quantity Correct") + scale_shape_manual(name="Experimental\nGroups", labels=c("English Early", "ASL Early", "English Later", "ASL Later"), values=c(5, 19, 17, 15)) + scale_color_manual(name="Experimental\nGroups", labels=c("English Early", "ASL Early", "English Later", "ASL Later"), values=c("mediumblue","forestgreen", "red1", "tan2")) + theme(text = element_text(size=16, family="Times New Roman")) + coord_cartesian(xlim = c(3, 7), ylim= c(0,16))
+                                AllPlot <- ggplot(MC_GiveN, aes(x=All_Age, y=All_GiveN)) + geom_point(aes(shape=Timing, color=Modality), position="jitter", size=2.5) + labs(x="Age (years)", y="Give-N Highest Quantity Correct") + scale_shape_manual(name="Timing of\nLanguage Exposure", labels=c("Early", "Later"), values=c(16,17)) + scale_color_manual(name="Language\nModality", labels=c("ASL ", "English"), values=c("forestgreen", "tan2")) + theme(text = element_text(size=16, family="Times New Roman")) + coord_cartesian(xlim = c(3, 7), ylim= c(0,16)) 
+                        #Scatterplot with different jitter        
+                                AllPlot <- ggplot(MC_GiveN, aes(x=All_Age, y=All_GiveN)) + geom_point(aes(shape=AllGroups, color=AllGroups), position="jitter", size=2.5) + labs(x="Age (years)", y="Give-N Highest Quantity Correct") + scale_shape_manual(name="Experimental\nGroups", labels=c("English Early", "ASL Early", "English Later", "ASL Later"), values=c(5, 19, 17, 15)) + scale_color_manual(name="Experimental\nGroups", labels=c("English Early", "ASL Early", "English Later", "ASL Later"), values=c("mediumblue","forestgreen", "red1", "tan2")) + theme(text = element_text(size=16, family="Times New Roman")) + coord_cartesian(xlim = c(3, 7), ylim= c(0,16))
 
-  #Most recent version, with colors and shapes we want
-jitter <- position_jitter(width=0.2, height=0.1)
-AllPlot <- ggplot(MC_GiveN, aes(x=All_Age, y=All_GiveN)) + geom_point(aes(shape=AllGroups, color=AllGroups), position=jitter, size=2.5) + labs(x="Age (years)", y="Give-N Highest Quantity Correct") + scale_shape_manual(name="Experimental\nGroups", labels=c("English Early", "ASL Early", "English Later", "ASL Later"), values=c(5, 19, 17, 15)) + scale_color_manual(name="Experimental\nGroups", labels=c("English Early", "ASL Early", "English Later", "ASL Later"), values=c("mediumblue","forestgreen", "red1", "tan2")) + theme(text = element_text(size=16, family="Times New Roman")) + coord_cartesian(xlim = c(3, 7), ylim= c(0,16))
+                        #MOST RECENT VERSION. Scatterplot using all groups as legend and set jitter. 
+                               #set the jitter
+                               jitter <- position_jitter(width=0.2, height=0.1)
+                               AllPlot <- ggplot(MC_GiveN, aes(x=All_Age, y=All_GiveN)) + geom_point(aes(shape=AllGroups, color=AllGroups), position=jitter, size=2.5) + labs(x="Age (years)", y="Give-N Highest Quantity Correct") + scale_shape_manual(name="Experimental\nGroups", labels=c("English Early", "ASL Early", "English Later", "ASL Later"), values=c(5, 19, 17, 15)) + scale_color_manual(name="Experimental\nGroups", labels=c("English Early", "ASL Early", "English Later", "ASL Later"), values=c("mediumblue","forestgreen", "red1", "tan2")) + theme(text = element_text(size=16, family="Times New Roman")) + coord_cartesian(xlim = c(3, 7), ylim= c(0,16))
 
 #MODALITY
     #ENGLISH ONLY
