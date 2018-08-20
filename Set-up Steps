@@ -57,10 +57,12 @@ EL <- subset(MC_GiveN, MC_GiveN$Group_4cat == "English Later")
 AL <- subset(MC_GiveN, MC_GiveN$Group_4cat == "ASL Later")
 
 #8. Create Other Variables
-All_Age <- MC_GiveN$Age
-All_GiveN <- MC_GiveN$GiveN_ALL_ceiling_conservative
+Age <- MC_GiveN$Age
+SES <- MC_GiveN$SES_range_8_to_66
+GiveN_conserv <- MC_GiveN$GiveN_ALL_ceiling_conservative
+GiveN_sm <- MC_GiveN$GiveN_Small_Ceiling
+GiveN_lrg <- MC_GiveN$GiveN_Large_Ceiling
 AllGroups <- MC_GiveN$LanguageGroup
 Modality <- MC_GiveN$Language_Modality
 Timing <- MC_GiveN$Language_Timing
-All_SES <- MC_GiveN$SES_range_8_to_66
 
