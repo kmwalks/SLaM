@@ -112,9 +112,12 @@
                          xlab = "Give-N ALL (conservative) Knower Level",
                          ylab= "Age (years)",
                          main="Knower Level by Age: 'ASL Later' Group")
-
-
-                
+        #Boxplots
+                #Give-N Conservative
+                ggplot(data=subset(MC_GiveN, !is.na(LanguageGroup)), aes(x=LanguageGroup, y=GiveN_conserv, fill=LanguageGroup)) + geom_boxplot() + labs (x= "Language Group", y= "Give-N Highest Quantity Correct") + theme(legend.position="none")
+                #ECw/Objects
+                ggplot(data=subset(MC_GiveN, !is.na(LanguageGroup)), aes(x=LanguageGroup, y=MC_GiveN$Highest_Count_wobj, fill=LanguageGroup)) + geom_boxplot() + labs (x= "Language Group", y= "Elicited Counting Highest Count with Objects") + theme(legend.position="none")
+              
                 
                 
                 
