@@ -39,7 +39,7 @@
 
     #ENGLISH & ASL
         #Create subset
-        GiveN_EarlyExposed <- subset(MC_GiveN, MC_GiveN$Group_4cat == "English Early" | MC_GiveN$Group_4cat == "ASL Early")
+        GiveN_EarlyExposed <- subset(MC_GiveN, MC_GiveN$Group_4cat == "ASL Early" | MC_GiveN$Group_4cat == "English Early")
         
         #Create variables 
         Age_EarlyBoth <- GiveN_EarlyExposed$Age
@@ -47,8 +47,7 @@
         Modality_EarlyBoth <- GiveN_EarlyExposed$Group_4cat
         
         #Create scatter plot
-        Early_Exposed <- ggplot(GiveN_EarlyExposed, aes(x=Age_EarlyBoth, y=GN_EarlyBoth)) + geom_point(aes(shape=Modality_EarlyBoth, color=Modality_EarlyBoth))
-        Early_Exposed + labs(x = "Age (years)", y = "Give-N Highest Quantity Correct")
+        ggplot(GiveN_EarlyExposed, aes(x=Age_EarlyBoth, y=GN_EarlyBoth)) + geom_point(aes(shape=Modality_EarlyBoth, color=Modality_EarlyBoth), position="jitter", size=2.5, alpha=.85) + labs(x="Age (years)", y="Give-N Highest Quantity Correct") + scale_shape_manual(name="Language\nGroup", labels=c("ASL Early", "English Early"), values=c(17, 19)) + scale_color_manual(name="Language\nGroup", labels=c("ASL Early", "English Early"), values=c("mediumvioletred","grey67")) + theme(text = element_text(size=16)) + coord_cartesian(xlim = c(3, 7), ylim= c(0,16))
     
  
 #TIMING
