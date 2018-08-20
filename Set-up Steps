@@ -59,6 +59,7 @@ AL <- subset(MC_GiveN, MC_GiveN$Group_4cat == "ASL Later")
 #8. Create Other Variables
 Age <- MC_GiveN$Age
 SES <- MC_GiveN$SES_range_8_to_66
+Sex <- MC_GiveN$Sex
 GiveN_conserv <- MC_GiveN$GiveN_ALL_ceiling_conservative
 GiveN_sm <- MC_GiveN$GiveN_Small_Ceiling
 GiveN_lrg <- MC_GiveN$GiveN_Large_Ceiling
