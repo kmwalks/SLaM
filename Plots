@@ -74,10 +74,7 @@
         TimeGrp <- TimingGroup$Language_Timing 
     
         #Create scatter plot 
-        BothTiming <- ggplot(TimingGroup, aes(x=Age_TimeBoth, y=GN_TimeBoth)) + geom_point(aes(shape=TimeGrp, color=TimeGrp))
-        BothTiming + labs(x = "Age (years)", y = "Give-N Highest Quantity Correct")
-                #Code below is with design elements added
-                ggplot(MC_GiveN, aes(x=Age, y=GN_TimeBoth)) + geom_point(aes(shape=TimeGrp, color=TimeGrp), position="jitter", size=1.6) + labs(x="Age (years)", y="Give-N highest quantity correct") + scale_shape_manual(name="Language\nTiming", labels=c("Early", "Later"), values=c(19, 15)) + scale_color_manual(name="Language\nTiming", labels=c("Early", "Later"), values=c("darkslateblue","darkorange")) + theme(text = element_text(size=16, family="Times New Roman")) + coord_cartesian(xlim = c(3, 7), ylim= c(0,16)) 
+        ggplot(MC_GiveN, aes(x=Age, y=GN_TimeBoth)) + geom_point(aes(shape=TimeGrp, color=TimeGrp), position="jitter", size=2.5) + labs(x="Age (years)", y="Give-N Highest Quantity Correct") + scale_shape_manual(name="Language\nTiming", labels=c("Early", "Later"), values=c(17, 15)) +scale_color_manual(name="Language\nTiming", labels=c("Early", "Later"), values=c("forestgreen","tan2")) + theme(text = element_text(size=16)) + coord_cartesian(xlim = c(3, 7), ylim= c(0,16))
     
     
 #Other Plots
@@ -117,9 +114,6 @@
                 #ECw/Objects
                 ggplot(data=subset(MC_GiveN, !is.na(LanguageGroup)), aes(x=LanguageGroup, y=MC_GiveN$Highest_Count_wobj, fill=LanguageGroup)) + geom_boxplot() + labs (x= "Language Group", y= "Elicited Counting Highest Count with Objects") + theme(legend.position="none")
               
-                
-                
-                
-                
+           
                 
                 
