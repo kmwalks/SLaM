@@ -9,6 +9,7 @@ install.packages("MASS") # for polr package
 install.packages("generalhoslem") # for testing model fit (lipsitz test and two others)
 install.packages("qwraps2") # for summary_table use
 install.packages("quantreg") # testing quantile plots (geom_quantile) and quantile regressions
+install.packages ("olsrr") #for testing normality
 
 library(tidyverse) 
 library(ggplot2) 
@@ -19,6 +20,7 @@ library(MASS)
 library(generalhoslem) 
 library(qwraps2) 
 library(quantreg) 
+library(olsrr)
 
 #2. Check and Set Working Directory
 setwd("/Users/labuser/Documents/R")
@@ -38,25 +40,21 @@ typeof(MC_GiveN) #checks what format it is in [[****currently is a list, would l
 str(MC_GiveN) #Age & SES - num, Give N - int (but then later 'factorize' them) 
 
 #6. Create & Add Factorized Give-N, Modality,Timing, and Language Group Variables
+      #Create factorized Give-N
+      GiveN_conserv_fac <- as.factor(MC_GiveN$GiveN_ALL_ceiling_conservative)
+      GiveN_sm_fac <- as.factor(MC_GiveN$GiveN_Small_Ceiling)
+      GiveN_lrg_fac <- as.factor(MC_GiveN$GiveN_Large_Ceiling)
+      GiveN_all_fac <- as.factor(MC_GiveN$GiveN_ALL_ceiling)
 
+      #Create Modality, Timing, and Language Variables
+      Language_Timing <- as.factor(factor(as.character(MC_GiveN$Group_2cat), levels = c ("Early", "Later"), exclude = ""))
+      Language_Modality <- ifelse(MC_GiveN$Group_4cat == "English Early" | MC_GiveN$Group_4cat== "English Later", c("English"), c("ASL"))
+      #if else statement, beginning is looking for wherever it has English Early or English Later, it will code it as English, and then for everything else will code as ASL, using c() to code as a factor and not character
+      LanguageGroup <- as.factor(factor(as.character(MC_GiveN$Group_4cat), levels = c("English Early", "ASL Early", "English Later", "ASL Later"), exclude=NA))
 
-GiveN_conserv_fac <- as.factor(MC_GiveN$GiveN_ALL_ceiling_conservative)
-GiveN_sm_fac <- as.factor(
-#FACTORIZE ALL GIVEN!
-
-
-Language_Timing <- as.factor(factor(as.character(MC_GiveN$Group_2cat), levels = c ("Early", "Later"), exclude = ""))
-Language_Timing
-
-Language_Modality <- ifelse(MC_GiveN$Group_4cat == "English Early" | MC_GiveN$Group_4cat== "English Later", c("English"), c("ASL"))
-Language_Modality
-#if else statement, beginning is looking for wherever it has English Early or English Later, it will code it as English, and then for everything else will code as ASL, using c() to code as a factor and not character
-
-LanguageGroup <- as.factor(factor(as.character(MC_GiveN$Group_4cat), levels = c("English Early", "ASL Early", "English Later", "ASL Later"), exclude=NA))
-
-MC_GiveN <- cbind(MC_GiveN, Language_Modality, Language_Timing, LanguageGroup) #adds variables to dataframe
-View(MC_GiveN)
-#CBIND EVERYTHING, ADD FACTORIZED! 
+      #Add all to Dataframe
+      MC_GiveN <- cbind(MC_GiveN, Language_Modality, Language_Timing, LanguageGroup, GiveN_conserv_fac, GiveN_sm_fac, GiveN_lrg_fac, GiveN_all_fac) 
+      View(MC_GiveN)
 
 #7. Create Subsets 
 EE <- subset(MC_GiveN, MC_GiveN$Group_4cat == "English Early")
@@ -69,13 +67,16 @@ AL <- subset(MC_GiveN, MC_GiveN$Group_4cat == "ASL Later")
 Age <- MC_GiveN$Age
 SES <- MC_GiveN$SES_range_8_to_66
 Sex <- MC_GiveN$Sex
-GiveN_conserv <- MC_GiveN$GiveN_ALL_ceiling_conservative
-GiveN_sm <- MC_GiveN$GiveN_Small_Ceiling
-GiveN_lrg <- MC_GiveN$GiveN_Large_Ceiling
-AllGroups <- MC_GiveN$LanguageGroup
+GN_con <- MC_GiveN$GiveN_ALL_ceiling_conservative
+GN_sm <- MC_GiveN$GiveN_Small_Ceiling
+GN_lrg <- MC_GiveN$GiveN_Large_Ceiling
+LngGrps <- MC_GiveN$LanguageGroup
 Modality <- MC_GiveN$Language_Modality
 Timing <- MC_GiveN$Language_Timing
-
-
+GN_con_f <- GiveN_conserv_fac
+GN_sm_f <- GiveN_sm_fac
+GN_lrg_f <- GiveN_lrg_fac
+GN_all_f <- GiveN_all_fac
+      
 
 
