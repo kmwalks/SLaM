@@ -37,7 +37,14 @@ View(MC_GiveN) #will display the data
 typeof(MC_GiveN) #checks what format it is in [[****currently is a list, would like it to be a dataframe****]]
 str(MC_GiveN) #Age & SES - num, Give N - int (but then later 'factorize' them) 
 
-#6. Create & Add Modality,Timing, and Language Group Variables
+#6. Create & Add Factorized Give-N, Modality,Timing, and Language Group Variables
+
+
+GiveN_conserv_fac <- as.factor(MC_GiveN$GiveN_ALL_ceiling_conservative)
+GiveN_sm_fac <- as.factor(
+#FACTORIZE ALL GIVEN!
+
+
 Language_Timing <- as.factor(factor(as.character(MC_GiveN$Group_2cat), levels = c ("Early", "Later"), exclude = ""))
 Language_Timing
 
@@ -49,6 +56,7 @@ LanguageGroup <- as.factor(factor(as.character(MC_GiveN$Group_4cat), levels = c(
 
 MC_GiveN <- cbind(MC_GiveN, Language_Modality, Language_Timing, LanguageGroup) #adds variables to dataframe
 View(MC_GiveN)
+#CBIND EVERYTHING, ADD FACTORIZED! 
 
 #7. Create Subsets 
 EE <- subset(MC_GiveN, MC_GiveN$Group_4cat == "English Early")
@@ -56,7 +64,8 @@ AE <- subset(MC_GiveN, MC_GiveN$Group_4cat == "ASL Early")
 EL <- subset(MC_GiveN, MC_GiveN$Group_4cat == "English Later")
 AL <- subset(MC_GiveN, MC_GiveN$Group_4cat == "ASL Later")
 
-#8. Create Other Variables
+
+#8. Create Shortcut Names of Variables
 Age <- MC_GiveN$Age
 SES <- MC_GiveN$SES_range_8_to_66
 Sex <- MC_GiveN$Sex
@@ -66,4 +75,7 @@ GiveN_lrg <- MC_GiveN$GiveN_Large_Ceiling
 AllGroups <- MC_GiveN$LanguageGroup
 Modality <- MC_GiveN$Language_Modality
 Timing <- MC_GiveN$Language_Timing
+
+
+
 
