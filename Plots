@@ -114,7 +114,9 @@
                 ggplot(data=subset(MC_GiveN, !is.na(LanguageGroup)), aes(x=LanguageGroup, y=GiveN_conserv, fill=LanguageGroup)) + geom_boxplot() + labs (x= "Language Group", y= "Give-N Highest Quantity Correct") + theme(legend.position="none")
                 #ECw/Objects
                 ggplot(data=subset(MC_GiveN, !is.na(LanguageGroup)), aes(x=LanguageGroup, y=MC_GiveN$Highest_Count_wobj, fill=LanguageGroup)) + geom_boxplot() + labs (x= "Language Group", y= "Elicited Counting Highest Count with Objects") + theme(legend.position="none")
-              
-           
+               #SES
+
+      ggplot(data=MC_GiveN, aes(x=LanguageGroup, y=SES, fill=LanguageGroup)) + geom_boxplot() + labs (x= "Language Group", y= "SES") + theme(legend.position="none")
+      
                 
                 
