@@ -83,12 +83,16 @@
         ggplot(MC_GiveN, aes(x=TimeGrp, y=Age)) + geom_violin() + labs(x="Language Timing")
 
         #Beeswarm
+        GiveN_conserv_fac <- as.factor(MC_GiveN$GiveN_ALL_ceiling_conservative)     
+               
                #English Early, GiveN Conservative
+               
                GiveN_col_EE <- factor(EE$GiveN_ALL_ceiling_conservative, 
                      levels=c(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12), 
                      labels=c("red1", "orange1", "yellow2", "green1", "blue1", "plum1", "purple1", "coral1", "hotpink1", "wheat1", "springgreen1", "steelblue1", "chocolate1"))
-               beeswarm(EE$Age~EE$GiveN_ALL_ceiling_conservative,
-                         data= EE,
+               beeswarm(MC_GiveN$Age~ GiveN_conserv_fac,
+                         data= MC_GiveN,
+                         subset= EE,
                          pch=16,
                          pwcol=as.character(GiveN_col_EE),
                          ylim=c(3,8),
