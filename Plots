@@ -83,31 +83,29 @@
         ggplot(MC_GiveN, aes(x=TimeGrp, y=Age)) + geom_violin() + labs(x="Language Timing")
 
         #Beeswarm
-        GiveN_conserv_fac <- as.factor(MC_GiveN$GiveN_ALL_ceiling_conservative)     
+                #Set standardized colors for Give-N scores across language groups        
+                #levels refer to the number of possible values (have 12 groups, can check with str(GiveN_conserv_fac))
+                GiveN_col <- factor(MC_GiveN$GiveN_conserv_fac, 
+                     levels=c(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12),                
+                     labels=c("red1", "orange1", "yellow2", "green1", "blue1", "plum1", "purple1", "coral1", "hotpink1", "wheat1", "springgreen1", "steelblue1", "chocolate1"))
                
                #English Early, GiveN Conservative
-               
-               GiveN_col_EE <- factor(EE$GiveN_ALL_ceiling_conservative, 
-                     levels=c(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12), 
-                     labels=c("red1", "orange1", "yellow2", "green1", "blue1", "plum1", "purple1", "coral1", "hotpink1", "wheat1", "springgreen1", "steelblue1", "chocolate1"))
                beeswarm(MC_GiveN$Age~ GiveN_conserv_fac,
                          data= MC_GiveN,
-                         subset= EE,
+                         subset= MC_GiveN$Group_4cat == "English Early",
                          pch=16,
-                         pwcol=as.character(GiveN_col_EE),
+                         pwcol=as.character(GiveN_col),
                          ylim=c(3,8),
                          yaxp = c(3, 8, 5),
                          xlab = "Give-N ALL (conservative) Knower Level",
                          ylab= "Age (years)",
-                         main="Knower Level by Age: 'English Early' Group")
+                         main= "Knower Level by Age: 'English Early' Group")
                #ASL Later, GiveN Conservative
-               GiveN_col_AL <- factor(AL$GiveN_ALL_ceiling_conservative, 
-                    levels=c(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12), 
-                    labels=c("red1", "orange1", "yellow2", "green1", "blue1", "plum1", "purple1", "coral1", "hotpink1", "wheat1", "springgreen1", "steelblue1", "chocolate1"))
-               beeswarm(AL$Age~AL$GiveN_ALL_ceiling_conservative,
-                         data= AL,
+               beeswarm(MC_GiveN$Age~GiveN_conserv_fac,
+                         data= MC_GiveN,
+                         subset= MC_GiveN$Group_4cat == "ASL Later"
                          pch=16,
-                         pwcol=as.character(GiveN_col_AL),
+                         pwcol=as.character(GiveN_col),
                          ylim=c(3,8),
                          yaxp = c(3, 8, 5),
                          xlab = "Give-N ALL (conservative) Knower Level",
