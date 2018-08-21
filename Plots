@@ -89,9 +89,9 @@
                 #Set standardized colors for Give-N scores across language groups        
                 #levels refer to the number of possible values (have 12 groups, can check with str(GiveN_conserv_fac))
                 GiveN_col <- factor(MC_GiveN$GiveN_conserv_fac, 
-                     levels=c(0, 1, 2, 3, 4, 5, 6, 7, 9, 10, 12, 16),                
-                     labels=c("red1", "orange1", "yellow2", "green1", "blue1", "plum1", "purple1", "coral1", "hotpink", "springgreen1", "steelblue1", "chocolate1"))
-               
+                    levels=c(0, 1, 2, 3, 4, 5, 6, 7, 9, 10, 12, 16),                
+                    labels=c("red1", "orange1", "yellow2", "green1", "blue1", "plum1", "purple1", "coral1", "hotpink", "springgreen1", "steelblue1", "chocolate1"))
+             
                #English Early, GiveN Conservative
                beeswarm(MC_GiveN$Age~ GiveN_conserv_fac,
                          data= MC_GiveN,
