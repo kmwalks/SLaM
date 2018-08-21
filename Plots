@@ -5,17 +5,16 @@
         #Create scatter plot
         ggplot(data=MC_GiveN) + geom_point(mapping=aes(x=Age, y=GiveN_ALL_ceiling_conservative)) 
         #Codes below are with design elements added
-                #Scatterplot with 2 legends for timing and modality
-                        #AllPlot <- ggplot(MC_GiveN, aes(x=All_Age, y=All_GiveN)) + geom_point(aes(shape=Timing, color=Modality), position="jitter", size=2.5) + labs(x="Age (years)", y="Give-N Highest Quantity Correct") + scale_shape_manual(name="Timing of\nLanguage Exposure", labels=c("Early", "Later"), values=c(16,17)) + scale_color_manual(name="Language\nModality", labels=c("ASL ", "English"), values=c("forestgreen", "tan2")) + theme(text = element_text(size=16, family="Times New Roman")) + coord_cartesian(xlim = c(3, 7), ylim= c(0,16)) 
-                #Scatterplot with different jitter        
+                #Scatterplot with automatic jitter        
                         #AllPlot <- ggplot(MC_GiveN, aes(x=All_Age, y=All_GiveN)) + geom_point(aes(shape=AllGroups, color=AllGroups), position="jitter", size=2.5) + labs(x="Age (years)", y="Give-N Highest Quantity Correct") + scale_shape_manual(name="Experimental\nGroups", labels=c("English Early", "ASL Early", "English Later", "ASL Later"), values=c(5, 19, 17, 15)) + scale_color_manual(name="Experimental\nGroups", labels=c("English Early", "ASL Early", "English Later", "ASL Later"), values=c("mediumblue","forestgreen", "red1", "tan2")) + theme(text = element_text(size=16, family="Times New Roman")) + coord_cartesian(xlim = c(3, 7), ylim= c(0,16))
-                #MOST RECENT VERSION. Scatterplot using all groups as legend and set jitter. 
-                       #set the jitter
-                       jitter <- position_jitter(width=0.2, height=0.2) #CURRENTLY USING
-                       #jitter_dodge <- position_dodge2(width=0.2, preserve= "single", padding= .1) 
-                       AllPlot <- ggplot(MC_GiveN, aes(x=Age, y=GiveN_conserv)) + geom_point(aes(shape=AllGroups, color=AllGroups), position=jitter, size=2) + labs(x="Age (years)", y="Give-N Highest Quantity Correct") + scale_shape_manual(name="Experimental\nGroups", labels=c("English Early", "ASL Early", "English Later", "ASL Later"), values=c(5, 19, 17, 15)) + scale_color_manual(name="Experimental\nGroups", labels=c("English Early", "ASL Early", "English Later", "ASL Later"), values=c("mediumblue","forestgreen", "red1", "tan2")) + theme(text = element_text(size=16, family="Times New Roman")) + coord_cartesian(xlim = c(3, 7), ylim= c(0,16))
-                #Version with y scale 0-16 going up by 2, CURRENTLY USING
-                       #AllPlot <- ggplot(MC_GiveN, aes(x=Age, y=GiveN_conserv)) + geom_point(aes(shape=AllGroups, color=AllGroups), position=jitter, size=2) + labs(x="Age (years)", y="Give-N Highest Quantity Correct") + scale_shape_manual(name="Experimental\nGroups", labels=c("English Early", "ASL Early", "English Later", "ASL Later"), values=c(5, 19, 17, 15)) + scale_color_manual(name="Experimental\nGroups", labels=c("English Early", "ASL Early", "English Later", "ASL Later"), values=c("mediumblue","forestgreen", "red1", "tan2")) + theme(text = element_text(size=16, family="Times New Roman")) + coord_cartesian(xlim = c(3, 7), ylim= c(0,16)) + scale_y_continuous(breaks=c(0,16,4,8,12))
+                #Set jitter
+                       jitter <- position_jitter(width=0.2, height=0.01) #CURRENTLY USING
+                       #jitter_dodge <- position_dodge2(width=0.2, preserve= "single", padding= .1)                      
+                #Scatterplot with y scale 0-16 going up by 2, CURRENTLY USING
+                       AllPlot <- ggplot(MC_GiveN, aes(x=Age, y=GiveN_conserv)) + geom_point(aes(shape=AllGroups, color=AllGroups), position=jitter, size=2.5) + labs(x="Age (years)", y="Give-N Highest Quantity Correct") + scale_shape_manual(name="Experimental\nGroups", labels=c("English Early", "ASL Early", "English Later", "ASL Later"), values=c(5, 19, 17, 15)) + scale_color_manual(name="Experimental\nGroups", labels=c("English Early", "ASL Early", "English Later", "ASL Later"), values=c("mediumblue","forestgreen", "red1", "tan2")) + theme(text = element_text(size=16, family="Times New Roman")) + coord_cartesian(xlim = c(3, 7), ylim= c(0,16)) + scale_y_continuous(breaks=c(0,16,4,8,12))
+                #Scatterplot with Automatic y scale
+                       #AllPlot <- ggplot(MC_GiveN, aes(x=Age, y=GiveN_conserv)) + geom_point(aes(shape=AllGroups, color=AllGroups), position=jitter, size=2.5) + labs(x="Age (years)", y="Give-N Highest Quantity Correct") + scale_shape_manual(name="Experimental\nGroups", labels=c("English Early", "ASL Early", "English Later", "ASL Later"), values=c(5, 19, 17, 15)) + scale_color_manual(name="Experimental\nGroups", labels=c("English Early", "ASL Early", "English Later", "ASL Later"), values=c("mediumblue","forestgreen", "red1", "tan2")) + theme(text = element_text(size=16, family="Times New Roman")) + coord_cartesian(xlim = c(3, 7), ylim= c(0,16))
+
 #MODALITY
     #ENGLISH ONLY
         #Create variables
@@ -76,8 +75,11 @@
         TimeGrp <- TimingGroup$Language_Timing 
     
         #Create scatter plot 
-        ggplot(MC_GiveN, aes(x=Age, y=GN_TimeBoth)) + geom_point(aes(shape=TimeGrp, color=TimeGrp), position="jitter", size=2.5) + labs(x="Age (years)", y="Give-N Highest Quantity Correct") + scale_shape_manual(name="Language\nTiming", labels=c("Early", "Later"), values=c(17, 15)) +scale_color_manual(name="Language\nTiming", labels=c("Early", "Later"), values=c("forestgreen","tan2")) + theme(text = element_text(size=16)) + coord_cartesian(xlim = c(3, 7), ylim= c(0,16))
-    
+                #Set jitter
+                jitter <- position_jitter(width=0.2, height=0.01)
+                ggplot(MC_GiveN, aes(x=Age, y=GN_TimeBoth)) + geom_point(aes(shape=TimeGrp, color=TimeGrp), position=jitter, size=2) + labs(x="Age (years)", y="Give-N Highest Quantity Correct") + scale_shape_manual(name="Timing of Language\nExposure", labels=c("Early", "Later"), values=c(17, 15)) +scale_color_manual(name="Timing of Language\nExposure", labels=c("Early", "Later"), values=c("forestgreen","tan2")) + theme(text = element_text(size=16)) + coord_cartesian(xlim = c(3, 7), ylim= c(0,16))
+                #Automatic Jitter
+                ggplot(MC_GiveN, aes(x=Age, y=GN_TimeBoth)) + geom_point(aes(shape=TimeGrp, color=TimeGrp), position="jitter", size=2) + labs(x="Age (years)", y="Give-N Highest Quantity Correct") + scale_shape_manual(name="Timing of Language\nExposure", labels=c("Early", "Later"), values=c(17, 15)) +scale_color_manual(name="Timing of Language\nExposure", labels=c("Early", "Later"), values=c("forestgreen","tan2")) + theme(text = element_text(size=16)) + coord_cartesian(xlim = c(3, 7), ylim= c(0,16))
     
 #Other Plots
         #Violin Plot
@@ -114,12 +116,16 @@
                          main="Knower Level by Age: 'ASL Later' Group")
         #Boxplots
                 #Give-N Conservative
-                ggplot(data=subset(MC_GiveN, !is.na(LanguageGroup)), aes(x=LanguageGroup, y=GiveN_conserv, fill=LanguageGroup)) + geom_boxplot() + labs (x= "Language Group", y= "Give-N Highest Quantity Correct") + theme(legend.position="none")
+                ggplot(data=MC_GiveN, aes(x=LanguageGroup, y=GiveN_conserv, fill=LanguageGroup)) + geom_boxplot() + labs (x= "Language Group", y= "Give-N Highest Quantity Correct") + theme(legend.position="none")
                 #ECw/Objects
-                ggplot(data=subset(MC_GiveN, !is.na(LanguageGroup)), aes(x=LanguageGroup, y=MC_GiveN$Highest_Count_wobj, fill=LanguageGroup)) + geom_boxplot() + labs (x= "Language Group", y= "Elicited Counting Highest Count with Objects") + theme(legend.position="none")
-               #SES
-
-      ggplot(data=MC_GiveN, aes(x=LanguageGroup, y=SES, fill=LanguageGroup)) + geom_boxplot() + labs (x= "Language Group", y= "SES") + theme(legend.position="none")
+                ggplot(data=MC_GiveN, aes(x=LanguageGroup, y=MC_GiveN$Highest_Count_wobj, fill=LanguageGroup)) + geom_boxplot() + labs (x= "Language Group", y= "Elicited Counting Highest Count with Objects") + theme(legend.position="none")
+                #SES
+                ggplot(data=MC_GiveN, aes(x=LanguageGroup, y=SES, fill=LanguageGroup)) + geom_boxplot() + labs (x= "Language Group", y= "SES") + theme(legend.position="none")
       
+        #HeatMap
+                GiveNHeat <- ggplot(MC_GiveN, aes(x = Age, y = GiveN_conserv)) + xlim(3,7) + ylim(0,16) + labs(x="Age (years)", y ="Give-N Highest Quantity Correct")
+                GiveNHeat  + geom_bin2d()
+                GiveNHeat + geom_bin2d(bins = 25)
+
                 
                 
