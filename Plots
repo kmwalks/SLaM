@@ -126,6 +126,8 @@
                 GiveNHeat <- ggplot(MC_GiveN, aes(x = Age, y = GiveN_conserv)) + xlim(3,7) + ylim(0,16) + labs(x="Age (years)", y ="Give-N Highest Quantity Correct")
                 GiveNHeat  + geom_bin2d()
                 GiveNHeat + geom_bin2d(bins = 25)
-
+        #Barplot (use only for simple counts)
+        ggplot(data=MC_GiveN, aes(x=Sex, y=..count.., fill = Sex)) + geom_bar() + labs (x="Sex", y = "Count") + scale_fill_manual(name = "Sex", values=c("darkolivegreen", "goldenrod1")) 
+                
                 
                 
