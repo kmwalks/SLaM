@@ -84,6 +84,12 @@
 #Other Plots
         #Violin Plot
         ggplot(MC_GiveN, aes(x=Timing, y=Age)) + geom_violin() + labs(x="Language Timing")
+                #Adding Colors
+                        #Outline colored
+                        OUTLINE COLORED:
+                        ggplot(MC_GiveN, aes(x=Timing, y=Age, shape=Timing, color=Timing)) + geom_violin() + labs(x="Timing of Language Exposure", y= "Age (years)") + scale_color_manual(name="Language Timing", labels=c("Early", "Later"), values=c("mediumblue","forestgreen")) 
+                        #Preset fill colored
+                        ggplot(MC_GiveN, aes(x=Timing, y=Age, fill=Timing)) + geom_violin() + labs(x="Timing of Language Exposure", y= "Age (years)") + theme(legend.position="none") 
 
         #Beeswarm
                 #Set standardized colors for Give-N scores across language groups        
