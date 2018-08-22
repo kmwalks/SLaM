@@ -1,6 +1,8 @@
 #Descriptive Statistics
-  #Subset group want ex. EE
-  #summary of variable want within that group ex. summary(EE$Sex) 
+      #Subset group want ex. EE
+      #summary of variable want within that group ex. summary(EE$Sex) 
+  #To get number of observations for each group
+      #sum(MC_GiveN$LanguageGroup == 'English Early', na.rm=TRUE)
   
 #General Linear Model/Regression
   #Note: Use LanguageGroup so all compared to English Early group
