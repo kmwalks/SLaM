@@ -83,7 +83,7 @@
     
 #Other Plots
         #Violin Plot
-        ggplot(MC_GiveN, aes(x=TimeGrp, y=Age)) + geom_violin() + labs(x="Language Timing")
+        ggplot(MC_GiveN, aes(x=Timing, y=Age)) + geom_violin() + labs(x="Language Timing")
 
         #Beeswarm
                 #Set standardized colors for Give-N scores across language groups        
