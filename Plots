@@ -86,10 +86,16 @@
         ggplot(MC_GiveN, aes(x=Timing, y=Age)) + geom_violin() + labs(x="Language Timing")
                 #Adding Colors
                         #Outline colored
-                        OUTLINE COLORED:
                         ggplot(MC_GiveN, aes(x=Timing, y=Age, shape=Timing, color=Timing)) + geom_violin() + labs(x="Timing of Language Exposure", y= "Age (years)") + scale_color_manual(name="Language Timing", labels=c("Early", "Later"), values=c("mediumblue","forestgreen")) 
                         #Preset fill colored
                         ggplot(MC_GiveN, aes(x=Timing, y=Age, fill=Timing)) + geom_violin() + labs(x="Timing of Language Exposure", y= "Age (years)") + theme(legend.position="none") 
+                #SES and LangGrp (With # of Obs and Means)
+                        #Set up 
+                        give.n <- function(x){return(c(y = median(x)*1.05, label = length(x))) }
+                        mean.n <- function(x){return(c(y= median(x)*0.97, label = round(mean(x), 2)))}
+                        #Chart
+                        ggplot(MC_GiveN, aes(x = LanguageGroup, y = SES, fill = LanguageGroup)) + geom_violin() + labs (x= "Language Group", y = "SES") + stat_summary(fun.data = give.n, geom = "text", fun.y = median) + stat_summary(fun.data = mean.n, geom= "text", fun.y=mean, color= "gainsboro") + theme(legend.position="none") 
+
 
         #Beeswarm
                 #Set standardized colors for Give-N scores across language groups        
@@ -137,6 +143,16 @@
                         main= "Give-N Small Ceiling by Age: 'English Early' Group")
                 
                 
+        #Boxplots within Violin Plots
+                #Set up for # of Obs and Means
+                give.n <- function(x){return(c(y = median(x)*1.05, label = length(x))) }
+                mean.n <- function(x){return(c(y= median(x)*0.97, label = round(mean(x), 2)))}
+                #GN and LangGrp
+                ggplot(MC_GiveN, aes(x = LanguageGroup, y = GN_con, fill = LanguageGroup)) + geom_violin() + geom_boxplot(width = 0.2) + labs (x= "Language Group", y = "Give-N Highest Quantity Correct") + stat_summary(fun.data = give.n, geom = "text", fun.y = median) + stat_summary(fun.data = mean.n, geom= "text", fun.y=mean, color= "gainsboro") + theme(legend.position="none") 
+                #SES and LangGrp
+                ggplot(MC_GiveN, aes(x = LanguageGroup, y = SES, fill = LanguageGroup)) + geom_violin() + geom_boxplot(width = 0.2) + labs (x= "Language Group", y = "SES") + stat_summary(fun.data = give.n, geom = "text", fun.y = median) + stat_summary(fun.data = mean.n, geom= "text", fun.y=mean, color= "gainsboro") + theme(legend.position="none") 
+
+                
         #Boxplots
                 #Give-N Conservative
                 ggplot(data=MC_GiveN, aes(x=LanguageGroup, y=GN_con, fill=LanguageGroup)) + geom_boxplot() + labs (x= "Language Group", y= "Give-N Highest Quantity Correct") + theme(legend.position="none")
@@ -147,6 +163,8 @@
                 ggplot(data=MC_GiveN, aes(x=LanguageGroup, y=MC_GiveN$Highest_Count_wobj, fill=LanguageGroup)) + geom_boxplot() + labs (x= "Language Group", y= "Elicited Counting Highest Count with Objects") + theme(legend.position="none")
                 #SES
                 ggplot(data=MC_GiveN, aes(x=LanguageGroup, y=SES, fill=LanguageGroup)) + geom_boxplot() + labs (x= "Language Group", y= "SES") + theme(legend.position="none")
+      
+      
       
         #HeatMap
                 GiveNHeat <- ggplot(MC_GiveN, aes(x = Age, y = GiveN_conserv)) + xlim(3,7) + ylim(0,16) + labs(x="Age (years)", y ="Give-N Highest Quantity Correct")
