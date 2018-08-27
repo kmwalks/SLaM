@@ -7,10 +7,24 @@
 #General Linear Model/Regression
   #Note: Use LanguageGroup so all compared to English Early group
     #GiveN
-    GiveN_conserv_reg <- glm(MC_GiveN$GiveN_ALL_ceiling_conservative ~ MC_GiveN$Age + MC_GiveN$SES_range_8_to_66 + MC_GiveN$LanguageGroup + MC_GiveN$Sex, data=MC_GiveN)
-    summary(GiveN_conserv_reg)
+            GN_c_reg <- glm(MC_GiveN$GiveN_ALL_ceiling_conservative ~ MC_GiveN$Age + MC_GiveN$SES_range_8_to_66 + MC_GiveN$LanguageGroup + MC_GiveN$Sex, data=MC_GiveN)
+            summary(GiveN_conserv_reg)     
   
     #Elicited Counting w/ Objects
-    EC_wobjects_reg <- glm(MC_GiveN$Highest_Count_wobj ~ MC_GiveN$Age + MC_GiveN$SES_range_8_to_66 + MC_GiveN$LanguageGroup + MC_GiveN$Sex, data=MC_GiveN)
-    summary(EC_wobjects_reg)
+            EC_w_reg <- glm(MC_GiveN$Highest_Count_wobj ~ MC_GiveN$Age + MC_GiveN$SES_range_8_to_66 + MC_GiveN$LanguageGroup + MC_GiveN$Sex, data=MC_GiveN)
+            summary(EC_w_reg)
+            #Scatterplot
+            ggplot(data=MC_GiveN, mapping=aes(x=SES, y=MC_GiveN$Highest_Count_wobj)) + geom_jitter() + labs (x="SES", y= "Highest Count with Objects")
+             
+    #Elicited Counting w/o Objects
+            EC_wo_reg <- glm(MC_GiveN$Highest_Count_noobj ~ MC_GiveN$Age + MC_GiveN$SES_range_8_to_66 + MC_GiveN$LanguageGroup + MC_GiveN$Sex, data=MC_GiveN)
+            summary(EC_wo_reg)
+            #Scatterplot
+            ggplot(data=MC_GiveN, mapping=aes(x=SES, y=MC_GiveN$Highest_Count_noobj)) + geom_jitter() + labs (x="SES", y= "Highest Count without Objects")
+    
+    #Max Count
+            max_cnt <- glm(MC_GiveN$MAX_COUNT_SEQ ~ MC_GiveN$Age + MC_GiveN$SES_range_8_to_66 + MC_GiveN$LanguageGroup + MC_GiveN$Sex, data=MC_GiveN)
+            summary(max_cnt)
+            #Scatterplot
+            ggplot(data=MC_GiveN, mapping=aes(x=SES, y=MC_GiveN$MAX_COUNT_SEQ)) + geom_jitter() + labs (x="SES", y= "Highest Count Overall")
 
