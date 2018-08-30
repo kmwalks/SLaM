@@ -145,6 +145,7 @@
                 
         #Boxplots within Violin Plots
                 #Set up for # of Obs and Means
+                        #median(x)*1.05 determines the placement
                 give.n <- function(x){return(c(y = median(x)*1.05, label = length(x))) }
                 mean.n <- function(x){return(c(y= median(x)*0.97, label = round(mean(x), 2)))}
                 #GN and LangGrp
