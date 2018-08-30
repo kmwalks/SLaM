@@ -134,7 +134,7 @@
                         beeswarm(MC_GiveN$Age~GN_sm_f,
                         data= MC_GiveN,
                         subset= MC_GiveN$Group_4cat == "English Early",
-                        pch=6,
+                        pch=16,
                         pwcol=as.character(GiveN_col_sm),
                         ylim=c(3,8),
                         yaxp = c(3, 8, 5),
