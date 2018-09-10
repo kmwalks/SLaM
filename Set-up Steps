@@ -73,10 +73,9 @@ GN_lrg <- MC_GiveN$GiveN_Large_Ceiling
 LngGrps <- MC_GiveN$LanguageGroup
 Modality <- MC_GiveN$Language_Modality
 Timing <- MC_GiveN$Language_Timing
+AllGrps <- MC_GiveN$Group_4cat
 GN_con_f <- GiveN_conserv_fac
 GN_sm_f <- GiveN_sm_fac
 GN_lrg_f <- GiveN_lrg_fac
 GN_all_f <- GiveN_all_fac
-      
-
-
+     
