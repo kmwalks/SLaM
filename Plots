@@ -23,9 +23,7 @@
         Modality_EE <- EE$Language_Modality
         
         #Create scatter plot
-        EnglishEarly <- ggplot(EE, aes(x=Age_EE, y=GN_EE)) + geom_point(aes(shape=Modality_EE, color=Modality_EE)) #plot will not show up at this point, but will when call it in subsequent lines or when call EnglishEarly
-        EnglishEarly + labs(x = "Age (years)", y = "Give-N Highest Quantity Correct") #add x and y labels 
-        #all-in-one code: ggplot(EE, aes(x=Age_EE, y=GN_EE)) + geom_point(aes(shape=Modality_EE, color=Modality_EE)) + labs(x = "Age (years)", y = "Give-N Highest Quantity Correct")
+        EnglishEarly <- ggplot(EE, aes(x=Age_EE, y=GN_EE)) + geom_point(aes(shape=Modality_EE, color=Modality_EE)) + labs(x = "Age (years)", y = "Give-N Highest Quantity Correct")
     
     #ASL ONLY
         #Create variables
@@ -34,9 +32,7 @@
         Modality_AE <- AE$Language_Modality 
         
         #Create scatter plot
-        ASLEarly <-ggplot(AE, aes(x=Age_AE, y=GN_AE)) + geom_point(aes(shape=Modality_AE, color=Modality_AE))
-        ASLEarly +labs(x = "Age (years)", y = "Give-N Highest Quantity Correct")
-        #ALTERNATIVE CODE FORMAT FOR GGPLOT: ggplot(data=AE) + geom_point(mapping=aes(x=Age_AE, y=GN_AE, shape=Modality_AE, color=Modality_AE))
+        ASLEarly <-ggplot(AE, aes(x=Age_AE, y=GN_AE)) + geom_point(aes(shape=Modality_AE, color=Modality_AE)) +labs(x = "Age (years)", y = "Give-N Highest Quantity Correct")
 
     #ENGLISH & ASL
         #Create subset
@@ -62,8 +58,7 @@
         Timing_Early <- GiveN_EarlyExposed$Language_Timing
         
         #Create scatter plot
-        EarlyTiming <- ggplot(GiveN_EarlyExposed, aes(x=Age_Early, y=GN_Early)) + geom_point(aes(shape=Timing_Early , color=Timing_Early))
-        EarlyTiming + labs(x = "Age (years)", y = "Give-N Highest Quantity Correct")
+        EarlyTiming <- ggplot(GiveN_EarlyExposed, aes(x=Age_Early, y=GN_Early)) + geom_point(aes(shape=Timing_Early , color=Timing_Early))+ labs(x = "Age (years)", y = "Give-N Highest Quantity Correct")
   
     #EARLY AND LATER
         #Create subset 
