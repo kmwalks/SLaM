@@ -9,7 +9,7 @@
   #Note: Use LanguageGroup so all compared to English Early group
     #GiveN
             GN_c_reg <- lm(MC_GiveN$GiveN_ALL_ceiling_conservative ~ MC_GiveN$Age + MC_GiveN$SES_range_8_to_66 + MC_GiveN$LanguageGroup + MC_GiveN$Sex, data=MC_GiveN)
-            summary(GiveN_conserv_reg)     
+            summary(GN_c_reg)     
   
     #Elicited Counting w/ Objects
             EC_w_reg <- lm(MC_GiveN$Highest_Count_wobj ~ MC_GiveN$Age + MC_GiveN$SES_range_8_to_66 + MC_GiveN$LanguageGroup + MC_GiveN$Sex, data=MC_GiveN)
