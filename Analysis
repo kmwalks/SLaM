@@ -6,6 +6,7 @@
       #from entire dataset: sum(MC$Group_4cat == 'ASL Early', na.rm=TRUE)
       #obtain Including in study NA: IncStudy_NA <- subset(MC, MC$Including_in_study == "" | is.na(MC$Including_in_study))
       #obtain Including in study No: IncStudy_No <- subset(MC, MC$Including_in_study == "No")
+      #obtain Including in study Yes & pull from this for other variable missing data info: IncStudy <- subset(MC, MC$Including_in_study == "Yes")
       
   
 #General Linear Model/Regression
