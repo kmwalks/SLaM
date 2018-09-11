@@ -8,6 +8,9 @@
       #obtain Including in study No: IncStudy_No <- subset(MC, MC$Including_in_study == "No")
       #obtain Including in study Yes & pull from this for other variable missing data info: IncStudy <- subset(MC, MC$Including_in_study == "Yes")
       #Missing SES: SES_NA <- subset(IncStudy, IncStudy$SES_range_8_to_66 == "NA" | is.na(IncStudy$SES_range_8_to_66 | IncStudy$SES_range_8_to_66 == "No"))
+      #Missing Age: Age_NA <- subset(IncStudy, IncStudy$Age == "NA" | is.na(IncStudy$Age | IncStudy$Age == "No"))
+  
+  
   
 #General Linear Model/Regression
   #Note: Use LanguageGroup so all compared to English Early group
