@@ -17,42 +17,54 @@
   #Note: Use LanguageGroup so all compared to English Early group
     #GiveN
             GN_c_reg <- lm(MC_GiveN$GiveN_ALL_ceiling_conservative ~ MC_GiveN$Age + MC_GiveN$SES_range_8_to_66 + MC_GiveN$LanguageGroup + MC_GiveN$Sex, data=MC_GiveN)
-            summary(GN_c_reg)     
-  
+            summary(GN_c_reg)
+            #Density plot to check if normally distributed
+            ggplot(data=MC_GiveN) + geom_density(mapping=aes(x=MC_GiveN$GiveN_ALL_ceiling_conservative, y=..count..))
+            #Scatterplot SES
+            ggplot(data=MC_GiveN, mapping=aes(x=SES, y=MC_GiveN$GiveN_ALL_ceiling_conservative)) + geom_jitter() + labs (x="SES", y= "Give N Highest Count")
+            #Correlation Test ("Kendall") SES
+            cor.test(MC_GiveN$SES_range_8_to_66, MC_GiveN$GiveN_ALL_ceiling_conservative, method= c("kendall"))  
+            #Test normality
+            
+            #Test residual normality
+            
+            
     #Elicited Counting w/ Objects
             EC_w_reg <- lm(MC_GiveN$Highest_Count_wobj ~ MC_GiveN$Age + MC_GiveN$SES_range_8_to_66 + MC_GiveN$LanguageGroup + MC_GiveN$Sex, data=MC_GiveN)
             summary(EC_w_reg)
             #Density plot to check if normally distributed
             ggplot(data=MC_GiveN) + geom_density(mapping=aes(x=MC_GiveN$Highest_Count_wobj, y=..count..))
-            #Scatterplot
+            #Scatterplot SES
             ggplot(data=MC_GiveN, mapping=aes(x=SES, y=MC_GiveN$Highest_Count_wobj)) + geom_jitter() + labs (x="SES", y= "Highest Count with Objects")
-            #Correlation Test ("Kendall")
+            #Correlation Test ("Kendall") SES
             cor.test(MC_GiveN$SES_range_8_to_66, MC_GiveN$Highest_Count_wobj, method= c("kendall"))          
             #Test normality
             
             #Test residual normality
+            
             
     #Elicited Counting w/o Objects
             EC_wo_reg <- lm(MC_GiveN$Highest_Count_noobj ~ MC_GiveN$Age + MC_GiveN$SES_range_8_to_66 + MC_GiveN$LanguageGroup + MC_GiveN$Sex, data=MC_GiveN)
             summary(EC_wo_reg)
             #Density plot to check if normally distributed
             ggplot(data=MC_GiveN) + geom_density(mapping=aes(x=MC_GiveN$Highest_Count_noobj, y=..count..))
-            #Scatterplot
+            #Scatterplot SES
             ggplot(data=MC_GiveN, mapping=aes(x=SES, y=MC_GiveN$Highest_Count_noobj)) + geom_jitter() + labs (x="SES", y= "Highest Count without Objects")
-            #Correlation Test ("Kendall")
+            #Correlation Test ("Kendall") SES
             cor.test(MC_GiveN$SES_range_8_to_66, MC_GiveN$Highest_Count_noobj, method= c("kendall"))
             #Test normality
             
             #Test residual normality
+ 
  
     #Max Count
             max_cnt <- lm(MC_GiveN$MAX_COUNT_SEQ ~ MC_GiveN$Age + MC_GiveN$SES_range_8_to_66 + MC_GiveN$LanguageGroup + MC_GiveN$Sex, data=MC_GiveN)
             summary(max_cnt)
             #Density plot to check if normally distributed
             ggplot(data=MC_GiveN) + geom_density(mapping=aes(x=MC_GiveN$MAX_COUNT_SEQ, y=..count..))
-            #Scatterplot
+            #Scatterplot SES
             ggplot(data=MC_GiveN, mapping=aes(x=SES, y=MC_GiveN$MAX_COUNT_SEQ)) + geom_jitter() + labs (x="SES", y= "Highest Count Overall")
-            #Correlation Test ("Kendall")
+            #Correlation Test ("Kendall") SES
             cor.test(MC_GiveN$SES_range_8_to_66, MC_GiveN$MAX_COUNT_SEQ, method= c("kendall"))
             #Test normality
             
