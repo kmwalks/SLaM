@@ -15,6 +15,14 @@
   
 #General Linear Model/Regression
   #Note: Use LanguageGroup so all compared to English Early group
+  #STEPS
+      #1.   Create regression and run summary
+      #2.   Check if data is normally distributed (cannot violate normality)
+      #3.   Create jittered scatterplots of variables in regression 
+      #4.   Run a correlation test of variables ("kendall") (cannot be correlated)
+                  #P values <.05 means differs significantly between expected and actual, so not the best model to describe the data
+      #5. 
+  
     #GiveN
             GN_c_reg <- lm(MC_GiveN$GiveN_ALL_ceiling_conservative ~ MC_GiveN$Age + MC_GiveN$SES_range_8_to_66 + MC_GiveN$LanguageGroup + MC_GiveN$Sex, data=MC_GiveN)
             summary(GN_c_reg)
