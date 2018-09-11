@@ -35,7 +35,7 @@
             #Test normality
             
             #Test residual normality
-            
+            ols_plot_resid_qq(GN_c_reg)
             
     #Elicited Counting w/ Objects
             EC_w_reg <- lm(MC_GiveN$Highest_Count_wobj ~ MC_GiveN$Age + MC_GiveN$SES_range_8_to_66 + MC_GiveN$LanguageGroup + MC_GiveN$Sex, data=MC_GiveN)
@@ -49,7 +49,7 @@
             #Test normality
             
             #Test residual normality
-            
+            ols_plot_resid_qq(EC_w_reg)
             
     #Elicited Counting w/o Objects
             EC_wo_reg <- lm(MC_GiveN$Highest_Count_noobj ~ MC_GiveN$Age + MC_GiveN$SES_range_8_to_66 + MC_GiveN$LanguageGroup + MC_GiveN$Sex, data=MC_GiveN)
@@ -63,7 +63,7 @@
             #Test normality
             
             #Test residual normality
- 
+            ols_plot_resid_qq(EC_wo_reg) 
  
     #Max Count
             max_cnt <- lm(MC_GiveN$MAX_COUNT_SEQ ~ MC_GiveN$Age + MC_GiveN$SES_range_8_to_66 + MC_GiveN$LanguageGroup + MC_GiveN$Sex, data=MC_GiveN)
@@ -77,3 +77,4 @@
             #Test normality
             
             #Test residual normality
+            ols_plot_resid_qq(max_cnt)
