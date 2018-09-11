@@ -4,8 +4,9 @@
   #To get number of observations for each group
       #sum(MC_GiveN$LanguageGroup == 'English Early', na.rm=TRUE)
       #from entire dataset: sum(MC$Group_4cat == 'ASL Early', na.rm=TRUE)
-      #obtain Including in study NA: IncStudy_NA <- subset(MC, MC$Including_in_study == "N/A")
+      #obtain Including in study NA: IncStudy_NA <- subset(MC, MC$Including_in_study == "" | is.na(MC$Including_in_study))
       #obtain Including in study No: IncStudy_No <- subset(MC, MC$Including_in_study == "No")
+      
   
 #General Linear Model/Regression
   #Note: Use LanguageGroup so all compared to English Early group
