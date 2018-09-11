@@ -9,7 +9,7 @@
       #obtain Including in study Yes & pull from this for other variable missing data info: IncStudy <- subset(MC, MC$Including_in_study == "Yes")
       #Missing SES: SES_NA <- subset(IncStudy, IncStudy$SES_range_8_to_66 == "NA" | is.na(IncStudy$SES_range_8_to_66 | IncStudy$SES_range_8_to_66 == "No"))
       #Missing Age: Age_NA <- subset(IncStudy, IncStudy$Age == "NA" | is.na(IncStudy$Age | IncStudy$Age == "No"))
-  
+      #Missing EC with objects: ECw_NA <- subset(IncStudy, IncStudy$Highest_Count_wobj == "NA" | is.na(IncStudy$Highest_Count_wobj | IncStudy$Highest_Count_wobj == "No"))
   
   
 #General Linear Model/Regression
