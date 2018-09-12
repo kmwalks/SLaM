@@ -1,0 +1,36 @@
+#Elicted Counting Max Count Sequence all groups graph 
+          jitter <- position_jitter(width=0.2, height=0.01)
+          AllPlot <- ggplot(MC_EC, aes(x=Age, y=EC_max)) + geom_point(aes(shape=AllGrps, color=AllGrps), position=jitter, size=2.5) + labs(x="Age (years)", y="Maximum Counting") + scale_shape_manual(name="Experimental\nGroups", labels=c("English Early", "ASL Early", "English Later", "ASL Later"), values=c(5, 19, 17, 15)) + scale_color_manual(name="Experimental\nGroups", labels=c("English Early", "ASL Early", "English Later", "ASL Later"), values=c("mediumblue","forestgreen", "red1", "tan2")) + theme(text = element_text(size=16, family="Times New Roman")) + coord_cartesian(xlim = c(3, 7), ylim= c(0,16)) + scale_y_continuous(breaks=c(0,16,4,8,12))
+  
+  
+ #ENGLISH & ASL
+        #Create subset
+        EC_EarlyExposed <- subset(MC_EC, MC_EC$Group_4cat == "ASL Early" | MC_EC$Group_4cat == "English Early")
+        
+        #Create variables 
+        EC_Age_EarlyBoth <- EC_EarlyExposed$Age
+        EC_EarlyBoth <- EC_EarlyExposed$MAX_COUNT_SEQ
+        EC_Modality_EarlyBoth <- EC_EarlyExposed$Group_4cat
+        
+        #Create scatter plot
+        ggplot(EC_EarlyExposed, aes(x=EC_Age_EarlyBoth, y=EC_EarlyBoth)) + geom_point(aes(shape=EC_Modality_EarlyBoth, color=EC_Modality_EarlyBoth), position="jitter", size=2.5, alpha=.85) + labs(x="Age (years)", y="Maximum Counting") + scale_shape_manual(name="Language\nGroup", labels=c("ASL Early", "English Early"), values=c(17, 19)) + scale_color_manual(name="Language\nGroup", labels=c("ASL Early", "English Early"), values=c("mediumvioletred","grey67")) + theme(text = element_text(size=16)) + coord_cartesian(xlim = c(3, 7), ylim= c(0,16))
+        
+        
+        
+#EARLY AND LATER
+        #Create subset 
+        EC_TimingGroup <- subset(MC_EC, MC_EC$Group_2cat == "Early" | MC_EC$Group_2cat == "Later")
+        
+        #Create variables
+        EC_Age_TimeBoth <- EC_TimingGroup$Age
+        EC_TimeBoth <-  EC_TimingGroup$MAX_COUNT_SEQ
+        EC_TimeGrp <- EC_TimingGroup$Language_Timing
+    
+        #Create scatter plot 
+                #Set jitter
+                jitter <- position_jitter(width=0.2, height=0.01)
+                ggplot(MC_EC, aes(x=Age, y=EC_TimeBoth)) + geom_point(aes(shape= EC_TimeGrp, color=EC_TimeGrp), position=jitter, size=2) + labs(x="Age (years)", y="Maximum Counting") + scale_shape_manual(name="Timing of Language\nExposure", labels=c("Early", "Later"), values=c(17, 15)) +scale_color_manual(name="Timing of Language\nExposure", labels=c("Early", "Later"), values=c("forestgreen","tan2")) + theme(text = element_text(size=16)) + coord_cartesian(xlim = c(3, 7), ylim= c(0,16))
+                
+                #Automatic Jitter
+                ggplot(MC_EC, aes(x=Age, y=EC_TimeBoth)) + geom_point(aes(shape= EC_TimeGrp, color= EC_TimeGrp), position="jitter", size=2) + labs(x="Age (years)", y="Maximum Counting") + scale_shape_manual(name="Timing of Language\nExposure", labels=c("Early", "Later"), values=c(17, 15)) +scale_color_manual(name="Timing of Language\nExposure", labels=c("Early", "Later"), values=c("forestgreen","tan2")) + theme(text = element_text(size=16)) + coord_cartesian(xlim = c(3, 7), ylim= c(0,16))
+    
