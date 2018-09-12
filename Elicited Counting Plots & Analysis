@@ -34,3 +34,18 @@
                 #Automatic Jitter
                 ggplot(MC_EC, aes(x=Age, y=EC_TimeBoth)) + geom_point(aes(shape= EC_TimeGrp, color= EC_TimeGrp), position="jitter", size=2) + labs(x="Age (years)", y="Maximum Counting") + scale_shape_manual(name="Timing of Language\nExposure", labels=c("Early", "Later"), values=c(17, 15)) +scale_color_manual(name="Timing of Language\nExposure", labels=c("Early", "Later"), values=c("forestgreen","tan2")) + theme(text = element_text(size=16)) + coord_cartesian(xlim = c(3, 7), ylim= c(0,16))
     
+#Violin
+ggplot(MC_EC, aes(x=Timing, y=Age)) + geom_violin() + labs(x="Language Timing")
+
+#Boxplots
+          #ECw/Objects
+          ggplot(data=MC_EC, aes(x=LanguageGroup, y=MC_EC$Highest_Count_wobj, fill=LanguageGroup)) + geom_boxplot() + labs (x= "Language Group", y= "Highest Count with Objects") + theme(legend.position="none")
+          #ECw/oObjects
+          ggplot(data=MC_EC, aes(x=LanguageGroup, y=MC_EC$Highest_Count_noobj, fill=LanguageGroup)) + geom_boxplot() + labs (x= "Language Group", y= "Highest Count without Objects") + theme(legend.position="none")
+          #ECMaxCount
+          ggplot(data=MC_EC, aes(x=LanguageGroup, y=MC_EC$MAX_COUNT_SEQ, fill=LanguageGroup)) + geom_boxplot() + labs (x= "Language Group", y= "Maximum Count") + theme(legend.position="none")
+                    
+                    
+                    
+                    
+                    
