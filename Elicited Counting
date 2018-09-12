@@ -52,7 +52,7 @@ str(MC_EC) #Age & SES - num, Give N - int (but then later 'factorize' them)
       LanguageGroup <- as.factor(factor(as.character(MC_EC$Group_4cat), levels = c("English Early", "ASL Early", "English Later", "ASL Later"), exclude=NA))
 
       #Add all to Dataframe
-      MC_EC <- cbind(MC_EC, Language_Modality, Language_Timing, LanguageGroup, EC_conserv_fac, EC_sm_fac, EC_lrg_fac, EC_all_fac) 
+      MC_EC <- cbind(MC_EC, Language_Modality, Language_Timing, LanguageGroup, EC_max_fac,EC_w_fac, EC_wo_fac) 
       View(MC_EC)
 
 #7. Create Subsets 
