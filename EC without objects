@@ -1,0 +1,81 @@
+#1. Install and Load Libraries 
+
+install.packages("tidyverse") # includes ggplot2
+install.packages("ggplot2") # for general plots
+install.packages("beeswarm") # for beeswarm plots
+install.packages("colorspace") # for fixing colors in beeswarm plots
+install.packages("stargazer") # for pretty regression output tables
+install.packages("MASS") # for polr package
+install.packages("generalhoslem") # for testing model fit (lipsitz test and two others)
+install.packages("qwraps2") # for summary_table use
+install.packages("quantreg") # testing quantile plots (geom_quantile) and quantile regressions
+install.packages ("olsrr") #for testing normality
+
+library(tidyverse) 
+library(ggplot2) 
+library(beeswarm)
+library(colorspace) 
+library(stargazer) 
+library(MASS) 
+library(generalhoslem) 
+library(qwraps2) 
+library(quantreg) 
+library(olsrr)
+
+#2. Check and Set Working Directory
+setwd("/Users/labuser/Documents/R")
+getwd() #to see where is set to
+
+#3. Import Data [[make sure is most recent version and saved as csv]]
+MC <- read.csv("MASTER_Coding_180905_KW.csv", na.strings = "N/A")
+View(MC)
+# <- saves MC as an object, read.csv() imports it 
+
+#4. Subset overall data with particular parameters (i.e. including P, coded, test using, age range)
+MC_EC <- subset(MC, MC$EC_Coded. == "Yes" & MC$MAX_COUNT_SEQ!="" & MC$Age<7 & MC$Including_in_study == "Yes")
+View(MC_EC) #will display the data
+
+#5. Check the structure of the dataframe and look over MC_GiveN for any errors 
+typeof(MC_EC) #checks what format it is in [[****currently is a list, would like it to be a dataframe****]]
+str(MC_EC) #Age & SES - num, Give N - int (but then later 'factorize' them) 
+
+#6. Create & Add Factorized EC, Modality, Timing, and Language Group Variables
+      #Create factorized EC
+      EC_max_fac <- as.factor(MC_EC$MAX_COUNT_SEQ)
+      EC_w_fac <- as.factor(MC_EC$Highest_Count_wobj)
+      EC_wo_fac <- as.factor(MC_EC$Highest_Count_noobj)
+
+      #Create Modality, Timing, and Language Variables
+      Language_Timing <- as.factor(factor(as.character(MC_EC$Group_2cat), levels = c ("Early", "Later"), exclude = ""))
+      Language_Modality <- ifelse(MC_EC$Group_4cat == "English Early" | MC_EC$Group_4cat== "English Later", c("English"), c("ASL"))
+      #if else statement, beginning is looking for wherever it has English Early or English Later, it will code it as English, and then for everything else will code as ASL, using c() to code as a factor and not character
+      LanguageGroup <- as.factor(factor(as.character(MC_EC$Group_4cat), levels = c("English Early", "ASL Early", "English Later", "ASL Later"), exclude=NA))
+
+      #Add all to Dataframe
+      MC_EC <- cbind(MC_EC, Language_Modality, Language_Timing, LanguageGroup, EC_conserv_fac, EC_sm_fac, EC_lrg_fac, EC_all_fac) 
+      View(MC_EC)
+
+#7. Create Subsets 
+EE <- subset(MC_EC, MC_EC$Group_4cat == "English Early")
+AE <- subset(MC_EC, MC_EC$Group_4cat == "ASL Early")
+EL <- subset(MC_EC, MC_EC$Group_4cat == "English Later")
+AL <- subset(MC_EC, MC_EC$Group_4cat == "ASL Later")
+
+
+#8. Create Shortcut Names of Variables
+Age <- MC_EC$Age
+SES <- MC_EC$SES_range_8_to_66
+Sex <- MC_EC$Sex
+LngGrps <- MC_EC$LanguageGroup
+Modality <- MC_EC$Language_Modality
+Timing <- MC_EC$Language_Timing
+AllGrps <- MC_EC$Group_4cat
+EC_max <- MC_EC$MAX_COUNT_SEQ
+EC_w <- MC_EC$Highest_Count_wobj
+EC_wo <- MC_EC$Highest_Count_noobj
+
+
+GN_con_f <- GiveN_conserv_fac
+GN_sm_f <- GiveN_sm_fac
+GN_lrg_f <- GiveN_lrg_fac
+GN_all_f <- GiveN_all_fac
