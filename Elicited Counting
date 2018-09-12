@@ -73,9 +73,6 @@ AllGrps <- MC_EC$Group_4cat
 EC_max <- MC_EC$MAX_COUNT_SEQ
 EC_w <- MC_EC$Highest_Count_wobj
 EC_wo <- MC_EC$Highest_Count_noobj
-
-
-GN_con_f <- GiveN_conserv_fac
-GN_sm_f <- GiveN_sm_fac
-GN_lrg_f <- GiveN_lrg_fac
-GN_all_f <- GiveN_all_fac
+GN_max_f <- EC_max_fac
+GN_w_f <- EC_w_fac
+GN_wo_f <- EC_wo_fac
