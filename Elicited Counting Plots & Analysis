@@ -35,7 +35,7 @@
                 ggplot(MC_EC, aes(x=Age, y=EC_TimeBoth)) + geom_point(aes(shape= EC_TimeGrp, color= EC_TimeGrp), position="jitter", size=2) + labs(x="Age (years)", y="Maximum Counting") + scale_shape_manual(name="Timing of Language\nExposure", labels=c("Early", "Later"), values=c(17, 15)) +scale_color_manual(name="Timing of Language\nExposure", labels=c("Early", "Later"), values=c("forestgreen","tan2")) + theme(text = element_text(size=16)) + coord_cartesian(xlim = c(3, 7), ylim= c(0,16))
     
 #Violin
-ggplot(MC_EC, aes(x=Timing, y=Age)) + geom_violin() + labs(x="Language Timing")
+ggplot(MC_EC, aes(x=Timing, y=Age, fill=Timing)) + geom_violin() + labs(x="Timing of Language Exposure", y= "Age (years)") + theme(legend.position="none") 
 
 #Boxplots
           #ECw/Objects
