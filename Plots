@@ -154,9 +154,7 @@
                 ggplot(data=MC_GiveN, aes(x=LanguageGroup, y=GN_con, fill=LanguageGroup)) + geom_boxplot() + labs (x= "Language Group", y= "Give-N Highest Quantity Correct") + theme(legend.position="none")
                         #Adding Number of Observations to the Plot
                         give.n <- function(x){return(c(y = median(x)*1.05, label = length(x))) }
-                        ggplot(data=MC_GiveN, aes(x=LanguageGroup, y=GN_con, fill=LanguageGroup)) + geom_boxplot() + labs (x= "Language Group", y= "Give-N Highest Quantity Correct") + theme(legend.position="none") + stat_summary(fun.data = give.n, geom = "text", fun.y = median)
-                #ECw/Objects
-                ggplot(data=MC_GiveN, aes(x=LanguageGroup, y=MC_GiveN$Highest_Count_wobj, fill=LanguageGroup)) + geom_boxplot() + labs (x= "Language Group", y= "Elicited Counting Highest Count with Objects") + theme(legend.position="none")
+                        ggplot(data=MC_GiveN, aes(x=LanguageGroup, y=GN_con, fill=LanguageGroup)) + geom_boxplot() + labs (x= "Language Group", y= "Give-N Highest Quantity Correct") + theme(legend.position="none") + stat_summary(fun.data = give.n, geom = "text", fun.y = median))
                 #SES
                 ggplot(data=MC_GiveN, aes(x=LanguageGroup, y=SES, fill=LanguageGroup)) + geom_boxplot() + labs (x= "Language Group", y= "SES") + theme(legend.position="none")
       
