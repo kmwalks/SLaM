@@ -12,7 +12,30 @@
       #Missing EC with objects: ECw_NA <- subset(IncStudy, IncStudy$Highest_Count_wobj == "NA" | is.na(IncStudy$Highest_Count_wobj | IncStudy$Highest_Count_wobj == "No"))
       #Missing EC without objects: ECwo_NA <- subset(IncStudy, IncStudy$Highest_Count_noobj == "NA" | is.na(IncStudy$Highest_Count_noobj | IncStudy$Highest_Count_noobj == "No"))
 
-  
+#Table for Overall Including in Study
+IncStudy <- subset(MC, MC$Including_in_study == "Yes")
+View(IncStudy)
+AE_Inc <- subset(IncStudy, IncStudy$Group_4cat == "ASL Early")
+EL_Inc <- subset(IncStudy, IncStudy$Group_4cat == "English Later")
+AL_Inc <- subset(IncStudy, IncStudy$Group_4cat == "ASL Later")
+EE_Inc <- subset(IncStudy, IncStudy$Group_4cat == "English Early")
+#Check for N/A in age & SES (note how many!)
+mean(AE_Inc$Age, na.rm = TRUE)
+sd(AE_Inc$Age, na.rm = TRUE) 
+mean(AE_Inc$SES_range_8_to_66, na.rm = TRUE)
+sd(AE_Inc$SES_range_8_to_66, na.rm = TRUE)
+
+#Table for GiveN
+MC_GiveN <- subset(MC, MC$GiveN_Coded. == "Yes" & MC$EC_Coded. == "Yes" & MC$GiveN_ALL_ceiling_conservative !="" & MC$Age<7 & MC$Including_in_study == "Yes")
+
+EE <- subset(MC_GiveN, MC_GiveN$Group_4cat == "English Early") #etc! 
+
+#Check for N/A in age & SES (note how many!)
+mean(AE$Age, na.rm = TRUE)
+sd(AE$Age, na.rm = TRUE) 
+mean(AE$SES_range_8_to_66, na.rm = TRUE)
+sd(AE$SES_range_8_to_66, na.rm = TRUE)
+
 #General Linear Model/Regression
   #Note: Use LanguageGroup so all compared to English Early group
   #STEPS
