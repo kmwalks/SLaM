@@ -27,7 +27,7 @@ setwd("/Users/labuser/Documents/R")
 getwd() #to see where is set to
 
 #3. Import Data [[make sure is most recent version and saved as csv]]
-MC <- read.csv("MASTER_Coding_180905_KW.csv", na.strings = "N/A")
+MC <- read.csv("MASTER_Coding_180921_CS.csv", na.strings = "N/A")
 View(MC)
 # <- saves MC as an object, read.csv() imports it 
 
