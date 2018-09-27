@@ -11,7 +11,7 @@ install.packages("qwraps2") # for summary_table use
 install.packages("quantreg") # testing quantile plots (geom_quantile) and quantile regressions
 install.packages ("olsrr") # for testing normality
 install.packages("censReg") # for censored regression
-install.packages("truncreg") # for trunkated regression
+install.packages("truncreg") # for truncated regression
 
 library(tidyverse) 
 library(ggplot2) 
