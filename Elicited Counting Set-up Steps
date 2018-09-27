@@ -9,7 +9,9 @@ install.packages("MASS") # for polr package
 install.packages("generalhoslem") # for testing model fit (lipsitz test and two others)
 install.packages("qwraps2") # for summary_table use
 install.packages("quantreg") # testing quantile plots (geom_quantile) and quantile regressions
-install.packages ("olsrr") #for testing normality
+install.packages ("olsrr") # for testing normality
+install.packages("censReg") # for sensored regression
+install.packages("truncreg") # for trunkated regression
 
 library(tidyverse) 
 library(ggplot2) 
@@ -21,6 +23,8 @@ library(generalhoslem)
 library(qwraps2) 
 library(quantreg) 
 library(olsrr)
+library(censReg)
+library(truncreg)
 
 #2. Check and Set Working Directory
 setwd("/Users/labuser/Documents/R")
