@@ -23,11 +23,15 @@ library(quantreg)
 library(olsrr)
 
 #2. Check and Set Working Directory
-setwd("/Users/labuser/Documents/R")
-getwd() #to see where is set to
+      #LAB
+      setwd("/Users/labuser/Documents/R")
+      getwd() #to see where is set to
+      #LAPTOP
+      setwd("Macintosh HD/⁨Users/kristinwalker/⁨Desktop⁩")
+      getwd()
 
 #3. Import Data [[make sure is most recent version and saved as csv]]
-MC <- read.csv("MASTER_Coding_180921_CS.csv", na.strings = "N/A")
+MC <- read.csv("MASTER_Coding_MS_190627.csv", na.strings = "N/A")
 View(MC)
 # <- saves MC as an object, read.csv() imports it 
 
