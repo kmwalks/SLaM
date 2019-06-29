@@ -27,7 +27,7 @@ library(olsrr)
       setwd("/Users/labuser/Documents/R")
       getwd() #to see where is set to
       #LAPTOP
-      setwd("Macintosh HD/⁨Users/kristinwalker/⁨Desktop⁩")
+      setwd("~/Desktop")
       getwd()
 
 #3. Import Data [[make sure is most recent version and saved as csv]]
@@ -36,8 +36,8 @@ View(MC)
 # <- saves MC as an object, read.csv() imports it 
 
 #4. Subset overall data with particular parameters (i.e. including P, coded, test using, age range)
-MC_GiveN <- subset(MC, MC$GiveN_Coded. == "Yes" & MC$EC_Coded. == "Yes" & MC$GiveN_ALL_ceiling_conservative !="" & MC$Age<7 & MC$Including_in_study == "Yes")
-View(MC_GiveN) #will display the data
+MC_GiveN <- subset(MC, MC$Give.NCoded. == "Yes" & MC$EC.Coded. == "Yes" & MC$GiveN_ALL_ceiling_conservative !="" & MC$Age<7 & MC$Including_in_study == "Yes")
+View(MC_GiveN)
 
 #5. Check the structure of the dataframe and look over MC_GiveN for any errors 
 typeof(MC_GiveN) #checks what format it is in [[****currently is a list, would like it to be a dataframe****]]
