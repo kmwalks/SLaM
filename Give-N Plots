@@ -180,5 +180,9 @@
         #Barplot (use only for simple counts)
         ggplot(data=MC_GiveN, aes(x=Sex, y=..count.., fill = Sex)) + geom_bar() + labs (x="Sex", y = "Count") + scale_fill_manual(name = "Sex", values=c("darkolivegreen", "goldenrod1")) 
                 
-                
+         #Density 2 Plot
+        ggplot(MC_GiveN, aes(x=Age, y=GN_lrg) ) + stat_density_2d(aes(fill = ..level..), geom = "polygon") + labs(x="Age (years)", y="Give-N Large")
+        #Frequency Dot Plot
+        ggplot(MC_GiveN, aes(x = GN_lrg)) + geom_dotplot(binwidth = .08,fill = "white", stroke = 2) + scale_y_continuous(NULL, breaks = NULL) + geom_text(stat='count', aes(label=..count..), vjust=-.5) + labs(x="Give-N Large") + scale_x_continuous(breaks=c(7,9,10,12,16))
+      
                 
