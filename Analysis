@@ -102,3 +102,17 @@ sd(AE$SES_range_8_to_66, na.rm = TRUE)
             
             #Test residual normality
             ols_plot_resid_qq(max_cnt)
+            
+            
+    #ORDINAL REGRESSION MODELS
+            #Instructions for this from: https://stats.idre.ucla.edu/r/dae/ordinal-logistic-regression/
+            j <- polr(formula = GN_lrg_f ~ KnowerLevel, data = AllGrps, Hess = TRUE)
+            summary(j)
+            jtable <- coef(summary(j))
+            p <- pnorm(abs(ctable[, "t value"]), lower.tail = FALSE) * 2
+            (ctable <- cbind(ctable, "p value" = p))
+            stargazer(jtable, out= "GN_lrg_KnowerLevel.htm")
+
+            #USE THIS CODE BELOW! 
+            stargazer(j, title = "Give-N Large Knower Level Ordinal Logistic Regression Results", align=TRUE, dep.var.labels=c("Give-N Large"), covariate.labels=c("Knower Level"), single.row=TRUE, keep.stat=c("n", "aic"), report=('vc*stp'), out= "GNLRGKNOWERLEVEL.htm")
+
