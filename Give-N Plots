@@ -158,7 +158,15 @@
                 #SES
                 ggplot(data=MC_GiveN, aes(x=LanguageGroup, y=SES, fill=LanguageGroup)) + geom_boxplot() + labs (x= "Language Group", y= "SES") + theme(legend.position="none")
       
-      
+        #Boxplots by Give-N Cardinal Principal Knower Level
+                KnowerLevel <- ifelse(MC_GiveN$GiveN_ALL_ceiling_conservative>5, c("Knower"), c("Subset"))
+                MC_GiveN <- cbind(MC_GiveN, KnowerLevel)
+                View(MC_GiveN)
+                #ALL CONSERVATIVE
+                ggplot(data=MC_GiveN, aes(x=KnowerLevel, y=GN_con, fill=KnowerLevel)) + geom_boxplot() + labs (x= "Cardinal Principal Knower Status", y= "Give-N Highest Quantity Correct") + theme(legend.position="none") + stat_summary(fun.data = give.n, geom = "text", fun.y = median)
+                #LARGE ONLY
+                ggplot(data=MC_GiveN, aes(x=KnowerLevel, y=GN_lrg, fill=KnowerLevel)) + geom_boxplot() + labs (x= "Cardinal Principal Knower Status", y= "Give-N Large") + theme(legend.position="none") + stat_summary(fun.data = give.n, geom = "text", fun.y = median)
+
       
         #HeatMap
                 GiveNHeat <- ggplot(MC_GiveN, aes(x = Age, y = GiveN_conserv)) + xlim(3,7) + ylim(0,16) + labs(x="Age (years)", y ="Give-N Highest Quantity Correct")
