@@ -185,4 +185,7 @@
         #Frequency Dot Plot
         ggplot(MC_GiveN, aes(x = GN_lrg)) + geom_dotplot(binwidth = .08,fill = "white", stroke = 2) + scale_y_continuous(NULL, breaks = NULL) + geom_text(stat='count', aes(label=..count..), vjust=-.5) + labs(x="Give-N Large") + scale_x_continuous(breaks=c(7,9,10,12,16))
       
+      #Colored Density Plot by Language Groups
+        ggplot(MC_GiveN, aes(x=GN_lrg, color=LngGrps, fill=LngGrps)) + geom_histogram(aes(y=..density..), alpha=0.5, position="identity")+geom_density(alpha=.2) + labs(x="Give-N Large") + scale_x_continuous(breaks=c(7,16,7,9,10,12,16))
+
                 
