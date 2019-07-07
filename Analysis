@@ -37,6 +37,51 @@ sd(AE$Age, na.rm = TRUE)
 mean(AE$SES_range_8_to_66, na.rm = TRUE)
 sd(AE$SES_range_8_to_66, na.rm = TRUE)
 
+#Checking Number of Participants Per Experimental Group
+      #Project 1
+      
+      setwd("~/Desktop")
+      P1_BGQ <- read.csv("Background_Questionnaire_MAIN_KW_190624.csv", na.strings = "N/A")
+      View(P1_BGQ)
+      library(dplyr)
+      P1_BGQ_Short <- select(P1_BGQ, SUBJ.ID, Group_2cat, Child_Language, Early_Later, Group_4cat, Tested, Including.in.Study, Testing.Location, Program.Language.Use, Age_Rounded, Age.of.Exposure..mo., Child.Hearing.Status, M.F, Child.s.Educational.Experiences.and.Environment, Hearing.Status.Caregiver.1, Hearing.Status.Caregiver.2, What.kind.of.hearing.technology.does.your.child.typically.use., Please.estimate.which.language.is.MOST.used.in.various.settings., Race_3cat, Ethnicity_3cat, Educ_P1.P2_Mean)
+      View(P1_BGQ_Short)
+      AE_1 <- subset(P1_BGQ_Short, P1_BGQ_Short$Group_4cat == "ASL Early" & P1_BGQ_Short$Including.in.Study == "Yes") 
+      AL_1 <- subset(P1_BGQ_Short, P1_BGQ_Short$Group_4cat == "ASL Later" & P1_BGQ_Short$Including.in.Study == "Yes")
+      EL_1 <- subset(P1_BGQ_Short, P1_BGQ_Short$Group_4cat == "English Later" & P1_BGQ_Short$Including.in.Study == "Yes")
+      EE_1 <- subset(P1_BGQ_Short, P1_BGQ_Short$Group_4cat == "English Early" & P1_BGQ_Short$Including.in.Study == "Yes")
+      sum(AL_1$Group_4cat == 'ASL Later', na.rm=TRUE) 
+      sum(EL_1$Group_4cat == 'English Later', na.rm=TRUE) 
+      sum(EE_1$Group_4cat == 'English Early', na.rm=TRUE) 
+      sum(AE_1$Group_4cat == 'ASL Early', na.rm=TRUE) 
+
+      #Project 2
+      setwd("~/Desktop")
+      P2_BGQ <- read.csv("SLaMProject2BackgroundQuestionnaire_KW_190701.csv", na.strings = "N/A")
+      View(P2_BGQ)
+      library(dplyr)
+      P2_BGQ_Short <- select(P2_BGQ, SUBJ.ID, Group_2cat, Child_Language, Early_Later, Group_4cat, Tested, Including.in.Study, P1.Tested., Grade., Testing.Location, Program.Language.Use, Age_Rounded, Age.of.Exposure..mo., Child.Hearing.Status, M.F, Child.s.Educational.Experiences.and.Environment, Hearing.Status.Caregiver.1, Hearing.Status.Caregiver.2, What.kind.of.hearing.technology.does.your.child.typically.use., Please.estimate.which.language.is.MOST.used.in.various.settings., Race_3cat, Ethnicity_3cat, Educ_P1.P2_Mean)
+      View(P2_BGQ_Short)
+      AE_2 <- subset(P2_BGQ_Short, P2_BGQ_Short$Group_4cat == "ASL Early" & P2_BGQ_Short$Including.in.Study == "Yes") 
+      AL_2 <- subset(P2_BGQ_Short, P2_BGQ_Short$Group_4cat == "ASL Later" & P2_BGQ_Short$Including.in.Study == "Yes")
+      EE_2 <- subset(P2_BGQ_Short, P2_BGQ_Short$Group_4cat == "English Early" & P2_BGQ_Short$Including.in.Study == "Yes")
+      EL_2 <- subset(P2_BGQ_Short, P2_BGQ_Short$Group_4cat == "English Later" & P2_BGQ_Short$Including.in.Study == "Yes")
+      sum(AL_2$Group_4cat == 'ASL Later', na.rm=TRUE) 
+      sum(EL_2$Group_4cat == 'English Later', na.rm=TRUE) 
+      sum(EE_2$Group_4cat == 'English Early', na.rm=TRUE) 
+      sum(AE_2$Group_4cat == 'ASL Early', na.rm=TRUE) 
+
+      #Project 1 and 2
+      AE_12 <- subset(P2_BGQ_Short, P2_BGQ_Short$Group_4cat == "ASL Early" & P2_BGQ_Short$Including.in.Study == "Yes" & P2_BGQ_Short$P1.Tested. == "Yes") 
+      AL_12 <- subset(P2_BGQ_Short, P2_BGQ_Short$Group_4cat == "ASL Later" & P2_BGQ_Short$Including.in.Study == "Yes" & P2_BGQ_Short$P1.Tested. == "Yes") 
+      EE_12 <- subset(P2_BGQ_Short, P2_BGQ_Short$Group_4cat == "English Early" & P2_BGQ_Short$Including.in.Study == "Yes" & P2_BGQ_Short$P1.Tested. == "Yes") 
+      EL_12 <- subset(P2_BGQ_Short, P2_BGQ_Short$Group_4cat == "English Later" & P2_BGQ_Short$Including.in.Study == "Yes" & P2_BGQ_Short$P1.Tested. == "Yes") 
+      sum(AL_12$Group_4cat == 'ASL Later', na.rm=TRUE) 
+      sum(EL_12$Group_4cat == 'English Later', na.rm=TRUE) 
+      sum(EE_12$Group_4cat == 'English Early', na.rm=TRUE) 
+      sum(AE_12$Group_4cat == 'ASL Early', na.rm=TRUE) 
+
+
 #General Linear Model/Regression
   #Note: Use LanguageGroup so all compared to English Early group
   #STEPS
