@@ -33,10 +33,10 @@ library(olsrr)
       
       
 #3. Import Data [[make sure is most recent version and saved as csv]]
-      Map <- read.csv("Mapping_Coding_KW_100709.csv", na.strings = "N/A")
+      Map <- read.csv("Mapping_Coding_KW_190709.csv", na.strings = "N/A")
       View(Map)
       # <- saves MC as an object, read.csv() imports it 
       
 #4. Subset overall data with particular parameters (i.e. including P, coded, test using, age range)
-      Map_2 <- subset(Map, Map$Give.NCoded. == "Yes" & MC$EC.Coded. == "Yes" & MC$GiveN_ALL_ceiling_conservative !="" & MC$Age<7 & MC$Including_in_study == "Yes")
-      View(Map_2)
+      Map_EE <- subset(Map, Map$Coded. == "Yes"  & Map$Group_4cat == "English Early" & Map$Age_Rounded<10 & Map$Including.in.Study == "Yes")
+      View(Map_EE)
