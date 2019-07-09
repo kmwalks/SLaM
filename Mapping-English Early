@@ -40,3 +40,7 @@ library(olsrr)
 #4. Subset overall data with particular parameters (i.e. including P, coded, test using, age range)
       Map_EE <- subset(Map, Map$Coded. == "Yes"  & Map$Group_4cat == "English Early" & Map$Age_Rounded<10 & Map$Including.in.Study == "Yes")
       View(Map_EE)
+
+#Other
+      #Analyze Participant Pool
+      sum(Map_EE$Group_4cat == 'English Early', na.rm=TRUE)
