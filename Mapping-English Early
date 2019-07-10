@@ -48,7 +48,7 @@ library(olsrr)
 #Plots
       #Scatterplot Sum Correct Total x Age 
       EarlyTiming <- ggplot(Map_EE, aes(x=Map_EE$Age_Rounded, y=Map_EE$SumCorrectTotal_All)) + geom_point(aes(shape=Map_EE$Group_4cat, color=Map_EE$Group_4cat))+ labs(x = "Age (years)", y = "Sum Correct Total") + theme(legend.position="none") 
-      
+      EarlyTiming
       
       #Violin/Box Plot SES
       map.n <- function(x){return(c(y = median(x)*1.05, label = length(x))) }
