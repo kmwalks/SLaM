@@ -54,3 +54,7 @@ library(olsrr)
       #Violin Age
       ggplot(Map_EE, aes(x=Map_EE$Group_4cat, y=Map_EE$Age_Rounded, fill=Map_EE$Group_4cat)) + geom_violin() + labs(x="Timing of Language Exposure", y= "Age (years)") + theme(legend.position="none") 
       
+      #Violin Age x Sex
+      map.n <- function(x){return(c(y = median(x)*1.05, label = length(x))) }
+      mean.n <- function(x){return(c(y= median(x)*0.97, label = round(mean(x), 2)))}
+      ggplot(Map_EE, aes(x=Map_EE$M.F, y=Map_EE$Age_Rounded, fill=Map_EE$Group_4cat)) + geom_violin() + labs(x="Timing of Language Exposure", y= "Age (years)") + theme(legend.position="none") + stat_summary(fun.data = map.n, geom = "text", fun.y = median) + stat_summary(fun.data = mean.n, geom= "text", fun.y=mean, color= "gainsboro") + theme(legend.position="none") 
