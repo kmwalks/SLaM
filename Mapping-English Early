@@ -44,3 +44,9 @@ library(olsrr)
 #Other
       #Analyze Participant Pool
       sum(Map_EE$Group_4cat == 'English Early', na.rm=TRUE)
+      
+#Plots
+      #Violin/Box Plot
+      map.n <- function(x){return(c(y = median(x)*1.05, label = length(x))) }
+      mean.n <- function(x){return(c(y= median(x)*0.97, label = round(mean(x), 2)))}
+      ggplot(Map_EE, aes(x = Map_EE$Group_4cat, y = Map_EE$SES_range_8_to_66, fill = Map_EE$Group_4cat)) + geom_violin() + geom_boxplot(width = 0.2) + labs (x= "Language Group", y = "SES") + stat_summary(fun.data = map.n, geom = "text", fun.y = median) + stat_summary(fun.data = mean.n, geom= "text", fun.y=mean, color= "gainsboro") + theme(legend.position="none") 
