@@ -291,7 +291,9 @@ sd(AE$SES_range_8_to_66, na.rm = TRUE)
       sum(AE_1$Group_4cat == 'ASL Early', na.rm=TRUE) 
 
       #Project 2
-      setwd("~/Desktop")
+      #Laptop setwd("~/Desktop")
+      #Lab setwd("/Users/labuser/Documents/R")
+      
       P2_BGQ <- read.csv("SLaMProject2BackgroundQuestionnaire_KW_190701.csv", na.strings = "N/A")
       View(P2_BGQ)
       library(dplyr)
