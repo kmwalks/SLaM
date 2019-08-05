@@ -14,6 +14,7 @@ install.packages("qwraps2") # for summary_table use
 install.packages("quantreg") # testing quantile plots (geom_quantile) and quantile regressions
 install.packages("sure") # package for calculating residuals for ordinal logistic regression (https://journal.r-project.org/archive/2018/RJ-2018-004/RJ-2018-004.pdf)
 install.packages("mediation") # package for testing mediation effects
+install.packages("gridExtra")
 
 
 library(tidyverse) 
@@ -27,6 +28,7 @@ library(qwraps2)
 library(quantreg) 
 library(sure) 
 library(mediation) 
+library(gridExtra)
 
 
 setwd("/Users/labuser/Documents/R")
