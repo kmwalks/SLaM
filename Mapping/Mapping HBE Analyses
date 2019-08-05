@@ -1,0 +1,34 @@
+#Mapping Analyses, following Hurst Analyses
+
+
+##If any of the following not already imported need import.packages("[packagename]")
+library(tidyverse) # includes ggplot2??
+library(ggplot2) # for general plots
+library(beeswarm) # for beeswarm plots
+library(colorspace) # for fixing colors in plots
+library(stargazer) # for pretty regression output tables
+library(MASS) # for polr package
+library(generalhoslem) # for testing model fit (lipsitz test and two others)
+library(qwraps2) # for summary_table use
+library(quantreg) # testing quantile plots (geom_quantile) and quantile regressions
+library(sure) # package for calculating residuals for ordinal logistic regression (https://journal.r-project.org/archive/2018/RJ-2018-004/RJ-2018-004.pdf)
+library(mediation) # package for testing mediation effects
+
+
+setwd("/Users/labuser/Documents/R")
+getwd()
+ 
+Mapping <- read.csv("Mapping_Coding_CH_190411.csv", na.strings = "N/A")
+ 
+typeof(Mapping) # when importing using read.csv, resulting obj type is a list (data frame)
+View(Mapping)
+
+####HEARING KIDS ONLY####
+
+Map_HBE <- subset(Mapping, Mapping$Including_in_study=='Yes' & Mapping$Group_2cat == 'Hearing') 
+
+#Q1: What does mapping performance look like with this age range (5-9)?
+  
+  #Proportion Correct for each Mapping Type (all HBE kids)
+  qn <- ggplot(Map_HBE, aes(x=Map_HBE$Age, y=Map_HBE$AvgCorrect_Quantity.Numeral)) + geom_point() + geom_smooth(method="loess", se = FALSE) + labs(x="Age (Years)", y="Quantity-Numeral") + theme(text = element_text(size=11)) + coord_cartesian(xlim = c(5, 10), ylim= c(0.4,1)) + scale_y_continuous(breaks=c(0.5, 0.6, 0.7, 0.8, 0.9, 1)) + scale_x_continuous(breaks=c(5, 6, 7, 8, 9))
+  nq <- ggplot(Map_HBE, aes(x=Map_HBE$Age, y=Map_HBE$AvgCorrect_Numeral.Quantity)) + geom_point() + geom_smooth(method="loess", se = FALSE) + labs(x="Age (Years)", y="Numeral-Quantity") + theme(text = element_text(size=11)) + coord_cartesian(xlim = c(5, 10), ylim= c(0.4,1)) + scale_y_continuous(breaks=c(0.5, 0.6, 0.7, 0.8, 0.9, 1)) + scale_x_continuous(breaks=c(5, 6, 7, 8, 9))
