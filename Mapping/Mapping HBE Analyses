@@ -18,7 +18,7 @@ library(mediation) # package for testing mediation effects
 setwd("/Users/labuser/Documents/R")
 getwd()
  
-Mapping <- read.csv("Mapping_Coding_CH_190411.csv", na.strings = "N/A")
+Mapping <- read.csv("Mapping_Coding_KW_190709.csv", na.strings = "N/A")
  
 typeof(Mapping) # when importing using read.csv, resulting obj type is a list (data frame)
 View(Mapping)
