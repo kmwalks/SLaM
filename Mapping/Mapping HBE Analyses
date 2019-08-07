@@ -54,8 +54,8 @@ str(Map_HBE)
 
 
 # COMPARE each type to chance - Hurst et al used one-sample Wilcoxon Signed Rank tests (use median and assume roughly normal distribution around MEDIAN)
-ggplot(Map_HBE, aes(y=Map_sub$AvgCorrect_Quantity.Numeral)) + geom_boxplot()
-ggplot(Map_HBE, aes(y=Map_sub$AvgCorrect_Numeral.Quantity)) + geom_boxplot()
+ggplot(Map_HBE, aes(y=Map_HBE$AvgCorrect_Quantity.Numeral)) + geom_boxplot()
+ggplot(Map_HBE, aes(y=Map_HBE$AvgCorrect_Numeral.Quantity)) + geom_boxplot()
 
 wilcox.test(Map_HBE$AvgCorrect_Quantity.Numeral, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) 
 
