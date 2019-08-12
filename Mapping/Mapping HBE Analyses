@@ -87,23 +87,27 @@ MapMeans <- c((MapAvgCorr[1]/9), (MapAvgCorr[2]/8), (MapAvgCorr[3]/9), (MapAvgCo
 MapMeans
 
 
-## WANT TO TRY LOOKING AT DATA FOR 5 YO vs 6YOs and up
+## 5 YO vs 6YOs and up ##
 
 #create a column for age group
 Map_HBE$AgeGrp <- ifelse(Map_HBE$Age_Rounded < 6, "5-year-olds", "6 and up")
 
+Map5 <- subset(Map_HBE, Map_HBE$AgeGrp =="5-year-olds")
+Map6up <- subset(Map_HBE, Map_HBE$AgeGrp =="6 and up")
 
-# There has to be an easier way to get summary info for 5yos vs 6andups but for now I split into two data frames
-Map5 <- subset(Map_sub, Map_sub$AgeGrp =="5-year-olds")
-Map6up <- subset(Map_sub, Map_sub$AgeGrp =="6 and up")
-
-
+#RAW NUMBER correct & PROPORTION correct
 Map5AvgCorr <- colMeans(subset(Map5, select = c(SumTotal_QuantityNumeral, SumTotal_NumeralQuantity, SumTotal_QuantityWord, SumTotal_WordQuantity, SumTotal_NumeralWord, SumTotal_WordNumeral)), na.rm = TRUE) 
 Map5AvgCorr
 Map5Means <- c((Map5AvgCorr[1]/9), (Map5AvgCorr[2]/8), (Map5AvgCorr[3]/9), (Map5AvgCorr[4]/8), (Map5AvgCorr[5]/9), (Map5AvgCorr[6]/8))
 Map5Means
 
+Map6upAvgCorr <- colMeans(subset(Map6up, select = c(SumTotal_QuantityNumeral, SumTotal_NumeralQuantity, SumTotal_QuantityWord, SumTotal_WordQuantity, SumTotal_NumeralWord, SumTotal_WordNumeral)), na.rm = TRUE) 
+Map6upAvgCorr
+Map6Means <- c((Map6upAvgCorr[1]/9), (Map6upAvgCorr[2]/8), (Map6upAvgCorr[3]/9), (Map6upAvgCorr[4]/8), (Map6upAvgCorr[5]/9), (Map6upAvgCorr[6]/8))
+MapMeans
+
 #ALL SIGNIFICANTLY DIFFERENT FROM CHANCE?
+# 5 YO 
 wilcox.test(Map5$AvgCorrect_Quantity.Numeral, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) 
 wilcox.test(Map5$AvgCorrect_Numeral.Quantity, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) 
 wilcox.test(Map5$SumTotal_QuantityNumeral, Map5$SumTotal_NumeralQuantity, paired=TRUE) # ASYMMETRY for 5yos? 
@@ -119,12 +123,7 @@ wilcox.test(Map5$AvgCorrect_Numeral.Word, mu = .25, alternative = "greater") # i
 wilcox.test(Map5$SumTotal_NumeralWord, Map5$SumTotal_WordNumeral, paired=TRUE) # ASYMMETRY?  Numeral word better than word numeral?
 #MARGINAL (p=.054)
 
-
-
-Map6upAvgCorr <- colMeans(subset(Map6up, select = c(SumTotal_QuantityNumeral, SumTotal_NumeralQuantity, SumTotal_QuantityWord, SumTotal_WordQuantity, SumTotal_NumeralWord, SumTotal_WordNumeral)), na.rm = TRUE) 
-Map6upAvgCorr
-Map6Means <- c((Map6upAvgCorr[1]/9), (Map6upAvgCorr[2]/8), (Map6upAvgCorr[3]/9), (Map6upAvgCorr[4]/8), (Map6upAvgCorr[5]/9), (Map6upAvgCorr[6]/8))
-MapMeans
+# 6 YO & >
 
 wilcox.test(Map6up$AvgCorrect_Quantity.Numeral, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) 
 wilcox.test(Map6up$AvgCorrect_Numeral.Quantity, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) 
