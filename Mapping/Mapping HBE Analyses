@@ -79,7 +79,7 @@ str(Map_HBE)
    
 
 # get average RAW NUMBER correct for each mapping type across all kids 
-MapAvgCorr <- colMeans(subset(Map_sub, select = c(SumTotal_QuantityNumeral, SumTotal_NumeralQuantity, SumTotal_QuantityWord, SumTotal_WordQuantity, SumTotal_NumeralWord, SumTotal_WordNumeral)), na.rm = TRUE)
+MapAvgCorr <- colMeans(subset(Map_HBE, select = c(SumTotal_QuantityNumeral, SumTotal_NumeralQuantity, SumTotal_QuantityWord, SumTotal_WordQuantity, SumTotal_NumeralWord, SumTotal_WordNumeral)), na.rm = TRUE)
 MapAvgCorr
 
 # Mapping types are out of different numbers, so to calculate proportion correct need code below
