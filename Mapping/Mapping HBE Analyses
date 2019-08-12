@@ -75,7 +75,7 @@ str(Map_HBE)
    #Quantity word better than word quantity?
    wilcox.test(Map_HBE$SumTotal_QuantityWord, Map_HBE$SumTotal_WordQuantity, paired=TRUE)
    #Numeral word better than word numeral?
-   wilcox.test(Map_HBE$SumTotal_NumeralWord, Map_sub$SumTotal_WordNumeral, paired=TRUE)
+   wilcox.test(Map_HBE$SumTotal_NumeralWord, Map_HBE$SumTotal_WordNumeral, paired=TRUE)
    
 
 # get average RAW NUMBER correct for each mapping type across all kids 
