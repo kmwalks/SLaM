@@ -69,7 +69,7 @@ str(Map_HBE)
   wilcox.test(Map_HBE$AvgCorrect_Numeral.Word, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) 
 
 
-# ASYMMETRY? 
+# ASYMMETRY?- Wilcoxon signed rank test with continuity correction
    #Quantity numeral better than numeral quantity?
    wilcox.test(Map_HBE$SumTotal_QuantityNumeral, Map_HBE$SumTotal_NumeralQuantity, paired=TRUE)
    #Quantity word better than word quantity?
@@ -90,9 +90,7 @@ MapMeans
 ## WANT TO TRY LOOKING AT DATA FOR 5 YO vs 6YOs and up
 
 #create a column for age group
-Map_sub$AgeGrp <- ifelse(Map_sub$Age < 6, "5-year-olds", "6 and up")
-
-
+Map_HBE$AgeGrp <- ifelse(Map_HBE$Age_Rounded < 6, "5-year-olds", "6 and up")
 
 
 # There has to be an easier way to get summary info for 5yos vs 6andups but for now I split into two data frames
