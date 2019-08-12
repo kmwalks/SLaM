@@ -89,11 +89,6 @@ wilcox.test(Map_sub$AvgCorrect_Numeral.Word, mu = .25, alternative = "greater") 
 wilcox.test(Map_sub$SumTotal_NumeralWord, Map_sub$SumTotal_WordNumeral, paired=TRUE) #WEIRDLY THESE SHOW AN ASYMMETRY ALSO
 
 
-### ALL GRAPHS ON A SINGLE PANEL (may be too small, but I LIKE IT)
-grid.arrange(qn, qw, wn, nq, wq, nw, nrow=2, ncol=3)
-
-
-
 # get average RAW NUMBER correct for each mapping type across all kids 
 MapAvgCorr <- colMeans(subset(Map_sub, select = c(SumTotal_QuantityNumeral, SumTotal_NumeralQuantity, SumTotal_QuantityWord, SumTotal_WordQuantity, SumTotal_NumeralWord, SumTotal_WordNumeral)), na.rm = TRUE)
 MapAvgCorr
