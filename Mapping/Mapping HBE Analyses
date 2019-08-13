@@ -104,7 +104,7 @@ Map5Means
 Map6upAvgCorr <- colMeans(subset(Map6up, select = c(SumTotal_QuantityNumeral, SumTotal_NumeralQuantity, SumTotal_QuantityWord, SumTotal_WordQuantity, SumTotal_NumeralWord, SumTotal_WordNumeral)), na.rm = TRUE) 
 Map6upAvgCorr
 Map6Means <- c((Map6upAvgCorr[1]/9), (Map6upAvgCorr[2]/8), (Map6upAvgCorr[3]/9), (Map6upAvgCorr[4]/8), (Map6upAvgCorr[5]/9), (Map6upAvgCorr[6]/8))
-MapMeans
+Map6Means
 
 #ALL SIGNIFICANTLY DIFFERENT FROM CHANCE?
 # 5 YO 
