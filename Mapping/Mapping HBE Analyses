@@ -158,10 +158,22 @@ wilcox.test(Map6up$SumTotal_NumeralWord, Map6up$SumTotal_WordNumeral, paired=TRU
           #Target 8: Items 7, 17, 25, 28, 40, 48
           #Target 9: Items 4, 13, 20, 33, 42, 45
 
-# AGES 5 #
-Map5_Sm_AvgCorr <- colMeans(subset(Map5, select = c(Item1_Correct.,Item10_Correct.,Item18_Correct.,Item35_Correct., Item44_Correct.,Item2_Correct.,Item19_Correct.,Item27_Correct.,Item36_Correct.,Item6_Correct.,Item15_Correct.,Item26_Correct.,Item29_Correct.,Item41_Correct.,Item47_Correct.)), na.rm = TRUE) 
-wilcox.test(Map5_Sm_AvgCorr, mu = .25, alternative = "greater") #is mean of small quantities correct for ages 5 significantly greater than chance (0.25) 
+     # AGES 5 #
+     Map5_Sm_AvgCorr <- colMeans(subset(Map5, select = c(Item1_Correct.,Item10_Correct.,Item18_Correct.,Item35_Correct., Item44_Correct.,Item2_Correct.,Item19_Correct.,Item27_Correct.,Item36_Correct.,Item6_Correct.,Item15_Correct.,Item26_Correct.,Item29_Correct.,Item41_Correct.,Item47_Correct.)), na.rm = TRUE) 
+     wilcox.test(Map5_Sm_AvgCorr, mu = .25, alternative = "greater") #is mean of small quantities correct for ages 5 significantly greater than chance (0.25) 
 
-# AGES 6 & > #
-Map6up_Sm_AvgCorr <- colMeans(subset(Map5, select = c(Item1_Correct.,Item10_Correct.,Item18_Correct.,Item35_Correct., Item44_Correct.,Item2_Correct.,Item19_Correct.,Item27_Correct.,Item36_Correct.,Item6_Correct.,Item15_Correct.,Item26_Correct.,Item29_Correct.,Item41_Correct.,Item47_Correct.)), na.rm = TRUE) 
-wilcox.test(MMap6up_Sm_AvgCorr, mu = .25, alternative = "greater") #is mean of small quantities correct for ages 6 and > significantly greater than chance (0.25) 
+     Map5_Med_AvgCorr <- colMeans(subset(Map5, select = c(Item5_Correct.,Item11_Correct.,Item21_Correct.,Item32_Correct., Item39_Correct.,Item51_Correct.,Item8_Correct.,Item12_Correct.,Item23_Correct.,Item34_Correct.,Item37_Correct.,Item50_Correct.)), na.rm = TRUE) 
+     wilcox.test(Map5_Med_AvgCorr, mu = .25, alternative = "greater") #is mean of medium quantities correct for ages 5 significantly greater than chance (0.25) 
+
+     Map5_Lrg_AvgCorr <- colMeans(subset(Map5, select = c(Item3_Correct.,Item16_Correct.,Item24_Correct.,Item31_Correct., Item43_Correct.,Item49_Correct.,Item9_Correct.,Item14_Correct.,Item22_Correct.,Item30_Correct.,Item38_Correct.,Item46_Correct., Item46_Correct., Item7_Correct., Item17_Correct., Item25_Correct.,Item28_Correct., Item40_Correct., Item48_Correct.,Item4_Correct.,Item13_Correct.,Item20_Correct.,Item33_Correct.,Item42_Correct.,Item45_Correct.)), na.rm = TRUE) 
+     wilcox.test(Map5_Lrg_AvgCorr, mu = .25, alternative = "greater") #is mean of large quantities correct for ages 5 significantly greater than chance (0.25) 
+
+     # AGES 6 & > #
+     Map6up_Sm_AvgCorr <- colMeans(subset(Map6up, select = c(Item1_Correct.,Item10_Correct.,Item18_Correct.,Item35_Correct., Item44_Correct.,Item2_Correct.,Item19_Correct.,Item27_Correct.,Item36_Correct.,Item6_Correct.,Item15_Correct.,Item26_Correct.,Item29_Correct.,Item41_Correct.,Item47_Correct.)), na.rm = TRUE) 
+     wilcox.test(Map6up_Sm_AvgCorr, mu = .25, alternative = "greater") #is mean of small quantities correct for ages 6 and > significantly greater than chance (0.25) 
+
+     Map6up_Med_AvgCorr <- colMeans(subset(Map6up, select = c(Item5_Correct.,Item11_Correct.,Item21_Correct.,Item32_Correct., Item39_Correct.,Item51_Correct.,Item8_Correct.,Item12_Correct.,Item23_Correct.,Item34_Correct.,Item37_Correct.,Item50_Correct.)), na.rm = TRUE) 
+     wilcox.test(Map6up_Med_AvgCorr, mu = .25, alternative = "greater") #is mean of medium quantities correct for ages 6 and > significantly greater than chance (0.25) 
+     
+     Map6up_Lrg_AvgCorr <- colMeans(subset(Map6up, select = c(Item3_Correct.,Item16_Correct.,Item24_Correct.,Item31_Correct., Item43_Correct.,Item49_Correct.,Item9_Correct.,Item14_Correct.,Item22_Correct.,Item30_Correct.,Item38_Correct.,Item46_Correct., Item46_Correct., Item7_Correct., Item17_Correct., Item25_Correct.,Item28_Correct., Item40_Correct., Item48_Correct.,Item4_Correct.,Item13_Correct.,Item20_Correct.,Item33_Correct.,Item42_Correct.,Item45_Correct.)), na.rm = TRUE) 
+     wilcox.test(Map6up_Lrg_AvgCorr, mu = .25, alternative = "greater") #is mean of large quantities correct for ages 5 significantly greater than chance (0.25) 
