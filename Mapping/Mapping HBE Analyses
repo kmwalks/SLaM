@@ -142,13 +142,24 @@ wilcox.test(Map6up$SumTotal_NumeralWord, Map6up$SumTotal_WordNumeral, paired=TRU
 
 
 
-## SEPARATE INTO SMALL (1-3), MEDIUM (4-5), LARGE (6-9) QUANTITIES ##
-#Target 1: Items 1, 10, 18, 35, 44
-#Target 2: Items 2, 19, 27, 36
-#Target 3: Items 6, 15, 26, 29, 41, 47
-#Target 4: Items 5, 11, 21, 32, 39, 51
-#Target 5: Items 8, 12, 23, 34, 37, 50
-#Target 6: Items 3, 16, 24, 31, 43, 49
-#Target 7: Items 9, 14, 22, 30, 38, 46
-#Target 8: Items 7, 17, 25, 28, 40, 48
-#Target 9: Items 4, 13, 20, 33, 42, 45
+## SEPARATE INTO SMALL (1-3), MEDIUM (4-5), LARGE (6-9) QUANTITIES BY AGE ##
+     #SMALL:
+          #Target 1: Items 1, 10, 18, 35, 44
+          #Target 2: Items 2, 19, 27, 36
+          #Target 3: Items 6, 15, 26, 29, 41, 47
+     #MEDIUM:
+          #Target 4: Items 5, 11, 21, 32, 39, 51
+          #Target 5: Items 8, 12, 23, 34, 37, 50
+     #LARGE:
+          #Target 6: Items 3, 16, 24, 31, 43, 49
+          #Target 7: Items 9, 14, 22, 30, 38, 46
+          #Target 8: Items 7, 17, 25, 28, 40, 48
+          #Target 9: Items 4, 13, 20, 33, 42, 45
+
+Map5_Sm_AvgCorr <- colMeans(subset(Map5, select = c(Item1_Correct?,Item10_Correct?,Item18_Correct?,Item35_Correct?, Item44_Correct?,Item2_Correct?,Item19_Correct?,Item27_Correct?,Item36_Correct?,Item6_Correct?,Item15_Correct?,Item26_Correct?,Item29_Correct?,Item41_Correct?,Item47_Correct?)), na.rm = TRUE) 
+Map5_Sm_Means <- c((Map5_Sm_AvgCorr/15))
+
+Map6up_T1_AvgCorr <- colMeans(subset(Map6up, select = c(SumTotal_QuantityNumeral, SumTotal_NumeralQuantity, SumTotal_QuantityWord, SumTotal_WordQuantity, SumTotal_NumeralWord, SumTotal_WordNumeral)), na.rm = TRUE) 
+Map6upAvgCorr
+Map6Means <- c((Map6upAvgCorr[1]/9), (Map6upAvgCorr[2]/8), (Map6upAvgCorr[3]/9), (Map6upAvgCorr[4]/8), (Map6upAvgCorr[5]/9), (Map6upAvgCorr[6]/8))
+Map6Means
