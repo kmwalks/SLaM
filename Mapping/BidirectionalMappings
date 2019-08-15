@@ -48,4 +48,17 @@ Map_HBE$AgeGrp <- ifelse(Map_HBE$Age_Rounded < 6, "5-year-olds", "6 and up")
 Map5 <- subset(Map_HBE, Map_HBE$AgeGrp =="5-year-olds")
 Map6up <- subset(Map_HBE, Map_HBE$AgeGrp =="6 and up")
 
+## MEDIAN AND SD FOR EACH MAPPING TYPE #
+median(Map_HBE$SumTotal_QuantityWord)
+sd(Map_HBE$SumTotal_QuantityWord)
+median(Map_HBE$SumTotal_WordQuantity)
+sd(Map_HBE$SumTotal_WordQuantity)
+median(Map_HBE$SumTotal_QuantityNumeral)
+sd(Map_HBE$SumTotal_QuantityNumeral)
+median(Map_HBE$SumTotal_NumeralQuantity)
+sd(Map_HBE$SumTotal_NumeralQuantity)
+median(Map_HBE$SumTotal_WordNumeral)
+sd(Map_HBE$SumTotal_WordNumeral)
+median(Map_HBE$SumTotal_NumeralWord)
+sd(Map_HBE$SumTotal_NumeralWord)
 
