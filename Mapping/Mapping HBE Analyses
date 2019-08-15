@@ -159,8 +159,7 @@ wilcox.test(Map6up$SumTotal_NumeralWord, Map6up$SumTotal_WordNumeral, paired=TRU
           #Target 9: Items 4, 13, 20, 33, 42, 45
 
 Map5_Sm_AvgCorr <- colMeans(subset(Map5, select = c(Item1_Correct.,Item10_Correct.,Item18_Correct.,Item35_Correct., Item44_Correct.,Item2_Correct.,Item19_Correct.,Item27_Correct.,Item36_Correct.,Item6_Correct.,Item15_Correct.,Item26_Correct.,Item29_Correct.,Item41_Correct.,Item47_Correct.)), na.rm = TRUE) 
-Map5_Sm_Means <- c((Map5_Sm_AvgCorr/15))
-wilcox.test(Map5_Sm_Means, mu = .25, alternative = "greater") #is mean of small quantities correct for ages 5 significantly greater than chance (0.25) 
+wilcox.test(Map5_Sm_AvgCorr, mu = .25, alternative = "greater") #is mean of small quantities correct for ages 5 significantly greater than chance (0.25) 
 
 Map6up_Sm_AvgCorr <- colMeans(subset(Map5, select = c(Item1_Correct.,Item10_Correct.,Item18_Correct.,Item35_Correct., Item44_Correct.,Item2_Correct.,Item19_Correct.,Item27_Correct.,Item36_Correct.,Item6_Correct.,Item15_Correct.,Item26_Correct.,Item29_Correct.,Item41_Correct.,Item47_Correct.)), na.rm = TRUE) 
 Map6up_Sm_Means <- c((Map6up_Sm_AvgCorr/15))
