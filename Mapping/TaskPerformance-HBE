@@ -70,16 +70,6 @@ str(Map_HBE)
   wilcox.test(Map_HBE$AvgCorrect_Word.Numeral, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) 
   wilcox.test(Map_HBE$AvgCorrect_Numeral.Word, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) 
 
-
-# ASYMMETRY?- Wilcoxon signed rank test with continuity correction
-   #Quantity numeral better than numeral quantity?
-   wilcox.test(Map_HBE$SumTotal_QuantityNumeral, Map_HBE$SumTotal_NumeralQuantity, paired=TRUE)
-   #Quantity word better than word quantity?
-   wilcox.test(Map_HBE$SumTotal_QuantityWord, Map_HBE$SumTotal_WordQuantity, paired=TRUE)
-   #Numeral word better than word numeral?
-   wilcox.test(Map_HBE$SumTotal_NumeralWord, Map_HBE$SumTotal_WordNumeral, paired=TRUE)
-   
-
 # get average RAW NUMBER correct for each mapping type across all kids 
 MapAvgCorr <- colMeans(subset(Map_HBE, select = c(SumTotal_QuantityNumeral, SumTotal_NumeralQuantity, SumTotal_QuantityWord, SumTotal_WordQuantity, SumTotal_NumeralWord, SumTotal_WordNumeral)), na.rm = TRUE)
 MapAvgCorr
