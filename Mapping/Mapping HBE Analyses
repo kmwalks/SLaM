@@ -33,7 +33,9 @@ library(gridExtra)
 
 setwd("/Users/labuser/Documents/R")
 getwd()
- 
+
+#LAPTOP setwd("~/Desktop")
+
 Mapping <- read.csv("Mapping_Coding_CH_190807.csv", na.strings = "N/A")
  
 typeof(Mapping) # when importing using read.csv, resulting obj type is a list (data frame)
