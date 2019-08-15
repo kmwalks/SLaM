@@ -43,7 +43,7 @@ View(Mapping)
 
 ####HEARING KIDS ONLY####
 
-Map_HBE <- subset(Mapping, Mapping$Including.in.Study == 'Yes' & Mapping$Group_2cat == 'Hearing')
+Map_HBE <- subset(Mapping, Mapping$Including.in.Study == 'Yes' & Mapping$Coded. == "Yes" & Mapping$Group_2cat == 'Hearing')
 View(Map_HBE)
 str(Map_HBE)
 
