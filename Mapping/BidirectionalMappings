@@ -1,0 +1,51 @@
+install.packages("tidyverse") # includes ggplot2??
+install.packages("ggplot2") # for general plots
+install.packages("beeswarm") # for beeswarm plots
+install.packages("colorspace") # for fixing colors in plots
+install.packages("stargazer") # for pretty regression output tables
+install.packages("MASS") # for polr package
+install.packages("generalhoslem") # for testing model fit (lipsitz test and two others)
+install.packages("qwraps2") # for summary_table use
+install.packages("quantreg") # testing quantile plots (geom_quantile) and quantile regressions
+install.packages("sure") # package for calculating residuals for ordinal logistic regression (https://journal.r-project.org/archive/2018/RJ-2018-004/RJ-2018-004.pdf)
+install.packages("mediation") # package for testing mediation effects
+install.packages("gridExtra")
+
+
+library(tidyverse) 
+library(ggplot2)
+library(beeswarm)
+library(colorspace) 
+library(stargazer)
+library(MASS)
+library(generalhoslem) 
+library(qwraps2) 
+library(quantreg) 
+library(sure) 
+library(mediation) 
+library(gridExtra)
+
+
+setwd("/Users/labuser/Documents/R")
+getwd()
+
+#LAPTOP setwd("~/Desktop")
+
+Mapping <- read.csv("Mapping_Coding_CH_190809.csv", na.strings = "N/A")
+ 
+typeof(Mapping) # when importing using read.csv, resulting obj type is a list (data frame)
+View(Mapping)
+
+####HEARING KIDS ONLY####
+
+Map_HBE <- subset(Mapping, Mapping$Including.in.Study == 'Yes' & Mapping$Coded. == "Yes" & Mapping$Group_2cat == 'Hearing')
+View(Map_HBE)
+str(Map_HBE)
+
+
+## IF SEPARATING BY AGE GROUPS ##
+Map_HBE$AgeGrp <- ifelse(Map_HBE$Age_Rounded < 6, "5-year-olds", "6 and up")
+Map5 <- subset(Map_HBE, Map_HBE$AgeGrp =="5-year-olds")
+Map6up <- subset(Map_HBE, Map_HBE$AgeGrp =="6 and up")
+
+
