@@ -92,6 +92,7 @@ MapMeans
 ## 5 YO vs 6YOs and up ##
 
 #create a column for age group
+Map_HBE$Age_Rounded <- as.numeric(Map_HBE$Age_Rounded) #changes Age Rounded column to numeric, or else get error with it being a factor
 Map_HBE$AgeGrp <- ifelse(Map_HBE$Age_Rounded < 6, "5-year-olds", "6 and up")
 
 Map5 <- subset(Map_HBE, Map_HBE$AgeGrp =="5-year-olds")
@@ -181,6 +182,7 @@ wilcox.test(Map6up$SumTotal_NumeralWord, Map6up$SumTotal_WordNumeral, paired=TRU
 
 ## SEPARATE INTO SMALL (1-3), MEDIUM (4-5), LARGE (6-9) QUANTITIES BY AGE, SEPARATED BY MAPPING PAIRS ##
 #create a column for age group
+Map_HBE$Age_Rounded <- as.numeric(Map_HBE$Age_Rounded)
 Map_HBE$AgeGrp <- ifelse(Map_HBE$Age_Rounded < 6, "5-year-olds", "6 and up")
 
 Map5 <- subset(Map_HBE, Map_HBE$AgeGrp =="5-year-olds")
