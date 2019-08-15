@@ -182,6 +182,23 @@ wilcox.test(Map6up$SumTotal_NumeralWord, Map6up$SumTotal_WordNumeral, paired=TRU
 ## SEPARATE INTO SMALL (1-3), MEDIUM (4-5), LARGE (6-9) QUANTITIES BY AGE, SEPARATED BY MAPPING PAIRS ##
 #create a column for age group
 Map_HBE$AgeGrp <- ifelse(Map_HBE$Age_Rounded < 6, "5-year-olds", "6 and up")
-
 Map5 <- subset(Map_HBE, Map_HBE$AgeGrp =="5-year-olds")
 Map6up <- subset(Map_HBE, Map_HBE$AgeGrp =="6 and up")
+
+# AGES 5 # 
+#SMALL#
+wilcox.test(Map5$AvgCorrect_Sm_QW, mu = .25, alternative = "greater") # is mean quantity & word correct for small quantities & ages 5  significantly greater than chance (0.25) 
+wilcox.test(Map5$AvgCorrect_Sm_QN, mu = .25, alternative = "greater") # is mean quantity & numeral correct for small quantities & ages 5  significantly greater than chance (0.25) 
+mean(Map5$AvgCorrect_Sm_QN)
+wilcox.test(Map5$AvgCorrect_Sm_WN, mu = .25, alternative = "greater") # is mean word & numeral correct for small quantities & ages 5  significantly greater than chance (0.25) 
+
+#MEDIUM#
+wilcox.test(Map5$AvgCorrect_Med_QW, mu = .25, alternative = "greater") # is mean quantity & word correct for medium quantities & ages 5  significantly greater than chance (0.25) 
+wilcox.test(Map5$AvgCorrect_Med_QN, mu = .25, alternative = "greater") # is mean quantity & numeral correct for medium quantities & ages 5  significantly greater than chance (0.25) 
+wilcox.test(Map5$AvgCorrect_Med_WN, mu = .25, alternative = "greater") # is mean word & numeral correct for medium quantities & ages 5  significantly greater than chance (0.25) 
+
+#LARGE#
+wilcox.test(Map5$AvgCorrect_Lrg_QW, mu = .25, alternative = "greater") # is mean quantity & word correct for large  quantities & ages 5  significantly greater than chance (0.25) 
+wilcox.test(Map5$AvgCorrect_Lrg_QN, mu = .25, alternative = "greater") # is mean quantity & numeral correct for large quantities & ages 5  significantly greater than chance (0.25) 
+wilcox.test(Map5$AvgCorrect_Lrg_WN, mu = .25, alternative = "greater") # is mean word & numeral correct for large quantities & ages 5  significantly greater than chance (0.25) 
+
