@@ -86,15 +86,16 @@ sd(Map_HBE$SumTotal_NumeralWord, na.rm = TRUE)
       
  
  ## HISTOGRAM OF DIFFERENCE SCORES FOR MAPPING PAIRS ##
-DH_QN <- ggplot(Map_HBE, aes(x=Map_HBE$Difference_Quantity.Numeral_Numeral.Quantity)) + geom_histogram(binwidth=1, aes(y=..count../sum(..count..))) + labs(y="Proportion of Children") + theme(panel.background = element_blank(),axis.title.x=element_blank(),text = element_text(size=12, family="Times New Roman")) + expand_limits(x = c(-8,9), y = c(0,1)) + scale_y_continuous(breaks = c(0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1)) + scale_x_continuous(breaks=c(-8,-7,-6,-5,-4,-3,-2,-1,0,1,2,3,4,5,6,7,8,9)) + theme(panel.border = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank(),axis.line = element_line(colour = "black")) 
-DH_QN
-DH_QW <- ggplot(Map_HBE, aes(x=Map_HBE$Difference_Quantity.Word_Word.Quantity)) + geom_histogram(binwidth=1, aes(y=..count../sum(..count..))) + labs(y="Proportion of Children") + theme(panel.background = element_blank(),axis.title.x=element_blank(),text = element_text(size=12, family="Times New Roman")) + expand_limits(x = c(-8,9), y = c(0,1)) + scale_y_continuous(breaks = c(0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1)) + scale_x_continuous(breaks=c(-8,-7,-6,-5,-4,-3,-2,-1,0,1,2,3,4,5,6,7,8,9)) + theme(panel.border = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank(),axis.line = element_line(colour = "black")) 
+DH_QW <- ggplot(Map_HBE, aes(x=Map_HBE$Difference_Quantity.Word_Word.Quantity)) + geom_histogram(binwidth=1, aes(y=..count../sum(..count..))) + labs(y="Proportion of Children", x="Quantity-Word > Word-Quantity") + theme(panel.background = element_blank(), text = element_text(size=12, family="Times New Roman")) + expand_limits(x = c(-8,9), y = c(0,1)) + scale_y_continuous(breaks = c(0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1)) + scale_x_continuous(breaks=c(-8,-7,-6,-5,-4,-3,-2,-1,0,1,2,3,4,5,6,7,8,9)) + theme(panel.border = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank(),axis.line = element_line(colour = "black")) 
 DH_QW
-DH_NW <- ggplot(Map_HBE, aes(x=Map_HBE$Difference_Numeral.Word_Word.Numeral)) + geom_histogram(binwidth=1, aes(y=..count../sum(..count..))) + labs(y="Proportion of Children") + theme(panel.background = element_blank(),axis.title.x=element_blank(),text = element_text(size=12, family="Times New Roman")) + expand_limits(x = c(-8,9), y = c(0,1)) + scale_y_continuous(breaks = c(0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1)) + scale_x_continuous(breaks=c(-8,-7,-6,-5,-4,-3,-2,-1,0,1,2,3,4,5,6,7,8,9)) + theme(panel.border = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank(),axis.line = element_line(colour = "black")) 
+
+DH_NW <- ggplot(Map_HBE, aes(x=Map_HBE$Difference_Numeral.Word_Word.Numeral)) + geom_histogram(binwidth=1, aes(y=..count../sum(..count..))) + labs(x="Numeral-Word > Word-Numeral") + theme(panel.background = element_blank(), axis.title.y=element_blank(), text = element_text(size=12, family="Times New Roman")) + expand_limits(x = c(-8,9), y = c(0,1)) + scale_y_continuous(breaks = c(0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1)) + scale_x_continuous(breaks=c(-8,-7,-6,-5,-4,-3,-2,-1,0,1,2,3,4,5,6,7,8,9)) + theme(panel.border = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank(),axis.line = element_line(colour = "black")) 
 DH_NW 
+
+DH_QN <- ggplot(Map_HBE, aes(x=Map_HBE$Difference_Quantity.Numeral_Numeral.Quantity)) + geom_histogram(binwidth=1, aes(y=..count../sum(..count..))) + labs(x="Quantity-Numeral > Numeral-Quantity")+ theme(panel.background = element_blank(), axis.title.y=element_blank(), text = element_text(size=12, family="Times New Roman")) + expand_limits(x = c(-8,9), y = c(0,1)) + scale_y_continuous(breaks = c(0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1)) + scale_x_continuous(breaks=c(-8,-7,-6,-5,-4,-3,-2,-1,0,1,2,3,4,5,6,7,8,9)) + theme(panel.border = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank(),axis.line = element_line(colour = "black")) 
+DH_QN
+
 grid.arrange(DH_QN,DH_QW,DH_NW, ncol = 3) 
- 
- 
  
  
  
