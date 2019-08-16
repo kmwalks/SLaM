@@ -42,12 +42,6 @@ Map_HBE <- subset(Mapping, Mapping$Including.in.Study == 'Yes' & Mapping$Coded. 
 View(Map_HBE)
 str(Map_HBE)
 
-
-## IF SEPARATING BY AGE GROUPS ##
-Map_HBE$AgeGrp <- ifelse(Map_HBE$Age_Rounded < 6, "5-year-olds", "6 and up")
-Map5 <- subset(Map_HBE, Map_HBE$AgeGrp =="5-year-olds")
-Map6up <- subset(Map_HBE, Map_HBE$AgeGrp =="6 and up")
-
 ## MEDIAN AND SD FOR EACH MAPPING TYPE #
 median(Map_HBE$SumTotal_QuantityWord)
 sd(Map_HBE$SumTotal_QuantityWord, na.rm = TRUE)
@@ -123,6 +117,12 @@ sd(Map_HBE$SumTotal_NumeralWord, na.rm = TRUE)
          (QN_1/N)*100
 
 
+
+ ## IF SEPARATING BY AGE GROUPS ##
+Map_HBE$AgeGrp <- ifelse(Map_HBE$Age_Rounded < 6, "5-year-olds", "6 and up")
+Map5 <- subset(Map_HBE, Map_HBE$AgeGrp =="5-year-olds")
+Map6up <- subset(Map_HBE, Map_HBE$AgeGrp =="6 and up")
+
  #GRAPH OF ACCURACY SCORES BY MAPPING PAIRS AND AGE#
        Map5$Sum_Quantity.Numeral_Numeral.Quantity
        Map6up$$Sum_Quantity.Numeral_Numeral.Quantity
@@ -130,7 +130,6 @@ sd(Map_HBE$SumTotal_NumeralWord, na.rm = TRUE)
        Map6up$Sum_Numeral.Word_Word.Numeral
        Map5$Sum_Quantity.Word_Word.Quantity
        Map6up$Sum_Quantity.Word_Word.Quantity
- 
  
  
  
