@@ -97,6 +97,7 @@ sd(Map_HBE$SumTotal_NumeralWord, na.rm = TRUE)
          DH_QN
 
          grid.arrange(DH_QW, DH_NW, DH_QN, ncol = 3) 
+         
      #SKEWNESS, KURTOSIS, MEAN,RANGE,SD,SE#
          install.packages(“psych”)
          library(psych)
