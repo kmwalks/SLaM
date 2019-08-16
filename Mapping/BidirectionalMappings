@@ -62,3 +62,24 @@ sd(Map_HBE$SumTotal_WordNumeral, na.rm = TRUE)
 median(Map_HBE$SumTotal_NumeralWord)
 sd(Map_HBE$SumTotal_NumeralWord, na.rm = TRUE)
 
+## ASYMMETRIES? ## 
+  #QUANTITY-WORD#
+      QW<-wilcox.test(Map_HBE$SumTotal_QuantityWord, Map_HBE$SumTotal_WordQuantity, paired = TRUE, exact=FALSE)
+      QW
+      QW_Zstat<-qnorm(QW$p.value/2)
+      QW_Zstat
+      abs(QW_Zstat)/sqrt(17)
+      
+  #QUANTITY-NUMERAL#
+      QN<-wilcox.test(Map_HBE$SumTotal_QuantityNumeral, Map_HBE$SumTotal_NumeralQuantity, paired = TRUE, exact=FALSE)
+      QN
+      QN_Zstat<-qnorm(QN$p.value/2)
+      QN_Zstat
+      abs(QN_Zstat)/sqrt(17)
+      
+  #WORD-NUMERAL#
+      WN<-wilcox.test(Map_HBE$SumTotal_WordNumeral, Map_HBE$SumTotal_NumeralWord, paired = TRUE, exact=FALSE)
+      WN
+      WN_Zstat<-qnorm(WN$p.value/2)
+      WN_Zstat
+      abs(WN_Zstat)/sqrt(17)
