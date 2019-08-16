@@ -83,3 +83,16 @@ sd(Map_HBE$SumTotal_NumeralWord, na.rm = TRUE)
       WN_Zstat<-qnorm(WN$p.value/2)
       WN_Zstat
       abs(WN_Zstat)/sqrt(17)
+      
+ #GRAPH OF ACCURACY SCORES BY MAPPING PAIRS AND AGE#
+       Map5$Sum_Quantity.Numeral_Numeral.Quantity
+       Map6up$$Sum_Quantity.Numeral_Numeral.Quantity
+       Map5$Sum_Numeral.Word_Word.Numeral
+       Map6up$Sum_Numeral.Word_Word.Numeral
+       Map5$Sum_Quantity.Word_Word.Quantity
+       Map6up$Sum_Quantity.Word_Word.Quantity
+ 
+ 
+ 
+ 
+ 
