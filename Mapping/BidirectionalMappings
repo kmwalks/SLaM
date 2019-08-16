@@ -104,8 +104,24 @@ sd(Map_HBE$SumTotal_NumeralWord, na.rm = TRUE)
          describe(Map_HBE$Difference_Quantity.Numeral_Numeral.Quantity)
          describe(Map_HBE$Difference_Quantity.Word_Word.Quantity)
          describe(Map_HBE$Difference_Numeral.Word_Word.Numeral)
+         
+         
+     #PERCENT THAT FALLS BETWEEN 1 POINT#
+         DiffQW <- Map_HBE$Difference_Quantity.Word_Word.Quantity
+         QW_1 <- length(which(DiffQW >= 0 & DiffQW <= 2)) #number of observations that fall 1 point above or below DiffQW median of 1
+         N <- nrow(Map_HBE) #gives # of observations
+         (QW_1/N)*100
 
- 
+         DiffNW <- Map_HBE$Difference_Numeral.Word_Word.Numeral
+         NW_1 <- length(which(DiffNW >= 0 & DiffNW <= 2)) #number of observations that fall 1 point above or below DiffNW median of 1
+         N <- nrow(Map_HBE) #gives # of observations
+         (NW_1/N)*100
+
+         DiffQN <- Map_HBE$Difference_Quantity.Numeral_Numeral.Quantity
+         QN_1 <- length(which(DiffQN >= 1 & DiffQN <= 3)) #number of observations that fall 1 point above or below DiffQN median of 2
+         N <- nrow(Map_HBE) #gives # of observations
+         (QN_1/N)*100
+
 
  #GRAPH OF ACCURACY SCORES BY MAPPING PAIRS AND AGE#
        Map5$Sum_Quantity.Numeral_Numeral.Quantity
