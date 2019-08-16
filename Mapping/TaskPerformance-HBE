@@ -102,34 +102,34 @@ Map6Means
 # 5 YO 
 wilcox.test(Map5$AvgCorrect_Quantity.Numeral, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) 
 wilcox.test(Map5$AvgCorrect_Numeral.Quantity, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) 
-wilcox.test(Map5$SumTotal_QuantityNumeral, Map5$SumTotal_NumeralQuantity, paired=TRUE) # ASYMMETRY for 5yos? 
+wilcox.test(Map5$SumTotal_QuantityNumeral, Map5$SumTotal_NumeralQuantity, paired=TRUE, exact=FALSE) # ASYMMETRY for 5yos? 
 #YES
 
 wilcox.test(Map5$AvgCorrect_Quantity.Word, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) 
 wilcox.test(Map5$AvgCorrect_Word.Quantity, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) 
-wilcox.test(Map5$SumTotal_QuantityWord, Map5$SumTotal_WordQuantity, paired=TRUE) # ASYMMETRY? Quantity word better than word quantity?
+wilcox.test(Map5$SumTotal_QuantityWord, Map5$SumTotal_WordQuantity, paired=TRUE, exact=FALSE) # ASYMMETRY? Quantity word better than word quantity?
 #YES
 
 wilcox.test(Map5$AvgCorrect_Word.Numeral, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) 
 wilcox.test(Map5$AvgCorrect_Numeral.Word, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) 
-wilcox.test(Map5$SumTotal_NumeralWord, Map5$SumTotal_WordNumeral, paired=TRUE) # ASYMMETRY?  Numeral word better than word numeral?
+wilcox.test(Map5$SumTotal_NumeralWord, Map5$SumTotal_WordNumeral, paired=TRUE, exact=FALSE) # ASYMMETRY?  Numeral word better than word numeral?
 #MARGINAL (p=.054)
 
 # 6 YO & >
 
 wilcox.test(Map6up$AvgCorrect_Quantity.Numeral, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) 
 wilcox.test(Map6up$AvgCorrect_Numeral.Quantity, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) 
-wilcox.test(Map6up$SumTotal_QuantityNumeral, Map6up$SumTotal_NumeralQuantity, paired=TRUE) # ASYMMETRY for 5yos?
+wilcox.test(Map6up$SumTotal_QuantityNumeral, Map6up$SumTotal_NumeralQuantity, paired=TRUE, exact=FALSE) # ASYMMETRY for 5yos?
 #YES
 
 wilcox.test(Map6up$AvgCorrect_Quantity.Word, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) 
 wilcox.test(Map6up$AvgCorrect_Word.Quantity, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) 
-wilcox.test(Map6up$SumTotal_QuantityWord, Map6up$SumTotal_WordQuantity, paired=TRUE) # ASYMMETRY? Quantity word better than word quantity?
+wilcox.test(Map6up$SumTotal_QuantityWord, Map6up$SumTotal_WordQuantity, paired=TRUE, exact=FALSE) # ASYMMETRY? Quantity word better than word quantity?
 #YES
 
 wilcox.test(Map6up$AvgCorrect_Word.Numeral, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) 
 wilcox.test(Map6up$AvgCorrect_Numeral.Word, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) 
-wilcox.test(Map6up$SumTotal_NumeralWord, Map6up$SumTotal_WordNumeral, paired=TRUE) # ASYMMETRY?  Numeral word better than word numeral?
+wilcox.test(Map6up$SumTotal_NumeralWord, Map6up$SumTotal_WordNumeral, paired=TRUE, exact=FALSE) # ASYMMETRY?  Numeral word better than word numeral?
 #YES
 
 
