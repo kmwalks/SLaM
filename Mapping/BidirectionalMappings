@@ -134,6 +134,23 @@ Map6up <- subset(Map_HBE, Map_HBE$AgeGrp =="6 and up")
       QN_Bar <- ggplot(data=Map_HBE, aes(x=Map_HBE$AgeGrp, y=Map_HBE$Sum_Quantity.Numeral_Numeral.Quantity, fill=Map_HBE$AgeGrp)) + geom_bar(stat="identity", position=position_dodge(), colour="black") + scale_fill_manual(values=c("black", "grey66")) + labs(x="Quantity-Numeral", y="Accuracy (out of 17)") + theme(text = element_text(size=12, family="Times New Roman")) + expand_limits(y = c(0,17)) + scale_y_continuous (breaks=c(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17))
       QN_Bar 
 
+##GROUPED BAR PLOT##
+      NW <- Map_HBE$Sum_Numeral.Word_Word.Numeral
+      QW <- Map_HBE$Sum_Quantity.Word_Word.Quantity
+      QN <- Map_HBE$Sum_Quantity.Numeral_Numeral.Quantity
+      AgeGrp <- Map_HBE$AgeGrp
+
+      df <- data.frame(AgeGrp,NW, QW, QN)
+      View(df)
+
+      install.packages("reshape2")
+      library(reshape2)
+
+      data.m <- melt(df, id.vars='AgeGrp') #melt the dataframe so all the mapping types are in the same column
+      View(data.m)
+
+      All_Bar <- ggplot(data.m, aes(variable, value)) + geom_bar(aes(fill = AgeGrp), width = 0.6, position = position_dodge(width=0.7), stat="identity") + scale_fill_manual(values=c("grey87", "grey51"), labels = c("5-year-olds", "6-year-olds and older")) + labs( y="Accuracy (out of 17)") + theme(text = element_text(size=12, family="Times New Roman")) + scale_y_continuous (breaks=c(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17), limits = c(0,17), expand = c(0,0)) + scale_x_discrete(limits=c("QW","NW","QN"), expand = c(.2,0),labels = c("Quantity and Word", "Numeral and Word", "Quantity and Numeral")) + theme_bw() + theme(legend.position="top", legend.title = element_blank(),axis.title.x=element_blank(), panel.border = element_blank(), panel.grid.major.x = element_blank(), panel.grid.minor.x = element_blank(), panel.grid.minor.y = element_blank(), axis.line = element_line(colour = "black"))
+      All_Bar
 
  
  
