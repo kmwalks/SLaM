@@ -140,7 +140,7 @@ Map6up <- subset(Map_HBE, Map_HBE$AgeGrp =="6 and up")
       QN <- Map_HBE$Sum_Quantity.Numeral_Numeral.Quantity
       AgeGrp <- Map_HBE$AgeGrp
 
-      df <- data.frame(AgeGrp,NW, QW, QN)
+      df <- data.frame(AgeGrp, QW, NW, QN)
       View(df)
 
       install.packages("reshape2")
