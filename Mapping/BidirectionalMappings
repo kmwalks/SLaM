@@ -233,13 +233,13 @@ Map6up <- subset(Map_HBE, Map_HBE$AgeGrp =="6 and up")
      model = lm(data.m$value ~ data.m$AgeGrp + data.m$Map + data.m$AgeGrp:data.m$Map, data = data.m)
      Anova(model, type = "II")
      
-     ## ETA-SQUARED ##
+     ## ETA-SQUARED, WITH ANOVA=TRUE CAN OBTAIN ANOVA TABLES AS WELL, DOUBLE CHECK ##
      # SOURCE: https://cran.r-project.org/web/packages/lsr/lsr.pdf #
      install.packages("lsr")
      library(lsr)
-     etaSquared(model,type = 2, anova = FALSE)
+     etaSquared(model,type = 2, anova = TRUE)
      
-
+     etaSquared(aov_map,type = 1, anova = TRUE)
       
  
  
