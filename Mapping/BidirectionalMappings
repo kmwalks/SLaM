@@ -12,6 +12,7 @@ install.packages("mediation") # package for testing mediation effects
 install.packages("gridExtra") # combine graphs into one figure 
 install.packages("plyr")
 install.packages("reshape2") #restructuring dataframes, ex melting, merging 
+install.packages("plotrix")
 
 
 
@@ -29,7 +30,7 @@ library(mediation)
 library(gridExtra)
 library(plyr)
 library(reshape2)
-
+library(plotrix)
 
 setwd("/Users/labuser/Documents/R")
 getwd()
