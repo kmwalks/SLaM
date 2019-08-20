@@ -146,7 +146,6 @@ Map6up <- subset(Map_HBE, Map_HBE$AgeGrp =="6 and up")
       QW <- Map_HBE$Sum_Quantity.Word_Word.Quantity
       QN <- Map_HBE$Sum_Quantity.Numeral_Numeral.Quantity
       AgeGrp <- Map_HBE$AgeGrp
-      Map <- data.m$variable
       QW_M <- mean(Map_HBE$Sum_Quantity.Word_Word.Quantity)
       NW_M <- mean(Map_HBE$Sum_Numeral.Word_Word.Numeral)
       QN_M <- mean(Map_HBE$Sum_Quantity.Numeral_Numeral.Quantity)
@@ -163,9 +162,10 @@ Map6up <- subset(Map_HBE, Map_HBE$AgeGrp =="6 and up")
       dfM2 <- melt(dfM, id.vars='AgeGrp')
       View(dfM2)
 
-      ## 4. RENAME VARIABLE COLUMN IN FIRST DATA FRAME TO MAP ##
+      ## 4. RENAME VARIABLE COLUMN IN FIRST DATA FRAME TO MAP & CREATE SHORTCUT VARIABLE ##
       names(data.m)[names(data.m) == "variable"] <- "Map"
       View(data.m)
+      Map <- data.m$variable
       
       # 5. ADD MAP COLUMN TO THE OTHER DATA FRAME ##
       dfM2 <- data.frame(AgeGrp, dfM2$variable, dfM2$value, Map)
