@@ -9,7 +9,9 @@ install.packages("qwraps2") # for summary_table use
 install.packages("quantreg") # testing quantile plots (geom_quantile) and quantile regressions
 install.packages("sure") # package for calculating residuals for ordinal logistic regression (https://journal.r-project.org/archive/2018/RJ-2018-004/RJ-2018-004.pdf)
 install.packages("mediation") # package for testing mediation effects
-install.packages("gridExtra")
+install.packages("gridExtra") # combine graphs into one figure 
+install.packages("plyr")
+install.packages("reshape2") #restructuring dataframes, ex melting, merging 
 
 
 library(tidyverse) 
@@ -135,23 +137,78 @@ Map6up <- subset(Map_HBE, Map_HBE$AgeGrp =="6 and up")
       QN_Bar 
 
 ##GROUPED BAR PLOT##
+      ##SOURCE: https://onunicornsandgenes.blog/2014/03/19/using-r-barplot-with-ggplot2/##
+      
+      ## 1. SET SHORT VARIABLE NAMES ##
       NW <- Map_HBE$Sum_Numeral.Word_Word.Numeral
       QW <- Map_HBE$Sum_Quantity.Word_Word.Quantity
       QN <- Map_HBE$Sum_Quantity.Numeral_Numeral.Quantity
       AgeGrp <- Map_HBE$AgeGrp
+      Map <- data.m$variable
+      QW_M <- mean(Map_HBE$Sum_Quantity.Word_Word.Quantity)
+      NW_M <- mean(Map_HBE$Sum_Numeral.Word_Word.Numeral)
+      QN_M <- mean(Map_HBE$Sum_Quantity.Numeral_Numeral.Quantity)
 
+      ## 2. CREATE FIRST DATA FRAME WITH MAPPING TYPES## 
       df <- data.frame(AgeGrp, QW, NW, QN)
       View(df)
-
-      install.packages("reshape2")
-      library(reshape2)
-
       data.m <- melt(df, id.vars='AgeGrp') #melt the dataframe so all the mapping types are in the same column
       View(data.m)
 
-      All_Bar <- ggplot(data.m, aes(variable, value)) + geom_bar(aes(fill = AgeGrp), width = 0.6, position = position_dodge(width=0.7), stat="identity") + scale_fill_manual(values=c("grey87", "grey51"), labels = c("5-year-olds", "6-year-olds and older")) + labs( y="Accuracy (out of 17)") + theme(text = element_text(size=12, family="Times New Roman")) + scale_y_continuous (breaks=c(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17), limits = c(0,17), expand = c(0,0)) + scale_x_discrete(limits=c("QW","NW","QN"), expand = c(.2,0),labels = c("Quantity and Word", "Numeral and Word", "Quantity and Numeral")) + theme_bw() + theme(legend.position="top", legend.title = element_blank(),axis.title.x=element_blank(), panel.border = element_blank(), panel.grid.major.x = element_blank(), panel.grid.minor.x = element_blank(), panel.grid.minor.y = element_blank(), axis.line = element_line(colour = "black"))
-      All_Bar
+      ## 3. CREATE SECOND DATA FRAME WITH MEANS ## 
+      dfM <- data.frame(AgeGrp, QW_M, NW_M, QN_M)
+      View(dfM)
+      dfM2 <- melt(dfM, id.vars='AgeGrp')
+      View(dfM2)
 
+      ## 4. RENAME VARIABLE COLUMN IN FIRST DATA FRAME TO MAP ##
+      names(data.m)[names(data.m) == "variable"] <- "Map"
+      View(data.m)
+      
+      # 5. ADD MAP COLUMN TO THE OTHER DATA FRAME ##
+      dfM2 <- data.frame(AgeGrp, dfM2$variable, dfM2$value, Map)
+      View(dfM2)
+      
+      ## 6. MERGE THE TWO DATA FRAMES TOGETHER & RENAME MEAN COLUMN ##
+      PORFAVOR <- merge(dfM2, data.m)
+      View(PORFAVOR)
+      names(PORFAVOR)[names(PORFAVOR) == "dfM2.value"] <- "Map_Mean"
+      
+      ## 7. CREATE THRID DATA FRAME WITH SEMS ##
+      QW_SE <- std.error(Map_HBE$Sum_Quantity.Word_Word.Quantity)
+      NW_SE <- std.error(Map_HBE$Sum_Numeral.Word_Word.Numeral)
+      QN_SE <- std.error(Map_HBE$Sum_Quantity.Numeral_Numeral.Quantity)
+      dSE <- data.frame(AgeGrp, QW_SE, NW_SE, QN_SE)
+      View(df3)
+      dSE2 <- melt(dSE, id.vars='AgeGrp')
+      View(dSE2)
+      dSE2<- data.frame(AgeGrp, dSE2$variable, dSE2$value, Map)
+      names(dSE2)[names(dSE2) == "dSE2.value"] <- "SEM"
+      View(dSE2)
+
+      
+      ## 8. MERGE PREVIOUSLY MERGED DATAFRAME WITH SEM DATA FRAME ##
+      PORFAVOR2 <- merge(PORFAVOR, dSE2)
+      View(PORFAVOR2)
+      
+      ## 9. ADD COLUMNS FOR ERROR BARS ##
+      lower <- PORFAVOR2$Map_Mean - PORFAVOR2$SEM
+      upper <- PORFAVOR2$Map_Mean + PORFAVOR2$SEM
+      PORFAVOR2 <- cbind(PORFAVOR2, lower, upper)
+      
+      ## 10. CREATE BAR PLOT AND ADD ERROR BARS ##
+      All_Bar <- ggplot(PORFAVOR2, aes(PORFAVOR2$Map, PORFAVOR2$Map_Mean)) + geom_bar(aes(fill = AgeGrp), width = 0.6, position = position_dodge(width=0.7), stat="identity") + scale_fill_manual(values=c("grey87", "grey51"), labels = c("5-year-olds", "6-year-olds and older")) + labs( y="Accuracy (out of 17)") + scale_y_continuous (breaks=c(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17), limits = c(0,17), expand = c(0,0)) + scale_x_discrete(limits=c("QW","NW","QN"), expand = c(.2,0),labels = c("Quantity and Word", "Numeral and Word", "Quantity and Numeral")) + theme_bw() + theme(legend.position="top", legend.title = element_blank(), axis.title.x=element_blank(), panel.border = element_blank(), panel.grid.major.x = element_blank(), panel.grid.minor.x = element_blank(), panel.grid.minor.y = element_blank(), axis.line = element_line(colour = "black"), text = element_text(size=12, family="Times New Roman"))
+      All_Bar + geom_errorbar(aes(ymax= PORFAVOR2$upper, ymin=PORFAVOR2$lower, group=AgeGrp), width=.5, position=position_dodge(0.7), data=PORFAVOR2)
+
+
+
+      
+
+
+
+     
+
+      
  
  
  
