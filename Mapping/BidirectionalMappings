@@ -185,7 +185,7 @@ Map6up <- subset(Map_HBE, Map_HBE$AgeGrp =="6 and up")
       View(df3)
       dSE2 <- melt(dSE, id.vars='AgeGrp')
       View(dSE2)
-      dSE2<- data.frame(AgeGrp, dSE2$variable, dSE2$value, Map)
+      dSE2<- data.frame(AgeGrp, dSE2$variable, dSE2$value, PORFAVOR$Map)
       names(dSE2)[names(dSE2) == "dSE2.value"] <- "SEM"
       View(dSE2)
 
