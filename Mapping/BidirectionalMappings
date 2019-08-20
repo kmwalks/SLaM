@@ -210,6 +210,7 @@ Map6up <- subset(Map_HBE, Map_HBE$AgeGrp =="6 and up")
 
 ## ANOVAS ##
      ## BEFORE RUN, HAVE DATA.M AS A DF FROM ABOVE CODE ##
+     ## REMEMBER TYPE 2 IS FOR BETWEEN SUBJECTS ##
      
      replications(data.m) # CHECK BALANCE OF THE DATA TO ENSURE CAN USE AOV FXN. AOV can be used for balanced & unbalanced, but to a certain extent#
 
