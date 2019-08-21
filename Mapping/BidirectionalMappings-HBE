@@ -254,13 +254,13 @@ sd(Map_HBE$SumTotal_NumeralWord, na.rm = TRUE)
     t.test(Map_HBE$Sum_Numeral.Word_Word.Numeral, Map_HBE$Sum_Quantity.Word_Word.Quantity, paired = TRUE, alternative = "two.sided")
     cohen.d(Map_HBE$Sum_Numeral.Word_Word.Numeral, Map_HBE$Sum_Quantity.Word_Word.Quantity,pooled=TRUE,paired=FALSE, na.rm=FALSE, hedges.correction=FALSE, conf.level=0.95,noncentral=FALSE)
     
-    ## AGE GROUPS: NW vs QN ##
+    ## AGE GROUPS: QN vs NW ##
       #5
-      t.test(Map5$Sum_Numeral.Word_Word.Numeral, Map5$Sum_Quantity.Numeral_Numeral.Quantity, paired = TRUE, alternative = "two.sided")
-      cohen.d(Map5$Sum_Numeral.Word_Word.Numeral, Map5$Sum_Quantity.Numeral_Numeral.Quantity,pooled=TRUE,paired=FALSE, na.rm=FALSE, hedges.correction=FALSE, conf.level=0.95,noncentral=FALSE)
+      t.test(Map5$Sum_Quantity.Numeral_Numeral.Quantity,Map5$Sum_Numeral.Word_Word.Numeral, paired = TRUE, alternative = "two.sided")
+      cohen.d(Map5$Sum_Quantity.Numeral_Numeral.Quantity,Map5$Sum_Numeral.Word_Word.Numeral, pooled=TRUE,paired=FALSE, na.rm=FALSE, hedges.correction=FALSE, conf.level=0.95,noncentral=FALSE)
       #6 & up
-      t.test(Map6up$Sum_Numeral.Word_Word.Numeral, Map6up$Sum_Quantity.Numeral_Numeral.Quantity, paired = TRUE, alternative = "two.sided")
-      cohen.d(Map6up$Sum_Numeral.Word_Word.Numeral, Map6up$Sum_Quantity.Numeral_Numeral.Quantity,pooled=TRUE,paired=FALSE, na.rm=FALSE, hedges.correction=FALSE, conf.level=0.95,noncentral=FALSE)
+      t.test(Map6up$Sum_Quantity.Numeral_Numeral.Quantity,Map6up$Sum_Numeral.Word_Word.Numeral, paired = TRUE, alternative = "two.sided")
+      cohen.d(Map6up$Sum_Quantity.Numeral_Numeral.Quantity,Map6up$Sum_Numeral.Word_Word.Numeral,pooled=TRUE,paired=FALSE, na.rm=FALSE, hedges.correction=FALSE, conf.level=0.95,noncentral=FALSE)
     
     ## AGE GROUPS: QW vs QN ##
        #5
