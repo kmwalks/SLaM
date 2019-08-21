@@ -127,84 +127,9 @@ sd(Map_HBE$SumTotal_NumeralWord, na.rm = TRUE)
          N <- nrow(Map_HBE) #gives # of observations
          (QN_1/N)*100
 
-
- #GRAPH OF ACCURACY SCORES BY MAPPING PAIRS AND AGE#
-      #INDIV GRAPHS#
-      QW_Bar <- ggplot(data=Map_HBE, aes(x=Map_HBE$AgeGrp, y=Map_HBE$Sum_Quantity.Word_Word.Quantity, fill=Map_HBE$AgeGrp)) + geom_bar(stat="identity", position=position_dodge(), colour="black") + scale_fill_manual(values=c("black", "grey66")) + labs(x="Quantity-Word", y="Accuracy (out of 17)") + theme(text = element_text(size=12, family="Times New Roman")) + expand_limits(y = c(0,17)) + scale_y_continuous (breaks=c(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17))
-      QW_Bar
-
-      NW_Bar <- ggplot(data=Map_HBE, aes(x=Map_HBE$AgeGrp, y=Map_HBE$Sum_Numeral.Word_Word.Numeral, fill=Map_HBE$AgeGrp)) + geom_bar(stat="identity", position=position_dodge(), colour="black") + scale_fill_manual(values=c("black", "grey66")) + labs(x="Numeral-Word", y="Accuracy (out of 17)") + theme(text = element_text(size=12, family="Times New Roman")) + expand_limits(y = c(0,17)) + scale_y_continuous (breaks=c(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17))
-      NW_Bar
-
-      QN_Bar <- ggplot(data=Map_HBE, aes(x=Map_HBE$AgeGrp, y=Map_HBE$Sum_Quantity.Numeral_Numeral.Quantity, fill=Map_HBE$AgeGrp)) + geom_bar(stat="identity", position=position_dodge(), colour="black") + scale_fill_manual(values=c("black", "grey66")) + labs(x="Quantity-Numeral", y="Accuracy (out of 17)") + theme(text = element_text(size=12, family="Times New Roman")) + expand_limits(y = c(0,17)) + scale_y_continuous (breaks=c(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17))
-      QN_Bar 
-
 ##GROUPED BAR PLOT##
       ##SOURCE: https://onunicornsandgenes.blog/2014/03/19/using-r-barplot-with-ggplot2/##
-      
-      ## 1. SET SHORT VARIABLE NAMES ##
-       NW <- Map_HBE$Sum_Numeral.Word_Word.Numeral
-       QW <- Map_HBE$Sum_Quantity.Word_Word.Quantity
-       QN <- Map_HBE$Sum_Quantity.Numeral_Numeral.Quantity
-       AgeGrp <- Map_HBE$AgeGrp
-       QW_M <- mean(Map_HBE$Sum_Quantity.Word_Word.Quantity)
-       NW_M <- mean(Map_HBE$Sum_Numeral.Word_Word.Numeral)
-       QN_M <- mean(Map_HBE$Sum_Quantity.Numeral_Numeral.Quantity)
 
-
-      ## 2. CREATE FIRST DATA FRAME WITH MAPPING TYPES## 
-       df <- data.frame(AgeGrp, QW, NW, QN)
-       View(df)
-       data.m <- melt(df, id.vars='AgeGrp') #melt the dataframe so all the mapping types are in the same column
-       View(data.m)
-       ## 3. CREATE SECOND DATA FRAME ## 
-       dfM <- data.frame(AgeGrp, QW_M, NW_M, QN_M)
-       View(dfM)
-       dfM2 <- melt(dfM, id.vars='AgeGrp')
-       View(dfM2)
-
-      ## 4. RENAME VARIABLE COLUMN IN FIRST DATA FRAME TO MAP & CREATE SHORTCUT VARIABLE ##
-       names(data.m)[names(data.m) == "variable"] <- "Map"
-       View(data.m)
-
-      # 5. ADD MAP COLUMN TO THE OTHER DATA FRAME ##
-       dfM2 <- data.frame(AgeGrp, dfM2$variable, dfM2$value, data.m$Map)
-       names(dfM2)[names(dfM2) == "data.m.Map"] <- "Map"
-       View(dfM2)
-
-      ## 6. CREATE NEW DATAFRAME WITH TWO DATA FRAMES & RENAME COLUMNS ##
-       PWEASE <- data.frame(AgeGrp, data.m$Map, data.m$value, dfM2$dfM2.variable, dfM2$dfM2.value)
-       names(PWEASE)[names(PWEASE) == "dfM2.dfM2.value"] <- "Map_Mean"
-       names(PWEASE)[names(PWEASE) == "data.m.Map"] <- "Map"
-       View(PWEASE)
-      
-      ## 7. CREATE THRID DATA FRAME WITH SEMS ##
-          QW_SE <- std.error(Map_HBE$Sum_Quantity.Word_Word.Quantity)
-          NW_SE <- std.error(Map_HBE$Sum_Numeral.Word_Word.Numeral)
-          QN_SE <- std.error(Map_HBE$Sum_Quantity.Numeral_Numeral.Quantity)
-
-          dSE <- data.frame(AgeGrp, QW_SE, NW_SE, QN_SE)
-          dSE2 <- melt(dSE, id.vars='AgeGrp')
-          View(dSE2)
-
-          dSE2<- data.frame(AgeGrp, dSE2$variable, dSE2$value, PWEASE$Map)
-          names(dSE2)[names(dSE2) == "PWEASE.Map"] <- "Map"
-          names(dSE2)[names(dSE2) == "dSE2.value"] <- "SEM"
-          View(dSE2)
-
-      ## 8. MERGE PREVIOUSLY COMBINED DATAFRAME WITH SEM DATA FRAME ##
-          PORFAVOR <- merge(PWEASE, dSE2)
-          View(PORFAVOR)
-      
-      ## 9. ADD COLUMNS FOR ERROR BARS ##
-       lower <- PORFAVOR$Map_Mean - PORFAVOR$SEM
-       upper <- PORFAVOR$Map_Mean + PORFAVOR$SEM
-       PORFAVOR <- cbind(PORFAVOR, lower, upper)
-       View(PORFAVOR)
-  
-      ## 10. CREATE BAR PLOT AND ADD ERROR BARS ##
-        All_Bar <- ggplot(PORFAVOR, aes(PORFAVOR$Map, PORFAVOR$Map_Mean)) + geom_bar(aes(fill = AgeGrp), width = 0.6, position = position_dodge(width=0.7), stat="identity") + scale_fill_manual(values=c("grey87", "grey51"), labels = c("5-year-olds", "6-year-olds and older")) + labs( y="Accuracy (out of 17)") + scale_y_continuous (breaks=c(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17), limits = c(0,17), expand = c(0,0)) + scale_x_discrete(limits=c("QW","NW","QN"), expand = c(.2,0),labels = c("Quantity and Word", "Numeral and Word", "Quantity and Numeral")) + theme_bw() + theme(legend.position="top", legend.title = element_blank(), axis.title.x=element_blank(), panel.border = element_blank(), panel.grid.major.x = element_blank(), panel.grid.minor.x = element_blank(), panel.grid.minor.y = element_blank(), axis.line = element_line(colour = "black"), text = element_text(size=12, family="Times New Roman"))
-        All_Bar + geom_errorbar(aes(ymax= PORFAVOR$upper, ymin=PORFAVOR$lower, group=AgeGrp), width=.5, position=position_dodge(0.7), data=PORFAVOR)
 
 
 ## ANOVAS ##
