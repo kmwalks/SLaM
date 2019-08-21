@@ -271,9 +271,14 @@ sd(Map_HBE$SumTotal_NumeralWord, na.rm = TRUE)
     
     ## AGE GROUPS: QW vs QN ##
        #5
-       
-       
+       t.test(Map5$AvgCorrect_Quantity.Word_Word.Quantity, Map5$AvgCorrect_Quantity.Numeral_Numeral.Quantity, paired = TRUE, alternative = "two.sided")
+       cohen.d(Map5$AvgCorrect_Quantity.Word_Word.Quantity, Map5$AvgCorrect_Quantity.Numeral_Numeral.Quantity,pooled=TRUE,paired=FALSE, na.rm=FALSE, hedges.correction=FALSE, conf.level=0.95,noncentral=FALSE)
        #6 & up
-    
-    
+       t.test(Map6up$AvgCorrect_Quantity.Word_Word.Quantity, Map6up$AvgCorrect_Quantity.Numeral_Numeral.Quantity, paired = TRUE, alternative = "two.sided")
+       cohen.d(Map6up$AvgCorrect_Quantity.Word, Map6up$AvgCorrect_Quantity.Numeral_Numeral.Quantity,pooled=TRUE,paired=FALSE, na.rm=FALSE, hedges.correction=FALSE, conf.level=0.95,noncentral=FALSE)
+       
+       
+       
+       
+       
     
