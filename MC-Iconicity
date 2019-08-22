@@ -84,28 +84,24 @@ I_Zstat
 abs(I_Zstat)/sqrt(17)
 
 
-
-
-### CURRENTLY HERE WITH CODE. DO NOT HAVE FOLLOWING COLUMNS IN SPREADSHEET ###
-
-#total # of trials answered
-mean(MagComp_subset$Matching_Answered, na.rm = TRUE)
-mean(MagComp_subset$Nonmatching_Answered, na.rm = TRUE)
+# total # of trials answered
+mean(MC_I$Matching_Answered, na.rm = TRUE) #17 trials total
+mean(MC_I$Nonmatching_Answered, na.rm = TRUE) #39 trials total
 
 # total # of trials correct
-mean(MagComp_subset$Matching_Correct, na.rm = TRUE)
-mean(MagComp_subset$Nonmatching_Correct, na.rm = TRUE)
-
-
-
-
+mean(MC_I$Matching_PropCorr, na.rm = TRUE)
+mean(MC_I$Nonmatching_PropCorr, na.rm = TRUE)
 
 # Average number of trials completed in entire ASL handshape set
-mean(MagComp_subset$Total_Complete_Han, na.rm = TRUE)
+mean(MC_I$Total_Complete_Han, na.rm = TRUE) #out of 56 trials
+
+
+
+
+
+## NOT SURE WHAT THE FOLLOWING INFO IS, ADDED COLUMNS TO INCLUDE THESE COMPARISONS ##
 
 #EXCEPT 
-
-
 ## Hearing kids on 3 vs. 6, 7, 8, 9
 ## COMPARISONS WE DON'T HAVE: 9 vs 6 or 6 vs 9
 
