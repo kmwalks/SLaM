@@ -51,30 +51,24 @@ View(MC_I)
 
 
 
+## COUNT VS PROPORTION CORRECT ## 
+ggplot(MC_I, aes(x=MC_I$Matching_PropCorr, y=..count..)) + geom_dotplot(method = "histodot") + labs(x="Proportion Correct", y="Count") + ggtitle("'Same Number of Fingers Extended' Trials") + theme(text = element_text(size=14), plot.title = element_text(hjust = 0.5)) + coord_cartesian(xlim = c(0.5, 1))
+ggplot(MC_I, aes(x=MC_I$Nonmatching_PropCorr, y=..count..)) + geom_dotplot(method = "histodot") +  ggtitle("'Different Number of Fingers Extended' Trials") + labs(x="Proportion Correct", y="Count") + theme(text = element_text(size=14), plot.title = element_text(hjust = 0.5)) + coord_cartesian(xlim = c(0.5, 1), ylim = c(0, 0.5))
+
+
+## AGE VS PROPORTION CORRECT ##
+ggplot(MC_I, aes(x=MC_I$Age_Rounded, y=MC_I$Nonmatching_PropCorr)) + geom_point() +  ggtitle("'Different Number of Fingers Extended' Trials") + labs(y="Proportion Correct", x="Age (Years)") + theme(text = element_text(size=14), plot.title = element_text(hjust = 0.5)) + coord_cartesian(xlim = c(5, 9), ylim = c(0.5, 1))
+ggplot(MC_I, aes(x=MC_I$Age_Rounded, y=MC_I$Matching_PropCorr)) + geom_point() +  ggtitle("'Same Number of Fingers Extended' Trials") + labs(y="Proportion Correct", x="Age (Years)") + theme(text = element_text(size=14), plot.title = element_text(hjust = 0.5)) + coord_cartesian(xlim = c(5, 9), ylim = c(0.5, 1))
 
 
 
-
-
-ggplot(MagComp_subset, aes(x=Matching_propcorr, y=..count..)) + geom_dotplot(method = "histodot") + labs(x="Proportion Correct", y="Count") + ggtitle("'Same Number of Fingers Extended' Trials") + theme(text = element_text(size=14), plot.title = element_text(hjust = 0.5)) + coord_cartesian(xlim = c(0.5, 1))
-ggplot(MagComp_subset, aes(x=Nonmatching_propcorr, y=..count..)) + geom_dotplot(method = "histodot") +  ggtitle("'Different Number of Fingers Extended' Trials") + labs(x="Proportion Correct", y="Count") + theme(text = element_text(size=14), plot.title = element_text(hjust = 0.5)) + coord_cartesian(xlim = c(0.5, 1), ylim = c(0, 0.5))
-
-ggplot(MagComp_subset, aes(x=Age, y=Nonmatching_propcorr)) + geom_point() +  ggtitle("'Different Number of Fingers Extended' Trials") + labs(y="Proportion Correct", x="Age (Years)") + theme(text = element_text(size=14), plot.title = element_text(hjust = 0.5)) + coord_cartesian(xlim = c(5, 9), ylim = c(0.5, 1))
-
-
-ggplot(MagComp_subset, aes(x=Age, y=Matching_propcorr)) + geom_point() +  ggtitle("'Same Number of Fingers Extended' Trials") + labs(y="Proportion Correct", x="Age (Years)") + theme(text = element_text(size=14), plot.title = element_text(hjust = 0.5)) + coord_cartesian(xlim = c(5, 9), ylim = c(0.5, 1))
-
-# Compare Matching to chance
-
-t.test(MagComp_subset$Matching_propcorr, mu=0.5) #above chance on matching
-
- 
-
+## Compare Matching to chance ##
+t.test(MC_I$Matching_PropCorr, mu=0.5) #above chance on matching
 
 # Compare nonmatching to chance
-t.test(MagComp_subset$Nonmatching_propcorr, mu=0.5)
+t.test(MC_I$Nonmatching_PropCorr, mu=0.5)
 
-TEST HOMOGENEITY OF VARIANCE OF MATCHING VS NON-MATCHING
+## TEST HOMOGENEITY OF VARIANCE OF MATCHING VS NON-MATCHING ##
 fligner.test(dataset~groups, data=dataframe) # fligner test supposed to be robust to departures from normality
 
 #Compare Matching to Nonmatching - MIGHT NEED NONPARAMETRIC BC HOMOGENEITY OF VARIANCE NOT ASSUMED
