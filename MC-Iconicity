@@ -46,9 +46,8 @@ View(MagComp)
 MC_subset <- subset(MagComp, MagComp$Including.in.Study=='Yes' & MagComp$Group_4cat == 'English Early' & MagComp$Form...A.or.B. !='') # This can be amended as necessary for the specific analyses 
 View(MC_subset)
 
-MC_I <- MC_subset [c(1:13,134:195)] #data frame with only background & ASL handshape columns
+MC_I <- MC_subset [c(1:13,134:197)] #data frame with only background & ASL handshape columns
 View(MC_I)
-
 
 
 ## COUNT VS PROPORTION CORRECT ## 
