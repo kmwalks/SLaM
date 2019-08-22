@@ -46,14 +46,11 @@ View(MagComp)
 MC_subset <- subset(MagComp, MagComp$Including.in.Study=='Yes' & MagComp$Group_4cat == 'English Early' & MagComp$Form...A.or.B. !='') # This can be amended as necessary for the specific analyses 
 View(MC_subset)
 
+MC_I <- MC_subset [c(1:14,134:193)] #data frame with only background & ASL handshape columns
+View(MC_I)
 
 
 
-
-
-
-## TRYING TO USE TO SELECT ONLY ASL HANDSHAPE COLUMNS - NOT WORKING YET
-# dplyr::select(MagComp_subset, one_of(c(starts_with("Han"),starts_with("Matching"),starts_with("Nonmatching"))))
 
 ggplot(MagComp_subset, aes(x=Matching_propcorr, y=..count..)) + geom_dotplot(method = "histodot") + labs(x="Proportion Correct", y="Count") + ggtitle("'Same Number of Fingers Extended' Trials") + theme(text = element_text(size=14), plot.title = element_text(hjust = 0.5)) + coord_cartesian(xlim = c(0.5, 1))
 ggplot(MagComp_subset, aes(x=Nonmatching_propcorr, y=..count..)) + geom_dotplot(method = "histodot") +  ggtitle("'Different Number of Fingers Extended' Trials") + labs(x="Proportion Correct", y="Count") + theme(text = element_text(size=14), plot.title = element_text(hjust = 0.5)) + coord_cartesian(xlim = c(0.5, 1), ylim = c(0, 0.5))
