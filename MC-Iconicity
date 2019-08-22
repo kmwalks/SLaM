@@ -61,18 +61,33 @@ ggplot(MC_I, aes(x=MC_I$Age_Rounded, y=MC_I$Nonmatching_PropCorr)) + geom_point(
 ggplot(MC_I, aes(x=MC_I$Age_Rounded, y=MC_I$Matching_PropCorr)) + geom_point() +  ggtitle("'Same Number of Fingers Extended' Trials") + labs(y="Proportion Correct", x="Age (Years)") + theme(text = element_text(size=14), plot.title = element_text(hjust = 0.5)) + coord_cartesian(xlim = c(5, 9), ylim = c(0.5, 1))
 
 
-
 ## Compare Matching to chance ##
 t.test(MC_I$Matching_PropCorr, mu=0.5) #above chance on matching
+wilcox.test(MC_I$Matching_PropCorr, mu = .5, alternative = "greater", exact = FALSE)
 
 # Compare nonmatching to chance
-t.test(MC_I$Nonmatching_PropCorr, mu=0.5)
+t.test(MC_I$Nonmatching_PropCorr, mu=0.5) #above chance on nonmatching
+wilcox.test(MC_I$Nonmatching_PropCorr, mu=0.5, alternative = "greater", exact = FALSE)
+
+
 
 ## TEST HOMOGENEITY OF VARIANCE OF MATCHING VS NON-MATCHING ##
-fligner.test(dataset~groups, data=dataframe) # fligner test supposed to be robust to departures from normality
+fligner.test(MC_I$Matching_PropCorr, MC_I$Nonmatching_PropCorr) # fligner test supposed to be robust to departures from normality
 
-#Compare Matching to Nonmatching - MIGHT NEED NONPARAMETRIC BC HOMOGENEITY OF VARIANCE NOT ASSUMED
-t.test(x=MagComp_subset$Matching_propcorr, y=MagComp_subset$Nonmatching_propcorr, paired = TRUE)
+## Compare Matching to Nonmatching - MIGHT NEED NONPARAMETRIC BC HOMOGENEITY OF VARIANCE NOT ASSUMED ##
+t.test(x=MC_I$Matching_PropCorr, y=MC_I$Nonmatching_PropCorr, paired = TRUE) #p-value > 0.05
+
+## Compare Matching to Nonmatching: NONPARAMETRIC WILCOXON SIGNED RANK TEST ##
+I <- wilcox.test(MC_I$Nonmatching_PropCorr, MC_I$Matching_PropCorr, paired=TRUE, exact=FALSE) #p-value > 0.05
+I
+I_Zstat<-qnorm(I$p.value/2)
+I_Zstat
+abs(I_Zstat)/sqrt(17)
+
+
+
+
+### CURRENTLY HERE WITH CODE. DO NOT HAVE FOLLOWING COLUMNS IN SPREADSHEET ###
 
 #total # of trials answered
 mean(MagComp_subset$Matching_Answered, na.rm = TRUE)
@@ -81,6 +96,10 @@ mean(MagComp_subset$Nonmatching_Answered, na.rm = TRUE)
 # total # of trials correct
 mean(MagComp_subset$Matching_Correct, na.rm = TRUE)
 mean(MagComp_subset$Nonmatching_Correct, na.rm = TRUE)
+
+
+
+
 
 # Average number of trials completed in entire ASL handshape set
 mean(MagComp_subset$Total_Complete_Han, na.rm = TRUE)
