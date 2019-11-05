@@ -33,7 +33,7 @@ library(olsrr)
       
       
 #3. Import Data [[make sure is most recent version and saved as csv]]
-      Map <- read.csv("Mapping_Coding_KW_190709.csv", na.strings = "N/A")
+      Map <- read.csv("Mapping_Coding_CH_191104.csv", na.strings = "N/A")
       View(Map)
       # <- saves MC as an object, read.csv() imports it 
       
