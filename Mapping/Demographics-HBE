@@ -38,8 +38,259 @@ library(olsrr)
       # <- saves MC as an object, read.csv() imports it 
       
 #4. Subset overall data with particular parameters (i.e. including P, coded, test using, age range)
-      Map_EE <- subset(Map, Map$Coded. == "Yes"  & Map$Group_4cat == "English Early" & Map$Age_Rounded<10 & Map$Including.in.Study == "Yes")
+      Map_EE <- subset(Map, Map$Group_4cat == "English Early" & Map$Age_Rounded<10 & Map$Including.in.Study == "Yes")
       View(Map_EE)
+      #LATER ADD Map$Coded. == "Yes"
+
+##### JUSTIN'S CODES BELOW #### 
+
+Total_Not_Inc_Study <- subset(MC_Data, MC_Data$Including.in.Study. == "No" | MC_Data$Including.in.Study. == "")
+nrow(Total_Not_Inc_Study)
+View(Total_Not_Inc_Study)
+# 36 total kids not included in study
+
+Tested_Not_Inc <- subset(MC_Data, MC_Data$Including.in.Study. != "Yes" & MC_Data$Date.Tested != "")
+View(Tested_Not_Inc)
+# 11 of 36 kids not included in study were tested
+
+Total_Inc_Study <- subset(MC_Data, MC_Data$Including.in.Study. == "Yes")
+View(Total_Inc_Study)
+# 201 total kids included in study
+
+EE_Not_Inc <- subset(Total_Not_Inc_Study, Total_Not_Inc_Study$Group_4cat == "English Early" & Total_Not_Inc_Study$Date.Tested != "")
+# 3 of 11 kids tested but not included are EE
+EL_Not_Inc <- subset(Total_Not_Inc_Study, Total_Not_Inc_Study$Group_4cat == "English Later" & Total_Not_Inc_Study$Date.Tested != "")
+# 1 of 11 kids tested but not included are EL
+AE_Not_Inc <- subset(Total_Not_Inc_Study, Total_Not_Inc_Study$Group_4cat == "ASL Early" & Total_Not_Inc_Study$Date.Tested != "")
+# 2 of 11 kids tested but not included are AE
+AL_Not_Inc <- subset(Total_Not_Inc_Study, Total_Not_Inc_Study$Group_4cat == "ASL Later" & Total_Not_Inc_Study$Date.Tested != "")
+# 5 of 11 kids tested but not included are AL
+Rest_Not_Inc <- subset(Total_Not_Inc_Study, is.na(Total_Not_Inc_Study$Date.Tested))
+# 25 remaining kids listed as not included were not tested
+
+EE_Inc <- subset(Total_Inc_Study, Total_Inc_Study$Group_4cat == "English Early")
+# 67 of 201 kids included are EE
+EL_Inc <- subset(Total_Inc_Study, Total_Inc_Study$Group_4cat == "English Later")
+# 52 of 201 kids included are EL
+AE_Inc <- subset(Total_Inc_Study, Total_Inc_Study$Group_4cat == "ASL Early")
+# 43 of 201 kids included are AE
+AL_Inc <- subset(Total_Inc_Study, Total_Inc_Study$Group_4cat == "ASL Later")
+# 39 of 201 kids included are AL
+
+rnames <- c("Including in Study","Not Including in Study")
+cnames <- c("English Early","English Later","ASL Early","ASL Later")
+Table_IncStudy <- matrix(c(nrow(EE_Inc),nrow(EL_Inc),nrow(AE_Inc),nrow(AL_Inc),nrow(EE_Not_Inc),nrow(EL_Not_Inc),nrow(AE_Not_Inc),nrow(AL_Not_Inc)), nrow=2, ncol=4, byrow=TRUE, dimnames=list(rnames,cnames))
+Table_IncStudy
+chisq.test(Table_IncStudy)
+# Test statistic is 0.8718, p-value is 0.8322, do not reject null, conclude that status of inclusion in study is not dependent on group 4 category
+
+# AGE DESCRIPTIVE STATISTICS
+# Age variable stored as factor. Need to convert to character, then to numeric (to preserve actual numeric values) before finding descriptive statistics.
+
+min(EE_Inc$Age, na.rm=TRUE) # 3.0
+min(EL_Inc$Age, na.rm=TRUE) # 3.1
+min(AE_Inc$Age, na.rm=TRUE) # 3.4
+min(AL_Inc$Age, na.rm=TRUE) # 3.1
+aggregate(Age ~ Group_4cat, data=Total_Inc_Study, min)
+
+max(EE_Inc$Age, na.rm=TRUE) # 7.3
+max(EL_Inc$Age, na.rm=TRUE) # 6.6
+max(AE_Inc$Age, na.rm=TRUE) # 7.6
+max(AL_Inc$Age, na.rm=TRUE) # 7.5
+aggregate(Age ~ Group_4cat, data=Total_Inc_Study, max) 
+
+median(EE_Inc$Age, na.rm=TRUE) # 4.8
+median(EL_Inc$Age, na.rm=TRUE) # 4.95
+median(AE_Inc$Age, na.rm=TRUE) # 4.8
+median(AL_Inc$Age, na.rm=TRUE) # 5.9
+aggregate(Age ~ Group_4cat, data=Total_Inc_Study, median)
+
+mean(EE_Inc$Age, na.rm=TRUE) # 4.768657
+mean(EL_Inc$Age, na.rm=TRUE) # 4.948077
+mean(AE_Inc$Age, na.rm=TRUE) # 5.065116
+mean(AL_Inc$Age, na.rm=TRUE) # 5.589744
+aggregate(Age ~ Group_4cat, data=Total_Inc_Study, mean)
+
+sd(EE_Inc$Age, na.rm=TRUE) # 0.7922368
+sd(EL_Inc$Age, na.rm=TRUE) # 0.9808940
+sd(AE_Inc$Age, na.rm=TRUE) # 1.1835950
+sd(AL_Inc$Age, na.rm=TRUE) # 1.0813721
+aggregate(Age ~ Group_4cat, data=Total_Inc_Study, sd)
+
+range(EE_Inc$Age, na.rm=TRUE) # 4.3
+range(EL_Inc$Age, na.rm=TRUE) # 3.5
+range(AE_Inc$Age, na.rm=TRUE) # 4.2
+range(AL_Inc$Age, na.rm=TRUE) # 4.4
+aggregate(Age ~ Group_4cat, data=Total_Inc_Study, range)
+
+# SES DESCRIPTIVE STATISTICS
+# SES variable stored as factor. Need to convert to character, then to numeric (to preserve actual numeric values) before finding descriptive statistics.
+
+min(EE_Inc$SES..8.66., na.rm=TRUE) # 8
+min(EL_Inc$SES..8.66., na.rm=TRUE) # 3
+min(AE_Inc$SES..8.66., na.rm=TRUE) # 11
+min(AL_Inc$SES..8.66., na.rm=TRUE) # 8
+aggregate(SES..8.66. ~ Group_4cat, data=Total_Inc_Study, min)
+
+max(EE_Inc$SES..8.66., na.rm=TRUE) # 66
+max(EL_Inc$SES..8.66., na.rm=TRUE) # 66
+max(AE_Inc$SES..8.66., na.rm=TRUE) # 66
+max(AL_Inc$SES..8.66., na.rm=TRUE) # 62
+aggregate(SES..8.66. ~ Group_4cat, data=Total_Inc_Study, max)
+
+median(EE_Inc$SES..8.66., na.rm=TRUE) # 54.5
+median(EL_Inc$SES..8.66., na.rm=TRUE) # 52.5
+median(AE_Inc$SES..8.66., na.rm=TRUE) # 52.0
+median(AL_Inc$SES..8.66., na.rm=TRUE) # 44.0
+aggregate(SES..8.66. ~ Group_4cat, data=Total_Inc_Study, median)
+
+mean(EE_Inc$SES..8.66., na.rm=TRUE) # 53.59167
+mean(EL_Inc$SES..8.66., na.rm=TRUE) # 46.92308
+mean(AE_Inc$SES..8.66., na.rm=TRUE) # 46.60256
+mean(AL_Inc$SES..8.66., na.rm=TRUE) # 39.52703
+aggregate(SES..8.66. ~ Group_4cat, data=Total_Inc_Study, mean)
+
+sd(EE_Inc$SES..8.66., na.rm=TRUE) # 11.39748
+sd(EL_Inc$SES..8.66., na.rm=TRUE) # 15.80686
+sd(AE_Inc$SES..8.66., na.rm=TRUE) # 16.58161
+sd(AL_Inc$SES..8.66., na.rm=TRUE) # 17.95826
+aggregate(SES..8.66. ~ Group_4cat, data=Total_Inc_Study, sd)
+
+range(EE_Inc$SES..8.66., na.rm=TRUE) # 58
+range(EL_Inc$SES..8.66., na.rm=TRUE) # 63
+range(AE_Inc$SES..8.66., na.rm=TRUE) # 55
+range(AL_Inc$SES..8.66., na.rm=TRUE) # 54
+aggregate(SES..8.66. ~ Group_4cat, data=Total_Inc_Study, range)
+
+Incorrect_SES <- subset(MC_Data, MC_Data$SES..8.66. < 8 | MC_Data$SES..8.66. == "")
+
+# ANOVA for mean Age and mean SES between groups
+# Violated variances assumption, re-run using kruskal-wallis test (non-parametric)
+
+# mean Age
+# Ho : mu1=...=mu4
+# Ha : mu2=...≠...mu4
+# alpha level: 0.05
+# Assumptions
+shapiro.test(EE_Inc$Age) # p=0.1889>0.05, do not reject null, assume normality
+shapiro.test(EL_Inc$Age) # p=0.1227>0.05, do not reject null, assume normality
+shapiro.test(AE_Inc$Age) # p=0.07453>0.05, do not reject null, assume normality
+shapiro.test(AL_Inc$Age) # p=0.5485>0.05, do not reject null, assume normality
+
+bartlett.test(Total_Inc_Study$Age, Total_Inc_Study$Group_4cat) # p=0.01563<0.05, reject the null hypothesis, do not assume variances are equal
+# sample sds are relatively close, use that to assume normality?
+
+Age_ANOVA <- aov(Total_Inc_Study$Age ~ Total_Inc_Study$Group_4cat)
+summary(Age_ANOVA) # p=0.00153<0.05, reject null, conclude that population means for Age are not equal between groups, which ones differ?
+
+qqPlot(Age_ANOVA)
+Age_residuals <- residuals(Age_ANOVA)
+shapiro.test(Age_residuals)
+
+plot(Age_ANOVA,1)
+bartlett.test(Age ~ Group_4cat, data=Total_Inc_Study)
+leveneTest(Age ~ Group_4cat, data=Total_Inc_Study)
+
+par(ask=TRUE)
+opar <- par(no.readonly=TRUE) 
+TukeyHSD(Age_ANOVA)
+par(las=1) 
+par(mar=c(5,8,4,2)) 
+plot(TukeyHSD(Age_ANOVA))
+par(opar)
+
+kruskal.test(Age ~ Group_4cat, data = Total_Inc_Study)
+pairwise.wilcox.test(Total_Inc_Study$Age, Total_Inc_Study$Group_4cat, p.adjust.method="none")
+# Which p-value adjustment method should be used?
+
+# Normality assumption violated for SES ANOVA but since ANOVA is relatively good at working without this assumption we will still run an ANOVA
+
+***
+
+# mean SES
+# Ho : mu1=...=mu4
+# Ha : mu2=...≠...mu4
+# alpha level: 0.05
+# Assumptions
+
+Labels <- factor(Total_Inc_Study$Group_4cat, levels=c("English Early","English Later","ASL Early","ASL Later"), labels = c("English Early","English Later","ASL Early","ASL Later"))
+sm.density.compare(Total_Inc_Study$SES..8.66., Total_Inc_Study$Group_4cat, xlab="Socioeconomic Status", lwd=3,xlim=c(3,66),col=c(4,6,2,3))
+title(main="SES Distribution for each Group 4 Category")
+colfill<-c(2,3,4,6)
+legend(3,0.033, levels(Labels), fill=colfill)
+
+shapiro.test(EE_Inc$SES..8.66.) # p=0.1.577e-08<0.05, reject null, can't assume normality
+shapiro.test(EL_Inc$SES..8.66.) # p=2.603e-07<0.05, reject null, can't assume normality
+shapiro.test(AE_Inc$SES..8.66.) # p=0.002099<0.05, reject null, can't assume normality
+shapiro.test(AL_Inc$SES..8.66.) # p=0.005926<0.05, reject null, can't assume normality
+# This assumption really fell apart
+
+bartlett.test(Total_Inc_Study$SES..8.66., Total_Inc_Study$Group_4cat) # p=0.7661>0.05, do not reject the null hypothesis, assume variances are equal
+
+# All samples drawn independently
+
+SES_ANOVA <- aov(Total_Inc_Study$SES..8.66. ~ Total_Inc_Study$Group_4cat)
+summary(SES_ANOVA) # p=0.105>0.05, do not reject null, conclude that population means for SES are equal between groups
+
+qqPlot(SES_ANOVA)
+SES_residuals <- residuals(SES_ANOVA)
+shapiro.test(SES_residuals)
+
+plot(SES_ANOVA,1)
+bartlett.test(SES..8.66. ~ Group_4cat, data=Total_Inc_Study)
+leveneTest(SES..8.66. ~ Group_4cat, data=Total_Inc_Study)
+
+par(ask=TRUE)
+opar <- par(no.readonly=TRUE) 
+TukeyHSD(SES_ANOVA)
+par(las=1) 
+par(mar=c(5,8,4,2)) 
+plot(TukeyHSD(SES_ANOVA))
+par(opar)
+
+kruskal.test(SES..8.66. ~ Group_4cat, data = Total_Inc_Study)
+pairwise.wilcox.test(Total_Inc_Study$SES..8.66.,Total_Inc_Study$Group_4cat,p.adjust.method="none")
+
+
+# Find observations with missing Age and SES values
+which(is.na(Total_Inc_Study$Age)) # 4 observations missing Age value
+Missing_Age <- Total_Inc_Study[which(is.na(Total_Inc_Study$Age)),3]
+Missing_Age
+
+which(is.na(Total_Inc_Study$SES)) # 14 observations missing SES value
+Missing_SES <- Total_Inc_Study[which(is.na(Total_Inc_Study$SES..8.66.)),3]
+Missing_SES
+
+# Merging old and new data
+colnames(Old_MC_Data)[12] <- "SES..8.66."
+Merge <- merge(Old_MC_Data[,c("Age","SES..8.66.")], MC_Data[,c("Age","SES..8.66.")], by = "SUBJECT.ID")
+
+comparison <- compare(Old_MC_Data, MC_Data)
+comparison$tM
+
+anti_join(Old_MC_Data, MC_Data)
+
+typeof(Old_MC_Data$GiveN_Small_Ceiling)
+typeof(MC_Data$GiveN_Small_Ceiling)
+
+MergeData <- data.frame(Old_SUBJECT.ID = Old_MC_Data$SUBJECT.ID[c(1:47,51:140,142:223)], New_SUBJECT.ID = MC_Data$SUBJECT.ID[1:219], Old_Age = Old_MC_Data$Age[c(1:47,51:140,142:223)], New_Age = MC_Data$Age[1:219], Old_SES = Old_MC_Data$SES..8.66.[c(1:47,51:140,142:223)], New_SES = MC_Data$SES..8.66.[1:219])
+MergeData$EqualAge <- with(MergeData, Old_Age==New_Age)
+MergeData$EqualSES <- with(MergeData, Old_SES==New_SES)
+# Had to disclude rows to match everything up, way to include everything and still match rows up? How do I merge data sets with an unequal number of rows?
+as.numeric(MergeData$EqualAge)
+as.numeric(MergeData$EqualSES)
+length(MergeData[MergeData$EqualAge=="",])
+which(MergeData$EqualAge=="NA")
+
+MergeData <- data.frame(Old_SUBJECT.ID = c(Old_MC_Data$SUBJECT.ID[c(1:47,51:140,142:223)],1:9), New_SUBJECT.ID = MC_Data$SUBJECT.ID[1:228], Old_Age = c(Old_MC_Data$Age[c(1:47,51:140,142:223)],1:9), New_Age = MC_Data$Age[1:228], Old_SES = c(Old_MC_Data$SES..8.66.[c(1:47,51:140,142:223)],1:9), New_SES = MC_Data$SES..8.66.[1:228])
+MC_Data$SUBJECT.ID[1:223]
+
+
+
+
+
+
+
 
 #Other
       #Analyze Participant Pool
