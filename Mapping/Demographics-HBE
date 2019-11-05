@@ -40,9 +40,9 @@ library(olsrr)
   
   ## 11.5.19 ##
 
-## NEED TO DO FOR ONLY ENGLISH! ## 
+Map_EE_Demo <- subset(Map, Map$Group_4cat == "English Early" & Map$Age_Rounded<10)
 
-Total_Not_Inc_Study <- subset(Map, Map$Including.in.Study. == "No" | Map$Including.in.Study. == "")
+Total_Not_Inc_Study <- subset(Map_EE_Demo, Map_EE_Demo$Including.in.Study. == "No" | Map_EE_Demo$Including.in.Study. == "")
 nrow(Total_Not_Inc_Study)
 View(Total_Not_Inc_Study)
 # total kids not included in study
@@ -50,10 +50,8 @@ View(Total_Not_Inc_Study)
 
 
 ## Subset overall data with particular parameters (i.e. including P, coded, test using, age range)
-      Map_EE <- subset(Map, Map$Group_4cat == "English Early" & Map$Age_Rounded<10 & Map$Including.in.Study == "Yes")
+      Map_EE <- subset(Map, Map$Coded. == "Yes" & Map$Group_4cat == "English Early" & Map$Age_Rounded<10 & Map$Including.in.Study == "Yes")
       View(Map_EE)
-      #LATER ADD Map$Coded. == "Yes"
-      
       
       
 
