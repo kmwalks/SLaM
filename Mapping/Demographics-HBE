@@ -37,142 +37,87 @@ library(olsrr)
       View(Map)
       # <- saves MC as an object, read.csv() imports it    
   
-  
-  ## 11.5.19 ##
-
-Map_EE_Demo <- subset(Map, Map$Group_4cat == "English Early" & Map$Age_Rounded<10)
-
-Total_Not_Inc_Study <- subset(Map_EE_Demo, Map_EE_Demo$Including.in.Study. == "No" | Map_EE_Demo$Including.in.Study. == "")
-nrow(Total_Not_Inc_Study)
-View(Total_Not_Inc_Study)
-# total kids not included in study
-
-
-
-## Subset overall data with particular parameters (i.e. including P, coded, test using, age range)
+      
+      ## WHEN HAVE FINALIZED DATA: Subset overall data with particular parameters (i.e. including P, coded, test using, age range)
       Map_EE <- subset(Map, Map$Coded. == "Yes" & Map$Group_4cat == "English Early" & Map$Age_Rounded<10 & Map$Including.in.Study == "Yes")
       View(Map_EE)
-      
-      
+  
+ ## BASIC DEMOGRAPHICS ## 
+
+      Map_EE_Demo <- subset(Map, Map$Group_4cat == "English Early" & Map$Age_Rounded<10)
+
+      Total_Inc_Study <- subset(Map_EE_Demo, Map_EE_Demo$Including.in.Study. == "Yes")
+      View(Total_Inc_Study)
+      # total kids included in study
+
+      Total_Not_Inc_Study <- subset(Map_EE_Demo, Map_EE_Demo$Including.in.Study. == "No" | Map_EE_Demo$Including.in.Study. == "")
+      nrow(Total_Not_Inc_Study)
+      View(Total_Not_Inc_Study)
+      # total kids not included in study
+
+      Tested_Not_Inc <- subset(Map_EE_Demo, Map_EE_Demo$Including.in.Study. != "Yes" & MMap_EE_Demo$Date.Tested != "")
+      View(Tested_Not_Inc)
+      # kids not included in study that were tested. Need to explain why were not included!
+
+
+## AGE DESCRIPTIVE STATISTICS ##
+      # Age variable stored as factor. Need to convert to character, then to numeric (to preserve actual numeric values) before finding descriptive statistics.
+
+      min(Total_Inc_Study$Age, na.rm=TRUE)
+      max(Total_Inc_Study$Age, na.rm=TRUE) 
+      median(Total_Inc_Study$Age, na.rm=TRUE) 
+      mean(Total_Inc_Study$Age, na.rm=TRUE) 
+      sd(Total_Inc_Study$Age, na.rm=TRUE) 
+      range(Total_Inc_Study$Age, na.rm=TRUE) 
+
+
+## SES DESCRIPTIVE STATISTICS ##
+      # SES variable stored as factor. Need to convert to character, then to numeric (to preserve actual numeric values) before finding descriptive statistics.
+
+      min(Total_Inc_Study$SES..8.66., na.rm=TRUE) 
+      max(Total_Inc_Study$SES..8.66., na.rm=TRUE) 
+      median(Total_Inc_Study$SES..8.66., na.rm=TRUE) 
+      mean(Total_Inc_Study$SES..8.66., na.rm=TRUE) 
+      sd(Total_Inc_Study$SES..8.66., na.rm=TRUE) 
+      range(Total_Inc_Study$SES..8.66., na.rm=TRUE) 
+
+      Incorrect_SES <- subset(Map_EE_Demo, Map_EE_Demo$SES..8.66. < 8 | Map_EE_Demo$SES..8.66. == "")
+
+
+## Find observations with missing Age and SES values ##
+      which(is.na(Total_Inc_Study$Age)) 
+      Missing_Age <- Total_Inc_Study[which(is.na(Total_Inc_Study$Age)),3]
+      Missing_Age
+
+      which(is.na(Total_Inc_Study$SES)) 
+      Missing_SES <- Total_Inc_Study[which(is.na(Total_Inc_Study$SES..8.66.)),3]
+      Missing_SES
+
 
 ##### JUSTIN'S CODES BELOW #### 
 
+#Other
+      #Analyze Participant Pool
+      sum(Map_EE$Group_4cat == 'English Early', na.rm=TRUE)
+      
+#Plots
+      #Scatterplot Sum Correct Total x Age 
+      EarlyTiming <- ggplot(Map_EE, aes(x=Map_EE$Age_Rounded, y=Map_EE$SumCorrectTotal_All)) + geom_point(aes(shape=Map_EE$Group_4cat, color=Map_EE$Group_4cat))+ labs(x = "Age (years)", y = "Sum Correct Total") + theme(legend.position="none") 
+      EarlyTiming
+      
+      #Violin/Box Plot SES
+      map.n <- function(x){return(c(y = median(x)*1.05, label = length(x))) }
+      mean.n <- function(x){return(c(y= median(x)*0.97, label = round(mean(x), 2)))}
+      ggplot(Map_EE, aes(x = Map_EE$Group_4cat, y = Map_EE$SES_range_8_to_66, fill = Map_EE$Group_4cat)) + geom_violin() + geom_boxplot(width = 0.2) + labs (x= "Language Group", y = "SES") + stat_summary(fun.data = map.n, geom = "text", fun.y = median) + stat_summary(fun.data = mean.n, geom= "text", fun.y=mean, color= "gainsboro") + theme(legend.position="none") 
 
+      #Violin Age
+      ggplot(Map_EE, aes(x=Map_EE$Group_4cat, y=Map_EE$Age_Rounded, fill=Map_EE$Group_4cat)) + geom_violin() + labs(x="Timing of Language Exposure", y= "Age (years)") + theme(legend.position="none") 
+      
+      #Violin Age x Sex
+      map.n <- function(x){return(c(y = median(x)*1.05, label = length(x))) }
+      mean.n <- function(x){return(c(y= median(x)*0.97, label = round(mean(x), 2)))}
+      ggplot(Map_EE, aes(x=Map_EE$M.F, y=Map_EE$Age_Rounded, fill=Map_EE$Group_4cat)) + geom_violin() + labs(x="Timing of Language Exposure", y= "Age (years)") + theme(legend.position="none") + stat_summary(fun.data = map.n, geom = "text", fun.y = median) + stat_summary(fun.data = mean.n, geom= "text", fun.y=mean, color= "gainsboro") + theme(legend.position="none") 
 
-Tested_Not_Inc <- subset(MC_Data, MC_Data$Including.in.Study. != "Yes" & MC_Data$Date.Tested != "")
-View(Tested_Not_Inc)
-# 11 of 36 kids not included in study were tested
-
-Total_Inc_Study <- subset(MC_Data, MC_Data$Including.in.Study. == "Yes")
-View(Total_Inc_Study)
-# 201 total kids included in study
-
-EE_Not_Inc <- subset(Total_Not_Inc_Study, Total_Not_Inc_Study$Group_4cat == "English Early" & Total_Not_Inc_Study$Date.Tested != "")
-# 3 of 11 kids tested but not included are EE
-EL_Not_Inc <- subset(Total_Not_Inc_Study, Total_Not_Inc_Study$Group_4cat == "English Later" & Total_Not_Inc_Study$Date.Tested != "")
-# 1 of 11 kids tested but not included are EL
-AE_Not_Inc <- subset(Total_Not_Inc_Study, Total_Not_Inc_Study$Group_4cat == "ASL Early" & Total_Not_Inc_Study$Date.Tested != "")
-# 2 of 11 kids tested but not included are AE
-AL_Not_Inc <- subset(Total_Not_Inc_Study, Total_Not_Inc_Study$Group_4cat == "ASL Later" & Total_Not_Inc_Study$Date.Tested != "")
-# 5 of 11 kids tested but not included are AL
-Rest_Not_Inc <- subset(Total_Not_Inc_Study, is.na(Total_Not_Inc_Study$Date.Tested))
-# 25 remaining kids listed as not included were not tested
-
-EE_Inc <- subset(Total_Inc_Study, Total_Inc_Study$Group_4cat == "English Early")
-# 67 of 201 kids included are EE
-EL_Inc <- subset(Total_Inc_Study, Total_Inc_Study$Group_4cat == "English Later")
-# 52 of 201 kids included are EL
-AE_Inc <- subset(Total_Inc_Study, Total_Inc_Study$Group_4cat == "ASL Early")
-# 43 of 201 kids included are AE
-AL_Inc <- subset(Total_Inc_Study, Total_Inc_Study$Group_4cat == "ASL Later")
-# 39 of 201 kids included are AL
-
-rnames <- c("Including in Study","Not Including in Study")
-cnames <- c("English Early","English Later","ASL Early","ASL Later")
-Table_IncStudy <- matrix(c(nrow(EE_Inc),nrow(EL_Inc),nrow(AE_Inc),nrow(AL_Inc),nrow(EE_Not_Inc),nrow(EL_Not_Inc),nrow(AE_Not_Inc),nrow(AL_Not_Inc)), nrow=2, ncol=4, byrow=TRUE, dimnames=list(rnames,cnames))
-Table_IncStudy
-chisq.test(Table_IncStudy)
-# Test statistic is 0.8718, p-value is 0.8322, do not reject null, conclude that status of inclusion in study is not dependent on group 4 category
-
-# AGE DESCRIPTIVE STATISTICS
-# Age variable stored as factor. Need to convert to character, then to numeric (to preserve actual numeric values) before finding descriptive statistics.
-
-min(EE_Inc$Age, na.rm=TRUE) # 3.0
-min(EL_Inc$Age, na.rm=TRUE) # 3.1
-min(AE_Inc$Age, na.rm=TRUE) # 3.4
-min(AL_Inc$Age, na.rm=TRUE) # 3.1
-aggregate(Age ~ Group_4cat, data=Total_Inc_Study, min)
-
-max(EE_Inc$Age, na.rm=TRUE) # 7.3
-max(EL_Inc$Age, na.rm=TRUE) # 6.6
-max(AE_Inc$Age, na.rm=TRUE) # 7.6
-max(AL_Inc$Age, na.rm=TRUE) # 7.5
-aggregate(Age ~ Group_4cat, data=Total_Inc_Study, max) 
-
-median(EE_Inc$Age, na.rm=TRUE) # 4.8
-median(EL_Inc$Age, na.rm=TRUE) # 4.95
-median(AE_Inc$Age, na.rm=TRUE) # 4.8
-median(AL_Inc$Age, na.rm=TRUE) # 5.9
-aggregate(Age ~ Group_4cat, data=Total_Inc_Study, median)
-
-mean(EE_Inc$Age, na.rm=TRUE) # 4.768657
-mean(EL_Inc$Age, na.rm=TRUE) # 4.948077
-mean(AE_Inc$Age, na.rm=TRUE) # 5.065116
-mean(AL_Inc$Age, na.rm=TRUE) # 5.589744
-aggregate(Age ~ Group_4cat, data=Total_Inc_Study, mean)
-
-sd(EE_Inc$Age, na.rm=TRUE) # 0.7922368
-sd(EL_Inc$Age, na.rm=TRUE) # 0.9808940
-sd(AE_Inc$Age, na.rm=TRUE) # 1.1835950
-sd(AL_Inc$Age, na.rm=TRUE) # 1.0813721
-aggregate(Age ~ Group_4cat, data=Total_Inc_Study, sd)
-
-range(EE_Inc$Age, na.rm=TRUE) # 4.3
-range(EL_Inc$Age, na.rm=TRUE) # 3.5
-range(AE_Inc$Age, na.rm=TRUE) # 4.2
-range(AL_Inc$Age, na.rm=TRUE) # 4.4
-aggregate(Age ~ Group_4cat, data=Total_Inc_Study, range)
-
-# SES DESCRIPTIVE STATISTICS
-# SES variable stored as factor. Need to convert to character, then to numeric (to preserve actual numeric values) before finding descriptive statistics.
-
-min(EE_Inc$SES..8.66., na.rm=TRUE) # 8
-min(EL_Inc$SES..8.66., na.rm=TRUE) # 3
-min(AE_Inc$SES..8.66., na.rm=TRUE) # 11
-min(AL_Inc$SES..8.66., na.rm=TRUE) # 8
-aggregate(SES..8.66. ~ Group_4cat, data=Total_Inc_Study, min)
-
-max(EE_Inc$SES..8.66., na.rm=TRUE) # 66
-max(EL_Inc$SES..8.66., na.rm=TRUE) # 66
-max(AE_Inc$SES..8.66., na.rm=TRUE) # 66
-max(AL_Inc$SES..8.66., na.rm=TRUE) # 62
-aggregate(SES..8.66. ~ Group_4cat, data=Total_Inc_Study, max)
-
-median(EE_Inc$SES..8.66., na.rm=TRUE) # 54.5
-median(EL_Inc$SES..8.66., na.rm=TRUE) # 52.5
-median(AE_Inc$SES..8.66., na.rm=TRUE) # 52.0
-median(AL_Inc$SES..8.66., na.rm=TRUE) # 44.0
-aggregate(SES..8.66. ~ Group_4cat, data=Total_Inc_Study, median)
-
-mean(EE_Inc$SES..8.66., na.rm=TRUE) # 53.59167
-mean(EL_Inc$SES..8.66., na.rm=TRUE) # 46.92308
-mean(AE_Inc$SES..8.66., na.rm=TRUE) # 46.60256
-mean(AL_Inc$SES..8.66., na.rm=TRUE) # 39.52703
-aggregate(SES..8.66. ~ Group_4cat, data=Total_Inc_Study, mean)
-
-sd(EE_Inc$SES..8.66., na.rm=TRUE) # 11.39748
-sd(EL_Inc$SES..8.66., na.rm=TRUE) # 15.80686
-sd(AE_Inc$SES..8.66., na.rm=TRUE) # 16.58161
-sd(AL_Inc$SES..8.66., na.rm=TRUE) # 17.95826
-aggregate(SES..8.66. ~ Group_4cat, data=Total_Inc_Study, sd)
-
-range(EE_Inc$SES..8.66., na.rm=TRUE) # 58
-range(EL_Inc$SES..8.66., na.rm=TRUE) # 63
-range(AE_Inc$SES..8.66., na.rm=TRUE) # 55
-range(AL_Inc$SES..8.66., na.rm=TRUE) # 54
-aggregate(SES..8.66. ~ Group_4cat, data=Total_Inc_Study, range)
-
-Incorrect_SES <- subset(MC_Data, MC_Data$SES..8.66. < 8 | MC_Data$SES..8.66. == "")
 
 # ANOVA for mean Age and mean SES between groups
 # Violated variances assumption, re-run using kruskal-wallis test (non-parametric)
@@ -261,65 +206,3 @@ par(opar)
 kruskal.test(SES..8.66. ~ Group_4cat, data = Total_Inc_Study)
 pairwise.wilcox.test(Total_Inc_Study$SES..8.66.,Total_Inc_Study$Group_4cat,p.adjust.method="none")
 
-
-# Find observations with missing Age and SES values
-which(is.na(Total_Inc_Study$Age)) # 4 observations missing Age value
-Missing_Age <- Total_Inc_Study[which(is.na(Total_Inc_Study$Age)),3]
-Missing_Age
-
-which(is.na(Total_Inc_Study$SES)) # 14 observations missing SES value
-Missing_SES <- Total_Inc_Study[which(is.na(Total_Inc_Study$SES..8.66.)),3]
-Missing_SES
-
-# Merging old and new data
-colnames(Old_MC_Data)[12] <- "SES..8.66."
-Merge <- merge(Old_MC_Data[,c("Age","SES..8.66.")], MC_Data[,c("Age","SES..8.66.")], by = "SUBJECT.ID")
-
-comparison <- compare(Old_MC_Data, MC_Data)
-comparison$tM
-
-anti_join(Old_MC_Data, MC_Data)
-
-typeof(Old_MC_Data$GiveN_Small_Ceiling)
-typeof(MC_Data$GiveN_Small_Ceiling)
-
-MergeData <- data.frame(Old_SUBJECT.ID = Old_MC_Data$SUBJECT.ID[c(1:47,51:140,142:223)], New_SUBJECT.ID = MC_Data$SUBJECT.ID[1:219], Old_Age = Old_MC_Data$Age[c(1:47,51:140,142:223)], New_Age = MC_Data$Age[1:219], Old_SES = Old_MC_Data$SES..8.66.[c(1:47,51:140,142:223)], New_SES = MC_Data$SES..8.66.[1:219])
-MergeData$EqualAge <- with(MergeData, Old_Age==New_Age)
-MergeData$EqualSES <- with(MergeData, Old_SES==New_SES)
-# Had to disclude rows to match everything up, way to include everything and still match rows up? How do I merge data sets with an unequal number of rows?
-as.numeric(MergeData$EqualAge)
-as.numeric(MergeData$EqualSES)
-length(MergeData[MergeData$EqualAge=="",])
-which(MergeData$EqualAge=="NA")
-
-MergeData <- data.frame(Old_SUBJECT.ID = c(Old_MC_Data$SUBJECT.ID[c(1:47,51:140,142:223)],1:9), New_SUBJECT.ID = MC_Data$SUBJECT.ID[1:228], Old_Age = c(Old_MC_Data$Age[c(1:47,51:140,142:223)],1:9), New_Age = MC_Data$Age[1:228], Old_SES = c(Old_MC_Data$SES..8.66.[c(1:47,51:140,142:223)],1:9), New_SES = MC_Data$SES..8.66.[1:228])
-MC_Data$SUBJECT.ID[1:223]
-
-
-
-
-
-
-
-
-#Other
-      #Analyze Participant Pool
-      sum(Map_EE$Group_4cat == 'English Early', na.rm=TRUE)
-      
-#Plots
-      #Scatterplot Sum Correct Total x Age 
-      EarlyTiming <- ggplot(Map_EE, aes(x=Map_EE$Age_Rounded, y=Map_EE$SumCorrectTotal_All)) + geom_point(aes(shape=Map_EE$Group_4cat, color=Map_EE$Group_4cat))+ labs(x = "Age (years)", y = "Sum Correct Total") + theme(legend.position="none") 
-      EarlyTiming
-      
-      #Violin/Box Plot SES
-      map.n <- function(x){return(c(y = median(x)*1.05, label = length(x))) }
-      mean.n <- function(x){return(c(y= median(x)*0.97, label = round(mean(x), 2)))}
-      ggplot(Map_EE, aes(x = Map_EE$Group_4cat, y = Map_EE$SES_range_8_to_66, fill = Map_EE$Group_4cat)) + geom_violin() + geom_boxplot(width = 0.2) + labs (x= "Language Group", y = "SES") + stat_summary(fun.data = map.n, geom = "text", fun.y = median) + stat_summary(fun.data = mean.n, geom= "text", fun.y=mean, color= "gainsboro") + theme(legend.position="none") 
-
-      #Violin Age
-      ggplot(Map_EE, aes(x=Map_EE$Group_4cat, y=Map_EE$Age_Rounded, fill=Map_EE$Group_4cat)) + geom_violin() + labs(x="Timing of Language Exposure", y= "Age (years)") + theme(legend.position="none") 
-      
-      #Violin Age x Sex
-      map.n <- function(x){return(c(y = median(x)*1.05, label = length(x))) }
-      mean.n <- function(x){return(c(y= median(x)*0.97, label = round(mean(x), 2)))}
-      ggplot(Map_EE, aes(x=Map_EE$M.F, y=Map_EE$Age_Rounded, fill=Map_EE$Group_4cat)) + geom_violin() + labs(x="Timing of Language Exposure", y= "Age (years)") + theme(legend.position="none") + stat_summary(fun.data = map.n, geom = "text", fun.y = median) + stat_summary(fun.data = mean.n, geom= "text", fun.y=mean, color= "gainsboro") + theme(legend.position="none") 
