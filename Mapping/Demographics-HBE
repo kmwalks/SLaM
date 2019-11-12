@@ -45,11 +45,11 @@ library(olsrr)
  ## BASIC DEMOGRAPHICS ## 
 
       Map_EE_Demo <- subset(Map, Map$Group_4cat == "English Early" & Map$Age_Rounded<10)
-      View(Map_EE_Demo)
+      View(Map_EE_Demo) #SHOULD HAVE 44, NOT SHOWING 2 THAT ARE NOT INCLUDED... 
 
       Total_Inc_Study <- subset(Map_EE_Demo, Map_EE_Demo$Including.in.Study. == "Yes")
       View(Total_Inc_Study)
-      # total kids included in study
+      # 42 total kids included in study
 
       Total_Not_Inc_Study <- subset(Map_EE_Demo, Map_EE_Demo$Including.in.Study. == "No" | Map_EE_Demo$Including.in.Study. == "")
       nrow(Total_Not_Inc_Study)
