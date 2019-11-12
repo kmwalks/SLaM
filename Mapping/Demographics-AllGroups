@@ -1,0 +1,73 @@
+
+### ADD CODES BEFORE THIS FROM MAPPING HBE DEMOGRAPHICS FILE ### 
+
+
+EE_Not_Inc <- subset(Total_Not_Inc_Study, Total_Not_Inc_Study$Group_4cat == "English Early" & Total_Not_Inc_Study$Date.Tested != "")
+# 3 of 11 kids tested but not included are EE
+EL_Not_Inc <- subset(Total_Not_Inc_Study, Total_Not_Inc_Study$Group_4cat == "English Later" & Total_Not_Inc_Study$Date.Tested != "")
+# 1 of 11 kids tested but not included are EL
+AE_Not_Inc <- subset(Total_Not_Inc_Study, Total_Not_Inc_Study$Group_4cat == "ASL Early" & Total_Not_Inc_Study$Date.Tested != "")
+# 2 of 11 kids tested but not included are AE
+AL_Not_Inc <- subset(Total_Not_Inc_Study, Total_Not_Inc_Study$Group_4cat == "ASL Later" & Total_Not_Inc_Study$Date.Tested != "")
+# 5 of 11 kids tested but not included are AL
+Rest_Not_Inc <- subset(Total_Not_Inc_Study, is.na(Total_Not_Inc_Study$Date.Tested))
+# 25 remaining kids listed as not included were not tested
+
+EE_Inc <- subset(Total_Inc_Study, Total_Inc_Study$Group_4cat == "English Early")
+# 67 of 201 kids included are EE
+EL_Inc <- subset(Total_Inc_Study, Total_Inc_Study$Group_4cat == "English Later")
+# 52 of 201 kids included are EL
+AE_Inc <- subset(Total_Inc_Study, Total_Inc_Study$Group_4cat == "ASL Early")
+# 43 of 201 kids included are AE
+AL_Inc <- subset(Total_Inc_Study, Total_Inc_Study$Group_4cat == "ASL Later")
+# 39 of 201 kids included are AL
+
+rnames <- c("Including in Study","Not Including in Study")
+cnames <- c("English Early","English Later","ASL Early","ASL Later")
+Table_IncStudy <- matrix(c(nrow(EE_Inc),nrow(EL_Inc),nrow(AE_Inc),nrow(AL_Inc),nrow(EE_Not_Inc),nrow(EL_Not_Inc),nrow(AE_Not_Inc),nrow(AL_Not_Inc)), nrow=2, ncol=4, byrow=TRUE, dimnames=list(rnames,cnames))
+Table_IncStudy
+chisq.test(Table_IncStudy)
+# Test statistic is 0.8718, p-value is 0.8322, do not reject null, conclude that status of inclusion in study is not dependent on group 4 category
+
+
+
+# AGE DESCRIPTIVE STATISTICS
+# Age variable stored as factor. Need to convert to character, then to numeric (to preserve actual numeric values) before finding descriptive statistics.
+
+min(EE_Inc$Age, na.rm=TRUE) # 3.0
+min(EL_Inc$Age, na.rm=TRUE) # 3.1
+min(AE_Inc$Age, na.rm=TRUE) # 3.4
+min(AL_Inc$Age, na.rm=TRUE) # 3.1
+aggregate(Age ~ Group_4cat, data=Total_Inc_Study, min)
+
+max(EE_Inc$Age, na.rm=TRUE) # 7.3
+max(EL_Inc$Age, na.rm=TRUE) # 6.6
+max(AE_Inc$Age, na.rm=TRUE) # 7.6
+max(AL_Inc$Age, na.rm=TRUE) # 7.5
+aggregate(Age ~ Group_4cat, data=Total_Inc_Study, max) 
+
+median(EE_Inc$Age, na.rm=TRUE) # 4.8
+median(EL_Inc$Age, na.rm=TRUE) # 4.95
+median(AE_Inc$Age, na.rm=TRUE) # 4.8
+median(AL_Inc$Age, na.rm=TRUE) # 5.9
+aggregate(Age ~ Group_4cat, data=Total_Inc_Study, median)
+
+mean(EE_Inc$Age, na.rm=TRUE) # 4.768657
+mean(EL_Inc$Age, na.rm=TRUE) # 4.948077
+mean(AE_Inc$Age, na.rm=TRUE) # 5.065116
+mean(AL_Inc$Age, na.rm=TRUE) # 5.589744
+aggregate(Age ~ Group_4cat, data=Total_Inc_Study, mean)
+
+sd(EE_Inc$Age, na.rm=TRUE) # 0.7922368
+sd(EL_Inc$Age, na.rm=TRUE) # 0.9808940
+sd(AE_Inc$Age, na.rm=TRUE) # 1.1835950
+sd(AL_Inc$Age, na.rm=TRUE) # 1.0813721
+aggregate(Age ~ Group_4cat, data=Total_Inc_Study, sd)
+
+range(EE_Inc$Age, na.rm=TRUE) # 4.3
+range(EL_Inc$Age, na.rm=TRUE) # 3.5
+range(AE_Inc$Age, na.rm=TRUE) # 4.2
+range(AL_Inc$Age, na.rm=TRUE) # 4.4
+aggregate(Age ~ Group_4cat, data=Total_Inc_Study, range)
+
+
