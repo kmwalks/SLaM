@@ -59,6 +59,37 @@ library(olsrr)
       Tested_Not_Inc <- subset(Map_EE_Demo, Map_EE_Demo$Including.in.Study. != "Yes" & MMap_EE_Demo$Date.Tested != "")
       View(Tested_Not_Inc)
       # kids not included in study that were tested. Need to explain why were not included!
+      
+      
+      
+      #Descriptive Statistics
+      #Subset group want ex. EE
+      #summary of variable want within that group ex. summary(EE$Sex)
+      
+  #To get number of observations for each group
+      #sum(MC_GiveN$LanguageGroup == 'English Early', na.rm=TRUE)
+      #from entire dataset: sum(MC$Group_4cat == 'ASL Early', na.rm=TRUE)
+      #obtain Including in study NA: IncStudy_NA <- subset(MC, MC$Including_in_study == "" | is.na(MC$Including_in_study))
+      #obtain Including in study No: IncStudy_No <- subset(MC, MC$Including_in_study == "No")
+      #obtain Including in study Yes & pull from this for other variable missing data info: IncStudy <- subset(MC, MC$Including_in_study == "Yes")
+      #Missing Give-N: GN_NA <- subset(IncStudy, IncStudy$GiveN_ALL_ceiling_conservative == "NA" | is.na(IncStudy$GiveN_ALL_ceiling_conservative | IncStudy$GiveN_ALL_ceiling_conservative == "No"))
+      #Missing SES: SES_NA <- subset(IncStudy, IncStudy$SES_range_8_to_66 == "NA" | is.na(IncStudy$SES_range_8_to_66 | IncStudy$SES_range_8_to_66 == "No"))
+      #Missing Age: Age_NA <- subset(IncStudy, IncStudy$Age == "NA" | is.na(IncStudy$Age | IncStudy$Age == "No"))
+      #Missing EC with objects: ECw_NA <- subset(IncStudy, IncStudy$Highest_Count_wobj == "NA" | is.na(IncStudy$Highest_Count_wobj | IncStudy$Highest_Count_wobj == "No"))
+      #Missing EC without objects: ECwo_NA <- subset(IncStudy, IncStudy$Highest_Count_noobj == "NA" | is.na(IncStudy$Highest_Count_noobj | IncStudy$Highest_Count_noobj == "No"))
+
+#Table for Overall Including in Study
+IncStudy <- subset(MC, MC$Including_in_study == "Yes")
+View(IncStudy)
+AE_Inc <- subset(IncStudy, IncStudy$Group_4cat == "ASL Early")
+EL_Inc <- subset(IncStudy, IncStudy$Group_4cat == "English Later")
+AL_Inc <- subset(IncStudy, IncStudy$Group_4cat == "ASL Later")
+EE_Inc <- subset(IncStudy, IncStudy$Group_4cat == "English Early")
+#Check for N/A in age & SES (note how many!)
+mean(AE_Inc$Age, na.rm = TRUE)
+sd(AE_Inc$Age, na.rm = TRUE) 
+mean(AE_Inc$SES_range_8_to_66, na.rm = TRUE)
+sd(AE_Inc$SES_range_8_to_66, na.rm = TRUE)
 
 
 ## AGE DESCRIPTIVE STATISTICS ##
