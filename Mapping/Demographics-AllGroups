@@ -71,3 +71,45 @@ range(AL_Inc$Age, na.rm=TRUE) # 4.4
 aggregate(Age ~ Group_4cat, data=Total_Inc_Study, range)
 
 
+## SES DESCRIPTIVE STATISTICS ##
+      # SES variable stored as factor. Need to convert to character, then to numeric (to preserve actual numeric values) before finding descriptive statistics.
+
+min(EE_Inc$SES..8.66., na.rm=TRUE) # 8
+min(EL_Inc$SES..8.66., na.rm=TRUE) # 3
+min(AE_Inc$SES..8.66., na.rm=TRUE) # 11
+min(AL_Inc$SES..8.66., na.rm=TRUE) # 8
+aggregate(SES..8.66. ~ Group_4cat, data=Total_Inc_Study, min)
+
+max(EE_Inc$SES..8.66., na.rm=TRUE) # 66
+max(EL_Inc$SES..8.66., na.rm=TRUE) # 66
+max(AE_Inc$SES..8.66., na.rm=TRUE) # 66
+max(AL_Inc$SES..8.66., na.rm=TRUE) # 62
+aggregate(SES..8.66. ~ Group_4cat, data=Total_Inc_Study, max)
+
+median(EE_Inc$SES..8.66., na.rm=TRUE) # 54.5
+median(EL_Inc$SES..8.66., na.rm=TRUE) # 52.5
+median(AE_Inc$SES..8.66., na.rm=TRUE) # 52.0
+median(AL_Inc$SES..8.66., na.rm=TRUE) # 44.0
+aggregate(SES..8.66. ~ Group_4cat, data=Total_Inc_Study, median)
+
+mean(EE_Inc$SES..8.66., na.rm=TRUE) # 53.59167
+mean(EL_Inc$SES..8.66., na.rm=TRUE) # 46.92308
+mean(AE_Inc$SES..8.66., na.rm=TRUE) # 46.60256
+mean(AL_Inc$SES..8.66., na.rm=TRUE) # 39.52703
+aggregate(SES..8.66. ~ Group_4cat, data=Total_Inc_Study, mean)
+
+sd(EE_Inc$SES..8.66., na.rm=TRUE) # 11.39748
+sd(EL_Inc$SES..8.66., na.rm=TRUE) # 15.80686
+sd(AE_Inc$SES..8.66., na.rm=TRUE) # 16.58161
+sd(AL_Inc$SES..8.66., na.rm=TRUE) # 17.95826
+aggregate(SES..8.66. ~ Group_4cat, data=Total_Inc_Study, sd)
+
+range(EE_Inc$SES..8.66., na.rm=TRUE) # 58
+range(EL_Inc$SES..8.66., na.rm=TRUE) # 63
+range(AE_Inc$SES..8.66., na.rm=TRUE) # 55
+range(AL_Inc$SES..8.66., na.rm=TRUE) # 54
+aggregate(SES..8.66. ~ Group_4cat, data=Total_Inc_Study, range)
+
+Incorrect_SES <- subset(MC_Data, MC_Data$SES..8.66. < 8 | MC_Data$SES..8.66. == "")
+
+
