@@ -45,6 +45,7 @@ library(olsrr)
  ## BASIC DEMOGRAPHICS ## 
 
       Map_EE_Demo <- subset(Map, Map$Group_4cat == "English Early" & Map$Age_Rounded<10)
+      View(Map_EE_Demo)
 
       Total_Inc_Study <- subset(Map_EE_Demo, Map_EE_Demo$Including.in.Study. == "Yes")
       View(Total_Inc_Study)
