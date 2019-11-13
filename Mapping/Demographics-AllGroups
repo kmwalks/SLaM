@@ -56,7 +56,7 @@ library(olsrr)
 
       Tested_Not_Inc <- subset(Map_Demo, Map_Demo$Including.in.Study. != "Yes" & Map_Demo$Date.Tested != "")
       View(Tested_Not_Inc)
-      # 1 kid out of 9 not included in study were tested
+      # 1 kid out of 9 not included in study were tested, NEED TO EXPLAIN WHY NOT INCLUDING
 
       ## Tested But Not Included: How many from each group? ## 
             EE_Not_Inc <- subset(Total_Not_Inc_Study, Total_Not_Inc_Study$Group_4cat == "English Early" & Total_Not_Inc_Study$Date.Tested != "")
