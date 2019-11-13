@@ -58,190 +58,208 @@ library(olsrr)
       View(Tested_Not_Inc)
       # 1 kid out of 9 not included in study were tested
 
-## Tested But Not Included: How many from each group? ## 
-
-      EE_Not_Inc <- subset(Total_Not_Inc_Study, Total_Not_Inc_Study$Group_4cat == "English Early" & Total_Not_Inc_Study$Date.Tested != "")
-      # 3 of 11 kids tested but not included are EE
-      EL_Not_Inc <- subset(Total_Not_Inc_Study, Total_Not_Inc_Study$Group_4cat == "English Later" & Total_Not_Inc_Study$Date.Tested != "")
-      # 1 of 11 kids tested but not included are EL
-      AE_Not_Inc <- subset(Total_Not_Inc_Study, Total_Not_Inc_Study$Group_4cat == "ASL Early" & Total_Not_Inc_Study$Date.Tested != "")
-      # 2 of 11 kids tested but not included are AE
-      AL_Not_Inc <- subset(Total_Not_Inc_Study, Total_Not_Inc_Study$Group_4cat == "ASL Later" & Total_Not_Inc_Study$Date.Tested != "")
-      # 5 of 11 kids tested but not included are AL
-      
-      
+      ## Tested But Not Included: How many from each group? ## 
+            EE_Not_Inc <- subset(Total_Not_Inc_Study, Total_Not_Inc_Study$Group_4cat == "English Early" & Total_Not_Inc_Study$Date.Tested != "")
+            # 0 of 1 kids tested but not included are EE
+            EL_Not_Inc <- subset(Total_Not_Inc_Study, Total_Not_Inc_Study$Group_4cat == "English Later" & Total_Not_Inc_Study$Date.Tested != "")
+            # 0 of 1 kids tested but not included are EL
+            AE_Not_Inc <- subset(Total_Not_Inc_Study, Total_Not_Inc_Study$Group_4cat == "ASL Early" & Total_Not_Inc_Study$Date.Tested != "")
+            # 1 of 1 kids tested but not included are AE
+            AL_Not_Inc <- subset(Total_Not_Inc_Study, Total_Not_Inc_Study$Group_4cat == "ASL Later" & Total_Not_Inc_Study$Date.Tested != "")
+            # 0 of 1 kids tested but not included are AL
+            
       Rest_Not_Inc <- subset(Total_Not_Inc_Study, is.na(Total_Not_Inc_Study$Date.Tested))
-      # 25 remaining kids listed as not included were not tested
+      # 8 remaining kids listed as not included were not tested
 
 ## Included: Numbers of Kids Per Group ##
       EE_Inc <- subset(Total_Inc_Study, Total_Inc_Study$Group_4cat == "English Early")
-      # 67 of 201 kids included are EE
+      # 42 of 118 kids included are EE
       EL_Inc <- subset(Total_Inc_Study, Total_Inc_Study$Group_4cat == "English Later")
-      # 52 of 201 kids included are EL
+      # 10 of 118 kids included are EL
       AE_Inc <- subset(Total_Inc_Study, Total_Inc_Study$Group_4cat == "ASL Early")
-      # 43 of 201 kids included are AE
+      # 21 of 118 kids included are AE
       AL_Inc <- subset(Total_Inc_Study, Total_Inc_Study$Group_4cat == "ASL Later")
-      # 39 of 201 kids included are AL
+      # 45 of 118 kids included are AL
 
 
-## Creating a Table/"Matrix": Included vs Not by Group ##
+## Creating a Table/"Matrix": Included vs Not (& not tested) by Group ##
 
       rnames <- c("Including in Study","Not Including in Study")
       cnames <- c("English Early","English Later","ASL Early","ASL Later")
       Table_IncStudy <- matrix(c(nrow(EE_Inc),nrow(EL_Inc),nrow(AE_Inc),nrow(AL_Inc),nrow(EE_Not_Inc),nrow(EL_Not_Inc),nrow(AE_Not_Inc),nrow(AL_Not_Inc)), nrow=2, ncol=4, byrow=TRUE, dimnames=list(rnames,cnames))
       Table_IncStudy
 
+
 ## Chi-Square on Table/"Matrix": Does the status of including in study depend on which group kids were in?, aka DNS more likely to not be included? ##
 chisq.test(Table_IncStudy)
-# Test statistic is 0.8718, p-value is 0.8322, do not reject null, conclude that status of inclusion in study is not dependent on group 4 category
+# Test statistic is p-value is 0.2171, do not reject null, conclude that status of inclusion in study is not dependent on group 4 category. GOOD.
+
 
 # AGE DESCRIPTIVE STATISTICS
-# Age variable stored as factor. Need to convert to character, then to numeric (to preserve actual numeric values) before finding descriptive statistics.
+min(EE_Inc$Age_Rounded, na.rm=TRUE) # 5.1
+min(EL_Inc$Age_Rounded, na.rm=TRUE) # 6.1
+min(AE_Inc$Age_Rounded, na.rm=TRUE) # 5.2
+min(AL_Inc$Age_Rounded, na.rm=TRUE) # 5.1
+aggregate(Age_Rounded ~ Group_4cat, data=Total_Inc_Study, min) #Creates a table in one 
 
-min(EE_Inc$Age, na.rm=TRUE) # 3.0
-min(EL_Inc$Age, na.rm=TRUE) # 3.1
-min(AE_Inc$Age, na.rm=TRUE) # 3.4
-min(AL_Inc$Age, na.rm=TRUE) # 3.1
-aggregate(Age ~ Group_4cat, data=Total_Inc_Study, min) #Creates a table in one 
+max(EE_Inc$Age_Rounded, na.rm=TRUE) # 9.7
+max(EL_Inc$Age_Rounded, na.rm=TRUE) # 9.8
+max(AE_Inc$Age_Rounded, na.rm=TRUE) # 9.9
+max(AL_Inc$Age_Rounded, na.rm=TRUE) # 9.8
+aggregate(Age_Rounded ~ Group_4cat, data=Total_Inc_Study, max) 
 
-max(EE_Inc$Age, na.rm=TRUE) # 7.3
-max(EL_Inc$Age, na.rm=TRUE) # 6.6
-max(AE_Inc$Age, na.rm=TRUE) # 7.6
-max(AL_Inc$Age, na.rm=TRUE) # 7.5
-aggregate(Age ~ Group_4cat, data=Total_Inc_Study, max) 
+median(EE_Inc$Age_Rounded, na.rm=TRUE) # 6.9
+median(EL_Inc$Age_Rounded, na.rm=TRUE) # 7.4
+median(AE_Inc$Age_Rounded, na.rm=TRUE) # 6.6
+median(AL_Inc$Age_Rounded, na.rm=TRUE) # 7.3
+aggregate(Age_Rounded ~ Group_4cat, data=Total_Inc_Study, median)
 
-median(EE_Inc$Age, na.rm=TRUE) # 4.8
-median(EL_Inc$Age, na.rm=TRUE) # 4.95
-median(AE_Inc$Age, na.rm=TRUE) # 4.8
-median(AL_Inc$Age, na.rm=TRUE) # 5.9
-aggregate(Age ~ Group_4cat, data=Total_Inc_Study, median)
+mean(EE_Inc$Age_Rounded, na.rm=TRUE) # 6.985714
+mean(EL_Inc$Age_Rounded, na.rm=TRUE) # 7.48
+mean(AE_Inc$Age_Rounded, na.rm=TRUE) # 7.42381
+mean(AL_Inc$Age_Rounded, na.rm=TRUE) # 7.293182
+aggregate(Age_Rounded ~ Group_4cat, data=Total_Inc_Study, mean)
 
-mean(EE_Inc$Age, na.rm=TRUE) # 4.768657
-mean(EL_Inc$Age, na.rm=TRUE) # 4.948077
-mean(AE_Inc$Age, na.rm=TRUE) # 5.065116
-mean(AL_Inc$Age, na.rm=TRUE) # 5.589744
-aggregate(Age ~ Group_4cat, data=Total_Inc_Study, mean)
+sd(EE_Inc$Age_Rounded, na.rm=TRUE) # 1.319381
+sd(EL_Inc$Age_Rounded, na.rm=TRUE) # 1.323128
+sd(AE_Inc$Age_Rounded, na.rm=TRUE) # 1.86545
+sd(AL_Inc$Age_Rounded, na.rm=TRUE) # 1.454967
+aggregate(Age_Rounded ~ Group_4cat, data=Total_Inc_Study, sd)
 
-sd(EE_Inc$Age, na.rm=TRUE) # 0.7922368
-sd(EL_Inc$Age, na.rm=TRUE) # 0.9808940
-sd(AE_Inc$Age, na.rm=TRUE) # 1.1835950
-sd(AL_Inc$Age, na.rm=TRUE) # 1.0813721
-aggregate(Age ~ Group_4cat, data=Total_Inc_Study, sd)
-
-range(EE_Inc$Age, na.rm=TRUE) # 4.3
-range(EL_Inc$Age, na.rm=TRUE) # 3.5
-range(AE_Inc$Age, na.rm=TRUE) # 4.2
-range(AL_Inc$Age, na.rm=TRUE) # 4.4
-aggregate(Age ~ Group_4cat, data=Total_Inc_Study, range)
+range(EE_Inc$Age_Rounded, na.rm=TRUE) # 5.1 9.7
+range(EL_Inc$Age_Rounded, na.rm=TRUE) # 6.1 9.8
+range(AE_Inc$Age_Rounded, na.rm=TRUE) # 5.2 9.9
+range(AL_Inc$Age_Rounded, na.rm=TRUE) # 5.1 9.8
+aggregate(Age_Rounded ~ Group_4cat, data=Total_Inc_Study, range)
 
 # SES DESCRIPTIVE STATISTICS
-# SES variable stored as factor. Need to convert to character, then to numeric (to preserve actual numeric values) before finding descriptive statistics.
+min(EE_Inc$SES_range_8_to_66, na.rm=TRUE) # 17
+min(EL_Inc$SES_range_8_to_66, na.rm=TRUE) # 6
+min(AE_Inc$SES_range_8_to_66, na.rm=TRUE) # 3
+min(AL_Inc$SES_range_8_to_66, na.rm=TRUE) # 3
+aggregate(SES_range_8_to_66 ~ Group_4cat, data=Total_Inc_Study, min)
 
-min(EE_Inc$SES..8.66., na.rm=TRUE) # 8
-min(EL_Inc$SES..8.66., na.rm=TRUE) # 3
-min(AE_Inc$SES..8.66., na.rm=TRUE) # 11
-min(AL_Inc$SES..8.66., na.rm=TRUE) # 8
-aggregate(SES..8.66. ~ Group_4cat, data=Total_Inc_Study, min)
+max(EE_Inc$SES_range_8_to_66, na.rm=TRUE) # 66
+max(EL_Inc$SES_range_8_to_66, na.rm=TRUE) # 66
+max(AE_Inc$SES_range_8_to_66, na.rm=TRUE) # 61
+max(AL_Inc$SES_range_8_to_66, na.rm=TRUE) # 63.5
+aggregate(SES_range_8_to_66 ~ Group_4cat, data=Total_Inc_Study, max)
 
-max(EE_Inc$SES..8.66., na.rm=TRUE) # 66
-max(EL_Inc$SES..8.66., na.rm=TRUE) # 66
-max(AE_Inc$SES..8.66., na.rm=TRUE) # 66
-max(AL_Inc$SES..8.66., na.rm=TRUE) # 62
-aggregate(SES..8.66. ~ Group_4cat, data=Total_Inc_Study, max)
+median(EE_Inc$SES_range_8_to_66, na.rm=TRUE) # 61
+median(EL_Inc$SES_range_8_to_66, na.rm=TRUE) # 502.5
+median(AE_Inc$SES_range_8_to_66, na.rm=TRUE) # 47
+median(AL_Inc$SES_range_8_to_66, na.rm=TRUE) # 45.5
+aggregate(SES_range_8_to_66 ~ Group_4cat, data=Total_Inc_Study, median)
 
-median(EE_Inc$SES..8.66., na.rm=TRUE) # 54.5
-median(EL_Inc$SES..8.66., na.rm=TRUE) # 52.5
-median(AE_Inc$SES..8.66., na.rm=TRUE) # 52.0
-median(AL_Inc$SES..8.66., na.rm=TRUE) # 44.0
-aggregate(SES..8.66. ~ Group_4cat, data=Total_Inc_Study, median)
+mean(EE_Inc$SES_range_8_to_66, na.rm=TRUE) # 55.2439
+mean(EL_Inc$SES_range_8_to_66, na.rm=TRUE) # 47
+mean(AE_Inc$SES_range_8_to_66, na.rm=TRUE) # 44.15625
+mean(AL_Inc$SES_range_8_to_66, na.rm=TRUE) # 41.87838
+aggregate(SES_range_8_to_66 ~ Group_4cat, data=Total_Inc_Study, mean)
 
-mean(EE_Inc$SES..8.66., na.rm=TRUE) # 53.59167
-mean(EL_Inc$SES..8.66., na.rm=TRUE) # 46.92308
-mean(AE_Inc$SES..8.66., na.rm=TRUE) # 46.60256
-mean(AL_Inc$SES..8.66., na.rm=TRUE) # 39.52703
-aggregate(SES..8.66. ~ Group_4cat, data=Total_Inc_Study, mean)
+sd(EE_Inc$SES_range_8_to_66, na.rm=TRUE) # 12.95093
+sd(EL_Inc$SES_range_8_to_66, na.rm=TRUE) # 16.49811
+sd(AE_Inc$SES_range_8_to_66, na.rm=TRUE) # 13.84042
+sd(AL_Inc$SES_range_8_to_66, na.rm=TRUE) # 16.17371
+aggregate(SES_range_8_to_66 ~ Group_4cat, data=Total_Inc_Study, sd)
 
-sd(EE_Inc$SES..8.66., na.rm=TRUE) # 11.39748
-sd(EL_Inc$SES..8.66., na.rm=TRUE) # 15.80686
-sd(AE_Inc$SES..8.66., na.rm=TRUE) # 16.58161
-sd(AL_Inc$SES..8.66., na.rm=TRUE) # 17.95826
-aggregate(SES..8.66. ~ Group_4cat, data=Total_Inc_Study, sd)
+range(EE_Inc$SES_range_8_to_66, na.rm=TRUE) # 17 66
+range(EL_Inc$SES_range_8_to_66, na.rm=TRUE) # 6 66
+range(AE_Inc$SES_range_8_to_66, na.rm=TRUE) # 3 61
+range(AL_Inc$SES_range_8_to_66, na.rm=TRUE) # 3 63.5
+aggregate(SES_range_8_to_66 ~ Group_4cat, data=Total_Inc_Study, range)
 
-range(EE_Inc$SES..8.66., na.rm=TRUE) # 58
-range(EL_Inc$SES..8.66., na.rm=TRUE) # 63
-range(AE_Inc$SES..8.66., na.rm=TRUE) # 55
-range(AL_Inc$SES..8.66., na.rm=TRUE) # 54
-aggregate(SES..8.66. ~ Group_4cat, data=Total_Inc_Study, range)
+Incorrect_SES <- subset(Map_Demo, Map_Demo$SES_range_8_to_66 < 3 | Map_Demo$SES_range_8_to_66 == "")
+#No observations of SES <3
 
-Incorrect_SES <- subset(MC_Data, MC_Data$SES..8.66. < 3 | MC_Data$SES..8.66. == "")
+
 
 # ANOVA for mean Age and mean SES between groups - is the avergae age or SES sig different between groups?
-# Violated variances assumption, re-run using kruskal-wallis test (non-parametric)
 
-# mean Age
-# Ho : mu1=...=mu4
-# Ha : mu2=...≠...mu4
-# alpha level: 0.05
+# Find observations with missing Age and SES values
+      which(is.na(Total_Inc_Study$Age_Rounded)) # 42 observations missing Age value
+      Missing_Age <- Total_Inc_Study[which(is.na(Total_Inc_Study$Age_Rounded)),3]
+      Missing_Age
 
-# Assumptions
+      which(is.na(Total_Inc_Study$SES)) # ??? observations missing SES value
+      Missing_SES <- Total_Inc_Study[which(is.na(Total_Inc_Study$SES_range_8_to_66)),3]
+      Missing_SES
+
+#AGE#
+      # mean Age
+      # Ho : mu1=...=mu4
+      # Ha : mu2=...≠...mu4
+      # alpha level: 0.05
+      
+      
+# RUN THAT ANOVA
+Age_ANOVA <- aov(Total_Inc_Study$Age_Rounded ~ Total_Inc_Study$Group_4cat)
+summary(Age_ANOVA) # p=0.6
+      # If > 0.5, conclude that population means for Age are equal between groups
+      # If <0.05, reject null, conclude that population means for Age are not equal between groups, which ones differ?
+            #Post-Hoc
+                  par(ask=TRUE)
+                  opar <- par(no.readonly=TRUE) 
+                  TukeyHSD(Age_ANOVA)
+                  par(las=1) 
+                  par(mar=c(5,8,4,2)) 
+                  plot(TukeyHSD(Age_ANOVA))
+                  par(opar)
+
+# Assumptions to be able to USE ANOVA
+      #THINK NEED LIBRARY MASS TO GET QQPLOT....GETTING ERRORS!
+      
       #1. Normality   
       qqPlot(Age_ANOVA) #qq plot: scatterplot of observed vs expected normality and want linear line (match up)
+      
       Age_residuals <- residuals(Age_ANOVA) #residual: all data's mean then overall mean subtracted from each data point (indiv-datasetmean)
-      shapiro.test(Age_residuals) #do not reject null, assume normality aka bell curve? WANT THAT HIGH P = NAHRMAL   
+      shapiro.test(Age_residuals) #do not reject null, assume normality aka bell curve? WANT THAT HIGH P = normally distributed
       
       #2. Homeogeneity of Variances Between Groups
-      bartlett.test(Total_Inc_Study$Age, Total_Inc_Study$Group_4cat) # p=0.01563<0.05, reject the null hypothesis, do not assume variances are equal, is the variance for each of the groups similar?, WANT THAT HIGH P! = HOMOGENEITYYYY
-      # sample sds are relatively close, use that to assume homogeneity? <- no, use the formal test (BARTLETT) 
+      bartlett.test(Total_Inc_Study$Age_Rounded, Total_Inc_Study$Group_4cat) # p=0.299
+            # IF p > 0.5 WANT THAT HIGH P! = HOMOGENEITY ACHIEVED
+            # IF p<0.05, reject the null hypothesis, do not assume variances are equal, is the variance for each of the groups similar?
+       
       plot(Age_ANOVA,1) #x-axis all indiv group means and for each group mean has observations and how spread from group mean, want bands to have same spread aka start and end points 
-      bartlett.test(Age ~ Group_4cat, data=Total_Inc_Study)
-      leveneTest(Age ~ Group_4cat, data=Total_Inc_Study)
+      
+      bartlett.test(Age_Rounded ~ Group_4cat, data=Total_Inc_Study) # p =0.3
+      
+      leveneTest(Age_Rounded ~ Group_4cat, data=Total_Inc_Study) #NEED TO INSTALL A LIBRARY TO GET THIS TO WORK...
 
 # IF SHAPIRO AND BARLETT ARE >.O5 YAH GOOD, IF NOT: LEVENE AS BACKUP FOR BARLETT, IF STILL NAH, NON-PARAMETRIC METHOD NEEDS TO BE USED / NOT ANOVA 
+      # Violated variances assumption, re-run using kruskal-wallis test (non-parametric)
       # IF ASSUMPTIONS DO NOT HOLD, USE KRUSKAL NON-PARAMATRIC TEST/PAIRWISE.WILCOX.TEST FOR POST-HOC)
       kruskal.test(Age ~ Group_4cat, data = Total_Inc_Study)
       pairwise.wilcox.test(Total_Inc_Study$Age, Total_Inc_Study$Group_4cat, p.adjust.method="none")
       # Which p-value adjustment method should be used?
 
-# RUN THAT ANOVA
-      Age_ANOVA <- aov(Total_Inc_Study$Age ~ Total_Inc_Study$Group_4cat)
-      summary(Age_ANOVA) # p=0.00153<0.05, reject null, conclude that population means for Age are not equal between groups, which ones differ?
-
-#Post-Hoc
-      par(ask=TRUE)
-      opar <- par(no.readonly=TRUE) 
-      TukeyHSD(Age_ANOVA)
-      par(las=1) 
-      par(mar=c(5,8,4,2)) 
-      plot(TukeyHSD(Age_ANOVA))
-      par(opar)
-
-***
-
-# mean SES
-# Ho : mu1=...=mu4
-# Ha : mu2=...≠...mu4
-# alpha level: 0.05
-# Assumptions
+*********************************
+#SES#
+            # mean SES
+            # Ho : mu1=...=mu4
+            # Ha : mu2=...≠...mu4
+            # alpha level: 0.05
+            # Assumptions
 
 
-#DENSITY PLOT BELOW
+#DENSITY PLOT BELOW, NOT WORKING NEED LIBRARY FOR SM.DENSITY.COMPARE
 Labels <- factor(Total_Inc_Study$Group_4cat, levels=c("English Early","English Later","ASL Early","ASL Later"), labels = c("English Early","English Later","ASL Early","ASL Later"))
 sm.density.compare(Total_Inc_Study$SES..8.66., Total_Inc_Study$Group_4cat, xlab="Socioeconomic Status", lwd=3,xlim=c(3,66),col=c(4,6,2,3))
 title(main="SES Distribution for each Group 4 Category")
 colfill<-c(2,3,4,6)
 legend(3,0.033, levels(Labels), fill=colfill)
 
-shapiro.test(EE_Inc$SES..8.66.) # p=0.1.577e-08<0.05, reject null, can't assume normality
-shapiro.test(EL_Inc$SES..8.66.) # p=2.603e-07<0.05, reject null, can't assume normality
-shapiro.test(AE_Inc$SES..8.66.) # p=0.002099<0.05, reject null, can't assume normality
-shapiro.test(AL_Inc$SES..8.66.) # p=0.005926<0.05, reject null, can't assume normality
+shapiro.test(EE_Inc$SES_range_8_to_66) # p=0.1.577e-08<0.05, reject null, can't assume normality
+shapiro.test(EL_Inc$SES_range_8_to_66) # p=2.603e-07<0.05, reject null, can't assume normality
+shapiro.test(AE_Inc$SES_range_8_to_66) # p=0.002099<0.05, reject null, can't assume normality
+shapiro.test(AL_Inc$SES_range_8_to_66) # p=0.005926<0.05, reject null, can't assume normality
 # This assumption really fell apart
 
-bartlett.test(Total_Inc_Study$SES..8.66., Total_Inc_Study$Group_4cat) # p=0.7661>0.05, do not reject the null hypothesis, assume variances are equal
+bartlett.test(Total_Inc_Study$SES_range_8_to_66, Total_Inc_Study$Group_4cat) # p=0.7661>0.05, do not reject the null hypothesis, assume variances are equal
 
 # All samples drawn independently
 
-SES_ANOVA <- aov(Total_Inc_Study$SES..8.66. ~ Total_Inc_Study$Group_4cat)
+SES_ANOVA <- aov(Total_Inc_Study$SES_range_8_to_66 ~ Total_Inc_Study$Group_4cat)
 summary(SES_ANOVA) # p=0.105>0.05, do not reject null, conclude that population means for SES are equal between groups
 
 qqPlot(SES_ANOVA)
@@ -249,8 +267,8 @@ SES_residuals <- residuals(SES_ANOVA)
 shapiro.test(SES_residuals)
 
 plot(SES_ANOVA,1)
-bartlett.test(SES..8.66. ~ Group_4cat, data=Total_Inc_Study)
-leveneTest(SES..8.66. ~ Group_4cat, data=Total_Inc_Study)
+bartlett.test(SES_range_8_to_66 ~ Group_4cat, data=Total_Inc_Study)
+leveneTest(SES_range_8_to_66 ~ Group_4cat, data=Total_Inc_Study)
 
 par(ask=TRUE)
 opar <- par(no.readonly=TRUE) 
@@ -261,14 +279,5 @@ plot(TukeyHSD(SES_ANOVA))
 par(opar)
 
 kruskal.test(SES..8.66. ~ Group_4cat, data = Total_Inc_Study)
-pairwise.wilcox.test(Total_Inc_Study$SES..8.66.,Total_Inc_Study$Group_4cat,p.adjust.method="none")
+pairwise.wilcox.test(Total_Inc_Study$SES_range_8_to_66,Total_Inc_Study$Group_4cat,p.adjust.method="none")
 
-
-# Find observations with missing Age and SES values
-which(is.na(Total_Inc_Study$Age)) # 4 observations missing Age value
-Missing_Age <- Total_Inc_Study[which(is.na(Total_Inc_Study$Age)),3]
-Missing_Age
-
-which(is.na(Total_Inc_Study$SES)) # 14 observations missing SES value
-Missing_SES <- Total_Inc_Study[which(is.na(Total_Inc_Study$SES..8.66.)),3]
-Missing_SES
