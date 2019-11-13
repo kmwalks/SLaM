@@ -58,6 +58,11 @@ library(olsrr)
       Tested_Not_Inc <- subset(Map_EE_Demo, Map_EE_Demo$Including.in.Study. != "Yes" & Map_EE_Demo$Date.Tested != "")
       View(Tested_Not_Inc)
       # 0 kids not included in study that were tested. If do have any, need to explain why they were not included!
+           
+  # SEX 
+  sum(Map_EE_Demo$M.F=='Female')
+  sum(Map_EE_Demo$M.F=='Male')
+  sum(Map_EE_Demo$M.F=='N/A')
       
   # AGE DESCRIPTIVE STATISTICS    
   min(Total_Inc_Study$Age_Rounded, na.rm=TRUE) # 5.1
