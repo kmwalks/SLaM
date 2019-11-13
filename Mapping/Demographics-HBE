@@ -37,15 +37,11 @@ library(olsrr)
       View(Map)
       # <- saves MC as an object, read.csv() imports it    
   
-      
-      ## WHEN HAVE FINALIZED DATA: Subset overall data with particular parameters (i.e. including P, coded, test using, age range)
-      Map_EE <- subset(Map, Map$Coded. == "Yes" & Map$Group_4cat == "English Early" & Map$Age_Rounded<10 & Map$Including.in.Study == "Yes")
-      View(Map_EE)
   
  ## BASIC DEMOGRAPHICS ## 
 
       Map_EE_Demo <- subset(Map, Map$Group_4cat == "English Early", Map$Age_Rounded<10 | is.na(Map$Age_Rounded))
-      View(Map_EE_Demo) #44 total English Early kids
+      View(Map_EE_Demo) #44 total English Early kids (no kids > 10)
 
       Total_Inc_Study <- subset(Map_EE_Demo, Map_EE_Demo$Including.in.Study. == "Yes")
       View(Total_Inc_Study)
@@ -55,186 +51,30 @@ library(olsrr)
       nrow(Total_Not_Inc_Study)
       View(Total_Not_Inc_Study)
       # 2 total kids not included in study
+      
+      Total_Blank_NA <- subset(Map_EE_Demo, Map_EE_Demo$Including.in.Study. == "" | is.na(Map_EE_Demo$Including.in.Study.))
+      # 0 blanks or N/As
 
       Tested_Not_Inc <- subset(Map_EE_Demo, Map_EE_Demo$Including.in.Study. != "Yes" & Map_EE_Demo$Date.Tested != "")
       View(Tested_Not_Inc)
-      # 0 kids not included in study that were tested. Need to explain why were not included!
+      # 0 kids not included in study that were tested. If do have any, need to explain why they were not included!
       
-      
-      
-      #Descriptive Statistics
-      #Subset group want ex. EE
-      #summary of variable want within that group ex. summary(EE$Sex)
-      
-  #To get number of observations for each group
-      #sum(MC_GiveN$LanguageGroup == 'English Early', na.rm=TRUE)
-      #from entire dataset: sum(MC$Group_4cat == 'ASL Early', na.rm=TRUE)
-      #obtain Including in study NA: IncStudy_NA <- subset(MC, MC$Including_in_study == "" | is.na(MC$Including_in_study))
-      #obtain Including in study No: IncStudy_No <- subset(MC, MC$Including_in_study == "No")
-      #obtain Including in study Yes & pull from this for other variable missing data info: IncStudy <- subset(MC, MC$Including_in_study == "Yes")
-      #Missing Give-N: GN_NA <- subset(IncStudy, IncStudy$GiveN_ALL_ceiling_conservative == "NA" | is.na(IncStudy$GiveN_ALL_ceiling_conservative | IncStudy$GiveN_ALL_ceiling_conservative == "No"))
-      #Missing SES: SES_NA <- subset(IncStudy, IncStudy$SES_range_8_to_66 == "NA" | is.na(IncStudy$SES_range_8_to_66 | IncStudy$SES_range_8_to_66 == "No"))
-      #Missing Age: Age_NA <- subset(IncStudy, IncStudy$Age == "NA" | is.na(IncStudy$Age | IncStudy$Age == "No"))
-      #Missing EC with objects: ECw_NA <- subset(IncStudy, IncStudy$Highest_Count_wobj == "NA" | is.na(IncStudy$Highest_Count_wobj | IncStudy$Highest_Count_wobj == "No"))
-      #Missing EC without objects: ECwo_NA <- subset(IncStudy, IncStudy$Highest_Count_noobj == "NA" | is.na(IncStudy$Highest_Count_noobj | IncStudy$Highest_Count_noobj == "No"))
-
-#Table for Overall Including in Study
-IncStudy <- subset(MC, MC$Including_in_study == "Yes")
-View(IncStudy)
-AE_Inc <- subset(IncStudy, IncStudy$Group_4cat == "ASL Early")
-EL_Inc <- subset(IncStudy, IncStudy$Group_4cat == "English Later")
-AL_Inc <- subset(IncStudy, IncStudy$Group_4cat == "ASL Later")
-EE_Inc <- subset(IncStudy, IncStudy$Group_4cat == "English Early")
-#Check for N/A in age & SES (note how many!)
-mean(AE_Inc$Age, na.rm = TRUE)
-sd(AE_Inc$Age, na.rm = TRUE) 
-mean(AE_Inc$SES_range_8_to_66, na.rm = TRUE)
-sd(AE_Inc$SES_range_8_to_66, na.rm = TRUE)
-
-
-## AGE DESCRIPTIVE STATISTICS ##
-      # Age variable stored as factor. Need to convert to character, then to numeric (to preserve actual numeric values) before finding descriptive statistics.
-
-      min(Total_Inc_Study$Age, na.rm=TRUE)
-      max(Total_Inc_Study$Age, na.rm=TRUE) 
-      median(Total_Inc_Study$Age, na.rm=TRUE) 
-      mean(Total_Inc_Study$Age, na.rm=TRUE) 
-      sd(Total_Inc_Study$Age, na.rm=TRUE) 
-      range(Total_Inc_Study$Age, na.rm=TRUE) 
-
-
-## SES DESCRIPTIVE STATISTICS ##
-      # SES variable stored as factor. Need to convert to character, then to numeric (to preserve actual numeric values) before finding descriptive statistics.
-
-      min(Total_Inc_Study$SES..8.66., na.rm=TRUE) 
-      max(Total_Inc_Study$SES..8.66., na.rm=TRUE) 
-      median(Total_Inc_Study$SES..8.66., na.rm=TRUE) 
-      mean(Total_Inc_Study$SES..8.66., na.rm=TRUE) 
-      sd(Total_Inc_Study$SES..8.66., na.rm=TRUE) 
-      range(Total_Inc_Study$SES..8.66., na.rm=TRUE) 
-
-      Incorrect_SES <- subset(Map_EE_Demo, Map_EE_Demo$SES..8.66. < 8 | Map_EE_Demo$SES..8.66. == "")
-
-
-## Find observations with missing Age and SES values ##
-      which(is.na(Total_Inc_Study$Age)) 
-      Missing_Age <- Total_Inc_Study[which(is.na(Total_Inc_Study$Age)),3]
-      Missing_Age
-
-      which(is.na(Total_Inc_Study$SES)) 
-      Missing_SES <- Total_Inc_Study[which(is.na(Total_Inc_Study$SES..8.66.)),3]
-      Missing_SES
-
-
-##### JUSTIN'S CODES BELOW #### 
-
-#Other
-      #Analyze Participant Pool
-      sum(Map_EE$Group_4cat == 'English Early', na.rm=TRUE)
-      
-#Plots
-      #Scatterplot Sum Correct Total x Age 
-      EarlyTiming <- ggplot(Map_EE, aes(x=Map_EE$Age_Rounded, y=Map_EE$SumCorrectTotal_All)) + geom_point(aes(shape=Map_EE$Group_4cat, color=Map_EE$Group_4cat))+ labs(x = "Age (years)", y = "Sum Correct Total") + theme(legend.position="none") 
-      EarlyTiming
-      
-      #Violin/Box Plot SES
-      map.n <- function(x){return(c(y = median(x)*1.05, label = length(x))) }
-      mean.n <- function(x){return(c(y= median(x)*0.97, label = round(mean(x), 2)))}
-      ggplot(Map_EE, aes(x = Map_EE$Group_4cat, y = Map_EE$SES_range_8_to_66, fill = Map_EE$Group_4cat)) + geom_violin() + geom_boxplot(width = 0.2) + labs (x= "Language Group", y = "SES") + stat_summary(fun.data = map.n, geom = "text", fun.y = median) + stat_summary(fun.data = mean.n, geom= "text", fun.y=mean, color= "gainsboro") + theme(legend.position="none") 
-
-      #Violin Age
-      ggplot(Map_EE, aes(x=Map_EE$Group_4cat, y=Map_EE$Age_Rounded, fill=Map_EE$Group_4cat)) + geom_violin() + labs(x="Timing of Language Exposure", y= "Age (years)") + theme(legend.position="none") 
-      
-      #Violin Age x Sex
-      map.n <- function(x){return(c(y = median(x)*1.05, label = length(x))) }
-      mean.n <- function(x){return(c(y= median(x)*0.97, label = round(mean(x), 2)))}
-      ggplot(Map_EE, aes(x=Map_EE$M.F, y=Map_EE$Age_Rounded, fill=Map_EE$Group_4cat)) + geom_violin() + labs(x="Timing of Language Exposure", y= "Age (years)") + theme(legend.position="none") + stat_summary(fun.data = map.n, geom = "text", fun.y = median) + stat_summary(fun.data = mean.n, geom= "text", fun.y=mean, color= "gainsboro") + theme(legend.position="none") 
-
-
-# ANOVA for mean Age and mean SES between groups
-# Violated variances assumption, re-run using kruskal-wallis test (non-parametric)
-
-# mean Age
-# Ho : mu1=...=mu4
-# Ha : mu2=...≠...mu4
-# alpha level: 0.05
-# Assumptions
-shapiro.test(EE_Inc$Age) # p=0.1889>0.05, do not reject null, assume normality
-shapiro.test(EL_Inc$Age) # p=0.1227>0.05, do not reject null, assume normality
-shapiro.test(AE_Inc$Age) # p=0.07453>0.05, do not reject null, assume normality
-shapiro.test(AL_Inc$Age) # p=0.5485>0.05, do not reject null, assume normality
-
-bartlett.test(Total_Inc_Study$Age, Total_Inc_Study$Group_4cat) # p=0.01563<0.05, reject the null hypothesis, do not assume variances are equal
-# sample sds are relatively close, use that to assume normality?
-
-Age_ANOVA <- aov(Total_Inc_Study$Age ~ Total_Inc_Study$Group_4cat)
-summary(Age_ANOVA) # p=0.00153<0.05, reject null, conclude that population means for Age are not equal between groups, which ones differ?
-
-qqPlot(Age_ANOVA)
-Age_residuals <- residuals(Age_ANOVA)
-shapiro.test(Age_residuals)
-
-plot(Age_ANOVA,1)
-bartlett.test(Age ~ Group_4cat, data=Total_Inc_Study)
-leveneTest(Age ~ Group_4cat, data=Total_Inc_Study)
-
-par(ask=TRUE)
-opar <- par(no.readonly=TRUE) 
-TukeyHSD(Age_ANOVA)
-par(las=1) 
-par(mar=c(5,8,4,2)) 
-plot(TukeyHSD(Age_ANOVA))
-par(opar)
-
-kruskal.test(Age ~ Group_4cat, data = Total_Inc_Study)
-pairwise.wilcox.test(Total_Inc_Study$Age, Total_Inc_Study$Group_4cat, p.adjust.method="none")
-# Which p-value adjustment method should be used?
-
-# Normality assumption violated for SES ANOVA but since ANOVA is relatively good at working without this assumption we will still run an ANOVA
-
-***
-
-# mean SES
-# Ho : mu1=...=mu4
-# Ha : mu2=...≠...mu4
-# alpha level: 0.05
-# Assumptions
-
-Labels <- factor(Total_Inc_Study$Group_4cat, levels=c("English Early","English Later","ASL Early","ASL Later"), labels = c("English Early","English Later","ASL Early","ASL Later"))
-sm.density.compare(Total_Inc_Study$SES..8.66., Total_Inc_Study$Group_4cat, xlab="Socioeconomic Status", lwd=3,xlim=c(3,66),col=c(4,6,2,3))
-title(main="SES Distribution for each Group 4 Category")
-colfill<-c(2,3,4,6)
-legend(3,0.033, levels(Labels), fill=colfill)
-
-shapiro.test(EE_Inc$SES..8.66.) # p=0.1.577e-08<0.05, reject null, can't assume normality
-shapiro.test(EL_Inc$SES..8.66.) # p=2.603e-07<0.05, reject null, can't assume normality
-shapiro.test(AE_Inc$SES..8.66.) # p=0.002099<0.05, reject null, can't assume normality
-shapiro.test(AL_Inc$SES..8.66.) # p=0.005926<0.05, reject null, can't assume normality
-# This assumption really fell apart
-
-bartlett.test(Total_Inc_Study$SES..8.66., Total_Inc_Study$Group_4cat) # p=0.7661>0.05, do not reject the null hypothesis, assume variances are equal
-
-# All samples drawn independently
-
-SES_ANOVA <- aov(Total_Inc_Study$SES..8.66. ~ Total_Inc_Study$Group_4cat)
-summary(SES_ANOVA) # p=0.105>0.05, do not reject null, conclude that population means for SES are equal between groups
-
-qqPlot(SES_ANOVA)
-SES_residuals <- residuals(SES_ANOVA)
-shapiro.test(SES_residuals)
-
-plot(SES_ANOVA,1)
-bartlett.test(SES..8.66. ~ Group_4cat, data=Total_Inc_Study)
-leveneTest(SES..8.66. ~ Group_4cat, data=Total_Inc_Study)
-
-par(ask=TRUE)
-opar <- par(no.readonly=TRUE) 
-TukeyHSD(SES_ANOVA)
-par(las=1) 
-par(mar=c(5,8,4,2)) 
-plot(TukeyHSD(SES_ANOVA))
-par(opar)
-
-kruskal.test(SES..8.66. ~ Group_4cat, data = Total_Inc_Study)
-pairwise.wilcox.test(Total_Inc_Study$SES..8.66.,Total_Inc_Study$Group_4cat,p.adjust.method="none")
-
+  # AGE DESCRIPTIVE STATISTICS    
+  min(Total_Inc_Study$Age_Rounded, na.rm=TRUE) # 5.1
+  max(Total_Inc_Study$Age_Rounded, na.rm=TRUE) # 9.7
+  median(Total_Inc_Study$Age_Rounded, na.rm=TRUE) # 6.9
+  mean(Total_Inc_Study$Age_Rounded, na.rm=TRUE) # 6.985714
+  sd(Total_Inc_Study$Age_Rounded, na.rm=TRUE) # 1.319381
+  range(Total_Inc_Study$Age_Rounded, na.rm=TRUE) # 5.1 - 9.7
+  
+  # SES DESCRIPTIVE STATISTICS
+  min(Total_Inc_Study$SES_range_8_to_66, na.rm=TRUE) # 17
+  max(Total_Inc_Study$SES_range_8_to_66, na.rm=TRUE) # 66
+  median(Total_Inc_Study$SES_range_8_to_66, na.rm=TRUE) # 61
+  mean(Total_Inc_Study$SES_range_8_to_66, na.rm=TRUE) # 55.2439
+  sd(Total_Inc_Study$SES_range_8_to_66, na.rm=TRUE) # 12.95093
+  range(Total_Inc_Study$SES_range_8_to_66, na.rm=TRUE) # 17 - 66
+  
+  
+  
+  
