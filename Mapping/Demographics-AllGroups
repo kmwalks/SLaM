@@ -33,7 +33,7 @@ library(olsrr)
       
       
 #3. Import Data [[make sure is most recent version and saved as csv]]
-      Map <- read.csv("Mapping_Coding_CH_191104.csv", na.strings = "N/A")
+      Map <- read.csv("Mapping_Coding_KW_191113.csv", na.strings = "N/A")
       View(Map)
       # <- saves MC as an object, read.csv() imports it    
 
@@ -42,21 +42,23 @@ library(olsrr)
       Map_Demo <- subset(Map, Map$Age_Rounded<10 | is.na(Map$Age_Rounded))
       View(Map_Demo) # 148 total kids (1 kid > 10 excluded)
 
-#### JUSTIN'S CODE BELOW ####
-      Total_Inc_Study <- subset(MC_Data, MC_Data$Including.in.Study. == "Yes")
+      Total_Inc_Study <- subset(Map_Demo, Map_Demo$Including.in.Study. == "Yes")
       View(Total_Inc_Study)
-      # 201 total kids included in study
+      # 118 total kids included in study
 
-      Total_Not_Inc_Study <- subset(MC_Data, MC_Data$Including.in.Study. == "No" | MC_Data$Including.in.Study. == "")
+      Total_Not_Inc_Study <- subset(Map_Demo, Map_Demo$Including.in.Study. == "No")
       nrow(Total_Not_Inc_Study)
       View(Total_Not_Inc_Study)
-      # 36 total kids not included in study
+      # 9 total kids not included in study
+      
+      Total_Blank_NA <- subset(Map_Demo, Map_Demo$Including.in.Study. == "" | is.na(Map_Demo$Including.in.Study.))
+      #21 blanks or N/As
 
-      Tested_Not_Inc <- subset(MC_Data, MC_Data$Including.in.Study. != "Yes" & MC_Data$Date.Tested != "")
+      Tested_Not_Inc <- subset(Map_Demo, Map_Demo$Including.in.Study. != "Yes" & Map_Demo$Date.Tested != "")
       View(Tested_Not_Inc)
-      # 11 of 36 kids not included in study were tested
+      # 1 kid out of 9 not included in study were tested
 
-## Tested But Not Included:How many from each group? ## 
+## Tested But Not Included: How many from each group? ## 
 
       EE_Not_Inc <- subset(Total_Not_Inc_Study, Total_Not_Inc_Study$Group_4cat == "English Early" & Total_Not_Inc_Study$Date.Tested != "")
       # 3 of 11 kids tested but not included are EE
