@@ -1,3 +1,50 @@
+#1. Install and Load Libraries 
+
+install.packages("tidyverse") # includes ggplot2
+install.packages("ggplot2") # for general plots
+install.packages("beeswarm") # for beeswarm plots
+install.packages("colorspace") # for fixing colors in beeswarm plots
+install.packages("stargazer") # for pretty regression output tables
+install.packages("MASS") # for polr package
+install.packages("generalhoslem") # for testing model fit (lipsitz test and two others)
+install.packages("qwraps2") # for summary_table use
+install.packages("quantreg") # testing quantile plots (geom_quantile) and quantile regressions
+install.packages ("olsrr") #for testing normality
+
+library(tidyverse) 
+library(ggplot2) 
+library(beeswarm)
+library(colorspace) 
+library(stargazer) 
+library(MASS) 
+library(generalhoslem) 
+library(qwraps2) 
+library(quantreg) 
+library(olsrr)
+
+
+#2. Check and Set Working Directory
+      #LAB
+      setwd("/Users/labuser/Documents/R")
+      getwd() #to see where is set to
+      #LAPTOP
+      setwd("~/Desktop")
+      getwd()
+      
+      
+#3. Import Data [[make sure is most recent version and saved as csv]]
+      Map <- read.csv("Mapping_Coding_CH_191104.csv", na.strings = "N/A")
+      View(Map)
+      # <- saves MC as an object, read.csv() imports it    
+
+
+
+
+
+
+
+
+
 
 ### ADD CODES BEFORE THIS FROM MAPPING HBE DEMOGRAPHICS FILE ### 
 
