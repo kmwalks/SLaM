@@ -86,7 +86,17 @@ library(olsrr)
       #SES VIOLIN
       ggplot(Total_Inc_Study, aes(x=Total_Inc_Study$Group_4cat, y=Total_Inc_Study$SES_range_8_to_66)) + geom_violin()
       
+
+  
+  
+  # Find observations with missing Age and SES values
+      which(is.na(Total_Inc_Study$Age_Rounded)) # 0 observations missing Age value
+      Missing_Age <- Total_Inc_Study[which(is.na(Total_Inc_Study$Age_Rounded)),3]
+      Missing_Age
+
+      which(is.na(Total_Inc_Study$SES)) # 1 observation missing SES value
+      Missing_SES <- Total_Inc_Study[which(is.na(Total_Inc_Study$SES_range_8_to_66)),3]
+      Missing_SES
+      
       Incorrect_SES <- subset(Total_Inc_Study, Total_Inc_Study$SES_range_8_to_66 < 3 | Total_Inc_Study$SES_range_8_to_66 == "")
       #No observations of SES < 3
-  
-  
