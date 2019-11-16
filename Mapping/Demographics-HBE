@@ -73,7 +73,7 @@ library(olsrr)
   range(Total_Inc_Study$Age_Rounded, na.rm=TRUE) # 5.1 - 9.7
   
       #AGE VIOLIN
-      ggplot(Map_EE_Demo, aes(x=Map_EE_Demo$Group_4cat, y=Map_EE_Demo$Age_Rounded)) + geom_violin()
+      ggplot(Total_Inc_Study, aes(x=Total_Inc_Study$Group_4cat, y=Total_Inc_Study$Age_Rounded)) + geom_violin()
   
   # SES DESCRIPTIVE STATISTICS
   min(Total_Inc_Study$SES_range_8_to_66, na.rm=TRUE) # 17
@@ -84,9 +84,9 @@ library(olsrr)
   range(Total_Inc_Study$SES_range_8_to_66, na.rm=TRUE) # 17 - 66
             
       #SES VIOLIN
-      ggplot(Map_EE_Demo, aes(x=Map_EE_Demo$Group_4cat, y=Map_EE_Demo$SES_range_8_to_66)) + geom_violin()
+      ggplot(Total_Inc_Study, aes(x=Total_Inc_Study$Group_4cat, y=Total_Inc_Study$SES_range_8_to_66)) + geom_violin()
       
-      Incorrect_SES <- subset(Map_EE_Demo, Map_EE_Demo$SES_range_8_to_66 < 3 | Map_EE_Demo$SES_range_8_to_66 == "")
+      Incorrect_SES <- subset(Total_Inc_Study, Total_Inc_Study$SES_range_8_to_66 < 3 | Total_Inc_Study$SES_range_8_to_66 == "")
       #No observations of SES < 3
   
   
