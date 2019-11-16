@@ -219,6 +219,15 @@ aggregate(SES_range_8_to_66 ~ Group_4cat, data=Total_Inc_Study, range)
       mean.n <- function(x){return(c(y= median(x)*0.97, label = round(mean(x), 2)))}
       ggplot(LngGrp, aes(x = LanguageGroup, y = LngGrp$Age_Rounded, fill = LanguageGroup)) + geom_violin() + geom_boxplot(width = 0.2) + labs (x= "Language Group", y = "Age (years)") + stat_summary(fun.data = mean.n, geom = "text", fun.y = median) + stat_summary(fun.data = mean.n, geom= "text", fun.y=mean, color= "gainsboro") + theme(legend.position="none") 
    
+   
+#DENSITY PLOT BELOW, NOT WORKING NEED LIBRARY FOR SM.DENSITY.COMPARE
+Labels <- factor(Total_Inc_Study$Group_4cat, levels=c("English Early","English Later","ASL Early","ASL Later"), labels = c("English Early","English Later","ASL Early","ASL Later"))
+sm.density.compare(Total_Inc_Study$SES_range_8_to_66, Total_Inc_Study$Group_4cat, xlab="Socioeconomic Status", lwd=3,xlim=c(3,66),col=c(4,6,2,3))
+title(main="SES Distribution for each Group 4 Category")
+colfill<-c(2,3,4,6)
+legend(3,0.033, levels(Labels), fill=colfill)
+
+
       
 # ANOVA for mean Age and mean SES between groups - is the avergae age or SES sig different between groups?
 
@@ -278,7 +287,7 @@ summary(Age_ANOVA) # p=0.6
 # IF SHAPIRO AND BARLETT ARE >.O5 YAH GOOD, IF NOT: LEVENE AS BACKUP FOR BARLETT, IF STILL NAH, NON-PARAMETRIC METHOD NEEDS TO BE USED / NOT ANOVA 
       # Violated variances assumption, re-run using kruskal-wallis test (non-parametric)
       # IF ASSUMPTIONS DO NOT HOLD, USE KRUSKAL NON-PARAMATRIC TEST/PAIRWISE.WILCOX.TEST FOR POST-HOC)
-      kruskal.test(Age ~ Group_4cat, data = Total_Inc_Study)
+      kruskal.test(Total_Inc_Study$Age_Rounded ~ Group_4cat, data = Total_Inc_Study)
       pairwise.wilcox.test(Total_Inc_Study$Age, Total_Inc_Study$Group_4cat, p.adjust.method="none")
       # Which p-value adjustment method should be used?
 
@@ -290,34 +299,25 @@ summary(Age_ANOVA) # p=0.6
             # alpha level: 0.05
             # Assumptions
 
-
-#DENSITY PLOT BELOW, NOT WORKING NEED LIBRARY FOR SM.DENSITY.COMPARE
-Labels <- factor(Total_Inc_Study$Group_4cat, levels=c("English Early","English Later","ASL Early","ASL Later"), labels = c("English Early","English Later","ASL Early","ASL Later"))
-sm.density.compare(Total_Inc_Study$SES..8.66., Total_Inc_Study$Group_4cat, xlab="Socioeconomic Status", lwd=3,xlim=c(3,66),col=c(4,6,2,3))
-title(main="SES Distribution for each Group 4 Category")
-colfill<-c(2,3,4,6)
-legend(3,0.033, levels(Labels), fill=colfill)
-
-shapiro.test(EE_Inc$SES_range_8_to_66) # p=0.1.577e-08<0.05, reject null, can't assume normality
-shapiro.test(EL_Inc$SES_range_8_to_66) # p=2.603e-07<0.05, reject null, can't assume normality
-shapiro.test(AE_Inc$SES_range_8_to_66) # p=0.002099<0.05, reject null, can't assume normality
-shapiro.test(AL_Inc$SES_range_8_to_66) # p=0.005926<0.05, reject null, can't assume normality
-# This assumption really fell apart
-
-bartlett.test(Total_Inc_Study$SES_range_8_to_66, Total_Inc_Study$Group_4cat) # p=0.7661>0.05, do not reject the null hypothesis, assume variances are equal
-
 # All samples drawn independently
-
 SES_ANOVA <- aov(Total_Inc_Study$SES_range_8_to_66 ~ Total_Inc_Study$Group_4cat)
 summary(SES_ANOVA) # p=0.105>0.05, do not reject null, conclude that population means for SES are equal between groups
 
-qqPlot(SES_ANOVA)
-SES_residuals <- residuals(SES_ANOVA)
-shapiro.test(SES_residuals)
+      #1. Normality  
+      qqPlot(SES_ANOVA)
+      SES_residuals <- residuals(SES_ANOVA)
+      shapiro.test(SES_residuals)
+            shapiro.test(EE_Inc$SES_range_8_to_66) # p=2.668e-07<0.05, reject null, can't assume normality
+            shapiro.test(EL_Inc$SES_range_8_to_66) # p=0.002325<0.05, reject null, can't assume normality
+            shapiro.test(AE_Inc$SES_range_8_to_66) # p=0.01088<0.05, reject null, can't assume normality
+            shapiro.test(AL_Inc$SES_range_8_to_66) # p=0.002279<0.05, reject null, can't assume normality
+            # This assumption really fell apart
+      
+      #2. Homeogeneity of Variances Between Groups
+      bartlett.test(Total_Inc_Study$SES_range_8_to_66, Total_Inc_Study$Group_4cat) # p=0.7661>0.05, do not reject the null hypothesis, assume variances are equal
 
-plot(SES_ANOVA,1)
-bartlett.test(SES_range_8_to_66 ~ Group_4cat, data=Total_Inc_Study)
-leveneTest(SES_range_8_to_66 ~ Group_4cat, data=Total_Inc_Study)
+
+
 
 par(ask=TRUE)
 opar <- par(no.readonly=TRUE) 
