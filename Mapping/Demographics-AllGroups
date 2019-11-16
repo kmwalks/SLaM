@@ -181,21 +181,19 @@ range(AE_Inc$SES_range_8_to_66, na.rm=TRUE) # 3 61
 range(AL_Inc$SES_range_8_to_66, na.rm=TRUE) # 3 63.5
 aggregate(SES_range_8_to_66 ~ Group_4cat, data=Total_Inc_Study, range)
 
-Incorrect_SES <- subset(Map_Demo, Map_Demo$SES_range_8_to_66 < 3 | Map_Demo$SES_range_8_to_66 == "")
-#No observations of SES <3
-
-
-
 # ANOVA for mean Age and mean SES between groups - is the avergae age or SES sig different between groups?
 
 # Find observations with missing Age and SES values
-      which(is.na(Total_Inc_Study$Age_Rounded)) # 42 observations missing Age value
+      which(is.na(Total_Inc_Study$Age_Rounded)) # 1 observation missing Age value
       Missing_Age <- Total_Inc_Study[which(is.na(Total_Inc_Study$Age_Rounded)),3]
       Missing_Age
 
-      which(is.na(Total_Inc_Study$SES)) # ??? observations missing SES value
+      which(is.na(Total_Inc_Study$SES)) # 15 observations missing SES value
       Missing_SES <- Total_Inc_Study[which(is.na(Total_Inc_Study$SES_range_8_to_66)),3]
       Missing_SES
+      
+      Incorrect_SES <- subset(Map_Demo, Map_Demo$SES_range_8_to_66 < 3 | Map_Demo$SES_range_8_to_66 == "")
+      #No observations of SES <3
 
 #AGE#
       # mean Age
