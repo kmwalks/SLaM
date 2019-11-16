@@ -181,7 +181,7 @@ range(AE_Inc$SES_range_8_to_66, na.rm=TRUE) # 3 61
 range(AL_Inc$SES_range_8_to_66, na.rm=TRUE) # 3 63.5
 aggregate(SES_range_8_to_66 ~ Group_4cat, data=Total_Inc_Study, range)
 
-## TIMING VIOLIN PLOTS## 
+## TIMING VIOLIN PLOTS ## 
       # TIMING: AGE 
       TimingGroup <- subset(Total_Inc_Study, Total_Inc_Study$Timing_cat == "Early" | Total_Inc_Study$Timing_2cat == "Later") 
       TimeGrp <- Total_Inc_Study$Timing_cat
@@ -192,7 +192,7 @@ aggregate(SES_range_8_to_66 ~ Group_4cat, data=Total_Inc_Study, range)
       TimeGrp <- Total_Inc_Study$Timing_cat
       ggplot(TimingGroup, aes(x=TimeGrp, y=Total_Inc_Study$SES_range_8_to_66)) + geom_violin() + labs(x="Timing", y="SES")
 
-## MODALITY VIOLIN PLOTS##
+## MODALITY VIOLIN PLOTS ##
       # MODALITY: AGE
       ModalityGroup <- subset(Total_Inc_Study, Total_Inc_Study$Modality_cat == "English" | Total_Inc_Study$Modality_cat == "ASL")
       ModalityGrp <- Total_Inc_Study$Modality_cat
@@ -203,8 +203,23 @@ aggregate(SES_range_8_to_66 ~ Group_4cat, data=Total_Inc_Study, range)
       ModalityGrp <- Total_Inc_Study$Modality_cat
       ggplot(ModalityGroup, aes(x=ModalityGrp, y=Total_Inc_Study$SES_range_8_to_66)) + geom_violin() + labs(x="Modality", y="SES")
       
-      
+## GROUP VIOLIN PLOTS ## 
+      # AGE
+      LngGrp <- cbind(Total_Inc_Study, LanguageGroup) 
+      View(LngGrp)
 
+      map.n <- function(x){return(c(y = median(x)*1.05, label = length(x))) }
+      mean.n <- function(x){return(c(y= median(x)*0.97, label = round(mean(x), 2)))}
+      ggplot(LngGrp, aes(x = LanguageGroup, y = LngGrp$SES_range_8_to_66, fill = LanguageGroup)) + geom_violin() + geom_boxplot(width = 0.2) + labs (x= "Language Group", y = "SES") + stat_summary(fun.data = mean.n, geom = "text", fun.y = median) + stat_summary(fun.data = mean.n, geom= "text", fun.y=mean, color= "gainsboro") + theme(legend.position="none") 
+
+      # SES
+      LngGrp <- cbind(Total_Inc_Study, LanguageGroup) 
+      View(LngGrp)
+      map.n <- function(x){return(c(y = median(x)*1.05, label = length(x))) }
+      mean.n <- function(x){return(c(y= median(x)*0.97, label = round(mean(x), 2)))}
+      ggplot(LngGrp, aes(x = LanguageGroup, y = LngGrp$Age_Rounded, fill = LanguageGroup)) + geom_violin() + geom_boxplot(width = 0.2) + labs (x= "Language Group", y = "Age (years)") + stat_summary(fun.data = mean.n, geom = "text", fun.y = median) + stat_summary(fun.data = mean.n, geom= "text", fun.y=mean, color= "gainsboro") + theme(legend.position="none") 
+   
+      
 # ANOVA for mean Age and mean SES between groups - is the avergae age or SES sig different between groups?
 
 # Find observations with missing Age and SES values
