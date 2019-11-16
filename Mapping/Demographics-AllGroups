@@ -95,6 +95,18 @@ chisq.test(Table_IncStudy)
 # Test statistic is p-value is 0.2171, do not reject null, conclude that status of inclusion in study is not dependent on group 4 category. GOOD.
 
 
+# SEX 
+  sum(Total_Inc_Study$M.F=='Female') # 59
+  sum(Total_Inc_Study$M.F=='Male') # 59
+  sum(EE_Inc$M.F=='Female') # 23 
+  sum(EE_Inc$M.F=='Male') # 19
+  sum(EL_Inc$M.F=='Female') # 6
+  sum(EL_Inc$M.F=='Male') # 4
+  sum(AE_Inc$M.F=='Female') # 12
+  sum(AE_Inc$M.F=='Male') # 9
+  sum(AL_Inc$M.F=='Female') # 18
+  sum(AL_Inc$M.F=='Male') #27
+
 # AGE DESCRIPTIVE STATISTICS
 min(EE_Inc$Age_Rounded, na.rm=TRUE) # 5.1
 min(EL_Inc$Age_Rounded, na.rm=TRUE) # 6.1
