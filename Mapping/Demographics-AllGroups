@@ -90,7 +90,19 @@ library(sm)
 chisq.test(Table_IncStudy)
 # Test statistic is p-value is 0.5469, do not reject null, conclude that status of inclusion in study is not dependent on group 4 category. GOOD.
 
+# Find observations with missing Age and SES values
+      which(is.na(Total_Inc_Study$Age_Rounded)) # 0 observations missing Age value
+      Missing_Age <- Total_Inc_Study[which(is.na(Total_Inc_Study$Age_Rounded)),3]
+      View(Missing_Age)
 
+      which(is.na(Total_Inc_Study$SES)) # 9 observations missing SES value
+      Missing_SES <- Total_Inc_Study[which(is.na(Total_Inc_Study$SES_range_8_to_66)),3]
+      View(Missing_SES)
+      
+      Incorrect_SES <- subset(Map_Demo, Map_Demo$SES_range_8_to_66 < 3 | Map_Demo$SES_range_8_to_66 == "") #No observations of SES <3
+      View(Incorrect_SES)
+      
+      
 # SEX 
   sum(Total_Inc_Study$M.F=='Female') # 57
   sum(Total_Inc_Study$M.F=='Male') # 73
@@ -226,18 +238,6 @@ legend(3,0.033, levels(Labels), fill=colfill)
 
       
 # ANOVA for mean Age and mean SES between groups - is the avergae age or SES sig different between groups?
-
-# Find observations with missing Age and SES values
-      which(is.na(Total_Inc_Study$Age_Rounded)) # 1 observation missing Age value
-      Missing_Age <- Total_Inc_Study[which(is.na(Total_Inc_Study$Age_Rounded)),3]
-      Missing_Age
-
-      which(is.na(Total_Inc_Study$SES)) # 15 observations missing SES value
-      Missing_SES <- Total_Inc_Study[which(is.na(Total_Inc_Study$SES_range_8_to_66)),3]
-      Missing_SES
-      
-      Incorrect_SES <- subset(Map_Demo, Map_Demo$SES_range_8_to_66 < 3 | Map_Demo$SES_range_8_to_66 == "")
-      #No observations of SES <3
 
 #AGE#
       # mean Age
