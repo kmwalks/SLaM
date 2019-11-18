@@ -38,26 +38,28 @@ library(olsrr)
       Map_EE_Demo <- subset(Map, Map$Group_4cat == "English Early", Map$Age_Rounded<10 | is.na(Map$Age_Rounded))
       View(Map_EE_Demo) #44 total English Early kids (no kids > 10)
 
-      Total_Inc_Study <- subset(Map_EE_Demo, Map_EE_Demo$Including.in.Study. == "Yes")
+      Total_Inc_Study <- subset(Map_EE_Demo, Map_EE_Demo$Including.in.Study == "Yes")
       View(Total_Inc_Study)
       # 42 total kids included in study
 
-      Total_Not_Inc_Study <- subset(Map_EE_Demo, Map_EE_Demo$Including.in.Study. == "No" | Map_EE_Demo$Including.in.Study. == "")
+      Total_Not_Inc_Study <- subset(Map_EE_Demo, Map_EE_Demo$Including.in.Study == "No" | Map_EE_Demo$Including.in.Study== "")
       nrow(Total_Not_Inc_Study)
       View(Total_Not_Inc_Study)
       # 2 total kids not included in study
       
-      Total_Blank_NA <- subset(Map_EE_Demo, Map_EE_Demo$Including.in.Study. == "" | is.na(Map_EE_Demo$Including.in.Study.))
+      Total_Blank_NA <- subset(Map_EE_Demo, Map_EE_Demo$Including.in.Study == "" | is.na(Map_EE_Demo$Including.in.Study))
       # 0 blanks or N/As
 
-      Tested_Not_Inc <- subset(Map_EE_Demo, Map_EE_Demo$Including.in.Study. != "Yes" & Map_EE_Demo$Date.Tested != "")
+      Tested_Not_Inc <- subset(Map_EE_Demo, Map_EE_Demo$Including.in.Study != "Yes" & Map_EE_Demo$Date.Tested != "")
       View(Tested_Not_Inc)
       # 0 kids not included in study that were tested. If do have any, need to explain why they were not included!
-           
+          
+                   
   # SEX 
-  sum(Total_Inc_Study$M.F=='Female') # 23
-  sum(Total_Inc_Study$M.F=='Male') # 19
+  sum(Total_Inc_Study$M.F=='Female') # 20
+  sum(Total_Inc_Study$M.F=='Male') # 22
   sum(Total_Inc_Study$M.F=='N/A') # 0
+      
       
   # AGE DESCRIPTIVE STATISTICS    
   min(Total_Inc_Study$Age_Rounded, na.rm=TRUE) # 5.1
@@ -82,16 +84,15 @@ library(olsrr)
       ggplot(Total_Inc_Study, aes(x=Total_Inc_Study$Group_4cat, y=Total_Inc_Study$SES_range_8_to_66)) + geom_violin()
       
 
-  
-  
   # Find observations with missing Age and SES values
       which(is.na(Total_Inc_Study$Age_Rounded)) # 0 observations missing Age value
       Missing_Age <- Total_Inc_Study[which(is.na(Total_Inc_Study$Age_Rounded)),3]
-      Missing_Age
+      View(Missing_Age)
 
-      which(is.na(Total_Inc_Study$SES)) # 1 observation missing SES value
+      which(is.na(Total_Inc_Study$SES)) # 0 observations missing SES value
       Missing_SES <- Total_Inc_Study[which(is.na(Total_Inc_Study$SES_range_8_to_66)),3]
-      Missing_SES
+      View(Missing_SES)
       
       Incorrect_SES <- subset(Total_Inc_Study, Total_Inc_Study$SES_range_8_to_66 < 3 | Total_Inc_Study$SES_range_8_to_66 == "")
+      View(Incorrect_SES)
       #No observations of SES < 3
