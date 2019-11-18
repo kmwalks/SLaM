@@ -36,11 +36,13 @@ library(sm)
 ## BASIC DEMOGRAPHICS ## 
 
       Map_Demo <- subset(Map, Map$Age_Rounded<10 | is.na(Map$Age_Rounded))
-      View(Map_Demo) # 148 total kids (1 kid > 10 excluded)
+      View(Map_Demo) # 155 total kids (1 kid > 10 excluded)
 
-      Total_Inc_Study <- subset(Map_Demo, Map_Demo$Including.in.Study. == "Yes")
+      Total_Inc_Study <- subset(Map_Demo, Map_Demo$Including.in.Study == "Yes")
       View(Total_Inc_Study)
-      # 118 total kids included in study
+      # 130 total kids included in study
+      
+      CODES GOOD TIL HERE
 
       Total_Not_Inc_Study <- subset(Map_Demo, Map_Demo$Including.in.Study. == "No")
       nrow(Total_Not_Inc_Study)
