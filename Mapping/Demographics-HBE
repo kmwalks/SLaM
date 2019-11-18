@@ -76,8 +76,8 @@ library(olsrr)
   min(Total_Inc_Study$SES_range_8_to_66, na.rm=TRUE) # 17
   max(Total_Inc_Study$SES_range_8_to_66, na.rm=TRUE) # 66
   median(Total_Inc_Study$SES_range_8_to_66, na.rm=TRUE) # 61
-  mean(Total_Inc_Study$SES_range_8_to_66, na.rm=TRUE) # 55.2439
-  sd(Total_Inc_Study$SES_range_8_to_66, na.rm=TRUE) # 12.95093
+  mean(Total_Inc_Study$SES_range_8_to_66, na.rm=TRUE) # 55.5
+  sd(Total_Inc_Study$SES_range_8_to_66, na.rm=TRUE) # 12.9
   range(Total_Inc_Study$SES_range_8_to_66, na.rm=TRUE) # 17 - 66
             
       #SES VIOLIN
