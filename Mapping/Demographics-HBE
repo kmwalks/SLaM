@@ -8,15 +8,15 @@ install.packages("qwraps2") # for summary_table use
 install.packages("quantreg") # testing quantile plots (geom_quantile) and quantile regressions
 install.packages ("olsrr") #for testing normality
 
+
+library(car)
+library(sm)
 library(ggplot2) 
 library(MASS) 
 library(generalhoslem) 
 library(qwraps2) 
 library(quantreg) 
 library(olsrr)
-library(car)
-library(sm)
-
 
 #2. Check and Set Working Directory
       #LAB
