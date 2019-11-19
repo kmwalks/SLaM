@@ -248,7 +248,7 @@ legend(3,0.033, levels(Labels), fill=colfill)
       
 # RUN THAT ANOVA
 Age_ANOVA <- aov(Total_Inc_Study$Age_Rounded ~ Total_Inc_Study$Group_4cat)
-summary(Age_ANOVA) # p=0.6
+summary(Age_ANOVA) # p=0.56
       # If > 0.5, conclude that population means for Age are equal between groups
       # If <0.05, reject null, conclude that population means for Age are not equal between groups, which ones differ?
             #Post-Hoc
@@ -278,7 +278,7 @@ summary(Age_ANOVA) # p=0.6
       
       bartlett.test(Age_Rounded ~ Group_4cat, data=Total_Inc_Study) # p =0.3
       
-      leveneTest(Age_Rounded ~ Group_4cat, data=Total_Inc_Study) #NEED TO INSTALL A LIBRARY TO GET THIS TO WORK...
+      leveneTest(Age_Rounded ~ Group_4cat, data=Total_Inc_Study) 
 
 # IF SHAPIRO AND BARLETT ARE >.O5 YAH GOOD, IF NOT: LEVENE AS BACKUP FOR BARLETT, IF STILL NAH, NON-PARAMETRIC METHOD NEEDS TO BE USED / NOT ANOVA 
       # Violated variances assumption, re-run using kruskal-wallis test (non-parametric)
@@ -320,12 +320,12 @@ summary(SES_ANOVA) # p < 0.0001
             # This assumption really fell apart
       
       #2. Homeogeneity of Variances Between Groups
-      bartlett.test(Total_Inc_Study$SES_range_8_to_66, Total_Inc_Study$Group_4cat) # p=0.5405>0.05, do not reject the null hypothesis, assume variances are equal
+      bartlett.test(Total_Inc_Study$SES_range_8_to_66, Total_Inc_Study$Group_4cat) # p >0.05, do not reject the null hypothesis, assume variances are equal
       plot(SES_ANOVA,1) #x-axis all indiv group means and for each group mean has observations and how spread from group mean, want bands to have same spread aka start and end points 
       
-      bartlett.test(SES_range_8_to_66 ~ Group_4cat, data=Total_Inc_Study) # p =0.3
+      bartlett.test(SES_range_8_to_66 ~ Group_4cat, data=Total_Inc_Study) # p =0.4697
       
-      leveneTest(SES_range_8_to_66 ~ Group_4cat, data=Total_Inc_Study) #NEED TO INSTALL A LIBRARY TO GET THIS TO WORK...
+      leveneTest(SES_range_8_to_66 ~ Group_4cat, data=Total_Inc_Study)
 
 # IF FAIL ABOVE ASSUMPTIONS, SWITCH TO NON-PARAMETRIC TEST # 
 kruskal.test(SES_range_8_to_66~ Group_4cat, data = Total_Inc_Study)
