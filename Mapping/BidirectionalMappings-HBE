@@ -37,7 +37,7 @@ getwd()
 
 #LAPTOP setwd("~/Desktop")
 
-Mapping <- read.csv("Mapping_Coding_CH_190816.csv", na.strings = "N/A")
+Mapping <- read.csv("Mapping_Coding_CH_191119.csv", na.strings = "N/A")
  
 typeof(Mapping) # when importing using read.csv, resulting obj type is a list (data frame)
 View(Mapping)
