@@ -7,6 +7,7 @@ install.packages("generalhoslem") # for testing model fit (lipsitz test and two 
 install.packages("qwraps2") # for summary_table use
 install.packages("quantreg") # testing quantile plots (geom_quantile) and quantile regressions
 install.packages ("olsrr") #for testing normality
+install.packages("plyr") #for count and other cool things
 
 
 library(car)
@@ -17,6 +18,7 @@ library(generalhoslem)
 library(qwraps2) 
 library(quantreg) 
 library(olsrr)
+library(plyr)
 
 #2. Check and Set Working Directory
       #LAB
@@ -61,10 +63,11 @@ library(olsrr)
   sum(Total_Inc_Study$M.F=='N/A') # 0
   
   # RACE DESCRIPTIVE STATISTICS
-         #group N/A & unsure together
-
+   #group N/A & unsure together
+   count((Total_Inc_Study$Race))
   
   # ETHNICITY DESCRIPTIVE STATISTICS
+  count((Total_Inc_Study$Ethnicity))
       
   # AGE DESCRIPTIVE STATISTICS    
   min(Total_Inc_Study$Age_Rounded, na.rm=TRUE) # 5.1
