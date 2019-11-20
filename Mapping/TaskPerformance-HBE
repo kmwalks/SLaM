@@ -37,14 +37,14 @@ getwd()
 
 #LAPTOP setwd("~/Desktop")
 
-Mapping <- read.csv("Mapping_Coding_CH_190809.csv", na.strings = "N/A")
+Mapping <- read.csv("Mapping_Coding_CH_191119.csv", na.strings = "N/A")
  
 typeof(Mapping) # when importing using read.csv, resulting obj type is a list (data frame)
 View(Mapping)
 
 ####HEARING KIDS ONLY####
 
-Map_HBE <- subset(Mapping, Mapping$Including.in.Study == 'Yes' & Mapping$Coded. == "Yes" & Mapping$Group_2cat == 'Hearing')
+Map_HBE <- subset(Mapping, Mapping$Including.in.Study == 'Yes' & Mapping$Coded. == "Yes" & Mapping$Hearing_Cat == 'Hearing')
 View(Map_HBE)
 str(Map_HBE)
 
