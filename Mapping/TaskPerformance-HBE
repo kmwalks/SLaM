@@ -31,11 +31,8 @@ library(mediation)
 library(gridExtra)
 library(coin)
 
-
-setwd("/Users/labuser/Documents/R")
+setwd("~/Desktop")
 getwd()
-
-#LAPTOP setwd("~/Desktop")
 
 Mapping <- read.csv("Mapping_Coding_CH_191119.csv", na.strings = "N/A")
  
