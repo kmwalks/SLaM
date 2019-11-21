@@ -71,7 +71,7 @@ sd(Map_HBE$SumTotal_NumeralWord, na.rm = TRUE)
       QW
       QW_Zstat<-qnorm(QW$p.value/2)
       QW_Zstat
-      abs(QW_Zstat)/sqrt(17)
+      abs(QW_Zstat)/sqrt(17) #calculates r value
       
   #QUANTITY-NUMERAL#
       QN<-wilcox.test(Map_HBE$SumTotal_QuantityNumeral, Map_HBE$SumTotal_NumeralQuantity, paired = TRUE, exact=FALSE)
