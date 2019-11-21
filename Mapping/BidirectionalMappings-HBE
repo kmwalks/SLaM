@@ -202,19 +202,19 @@ sd(Map_HBE$SumTotal_NumeralWord, na.rm = TRUE)
 
 
 ## ANOVAS ##
-     ## BEFORE RUN, HAVE DATA.M AS A DF FROM ABOVE CODE ##
+     ## BEFORE RUN, HAVE BOOYAH AS A DF FROM ABOVE CODE ##
      ## REMEMBER TYPE 2 IS FOR BETWEEN SUBJECTS ##
      
-     replications(data.m) # CHECK BALANCE OF THE DATA TO ENSURE CAN USE AOV FXN. AOV can be used for balanced & unbalanced, but to a certain extent#
+     replications(BOOYAH) # CHECK BALANCE OF THE DATA TO ENSURE CAN USE AOV FXN. AOV can be used for balanced & unbalanced, but to a certain extent#
 
      ## AGE GROUP (2 LEVELS) --> SUM SCORES? One-way ANOVA unbalanced (different sample sizes), between subjects design ##
-     aov_age<- aov(data.m$value ~ data.m$AgeGrp)
+     aov_age<- aov(BOOYAH$mean ~ BOOYAH$AgeGrp)
      summary(aov_age)
      tuk_age<- TukeyHSD(aov_age)
      tuk_age  #can see WHICH variables are significantly different#
 
      ## MAP PAIR (3 LEVELS) --> SUM SCORES? One-way ANOVA balanced, within subjects/repeated measures design ##
-     aov_map<- aov(data.m$value ~ data.m$Map)
+     aov_map<- aov(BOOYAH$mean ~ BOOYAH$Map)
      summary(aov_map)
      tuk_map<- TukeyHSD(aov_map)
      tuk_map #can see WHICH variables are significantly different#
@@ -223,16 +223,19 @@ sd(Map_HBE$SumTotal_NumeralWord, na.rm = TRUE)
      ## Source: https://rcompanion.org/handbook/G_09.html ##
      install.packages("car")
      library(car)
-     model = lm(data.m$value ~ data.m$AgeGrp + data.m$Map + data.m$AgeGrp:data.m$Map, data = data.m)
+     model = lm(BOOYAH$mean ~ BOOYAH$AgeGrp + BOOYAH$Map, data = BOOYAH)
      Anova(model, type = "II")
+     
      
      ## ETA-SQUARED, WITH ANOVA=TRUE CAN OBTAIN ANOVA TABLES AS WELL, DOUBLE CHECK ##
      # SOURCE: https://cran.r-project.org/web/packages/lsr/lsr.pdf #
      install.packages("lsr")
      library(lsr)
-     etaSquared(model,type = 2, anova = TRUE)
      
+     etaSquared(aov_age,type = 1, anova = TRUE)
      etaSquared(aov_map,type = 1, anova = TRUE)
+     etaSquared(model,type = 2, anova = TRUE)
+   
       
  ## t-tests and Cohen’s d, paired t-test (same sample, different variables) ##
      install.packages(“effsize”) #compute cohen's d
