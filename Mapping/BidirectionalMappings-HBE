@@ -86,7 +86,24 @@ sd(Map_HBE$SumTotal_NumeralWord, na.rm = TRUE)
       WN_Zstat<-qnorm(WN$p.value/2)
       WN_Zstat
       abs(WN_Zstat)/sqrt(17)
-      
+ 
+ 
+# SCATTER PLOTS OF MAPPING PAIRS # 
+QNx <- Map_HBE$SumTotal_QuantityNumeral
+QNy <- Map_HBE$SumTotal_NumeralQuantity
+QN <- plot(QNx, QNy, main = "Quantity-Numeral",  xlab = "Quantity-Numeral", ylab = "Numeral-Quantity", pch = 19, frame = FALSE)
+QN + abline(lm(QNy ~ QNx , data = Map_HBE), col = "blue")
+
+QWx <- Map_HBE$SumTotal_QuantityWord
+QWy <- Map_HBE$SumTotal_WordQuantity
+QW <- plot(QWx, QWy, main = "Quantity-Word",  xlab = "Quantity-Word", ylab = "Word-Quantity", pch = 19, frame = FALSE)
+QW + abline(lm(QWy ~ QWx , data = Map_HBE), col = "blue")
+
+NWx <- Map_HBE$SumTotal_NumeralWord
+NWy <- Map_HBE$SumTotal_WordNumeral
+NW <- plot(NWx, NWy, main = "Numeral-Word",  xlab = "Numeral-Word", ylab = "Word-Numeral", pch = 19, frame = FALSE)
+NW + abline(lm(QNy ~ QNx , data = Map_HBE), col = "blue")
+
  
  ## HISTOGRAM OF DIFFERENCE SCORES FOR MAPPING PAIRS ##
      #Want columns to start at x axis, but solutions all include changing expand to start at 0. that would remove the blank columns.#
