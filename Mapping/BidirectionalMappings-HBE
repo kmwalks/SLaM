@@ -235,6 +235,12 @@ sd(Map_HBE$SumTotal_NumeralWord, na.rm = TRUE)
      etaSquared(aov_age,type = 1, anova = TRUE)
      etaSquared(aov_map,type = 1, anova = TRUE)
      etaSquared(model,type = 2, anova = TRUE)
+     
+     #REGRESSION FOR SES ON MAPPING PERFORMANCE
+     SES <- Total_Inc_Study$SES_range_8_to_66 
+     REG = lm(Total_Inc_Study$SumCorrectTotal_All ~ SES, data =Total_Inc_Study)
+     anova(REG)
+     etaSquared(REG,type = 1, anova = TRUE)
    
       
  ## t-tests and Cohen’s d, paired t-test (same sample, different variables) ##
