@@ -102,6 +102,8 @@ library(plyr)
       install.packages("psych")
       library(psych)
       describe(Total_Inc_Study$SES_range_8_to_66)
+      
+      qplot(Total_Inc_Study$SES_range_8_to_66, geom = 'histogram', binwidth = 2) + xlab('SES')
 
   # Find observations with missing Age and SES values
       which(is.na(Total_Inc_Study$Age_Rounded)) # 0 observations missing Age value
