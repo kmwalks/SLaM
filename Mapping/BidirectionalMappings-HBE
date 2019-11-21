@@ -89,19 +89,19 @@ sd(Map_HBE$SumTotal_NumeralWord, na.rm = TRUE)
  
  
 # SCATTER PLOTS OF MAPPING PAIRS # 
-QNx <- Map_HBE$SumTotal_QuantityNumeral
-QNy <- Map_HBE$SumTotal_NumeralQuantity
-QN <- plot(QNx, QNy, main = "Quantity-Numeral",  xlab = "Quantity-Numeral", ylab = "Numeral-Quantity", pch = 19, frame = FALSE)
+QNy <- Map_HBE$SumTotal_QuantityNumeral
+QNx <- Map_HBE$SumTotal_NumeralQuantity
+QN <- plot(QNx, QNy, main = "Quantity-Numeral",  xlab = "Numeral-Quantity", ylab = "Quantity-Numeral", pch = 19, frame = FALSE)
 QN + abline(lm(QNy ~ QNx , data = Map_HBE), col = "blue")
 
-QWx <- Map_HBE$SumTotal_QuantityWord
-QWy <- Map_HBE$SumTotal_WordQuantity
-QW <- plot(QWx, QWy, main = "Quantity-Word",  xlab = "Quantity-Word", ylab = "Word-Quantity", pch = 19, frame = FALSE)
+QWy <- Map_HBE$SumTotal_QuantityWord
+QWx <- Map_HBE$SumTotal_WordQuantity
+QW <- plot(QWx, QWy, main = "Quantity-Word",  xlab = "Word-Quantity", ylab = "Quantity-Word", pch = 19, frame = FALSE)
 QW + abline(lm(QWy ~ QWx , data = Map_HBE), col = "blue")
 
-NWx <- Map_HBE$SumTotal_NumeralWord
-NWy <- Map_HBE$SumTotal_WordNumeral
-NW <- plot(NWx, NWy, main = "Numeral-Word",  xlab = "Numeral-Word", ylab = "Word-Numeral", pch = 19, frame = FALSE)
+NWy <- Map_HBE$SumTotal_NumeralWord
+NWx <- Map_HBE$SumTotal_WordNumeral
+NW <- plot(NWx, NWy, main = "Numeral-Word",  xlab = "Word-Numeral", ylab = "Numeral-Word", pch = 19, frame = FALSE)
 NW + abline(lm(QNy ~ QNx , data = Map_HBE), col = "blue")
 
  
