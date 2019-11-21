@@ -93,15 +93,16 @@ library(plyr)
 
 # Skewness and Kurtosis for SES (still cannot figure out to get Standard Error for both)
       #Option 1
+      install.packages("psych")
+      library(psych)
+      describe(Total_Inc_Study$SES_range_8_to_66)
+      
+      #Option 2
       install.packages("moments")
       library(moments)
       skewness(Total_Inc_Study$SES_range_8_to_66) 
       kurtosis(Total_Inc_Study$SES_range_8_to_66)
 
-      #Option 2
-      install.packages("psych")
-      library(psych)
-      describe(Total_Inc_Study$SES_range_8_to_66)
       
       qplot(Total_Inc_Study$SES_range_8_to_66, geom = 'histogram', binwidth = 2) + xlab('SES')
 
