@@ -261,7 +261,7 @@ NW + abline(lm(QNy ~ QNx , data = Map_HBE), col = "blue")
    
       
  ## t-tests and Cohen’s d, paired t-test (same sample, different variables) ##
-     install.packages(“effsize”) #compute cohen's d
+     install.packages("effsize") #compute cohen's d
      library(effsize)
      
      ## MAPPING PAIRS MEANS ##
@@ -308,6 +308,24 @@ NW + abline(lm(QNy ~ QNx , data = Map_HBE), col = "blue")
        #6 & up
        t.test(Map6up$Sum_Numeral.Word_Word.Numeral, Map6up$Sum_Quantity.Word_Word.Quantity, paired = TRUE, alternative = "two.sided")
        cohen.d(Map6up$Sum_Numeral.Word_Word.Numeral, Map6up$Sum_Quantity.Word_Word.Quantity,pooled=TRUE,paired=FALSE, na.rm=FALSE, hedges.correction=FALSE, conf.level=0.95,noncentral=FALSE)
+       
+       
+# SET SIZES T TESTS #
+ #QW
+t.test(Map5$AvgCorrect_Sm_QuantityWord,Map5$AvgCorrect_Lrg_QuantityWord, paired = TRUE, alternative = "two.sided")
+cohen.d(Map5$AvgCorrect_Sm_QuantityWord,Map5$AvgCorrect_Lrg_QuantityWord, pooled=TRUE,paired=FALSE, na.rm=FALSE, hedges.correction=FALSE, conf.level=0.95,noncentral=FALSE)
+t.test(Map6up$AvgCorrect_Sm_QuantityWord,Map6up$AvgCorrect_Lrg_QuantityWord, paired = TRUE, alternative = "two.sided")
+cohen.d(Map6up$AvgCorrect_Sm_QuantityWord,Map6up$AvgCorrect_Lrg_QuantityWord, pooled=TRUE,paired=FALSE, na.rm=FALSE, hedges.correction=FALSE, conf.level=0.95,noncentral=FALSE)
+#QN
+t.test(Map5$AvgCorrect_Sm_NumeralQuantity,Map5$AvgCorrect_Lrg_NumeralQuantity, paired = TRUE, alternative = "two.sided")
+cohen.d(Map5$AvgCorrect_Sm_NumeralQuantity,Map5$AvgCorrect_Lrg_NumeralQuantity, pooled=TRUE,paired=FALSE, na.rm=FALSE, hedges.correction=FALSE, conf.level=0.95,noncentral=FALSE)
+t.test(Map6up$AvgCorrect_Sm_NumeralQuantity,Map6up$AvgCorrect_Lrg_NumeralQuantity, paired = TRUE, alternative = "two.sided")
+cohen.d(Map6up$AvgCorrect_Sm_NumeralQuantity,Map6up$AvgCorrect_Lrg_NumeralQuantity, pooled=TRUE,paired=FALSE, na.rm=FALSE, hedges.correction=FALSE, conf.level=0.95,noncentral=FALSE)
+#NW
+t.test(Map5$AvgCorrect_Sm_NumeralWord,Map5$AvgCorrect_Lrg_WordNumeral, paired = TRUE, alternative = "two.sided")
+cohen.d(Map5$AvgCorrect_Sm_NumeralWord,Map5$AvgCorrect_Lrg_WordNumeral, pooled=TRUE,paired=FALSE, na.rm=FALSE, hedges.correction=FALSE, conf.level=0.95,noncentral=FALSE)
+t.test(Map6up$AvgCorrect_Sm_NumeralWord,Map6up$AvgCorrect_Lrg_WordNumeral, paired = TRUE, alternative = "two.sided")
+cohen.d(Map6up$AvgCorrect_Sm_NumeralWord,Map6up$AvgCorrect_Lrg_WordNumeral, pooled=TRUE,paired=FALSE, na.rm=FALSE, hedges.correction=FALSE, conf.level=0.95,noncentral=FALSE)
        
    
 ## MAPPING MEANS FOR QUANTITY SIZES ##
