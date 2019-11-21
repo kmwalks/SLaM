@@ -32,10 +32,8 @@ library(plyr)
 library(reshape2)
 library(plotrix)
 
-setwd("/Users/labuser/Documents/R")
+setwd("~/Desktop")
 getwd()
-
-#LAPTOP setwd("~/Desktop")
 
 Mapping <- read.csv("Mapping_Coding_CH_191119.csv", na.strings = "N/A")
  
