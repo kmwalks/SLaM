@@ -223,8 +223,8 @@ sd(Map_HBE$SumTotal_NumeralWord, na.rm = TRUE)
      ## Source: https://rcompanion.org/handbook/G_09.html ##
      install.packages("car")
      library(car)
-     model = lm(BOOYAH$mean ~ BOOYAH$AgeGrp + BOOYAH$Map, data = BOOYAH)
-     Anova(model, type = "II")
+     model = lm(BOOYAH$mean ~ BOOYAH$AgeGrp + BOOYAH$Map + BOOYAH$AgeGrp:BOOYAH$Map, data = BOOYAH)
+     anova(model)
      
      
      ## ETA-SQUARED, WITH ANOVA=TRUE CAN OBTAIN ANOVA TABLES AS WELL, DOUBLE CHECK ##
