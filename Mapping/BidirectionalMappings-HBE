@@ -108,6 +108,9 @@ sd(Map_HBE$SumTotal_NumeralWord, na.rm = TRUE)
          describe(Map_HBE$Difference_Quantity.Word_Word.Quantity)
          describe(Map_HBE$Difference_Numeral.Word_Word.Numeral)
          
+         #If skewness is less than -1 or greater than 1, the distribution is highly skewed.
+         #If skewness is between -1 and -0.5 or between 0.5 and 1, the distribution is moderately skewed.
+         #If skewness is between -0.5 and 0.5, the distribution is approximately symmetric.
          
      #PERCENT THAT FALLS BETWEEN 1 POINT#
          DiffQW <- Map_HBE$Difference_Quantity.Word_Word.Quantity
