@@ -197,3 +197,28 @@ wilcox.test(Map5$AvgCorrect_Lrg_QN, mu = .25, alternative = "greater") # is mean
 mean(Map5$AvgCorrect_Lrg_QN)
 wilcox.test(Map5$AvgCorrect_Lrg_WN, mu = .25, alternative = "greater") # is mean word & numeral correct for large quantities & ages 5  significantly greater than chance (0.25) 
 mean(Map5$AvgCorrect_Lrg_WN)
+
+# AGES 6 and up # 
+#SMALL#
+wilcox.test(Map6up$AvgCorrect_Sm_QW, mu = .25, alternative = "greater") # is mean quantity & word correct for small quantities & ages 5  significantly greater than chance (0.25) 
+mean(Map6up$AvgCorrect_Sm_QW)
+wilcox.test(Map6up$AvgCorrect_Sm_QN, mu = .25, alternative = "greater") # is mean quantity & numeral correct for small quantities & ages 5  significantly greater than chance (0.25) 
+mean(Map6up$AvgCorrect_Sm_QN)
+wilcox.test(Map6up$AvgCorrect_Sm_WN, mu = .25, alternative = "greater") # is mean word & numeral correct for small quantities & ages 5  significantly greater than chance (0.25) 
+mean(Map6up$AvgCorrect_Sm_WN)
+
+#MEDIUM#
+wilcox.test(Map6up$AvgCorrect_Med_QW, mu = .25, alternative = "greater") # is mean quantity & word correct for medium quantities & ages 5  significantly greater than chance (0.25) 
+mean(Map6up$AvgCorrect_Med_QW)
+wilcox.test(Map6up$AvgCorrect_Med_QN, mu = .25, alternative = "greater") # is mean quantity & numeral correct for medium quantities & ages 5  significantly greater than chance (0.25) 
+mean(Map6up$AvgCorrect_Med_QN)
+wilcox.test(Map6up$AvgCorrect_Med_WN, mu = .25, alternative = "greater") # is mean word & numeral correct for medium quantities & ages 5  significantly greater than chance (0.25) 
+mean(Map6up$AvgCorrect_Med_WN)
+
+#LARGE#
+wilcox.test(Map6up$AvgCorrect_Lrg_QW, mu = .25, alternative = "greater") # is mean quantity & word correct for large  quantities & ages 5  significantly greater than chance (0.25) 
+mean(Map6up$AvgCorrect_Lrg_QW)
+wilcox.test(Map6up$AvgCorrect_Lrg_QN, mu = .25, alternative = "greater") # is mean quantity & numeral correct for large quantities & ages 5  significantly greater than chance (0.25) 
+mean(Map6up$AvgCorrect_Lrg_QN)
+wilcox.test(Map6up$AvgCorrect_Lrg_WN, mu = .25, alternative = "greater") # is mean word & numeral correct for large quantities & ages 5  significantly greater than chance (0.25) 
+mean(Map6up$AvgCorrect_Lrg_WN)
