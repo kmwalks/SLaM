@@ -114,7 +114,7 @@ sd(Map_HBE$SumTotal_NumeralWord, na.rm = TRUE)
          
      #PERCENT THAT FALLS BETWEEN 1 POINT#
          DiffQW <- Map_HBE$Difference_Quantity.Word_Word.Quantity
-         QW_1 <- length(which(DiffQW >= 0 & DiffQW <= 2)) #number of observations that fall 1 point above or below DiffQW median of 1
+         QW_1 <- length(which(DiffQW >= 1 & DiffQW <= 3)) #number of observations that fall 1 point above or below DiffQW median of 2
          N <- nrow(Map_HBE) #gives # of observations
          (QW_1/N)*100
 
@@ -124,7 +124,7 @@ sd(Map_HBE$SumTotal_NumeralWord, na.rm = TRUE)
          (NW_1/N)*100
 
          DiffQN <- Map_HBE$Difference_Quantity.Numeral_Numeral.Quantity
-         QN_1 <- length(which(DiffQN >= 1 & DiffQN <= 3)) #number of observations that fall 1 point above or below DiffQN median of 2
+         QN_1 <- length(which(DiffQN >= 0 & DiffQN <= 1)) #number of observations that fall 1 point above or below DiffQN median of 2
          N <- nrow(Map_HBE) #gives # of observations
          (QN_1/N)*100
 
