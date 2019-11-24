@@ -100,16 +100,13 @@ QN
 
 QWy <- Map_HBE$SumTotal_QuantityWord
 QWx <- Map_HBE$SumTotal_WordQuantity
-QW <- ggplot(Map_HBE, aes(x=QWx, y=QWy)) + geom_point(position=jitter, size=2)+ labs(x=Word-Quantity", y="Quantity-Word") + ggtitle("Quantity-Word") +
-theme(plot.title = element_text(hjust = 0.5)) + geom_abline()
+QW <- ggplot(Map_HBE, aes(x=QWx, y=QWy)) + geom_point(position=jitter, size=2)+ labs(x="Word-Quantity", y="Quantity-Word") + ggtitle("Quantity-Word") + theme(plot.title = element_text(hjust = 0.5)) + geom_abline()
 QW
 
 NWy <- Map_HBE$SumTotal_NumeralWord
 NWx <- Map_HBE$SumTotal_WordNumeral
-NW <- ggplot(Map_HBE, aes(x=NWx, y=NWy)) + geom_point(position=jitter, size=2)+ labs(x=Word-Numeral", y= "Numeral-Word") + ggtitle("Numeral-Word") +
-theme(plot.title = element_text(hjust = 0.5)) + geom_abline()
+NW <- ggplot(Map_HBE, aes(x=NWx, y=NWy)) + geom_point(position=jitter, size=2)+ labs(x="Word-Numeral", y="Numeral-Word") + ggtitle("Numeral-Word") + theme(plot.title = element_text(hjust = 0.5)) + geom_abline()
 NW
-
  
  ## HISTOGRAM OF DIFFERENCE SCORES FOR MAPPING PAIRS ##
      #Want columns to start at x axis, but solutions all include changing expand to start at 0. that would remove the blank columns.#
