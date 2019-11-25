@@ -154,6 +154,10 @@ summary(NWmodel)
          N <- nrow(Map_HBE) #gives # of observations
          (QN_1/N)*100
 
+# TESTING NORMALITY OF DIFFERENCE SCORES # 
+shapiro.test(Map_HBE$Difference_Numeral.Word_Word.Numeral)
+#ETC FOR TWO OTHER PAIRS
+
 ##GROUPED BAR PLOT##
       ##SOURCE: https://onunicornsandgenes.blog/2014/03/19/using-r-barplot-with-ggplot2/##
       ## 1. CREATE DF FOR AGE GRP 5 ##
