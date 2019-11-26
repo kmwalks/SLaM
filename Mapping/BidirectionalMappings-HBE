@@ -346,25 +346,7 @@ AND LOOKED AT WN VS WQ:
 t = 44.068, df = 41, p-value < 2.2e-16
 mean(Map_HBE$AvgCorrect_Word.Quantity) #0.84
 mean(Map_HBE$AvgCorrect_Word.Numeral) #0.94
-       
-# SET SIZES T TESTS #
- #QW
-t.test(Map5$AvgCorrect_Sm_QuantityWord,Map5$AvgCorrect_Lrg_QuantityWord, paired = TRUE, alternative = "two.sided")
-cohen.d(Map5$AvgCorrect_Sm_QuantityWord,Map5$AvgCorrect_Lrg_QuantityWord, pooled=TRUE,paired=FALSE, na.rm=FALSE, hedges.correction=FALSE, conf.level=0.95,noncentral=FALSE)
-t.test(Map6up$AvgCorrect_Sm_QuantityWord,Map6up$AvgCorrect_Lrg_QuantityWord, paired = TRUE, alternative = "two.sided")
-cohen.d(Map6up$AvgCorrect_Sm_QuantityWord,Map6up$AvgCorrect_Lrg_QuantityWord, pooled=TRUE,paired=FALSE, na.rm=FALSE, hedges.correction=FALSE, conf.level=0.95,noncentral=FALSE)
-#QN
-t.test(Map5$AvgCorrect_Sm_NumeralQuantity,Map5$AvgCorrect_Lrg_NumeralQuantity, paired = TRUE, alternative = "two.sided")
-cohen.d(Map5$AvgCorrect_Sm_NumeralQuantity,Map5$AvgCorrect_Lrg_NumeralQuantity, pooled=TRUE,paired=FALSE, na.rm=FALSE, hedges.correction=FALSE, conf.level=0.95,noncentral=FALSE)
-t.test(Map6up$AvgCorrect_Sm_NumeralQuantity,Map6up$AvgCorrect_Lrg_NumeralQuantity, paired = TRUE, alternative = "two.sided")
-cohen.d(Map6up$AvgCorrect_Sm_NumeralQuantity,Map6up$AvgCorrect_Lrg_NumeralQuantity, pooled=TRUE,paired=FALSE, na.rm=FALSE, hedges.correction=FALSE, conf.level=0.95,noncentral=FALSE)
-#NW
-t.test(Map5$AvgCorrect_Sm_NumeralWord,Map5$AvgCorrect_Lrg_WordNumeral, paired = TRUE, alternative = "two.sided")
-cohen.d(Map5$AvgCorrect_Sm_NumeralWord,Map5$AvgCorrect_Lrg_WordNumeral, pooled=TRUE,paired=FALSE, na.rm=FALSE, hedges.correction=FALSE, conf.level=0.95,noncentral=FALSE)
-t.test(Map6up$AvgCorrect_Sm_NumeralWord,Map6up$AvgCorrect_Lrg_WordNumeral, paired = TRUE, alternative = "two.sided")
-cohen.d(Map6up$AvgCorrect_Sm_NumeralWord,Map6up$AvgCorrect_Lrg_WordNumeral, pooled=TRUE,paired=FALSE, na.rm=FALSE, hedges.correction=FALSE, conf.level=0.95,noncentral=FALSE)
-       
-   
+
 ## MAPPING MEANS FOR QUANTITY SIZES ##
       ## QW ##
       mean(Map_HBE$AvgCorrect_Sm_QW)
@@ -380,6 +362,58 @@ cohen.d(Map6up$AvgCorrect_Sm_NumeralWord,Map6up$AvgCorrect_Lrg_WordNumeral, pool
       mean(Map_HBE$AvgCorrect_Sm_QN)
       mean(Map_HBE$AvgCorrect_Med_QN)
       mean(Map_HBE$AvgCorrect_Lrg_QN)
+       
+# SET SIZES T TESTS #
+      #SMALL VERSUS LARGE#
+       #QW
+      t.test(Map5$AvgCorrect_Sm_QuantityWord,Map5$AvgCorrect_Lrg_QuantityWord, paired = TRUE, alternative = "two.sided")
+      cohen.d(Map5$AvgCorrect_Sm_QuantityWord,Map5$AvgCorrect_Lrg_QuantityWord, pooled=TRUE,paired=FALSE, na.rm=FALSE, hedges.correction=FALSE, conf.level=0.95,noncentral=FALSE)
+      t.test(Map6up$AvgCorrect_Sm_QuantityWord,Map6up$AvgCorrect_Lrg_QuantityWord, paired = TRUE, alternative = "two.sided")
+      cohen.d(Map6up$AvgCorrect_Sm_QuantityWord,Map6up$AvgCorrect_Lrg_QuantityWord, pooled=TRUE,paired=FALSE, na.rm=FALSE, hedges.correction=FALSE, conf.level=0.95,noncentral=FALSE)
+      #QN
+      t.test(Map5$AvgCorrect_Sm_NumeralQuantity,Map5$AvgCorrect_Lrg_NumeralQuantity, paired = TRUE, alternative = "two.sided")
+      cohen.d(Map5$AvgCorrect_Sm_NumeralQuantity,Map5$AvgCorrect_Lrg_NumeralQuantity, pooled=TRUE,paired=FALSE, na.rm=FALSE, hedges.correction=FALSE, conf.level=0.95,noncentral=FALSE)
+      t.test(Map6up$AvgCorrect_Sm_NumeralQuantity,Map6up$AvgCorrect_Lrg_NumeralQuantity, paired = TRUE, alternative = "two.sided")
+      cohen.d(Map6up$AvgCorrect_Sm_NumeralQuantity,Map6up$AvgCorrect_Lrg_NumeralQuantity, pooled=TRUE,paired=FALSE, na.rm=FALSE, hedges.correction=FALSE, conf.level=0.95,noncentral=FALSE)
+      #NW
+      t.test(Map5$AvgCorrect_Sm_NumeralWord,Map5$AvgCorrect_Lrg_WordNumeral, paired = TRUE, alternative = "two.sided")
+      cohen.d(Map5$AvgCorrect_Sm_NumeralWord,Map5$AvgCorrect_Lrg_WordNumeral, pooled=TRUE,paired=FALSE, na.rm=FALSE, hedges.correction=FALSE, conf.level=0.95,noncentral=FALSE)
+      t.test(Map6up$AvgCorrect_Sm_NumeralWord,Map6up$AvgCorrect_Lrg_WordNumeral, paired = TRUE, alternative = "two.sided")
+      cohen.d(Map6up$AvgCorrect_Sm_NumeralWord,Map6up$AvgCorrect_Lrg_WordNumeral, pooled=TRUE,paired=FALSE, na.rm=FALSE, hedges.correction=FALSE, conf.level=0.95,noncentral=FALSE)
+       
+      #SMALL VERSUS MEDIUM#
+       #QW
+      t.test(Map5$AvgCorrect_Sm_QuantityWord,Map5$AvgCorrect_Med_QuantityWord, paired = TRUE, alternative = "two.sided")
+      cohen.d(Map5$AvgCorrect_Sm_QuantityWord,Map5$AvgCorrect_Med_QuantityWord, pooled=TRUE,paired=FALSE, na.rm=FALSE, hedges.correction=FALSE, conf.level=0.95,noncentral=FALSE)
+      t.test(Map6up$AvgCorrect_Sm_QuantityWord,Map6up$AvgCorrect_Med_QuantityWord, paired = TRUE, alternative = "two.sided")
+      cohen.d(Map6up$AvgCorrect_Sm_QuantityWord,Map6up$AvgCorrect_Med_QuantityWord, pooled=TRUE,paired=FALSE, na.rm=FALSE, hedges.correction=FALSE, conf.level=0.95,noncentral=FALSE)
+      #QN
+      t.test(Map5$AvgCorrect_Sm_NumeralQuantity,Map5$AvgCorrect_Med_NumeralQuantity, paired = TRUE, alternative = "two.sided")
+      cohen.d(Map5$AvgCorrect_Sm_NumeralQuantity,Map5$AvgCorrect_Med_NumeralQuantity, pooled=TRUE,paired=FALSE, na.rm=FALSE, hedges.correction=FALSE, conf.level=0.95,noncentral=FALSE)
+      t.test(Map6up$AvgCorrect_Sm_NumeralQuantity,Map6up$AvgCorrect_Med_NumeralQuantity, paired = TRUE, alternative = "two.sided")
+      cohen.d(Map6up$AvgCorrect_Sm_NumeralQuantity,Map6up$AvgCorrect_Med_NumeralQuantity, pooled=TRUE,paired=FALSE, na.rm=FALSE, hedges.correction=FALSE, conf.level=0.95,noncentral=FALSE)
+      #NW
+      t.test(Map5$AvgCorrect_Sm_NumeralWord,Map5$AvgCorrect_Med_WordNumeral, paired = TRUE, alternative = "two.sided")
+      cohen.d(Map5$AvgCorrect_Sm_NumeralWord,Map5$AvgCorrect_Med_WordNumeral, pooled=TRUE,paired=FALSE, na.rm=FALSE, hedges.correction=FALSE, conf.level=0.95,noncentral=FALSE)
+      t.test(Map6up$AvgCorrect_Sm_NumeralWord,Map6up$AvgCorrect_Med_WordNumeral, paired = TRUE, alternative = "two.sided")
+      cohen.d(Map6up$AvgCorrect_Sm_NumeralWord,Map6up$AvgCorrect_Med_WordNumeral, pooled=TRUE,paired=FALSE, na.rm=FALSE, hedges.correction=FALSE, conf.level=0.95,noncentral=FALSE)
+
+     #MEDIUM VERSUS LARGE#
+      #QW
+      t.test(Map5$AvgCorrect_Med_QuantityWord,Map5$AvgCorrect_Med_QuantityWord, paired = TRUE, alternative = "two.sided")
+      cohen.d(Map5$AvgCorrect_Med_QuantityWord,Map5$AvgCorrect_Med_QuantityWord, pooled=TRUE,paired=FALSE, na.rm=FALSE, hedges.correction=FALSE, conf.level=0.95,noncentral=FALSE)
+      t.test(Map6up$AvgCorrect_Med_QuantityWord,Map6up$AvgCorrect_Med_QuantityWord, paired = TRUE, alternative = "two.sided")
+      cohen.d(Map6up$AvgCorrect_Med_QuantityWord,Map6up$AvgCorrect_Med_QuantityWord, pooled=TRUE,paired=FALSE, na.rm=FALSE, hedges.correction=FALSE, conf.level=0.95,noncentral=FALSE)
+      #QN
+      t.test(Map5$AvgCorrect_Med_NumeralQuantity,Map5$AvgCorrect_Med_NumeralQuantity, paired = TRUE, alternative = "two.sided")
+      cohen.d(Map5$AvgCorrect_Med_NumeralQuantity,Map5$AvgCorrect_Med_NumeralQuantity, pooled=TRUE,paired=FALSE, na.rm=FALSE, hedges.correction=FALSE, conf.level=0.95,noncentral=FALSE)
+      t.test(Map6up$AvgCorrect_Med_NumeralQuantity,Map6up$AvgCorrect_Med_NumeralQuantity, paired = TRUE, alternative = "two.sided")
+      cohen.d(Map6up$AvgCorrect_Med_NumeralQuantity,Map6up$AvgCorrect_Med_NumeralQuantity, pooled=TRUE,paired=FALSE, na.rm=FALSE, hedges.correction=FALSE, conf.level=0.95,noncentral=FALSE)
+      #NW
+      t.test(Map5$AvgCorrect_Med_NumeralWord,Map5$AvgCorrect_Med_WordNumeral, paired = TRUE, alternative = "two.sided")
+      cohen.d(Map5$AvgCorrect_Med_NumeralWord,Map5$AvgCorrect_Med_WordNumeral, pooled=TRUE,paired=FALSE, na.rm=FALSE, hedges.correction=FALSE, conf.level=0.95,noncentral=FALSE)
+      t.test(Map6up$AvgCorrect_Med_NumeralWord,Map6up$AvgCorrect_Med_WordNumeral, paired = TRUE, alternative = "two.sided")
+      cohen.d(Map6up$AvgCorrect_Med_NumeralWord,Map6up$AvgCorrect_Lrg_WordNumeral, pooled=TRUE,paired=FALSE, na.rm=FALSE, hedges.correction=FALSE, conf.level=0.95,noncentral=FALSE)
 
     
        
