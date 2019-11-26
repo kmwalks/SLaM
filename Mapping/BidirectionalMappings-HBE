@@ -228,7 +228,10 @@ shapiro.test(Map_HBE$Difference_Numeral.Word_Word.Numeral)
       All_Bar <- ggplot(BOOYAH, aes(BOOYAH$Map, BOOYAH$mean)) + geom_bar(aes(fill = BOOYAH$AgeGrp), width = 0.6, position = position_dodge(width=0.7), stat="identity") + scale_fill_manual(values=c("grey87", "grey51"), labels = c("5-year-olds", "6-year-olds and older")) + labs( y="Accuracy (out of 17)") + scale_y_continuous (breaks=c(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17), limits = c(0,17), expand = c(0,0)) + scale_x_discrete(limits=c("QW","NW","QN"), expand = c(.2,0),labels = c("Quantity and Word", "Numeral and Word", "Quantity and Numeral")) + theme_bw() + theme(legend.position="top", legend.title = element_blank(), axis.title.x=element_blank(), panel.border = element_blank(),panel.grid.minor.y = element_blank(), panel.grid.major.x = element_blank(), panel.grid.minor.x = element_blank(), axis.line = element_line(colour = "black"), text = element_text(size=12, family="Times New Roman"))
       All_Bar + geom_errorbar(aes(ymax=BOOYAH$upper, ymin=BOOYAH$lower, group=AgeGrp), width=.5, position=position_dodge(0.7), data=BOOYAH)
 
-
+#TESTING SIGNIFICANCE BETWEEN BARS#
+t.test(Map5$Sum_Quantity.Numeral_Numeral.Quantity, Map6up$Sum_Quantity.Numeral_Numeral.Quantity, paired = FALSE, alternative = "two.sided") 
+t.test(Map5$Sum_Quantity.Word_Word.Quantity, Map6up$Sum_Quantity.Word_Word.Quantity, paired = FALSE, alternative = "two.sided")
+t.test(Map5$Sum_Numeral.Word_Word.Numeral, Map6up$Sum_Numeral.Word_Word.Numeral, paired = FALSE, alternative = "two.sided") 
 
 
 ## ANOVAS ##
