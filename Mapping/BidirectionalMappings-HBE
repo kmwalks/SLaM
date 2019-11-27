@@ -383,6 +383,17 @@ mean(Map_HBE$AvgCorrect_Word.Numeral) #0.94
       mean(Map_HBE$AvgCorrect_Lrg_QN)
        
 # SET SIZES T TESTS #
+      #GENERAL SMALL VERSUS LARGE DIFFERENCES (NOT AGES)#
+      #QW
+      t.test(Map_HBE$AvgCorrect_Sm_QW, Map_HBE$AvgCorrect_Lrg_QW, paired = FALSE, alternative = "two.sided")
+      cohen.d(Map_HBE$AvgCorrect_Sm_QW, Map_HBE$AvgCorrect_Lrg_QW,pooled=TRUE,paired=FALSE, na.rm=FALSE, hedges.correction=FALSE, conf.level=0.95,noncentral=FALSE) 
+      #QN
+      t.test(Map_HBE$AvgCorrect_Sm_QN, Map_HBE$AvgCorrect_Lrg_QN, paired = FALSE, alternative = "two.sided") 
+      cohen.d(Map_HBE$AvgCorrect_Sm_QN, Map_HBE$AvgCorrect_Lrg_QN,pooled=TRUE,paired=FALSE, na.rm=FALSE, hedges.correction=FALSE, conf.level=0.95,noncentral=FALSE) 
+      #NW
+      t.test(Map_HBE$AvgCorrect_Sm_WN, Map_HBE$AvgCorrect_Lrg_WN, paired = FALSE, alternative = "two.sided") 
+      cohen.d(Map_HBE$AvgCorrect_Sm_WN, Map_HBE$AvgCorrect_Lrg_WN,pooled=TRUE,paired=FALSE, na.rm=FALSE, hedges.correction=FALSE, conf.level=0.95,noncentral=FALSE)
+      
       #SMALL VERSUS LARGE#
        #QW
       t.test(Map5$AvgCorrect_Sm_QW, Map5$AvgCorrect_Lrg_QW, paired = TRUE, alternative = "two.sided")
