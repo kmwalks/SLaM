@@ -1,1 +1,30 @@
+setwd("~/Desktop")
+getwd()
+
+Mapping <- read.csv("Mapping_Coding_CH_191119.csv", na.strings = "N/A")
+ 
+typeof(Mapping) # when importing using read.csv, resulting obj type is a list (data frame)
+View(Mapping)
+
+####HEARING KIDS ONLY####
+
+Map_HBE <- subset(Mapping, Mapping$Including.in.Study == 'Yes' & Mapping$Coded. == "Yes" & Mapping$Hearing_Cat == 'Hearing')
+View(Map_HBE)
+str(Map_HBE)
+
+## IF SEPARATING BY AGE GROUPS ##
+Map_HBE$AgeGrp <- ifelse(Map_HBE$Age_Rounded < 6, "5", "6")
+Map5 <- subset(Map_HBE, Map_HBE$AgeGrp =="5")
+Map6up <- subset(Map_HBE, Map_HBE$AgeGrp =="6")
+
+# BIVARIATE CORRELATIONS. RESOURCE: http://www.sthda.com/english/wiki/correlation-matrix-a-quick-start-guide-to-analyze-format-and-visualize-a-correlation-matrix-using-r-software # 
+install.packages(“Hmisc”) 
+library("Hmisc")
+COR <- data.frame(Map_HBE$Sum_Quantity.Numeral_Numeral.Quantity, Map_HBE$Sum_Quantity.Word_Word.Quantity, Map_HBE$Sum_Numeral.Word_Word.Numeral, Map_HBE$AgeGrp)
+CORPLOT <- rcorr(as.matrix(COR))
+CORPLOT
+# Extract the correlation coefficients
+CORPLOT$r
+# Extract p-values
+CORPLOT$P
 
