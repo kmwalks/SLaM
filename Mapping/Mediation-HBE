@@ -45,23 +45,13 @@ summary(QW_QN_reg)
 
 #MEDIATION CODES#
 setwd("~/Desktop")
-getwd()
 
-Mapping2 <- read.csv("Mapping_HBE_RegressionData.xlsx", na.strings = "N/A")
- 
-typeof(Mapping2) # when importing using read.csv, resulting obj type is a list (data frame)
-View(Mapping2)
+Map <- read.csv("Mapping_HBE_RegressionData.csv", na.strings = "N/A") #ALREADY ONLY HBE INCLUDING IN STUDY! 
+View(Map)
 
+#ADD AGE GRP COLUMN#
+Map$AgeGrp <- ifelse(Map$Age_Rounded < 6, "5", "6")
 
-
-Map2_HBE <- subset(Mapping2, Mapping2$Including.in.Study == 'Yes' & Mapping2$Coded. == "Yes" & Mapping2$Hearing_Cat == 'Hearing')
-View(Map2_HBE)
-str(Map2_HBE)
-
-## IF SEPARATING BY AGE GROUPS ##
-Map2_HBE$AgeGrp <- ifelse(Map2_HBE$Age_Rounded < 6, "5", "6")
-Map25 <- subset(Map2_HBE, Map2_HBE$AgeGrp =="5")
-Map26up <- subset(Map2_HBE, Map2_HBE$AgeGrp =="6")
 
 
 
