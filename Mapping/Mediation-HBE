@@ -41,9 +41,7 @@ QW_QN_reg <-
 lm(Map_HBE$AvgCorrect_Quantity.Word_Word.Quantity~Map_HBE$AvgCorrect_Quantity.Numeral_Numeral.Quantity + agecovariate)
 summary(QW_QN_reg)
 
-
-
-
+-------------------------------------------------------------------------------------------------------------
 
 #MEDIATION CODES#
 setwd("~/Desktop")
