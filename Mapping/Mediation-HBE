@@ -47,11 +47,54 @@ summary(QW_QN_reg)
 setwd("~/Desktop")
 
 Map <- read.csv("Mapping_HBE_RegressionData.csv", na.strings = "N/A") #ALREADY ONLY HBE INCLUDING IN STUDY! 
-View(Map)
-
 #ADD AGE GRP COLUMN#
 Map$AgeGrp <- ifelse(Map$Age_Rounded < 6, "5", "6")
+View(Map)
 
+Quantity_cols <- colnames(select(Map, ends_with("Answer")))
+Correct_cols <- colnames(select(Map, ends_with("Correct.")))
 
+Quant_Corr <- c()# Create new empty list
+for(i in 1:51)
+Quant_Corr[i] <- paste(names(select(Map, contains(match=Quantity_cols[i]))), names(select(Map, contains(match=Correct_cols[i]))), sep=("."))
+
+#Want wide → long, use tidyr's pivot_longer() 
+#resource https://cran.r-project.org/web/packages/tidyr/vignettes/pivot.html
+
+#Create df for Quantity 
+HBE_long <- pivot_longer(data = Map, cols=c(ends_with("Answer")), names_to = c("Type"), values_to = "Quantity")
+View(HBE_long)
+
+#Create df for Correct
+HBE_long2 <- pivot_longer(data = Map, cols=c(ends_with("Correct.")), names_to = c("Type2"), values_to = "Correct")
+View(HBE_long2)
+
+#Combine 2 df into short one (ensure all Quantity-Correct match for each kid!)
+HBE_long3 <- cbind(HBE_long, HBE_long2)
+View(HBE_long3)
+HBE_short = HBE_long3[,!grepl("^Item",names(HBE_long3))] # delete columns that contain “item” 
+HBE_short = select(HBE_short, -10:-16) # getting rid of double IDs
+View(HBE_short)
+
+# From Type column, create a new column (Map_Type) extracting the “QN” etc part
+
+#Create new column for which IF Map_Reg$Type contains “NW” or “WN”, assign value “Numeral-Word”
+Map_Type <- c()
+for(i in 1:2142)
+Map_Type[i] <- ifelse(grepl("NW", Map_Reg$Type[i]), "Numeral-Word", ifelse(grepl("WN", Map_Reg$Type[i]), "Numeral-Word", ifelse(grepl("QN", Map_Reg$Type[i]), "Quantity-Numeral", ifelse(grepl("NQ", Map_Reg$Type[i]), "Quantity-Numeral", ifelse(grepl("QW", Map_Reg$Type[i]), "Quantity-Word", ifelse(grepl("WQ", Map_Reg$Type[i]), "Quantity-Word","bananas")
+
+HBE_short2 <- cbind(HBE_short, Map_Type)
+View(HBE_short2)
+
+#From Quantity column, create Small, Med, Large
+# resource https://stackoverflow.com/questions/15016723/how-to-add-column-into-a-dataframe-based-on-condition
+
+Set_Size <- c()
+Set_Size <- case_when(HBE_short$Quantity <= 3 ~ 'Small',
+                      HBE_short$Quantity > 3 & HBE_short$Quantity<= 5 ~ 'Medium',
+                      HBE_short$Quantity > 5 ~ 'Large')
+
+HBE_short3 <- cbind(HBE_short2,Set_Size)
+View(HBE_short3)
 
 
