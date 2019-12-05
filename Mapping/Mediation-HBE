@@ -103,4 +103,8 @@ summary(REG)
 
 exp(fixef(REG)) #provides Odds Ratios
 
+#Mediation Analysis
+
+
+
 
