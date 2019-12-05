@@ -44,6 +44,12 @@ summary(QW_QN_reg)
 -------------------------------------------------------------------------------------------------------------
 
 #MEDIATION CODES#
+
+install.packages("dplyr")
+library(dplyr)
+install.packages("tidyr")
+library(tidyr)
+
 setwd("~/Desktop")
 
 Map <- read.csv("Mapping_HBE_RegressionData.csv", na.strings = "N/A") #ALREADY ONLY HBE INCLUDING IN STUDY! 
