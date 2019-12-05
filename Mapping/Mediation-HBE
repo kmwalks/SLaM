@@ -1,13 +1,3 @@
-##SIMPLE REGRESSION CODES##
-
-setwd("~/Desktop")
-getwd()
-
-Mapping <- read.csv("Mapping_Coding_CH_191119.csv", na.strings = "N/A")
- 
-typeof(Mapping) # when importing using read.csv, resulting obj type is a list (data frame)
-View(Mapping)
-
 ####HEARING KIDS ONLY####
 
 Map_HBE <- subset(Mapping, Mapping$Including.in.Study == 'Yes' & Mapping$Coded. == "Yes" & Mapping$Hearing_Cat == 'Hearing')
@@ -43,8 +33,7 @@ summary(QW_QN_reg)
 
 -------------------------------------------------------------------------------------------------------------
 
-#MEDIATION CODES#
-
+##SETTING UP DATA FRAME ##
 install.packages("dplyr")
 library(dplyr)
 install.packages("tidyr")
@@ -102,5 +91,16 @@ Set_Size <- case_when(HBE_short$Quantity <= 3 ~ 'Small',
 
 HBE_short3 <- cbind(HBE_short2,Set_Size)
 View(HBE_short3)
+
+
+#Mixed Effects Logistic Regression
+install.packages(“lme4”)
+library(lme4)
+REG <- glmer(Correct ~ AgeGrp + SES_range_8_to_66 + Set_Size + Map_Type + Race + Ethnicity + M.F + (1 | SUBJECT_ID), data = HBE_short3, family = binomial, control = glmerControl(optimizer = "bobyqa"),  nAGQ = 10) #AIC and BIC are numbers for model fit (lower when include race, ethnicity, and sex… lower = better)
+summary(REG)
+#Without glmerControl() argument model has many scary warnings
+# nAGQ is something like number of iterations, anything >1 is better, takes longer to run (10 took about a minute to run on 2000 trials)
+
+exp(fixef(REG)) #provides Odds Ratios
 
 
