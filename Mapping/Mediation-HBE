@@ -25,16 +25,15 @@ CORPLOT$r
 CORPLOT$P
 
 
-##UPDATE CODE BELOW
+##WORKING ON CODES BELOW
 #SOURCE Controlling for variables: https://stats.stackexchange.com/questions/17336/how-exactly-does-one-control-for-other-variables
 #DIRECT REG: NW & QN#
-agecovariate <- Map$AgeGrp
-NW_QN_reg <- lm(Map$AvgCorrect_Numeral.Word_Word.Numeral~Map$AvgCorrect_Quantity.Numeral_Numeral.Quantity + agecovariate)
+agecovariate <- Map_HBE$AgeGrp
+NW_QN_reg <- lm(Map_HBE$AvgCorrect_Numeral.Word_Word.Numeral~Map_HBE$AvgCorrect_Quantity.Numeral_Numeral.Quantity + agecovariate)
 summary(NW_QN_reg)
 
 #DIRECT REG: QW & QN#
-QW_QN_reg <-
-lm(Map$AvgCorrect_Quantity.Word_Word.Quantity~Map$AvgCorrect_Quantity.Numeral_Numeral.Quantity + agecovariate)
+QW_QN_reg <-lm(Map_HBE$AvgCorrect_Quantity.Word_Word.Quantity~Map_HBE$AvgCorrect_Quantity.Numeral_Numeral.Quantity + agecovariate)
 summary(QW_QN_reg)
 
 -------------------------------------------------------------------------------------------------------------
