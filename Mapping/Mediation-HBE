@@ -43,11 +43,39 @@ QW_QN_reg <-lm(Map_HBE$AvgCorrect_Quantity.Word_Word.Quantity~Map_HBE$AvgCorrect
 summary(QW_QN_reg) #SIG!
 lm.beta(QW_QN_reg)
 
-
 #DIRECT REG: NW & QW#
-NW_QN_reg <-lm(Map_HBE$AvgCorrect_Quantity.Word_Word.Quantity~Map_HBE$AvgCorrect_Quantity.Numeral_Numeral.Quantity + agecovariate)
-summary(NW_QW_reg) 
+NW_QW_reg <-lm(Map_HBE$AvgCorrect_Quantity.Word_Word.Quantity~Map_HBE$AvgCorrect_Quantity.Numeral_Numeral.Quantity + agecovariate)
+summary(NW_QW_reg) #SIG!
 lm.beta(NW_QW_reg)
+
+
+## IF SEPARATING BY AGE GROUPS ##
+Map_HBE$AgeGrp <- ifelse(Map_HBE$Age_Rounded < 6, "5-year-olds", "6 and up")
+Map5 <- subset(Map_HBE, Map_HBE$AgeGrp =="5-year-olds")
+Map6up <- subset(Map_HBE, Map_HBE$AgeGrp =="6 and up")
+
+# DIRECT REGRESSIONS FOR AGES (NOT INCLUDE AGE COVARIATE)
+#DIRECT REG: NW & QN BY AGES#
+NW_QN_5reg <- lm(Map5$AvgCorrect_Numeral.Word_Word.Numeral~Map5$AvgCorrect_Quantity.Numeral_Numeral.Quantity)
+summary(NW_QN_5reg) # NOT SIG
+NW_QN_6reg <- lm(Map6up$AvgCorrect_Numeral.Word_Word.Numeral~Map6up$AvgCorrect_Quantity.Numeral_Numeral.Quantity)
+summary(NW_QN_6reg) # NOT SIG
+
+#DIRECT REG: QW & QN BY AGES#
+QW_QN_5reg <-lm(Map5$AvgCorrect_Quantity.Word_Word.Quantity~Map5$AvgCorrect_Quantity.Numeral_Numeral.Quantity)
+summary(QW_QN_5reg) #SIG
+lm.beta(QW_QN_5reg)
+QW_QN_6reg <-lm(Map6up$AvgCorrect_Quantity.Word_Word.Quantity~Map6up$AvgCorrect_Quantity.Numeral_Numeral.Quantity)
+summary(QW_QN_6reg) #SIG
+lm.beta(QW_QN_6reg)
+
+#DIRECT REG: NW & QW BY AGES#
+NW_QW_5reg <-lm(Map5$AvgCorrect_Quantity.Word_Word.Quantity~Map5$AvgCorrect_Quantity.Numeral_Numeral.Quantity)
+summary(NW_QW_5reg) #SIG
+lm.beta(NW_QW_5reg)
+NW_QW_6reg <-lm(Map6up$AvgCorrect_Quantity.Word_Word.Quantity~Map6up$AvgCorrect_Quantity.Numeral_Numeral.Quantity)
+summary(NW_QW_6reg) #SIG
+lm.beta(NW_QW_6reg)
 
 -------------------------------------------------------------------------------------------------------------
 
