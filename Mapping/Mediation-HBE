@@ -1,5 +1,7 @@
 ####HEARING KIDS ONLY####
 
+## MEDIATION CODES ##
+
 setwd("~/Desktop")
 getwd()
 
@@ -25,7 +27,7 @@ CORPLOT$r
 CORPLOT$P
 -------------------------------------------------------------------------------------------------------------
 
-##SETTING UP DATA FRAME ##
+##SETTING UP DATA FRAME FOR LOGISTIC REGRESSION##
 install.packages("dplyr")
 library(dplyr)
 install.packages("tidyr")
