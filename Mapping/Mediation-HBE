@@ -26,6 +26,29 @@ CORPLOT
 CORPLOT$r
 # Extract p-values
 CORPLOT$P
+
+#DIRECT REGRESSIONS
+install.packages("QuantPsyc") #for beta values
+library(QuantPsyc)
+#SOURCE Controlling for variables: https://stats.stackexchange.com/questions/17336/how-exactly-does-one-control-for-other-variables
+agecovariate <- Map_HBE$AgeGrp
+
+#DIRECT REG: NW & QN#
+NW_QN_reg <- lm(Map_HBE$AvgCorrect_Numeral.Word_Word.Numeral~Map_HBE$AvgCorrect_Quantity.Numeral_Numeral.Quantity + agecovariate)
+summary(NW_QN_reg) #NOT SIG! Hurst’s was… 
+lm.beta(NW_QN_reg)
+
+#DIRECT REG: QW & QN#
+QW_QN_reg <-lm(Map_HBE$AvgCorrect_Quantity.Word_Word.Quantity~Map_HBE$AvgCorrect_Quantity.Numeral_Numeral.Quantity + agecovariate)
+summary(QW_QN_reg) #SIG!
+lm.beta(QW_QN_reg)
+
+
+#DIRECT REG: NW & QN#
+NW_QN_reg <-lm(Map_HBE$AvgCorrect_Numeral.Word_Word.Numeral~Map_HBE$AvgCorrect_Quantity.Numeral_Numeral.Quantity + agecovariate)
+summary(NW_QN_reg) 
+lm.beta(NW_QN_reg)
+
 -------------------------------------------------------------------------------------------------------------
 
 ##SETTING UP DATA FRAME FOR LOGISTIC REGRESSION##
