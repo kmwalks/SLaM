@@ -16,7 +16,7 @@ View(Map_HBE)
 
 # BIVARIATE CORRELATIONS. RESOURCE: http://www.sthda.com/english/wiki/correlation-matrix-a-quick-start-guide-to-analyze-format-and-visualize-a-correlation-matrix-using-r-software # 
 install.packages("Hmisc") 
-library("Hmisc")
+library(Hmisc)
 COR <- data.frame(Map_HBE$Sum_Quantity.Numeral_Numeral.Quantity, Map_HBE$Sum_Quantity.Word_Word.Quantity, Map_HBE$Sum_Numeral.Word_Word.Numeral, Map_HBE$AgeGrp)
 View(COR)
 CORPLOT <- rcorr(as.matrix(COR)) #had to change age group to only be numbers for this to work! 
