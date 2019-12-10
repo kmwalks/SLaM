@@ -95,9 +95,12 @@ QW_QN_lrg_reg <-lm(Map_HBE$AvgCorrect_Lrg_QW~Map_HBE$AvgCorrect_Lrg_QN + agecova
 summary(QW_QN_lrg_reg) #SIG
 
 #DIRECT REG: NW & QW#
-NW_QW_reg <-lm(Map_HBE$AvgCorrect_Sm_WN~Map_HBE$AvgCorrect_Quantity.Numeral_Numeral.Quantity + agecovariate)
-summary(NW_QW_reg) #SIG!
-lm.beta(NW_QW_reg)
+NW_QW_sm_reg <-lm(Map_HBE$AvgCorrect_Sm_WN~Map_HBE$AvgCorrect_Sm_QW + agecovariate)
+summary(NW_QW_sm_reg) #NOT SIG!
+NW_QW_med_reg <-lm(Map_HBE$AvgCorrect_Med_WN~Map_HBE$AvgCorrect_Med_QW + agecovariate)
+summary(NW_QW_med_reg) #NOT SIG!
+NW_QW_lrg_reg <-lm(Map_HBE$AvgCorrect_Lrg_WN~Map_HBE$AvgCorrect_Lrg_QW + agecovariate)
+summary(NW_QW_lrg_reg) #NOT SIG!
 
 
 -------------------------------------------------------------------------------------------------------------
