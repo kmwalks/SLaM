@@ -51,6 +51,18 @@ Map_HBE$AgeGrp <- ifelse(Map_HBE$Age_Rounded < 6, "5-year-olds", "6 and up")
 Map5 <- subset(Map_HBE, Map_HBE$AgeGrp =="5-year-olds")
 Map6up <- subset(Map_HBE, Map_HBE$AgeGrp =="6 and up")
 
+# TESTING AGE GROUP DIFFERENCES #
+boxplot(Map_HBE$AvgCorrect_Total~Map_HBE$AgeGrp,data=Map_HBE, xlab="Age Groups", ylab="Average Performance")
+ #TESTING VARIANCES#
+ #http://www.sthda.com/english/wiki/f-test-compare-two-variances-in-r
+ res.ftest <- var.test(Map_HBE$AvgCorrect_Total~Map_HBE$AgeGrp, data = Map_HBE) #NOT SIG… 
+ leveneTest(Map_HBE$AvgCorrect_Total~Map_HBE$AgeGrp, data=Map_HBE)  #NOT SIG
+ fligner.test(Map_HBE$AvgCorrect_Total~Map_HBE$AgeGrp, data=Map_HBE) # chi-squared = 3.9292, df = 1, p-value = 0.04745, SIG DIFF
+
+
+
+
+
 ## MEDIAN AND SD FOR EACH MAPPING TYPE #
 median(Map_HBE$SumTotal_QuantityWord)
 sd(Map_HBE$SumTotal_QuantityWord, na.rm = TRUE)
