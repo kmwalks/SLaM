@@ -58,9 +58,20 @@ boxplot(Map_HBE$AvgCorrect_Total~Map_HBE$AgeGrp,data=Map_HBE, xlab="Age Groups",
  res.ftest <- var.test(Map_HBE$AvgCorrect_Total~Map_HBE$AgeGrp, data = Map_HBE) #NOT SIG… 
  leveneTest(Map_HBE$AvgCorrect_Total~Map_HBE$AgeGrp, data=Map_HBE)  #NOT SIG
  fligner.test(Map_HBE$AvgCorrect_Total~Map_HBE$AgeGrp, data=Map_HBE) # chi-squared = 3.9292, df = 1, p-value = 0.04745, SIG DIFF
-
-
-
+ #Correlations for age and percent correct for each mapping type#
+  install.packages("ggpubr")
+  library("ggpubr")
+  #ALL SIX TYPES
+  cor.test(Map_HBE$Age_Rounded, Map_HBE$AvgCorrect_Word.Quantity, method=c("pearson", "kendall", "spearman")) #t = 2.962, df = 40, p-value = 0.005123
+  cor.test(Map_HBE$Age_Rounded, Map_HBE$AvgCorrect_Quantity.Word, method=c("pearson", "kendall", "spearman")) #t = 2.6532, df = 40, p-value = 0.01138
+  cor.test(Map_HBE$Age_Rounded, Map_HBE$AvgCorrect_Quantity.Numeral, method=c("pearson", "kendall", "spearman")) #t = 2.9464, df = 40, p-value = 0.005339
+  cor.test(Map_HBE$Age_Rounded, Map_HBE$AvgCorrect_Numeral.Quantity, method=c("pearson", "kendall", "spearman")) #t = 3.7277, df = 40, p-value = 0.000598
+  cor.test(Map_HBE$Age_Rounded, Map_HBE$AvgCorrect_Numeral.Word, method=c("pearson", "kendall", "spearman")) #t = 3.4694, df = 40, p-value = 0.001264
+  cor.test(Map_HBE$Age_Rounded, Map_HBE$AvgCorrect_Word.Numeral, method=c("pearson", "kendall", "spearman")) #t = 0.801, df = 40, p-value = 0.4279
+  #ALL 3 PAIRS
+  cor.test(Map_HBE$Age_Rounded, Map_HBE$AvgCorrect_Quantity.Numeral_Numeral.Quantity, method=c("pearson", "kendall", "spearman")) #t = 3.9084, df = 40, p-value = 0.0003501
+  cor.test(Map_HBE$Age_Rounded, Map_HBE$AvgCorrect_Quantity.Word_Word.Quantity, method=c("pearson", "kendall", "spearman")) #t = 3.4769, df = 40, p-value = 0.001237
+  cor.test(Map_HBE$Age_Rounded, Map_HBE$AvgCorrect_Numeral.Word_Word.Numeral, method=c("pearson", "kendall", "spearman")) #t = 1.7641, df = 40, p-value = 0.08535
 
 
 ## MEDIAN AND SD FOR EACH MAPPING TYPE #
