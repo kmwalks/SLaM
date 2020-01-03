@@ -78,24 +78,43 @@ MapMeans <- c((MapAvgCorr[1]/9), (MapAvgCorr[2]/8), (MapAvgCorr[3]/9), (MapAvgCo
 MapMeans
 
 
-## 5 YO vs 6YOs and up ##
+## 5 and 6 YO vs 7 and UP ##
 
+##AGE GROUPS DECISONS ##
+AGEGRP <- Map_HBE$AgeGrp %>% mutate(AGEGRP = case_when(Map_HBE$Age_Rounded >= 5  & Map_HBE$Age_Rounded < 6 ~ '5', Map_HBE$Age_Rounded >= 6  & Map_HBE$Age_Rounded < 7 ~ '6', Map_HBE$Age_Rounded >= 7  & Map_HBE$Age_Rounded < 8 ~ '7', Map_HBE$Age_Rounded >= 8  & Map_HBE$Age_Rounded < 9 ~ '8', Map_HBE$Age_Rounded >= 9  & Map_HBE$Age_Rounded < 10 ~ '9'))
+Map_HBE2 <- cbind(Map_HBE, AGEGRP)
+View(Map_HBE2)
+YO5 <- subset(Map_HBE2, Map_HBE2$AGEGRP =="5")
+YO6 <- subset(Map_HBE2, Map_HBE2$AGEGRP =="6")
+YO7 <- subset(Map_HBE2, Map_HBE2$AGEGRP =="7")
+YO8 <- subset(Map_HBE2, Map_HBE2$AGEGRP =="8")
+YO9 <- subset(Map_HBE2, Map_HBE2$AGEGRP =="9")
+t.test(YO5$AvgCorrect_Total, YO6$AvgCorrect_Total, paired = FALSE, alternative = "two.sided")  #t = -1.3824, df = 18.414, p-value = 0.1834, 5 vs 6 NOT
+t.test(YO5$AvgCorrect_Total, YO7$AvgCorrect_Total, paired = FALSE, alternative = "two.sided")  # 6 vs 7 SIG DIFFERENT
+t.test(YO7$AvgCorrect_Total, YO8$AvgCorrect_Total, paired = FALSE, alternative = "two.sided") #7 vs 8 NOT 
+t.test(YO7$AvgCorrect_Total, YO9$AvgCorrect_Total, paired = FALSE, alternative = "two.sided") #7 vs 9 NOT
+t.test(YO8$AvgCorrect_Total, YO9$AvgCorrect_Total, paired = FALSE, alternative = "two.sided") #8 vs 9 NOT
+t.test(YO6$AvgCorrect_Total, YO8$AvgCorrect_Total, paired = FALSE, alternative = "two.sided") # t = -2.2195, df = 8.8544, p-value = 0.05408, BARELY NOT SIG
+t.test(YO6$AvgCorrect_Total, YO9$AvgCorrect_Total, paired = FALSE, alternative = "two.sided") #SIG DIFF
+# SIG FINDINGS: 5 vs 6 NO, 6 vs 7 YES, 7 vs 8 NO, 7 vs 9 NO, 8 vs 9 NO, 6 vs 8 NO (but barely p = 0.054), 6 vs 9 YES… so good support for 5 and 6 year olds vs 7 year olds and up
+
+#SETTING UP
 #create a column for age group
-Map_HBE$AgeGrp <- ifelse(Map_HBE$Age_Rounded < 6, "5-year-olds", "6 and up")
+Map_HBE$AgeGrp <- ifelse(Map_HBE$Age_Rounded < 7, "5- and 6-year-olds", "7 and up")
 
-Map5 <- subset(Map_HBE, Map_HBE$AgeGrp =="5-year-olds")
-Map6up <- subset(Map_HBE, Map_HBE$AgeGrp =="6 and up")
+Map56 <- subset(Map_HBE, Map_HBE$AgeGrp =="5- and 6-year-olds")
+Map7up <- subset(Map_HBE, Map_HBE$AgeGrp =="7 and up")
 
 #RAW NUMBER correct & PROPORTION correct
-Map5AvgCorr <- colMeans(subset(Map5, select = c(SumTotal_QuantityNumeral, SumTotal_NumeralQuantity, SumTotal_QuantityWord, SumTotal_WordQuantity, SumTotal_NumeralWord, SumTotal_WordNumeral)), na.rm = TRUE) 
-Map5AvgCorr
-Map5Means <- c((Map5AvgCorr[1]/9), (Map5AvgCorr[2]/8), (Map5AvgCorr[3]/9), (Map5AvgCorr[4]/8), (Map5AvgCorr[5]/9), (Map5AvgCorr[6]/8))
-Map5Means
+Map56AvgCorr <- colMeans(subset(Map56, select = c(SumTotal_QuantityNumeral, SumTotal_NumeralQuantity, SumTotal_QuantityWord, SumTotal_WordQuantity, SumTotal_NumeralWord, SumTotal_WordNumeral)), na.rm = TRUE) 
+Map56AvgCorr
+Map56Means <- c((Map56AvgCorr[1]/9), (Map56AvgCorr[2]/8), (Map56AvgCorr[3]/9), (Map56AvgCorr[4]/8), (Map56AvgCorr[5]/9), (Map56AvgCorr[6]/8))
+Map56Means
 
-Map6upAvgCorr <- colMeans(subset(Map6up, select = c(SumTotal_QuantityNumeral, SumTotal_NumeralQuantity, SumTotal_QuantityWord, SumTotal_WordQuantity, SumTotal_NumeralWord, SumTotal_WordNumeral)), na.rm = TRUE) 
-Map6upAvgCorr
-Map6Means <- c((Map6upAvgCorr[1]/9), (Map6upAvgCorr[2]/8), (Map6upAvgCorr[3]/9), (Map6upAvgCorr[4]/8), (Map6upAvgCorr[5]/9), (Map6upAvgCorr[6]/8))
-Map6Means
+Map7upAvgCorr <- colMeans(subset(Map7up, select = c(SumTotal_QuantityNumeral, SumTotal_NumeralQuantity, SumTotal_QuantityWord, SumTotal_WordQuantity, SumTotal_NumeralWord, SumTotal_WordNumeral)), na.rm = TRUE) 
+Map7upAvgCorr
+Map7Means <- c((Map7upAvgCorr[1]/9), (Map7upAvgCorr[2]/8), (Map7upAvgCorr[3]/9), (Map7upAvgCorr[4]/8), (Map7upAvgCorr[5]/9), (Map7upAvgCorr[6]/8))
+Map7Means
 
 #ALL SIGNIFICANTLY DIFFERENT FROM CHANCE?
 # 5 YO 
