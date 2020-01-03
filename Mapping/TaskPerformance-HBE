@@ -105,7 +105,7 @@ Map_HBE$AgeGrp <- ifelse(Map_HBE$Age_Rounded < 7, "5- and 6-year-olds", "7 and u
 Map56 <- subset(Map_HBE, Map_HBE$AgeGrp =="5- and 6-year-olds")
 Map7up <- subset(Map_HBE, Map_HBE$AgeGrp =="7 and up")
 
-#RAW NUMBER correct & PROPORTION correct
+#RAW NUMBER correct & PROPORTION correct, THESE ARE FOR TABLES
 Map56AvgCorr <- colMeans(subset(Map56, select = c(SumTotal_QuantityNumeral, SumTotal_NumeralQuantity, SumTotal_QuantityWord, SumTotal_WordQuantity, SumTotal_NumeralWord, SumTotal_WordNumeral)), na.rm = TRUE) 
 Map56AvgCorr
 Map56Means <- c((Map56AvgCorr[1]/9), (Map56AvgCorr[2]/8), (Map56AvgCorr[3]/9), (Map56AvgCorr[4]/8), (Map56AvgCorr[5]/9), (Map56AvgCorr[6]/8))
@@ -116,12 +116,15 @@ Map7upAvgCorr
 Map7Means <- c((Map7upAvgCorr[1]/9), (Map7upAvgCorr[2]/8), (Map7upAvgCorr[3]/9), (Map7upAvgCorr[4]/8), (Map7upAvgCorr[5]/9), (Map7upAvgCorr[6]/8))
 Map7Means
 
-#ALL SIGNIFICANTLY DIFFERENT FROM CHANCE?
-# 5 YO 
-wilcox.test(Map5$AvgCorrect_Quantity.Numeral, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) #YES, p-value = 0.001005
-wilcox.test(Map5$AvgCorrect_Numeral.Quantity, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) #YES, p-value = 0.001187
-wilcox.test(Map5$SumTotal_QuantityNumeral, Map5$SumTotal_NumeralQuantity, paired=TRUE, exact=FALSE) # ASYMMETRY? Quantity numeral better than numeral quantity? 
-#YES, p-value = 0.007412
+#ALL SIGNIFICANTLY DIFFERENT FROM CHANCE?, THESE ARE FOR SIGNIFICANCE ON TABLES
+# 5 and 6 YO 
+wilcox.test(Map56$AvgCorrect_Quantity.Numeral, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) #YES, p-value = 2.54e-05
+wilcox.test(Map56$AvgCorrect_Numeral.Quantity, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) #YES, p-value = 2.784e-05
+wilcox.test(Map56$SumTotal_QuantityNumeral, Map56$SumTotal_NumeralQuantity, paired=TRUE, exact=FALSE) # ASYMMETRY? Quantity numeral better than numeral quantity? 
+#YES, p-value = p-value = 0.001521
+
+
+#### MADE CHANGES UP TO HERE!
 
 wilcox.test(Map5$AvgCorrect_Quantity.Word, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) #YES, p-value = 0.001141
 wilcox.test(Map5$AvgCorrect_Word.Quantity, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) #YES, p-value = 0.001215
@@ -133,7 +136,7 @@ wilcox.test(Map5$AvgCorrect_Numeral.Word, mu = .25, alternative = "greater") # i
 wilcox.test(Map5$SumTotal_NumeralWord, Map5$SumTotal_WordNumeral, paired=TRUE, exact=FALSE) # ASYMMETRY?  Numeral word better than word numeral?
 #YES, p-value = 0.01198
 
-# 6 YO & >
+# 7 YO & >
 
 wilcox.test(Map6up$AvgCorrect_Quantity.Numeral, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) #YES, p-value = 2.178e-07
 wilcox.test(Map6up$AvgCorrect_Numeral.Quantity, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) #YES, p-value = 3.106e-07
