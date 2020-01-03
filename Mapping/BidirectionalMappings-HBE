@@ -47,9 +47,10 @@ View(Map_HBE)
 str(Map_HBE)
 
 ## IF SEPARATING BY AGE GROUPS ##
-Map_HBE$AgeGrp <- ifelse(Map_HBE$Age_Rounded < 6, "5-year-olds", "6 and up")
-Map5 <- subset(Map_HBE, Map_HBE$AgeGrp =="5-year-olds")
-Map6up <- subset(Map_HBE, Map_HBE$AgeGrp =="6 and up")
+Map_HBE$AgeGrp <- ifelse(Map_HBE$Age_Rounded < 7, "5- and 6-year-olds", "7 and up")
+Map56 <- subset(Map_HBE, Map_HBE$AgeGrp =="5- and 6-year-olds")
+Map7up <- subset(Map_HBE, Map_HBE$AgeGrp =="7 and up")
+
 
 # TESTING AGE GROUP DIFFERENCES #
 boxplot(Map_HBE$AvgCorrect_Total~Map_HBE$AgeGrp,data=Map_HBE, xlab="Age Groups", ylab="Average Performance")
