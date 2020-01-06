@@ -423,6 +423,29 @@ mean(Map_HBE$AvgCorrect_Word.Numeral) #0.94
       t.test(Map_HBE$AvgCorrect_Sm_WN, Map_HBE$AvgCorrect_Lrg_WN, paired = FALSE, alternative = "two.sided") 
       cohen.d(Map_HBE$AvgCorrect_Sm_WN, Map_HBE$AvgCorrect_Lrg_WN,pooled=TRUE,paired=FALSE, na.rm=FALSE, hedges.correction=FALSE, conf.level=0.95,noncentral=FALSE)
       
+      #GENERAL SMALL VERSUS MEDIUM DIFFERENCES (NOT AGES)#
+      #QW
+      t.test(Map_HBE$AvgCorrect_Sm_QW, Map_HBE$AvgCorrect_Med_QW, paired = FALSE, alternative = "two.sided")
+      cohen.d(Map_HBE$AvgCorrect_Sm_QW, Map_HBE$AvgCorrect_Med_QW,pooled=TRUE,paired=FALSE, na.rm=FALSE, hedges.correction=FALSE, conf.level=0.95,noncentral=FALSE) 
+      #QN
+      t.test(Map_HBE$AvgCorrect_Sm_QN, Map_HBE$AvgCorrect_Med_QN, paired = FALSE, alternative = "two.sided") 
+      cohen.d(Map_HBE$AvgCorrect_Sm_QN, Map_HBE$AvgCorrect_Lrg_QN,pooled=TRUE,paired=FALSE, na.rm=FALSE, hedges.correction=FALSE, conf.level=0.95,noncentral=FALSE) 
+      #NW
+      t.test(Map_HBE$AvgCorrect_Sm_WN, Map_HBE$AvgCorrect_Med_WN, paired = FALSE, alternative = "two.sided") 
+      cohen.d(Map_HBE$AvgCorrect_Sm_WN, Map_HBE$AvgCorrect_Med_WN,pooled=TRUE,paired=FALSE, na.rm=FALSE, hedges.correction=FALSE, conf.level=0.95,noncentral=FALSE)
+      
+       #GENERAL MEDIUM VERSUS LARGE DIFFERENCES (NOT AGES)#
+      #QW
+      t.test(Map_HBE$AvgCorrect_Med_QW, Map_HBE$AvgCorrect_Lrg_QW, paired = FALSE, alternative = "two.sided")
+      cohen.d(Map_HBE$AvgCorrect_Med_QW, Map_HBE$AvgCorrect_Lrg_QW,pooled=TRUE,paired=FALSE, na.rm=FALSE, hedges.correction=FALSE, conf.level=0.95,noncentral=FALSE) 
+      #QN
+      t.test(Map_HBE$AvgCorrect_Med_QN, Map_HBE$AvgCorrect_Lrg_QN, paired = FALSE, alternative = "two.sided") 
+      cohen.d(Map_HBE$AvgCorrect_Med_QN, Map_HBE$AvgCorrect_Lrg_QN,pooled=TRUE,paired=FALSE, na.rm=FALSE, hedges.correction=FALSE, conf.level=0.95,noncentral=FALSE) 
+      #NW
+      t.test(Map_HBE$AvgCorrect_Med_WN, Map_HBE$AvgCorrect_Lrg_WN, paired = FALSE, alternative = "two.sided") 
+      cohen.d(Map_HBE$AvgCorrect_Med_WN, Map_HBE$AvgCorrect_Lrg_WN,pooled=TRUE,paired=FALSE, na.rm=FALSE, hedges.correction=FALSE, conf.level=0.95,noncentral=FALSE)
+      
+     
       #SMALL VERSUS LARGE#
        #QW
       t.test(Map56$AvgCorrect_Sm_QW, Map56$AvgCorrect_Lrg_QW, paired = TRUE, alternative = "two.sided")
