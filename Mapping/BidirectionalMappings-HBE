@@ -185,49 +185,49 @@ shapiro.test(Map_HBE$Difference_Numeral.Word_Word.Numeral)
 ##GROUPED BAR PLOT##
       ##SOURCE: https://onunicornsandgenes.blog/2014/03/19/using-r-barplot-with-ggplot2/##
       ## 1. CREATE DF FOR AGE GRP 5 ##
-      AgeGrp <- Map5$AgeGrp
-      QW <- mean(Map5$Sum_Quantity.Word_Word.Quantity)
-      NW <- mean(Map5$Sum_Numeral.Word_Word.Numeral)
-      QN <- mean(Map5$Sum_Quantity.Numeral_Numeral.Quantity)
-      age5 <- data.frame(AgeGrp, QW, NW,QN)
-      age5.data <- melt(age5, id.vars='AgeGrp')
-      View(age5.data)
+      AgeGrp <- Map56$AgeGrp
+      QW <- mean(Map56$Sum_Quantity.Word_Word.Quantity)
+      NW <- mean(Map56$Sum_Numeral.Word_Word.Numeral)
+      QN <- mean(Map56$Sum_Quantity.Numeral_Numeral.Quantity)
+      age56 <- data.frame(AgeGrp, QW, NW,QN)
+      age56.data <- melt(age56, id.vars='AgeGrp')
+      View(age56.data)
 
       ## 2. CREATE DF FOR AGE GRP 6 > ##
-      AgeGrp <- Map6up$AgeGrp
-      QW <- mean(Map6up$Sum_Quantity.Word_Word.Quantity)
-      NW <- mean(Map6up$Sum_Numeral.Word_Word.Numeral)
-      QN <- mean(Map6up$Sum_Quantity.Numeral_Numeral.Quantity)
-      age6 <- data.frame(AgeGrp, QW,NW,QN)
-      age6.data <- melt(age6, id.vars='AgeGrp')
-      View(age6.data)
+      AgeGrp <- Map7up$AgeGrp
+      QW <- mean(Map7up$Sum_Quantity.Word_Word.Quantity)
+      NW <- mean(Map7up$Sum_Numeral.Word_Word.Numeral)
+      QN <- mean(Map7up$Sum_Quantity.Numeral_Numeral.Quantity)
+      age7 <- data.frame(AgeGrp, QW,NW,QN)
+      age7.data <- melt(age7, id.vars='AgeGrp')
+      View(age7.data)
 
       ## 3. MERGE 2 AGE GROUP DFS ##
-      K <- merge(age5.data, age6.data, by=c("AgeGrp","variable","value"), all = T)
+      K <- merge(age56.data, age7.data, by=c("AgeGrp","variable","value"), all = T)
       names(K)[names(K) == "variable"] <- "Map"
       View(K)
 
       ## 4. CREATE NEW DATA FRAME WITH SEMS ##
-          #AGE 5#         
-          AgeGrp <- Map5$AgeGrp
-          QW_SE <- std.error(Map5$Sum_Quantity.Word_Word.Quantity)
-          NW_SE <- std.error(Map5$Sum_Numeral.Word_Word.Numeral)
-          QN_SE <- std.error(Map5$Sum_Quantity.Numeral_Numeral.Quantity)
-          SE_5 <- data.frame(AgeGrp, QW_SE, NW_SE, QN_SE)
-          SE_5 <- melt(SE_5, id.vars='AgeGrp')
-          View(SE_5)
+          #AGE 5 and 6#         
+          AgeGrp <- Map56$AgeGrp
+          QW_SE <- std.error(Map56$Sum_Quantity.Word_Word.Quantity)
+          NW_SE <- std.error(Map56$Sum_Numeral.Word_Word.Numeral)
+          QN_SE <- std.error(Map56$Sum_Quantity.Numeral_Numeral.Quantity)
+          SE_56 <- data.frame(AgeGrp, QW_SE, NW_SE, QN_SE)
+          SE_56 <- melt(SE_56, id.vars='AgeGrp')
+          View(SE_56)
 
-         #AGE 6#
-         AgeGrp <- Map6up$AgeGrp
-         QW_SE <- std.error(Map6up$Sum_Quantity.Word_Word.Quantity)
-         NW_SE <- std.error(Map6up$Sum_Numeral.Word_Word.Numeral)
-         QN_SE <- std.error(Map6up$Sum_Quantity.Numeral_Numeral.Quantity)
-         SE_6 <- data.frame(AgeGrp, QW_SE, NW_SE, QN_SE)
-         SE_6 <- melt(SE_6, id.vars='AgeGrp')
-         View(SE_6)
+         #AGE 7 and up#
+         AgeGrp <- Map7up$AgeGrp
+         QW_SE <- std.error(Map7up$Sum_Quantity.Word_Word.Quantity)
+         NW_SE <- std.error(Map7up$Sum_Numeral.Word_Word.Numeral)
+         QN_SE <- std.error(Map7up$Sum_Quantity.Numeral_Numeral.Quantity)
+         SE_7 <- data.frame(AgeGrp, QW_SE, NW_SE, QN_SE)
+         SE_7 <- melt(SE_7, id.vars='AgeGrp')
+         View(SE_7)
 
       ## 5. MERGE 2 SEM DATA FRAMES & PREP TO MERGE WITH OTHER MERGED DF ##
-      K2 <- merge(SE_5, SE_6, by=c("AgeGrp","variable","value"), all = T)
+      K2 <- merge(SE_56, SE_7, by=c("AgeGrp","variable","value"), all = T)
       View(K2)
       K2 <- data.frame(K2$AgeGrp, K2$value, K2$variable, K$Map)
       names(K2)[names(K2) == "K2.value"] <- "value"
@@ -249,8 +249,9 @@ shapiro.test(Map_HBE$Difference_Numeral.Word_Word.Numeral)
              View(BOOYAH)
 
       ## 8. CREATE BAR PLOT ##
-      All_Bar <- ggplot(BOOYAH, aes(BOOYAH$Map, BOOYAH$mean)) + geom_bar(aes(fill = BOOYAH$AgeGrp), width = 0.6, position = position_dodge(width=0.7), stat="identity") + scale_fill_manual(values=c("grey87", "grey51"), labels = c("5-year-olds", "6-year-olds and older")) + labs( y="Accuracy (out of 17)") + scale_y_continuous (breaks=c(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17), limits = c(0,17), expand = c(0,0)) + scale_x_discrete(limits=c("QW","NW","QN"), expand = c(.2,0),labels = c("Quantity and Word", "Numeral and Word", "Quantity and Numeral")) + theme_bw() + theme(legend.position="top", legend.title = element_blank(), axis.title.x=element_blank(), panel.border = element_blank(),panel.grid.minor.y = element_blank(), panel.grid.major.x = element_blank(), panel.grid.minor.x = element_blank(), axis.line = element_line(colour = "black"), text = element_text(size=12, family="Times New Roman"))
+      All_Bar <- ggplot(BOOYAH, aes(BOOYAH$Map, BOOYAH$mean)) + geom_bar(aes(fill = BOOYAH$AgeGrp), width = 0.6, position = position_dodge(width=0.7), stat="identity") + scale_fill_manual(values=c("grey87", "grey51"), labels = c("5 and 6-year-olds", "7-year-olds and older")) + labs( y="Accuracy (out of 17)") + scale_y_continuous (breaks=c(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17), limits = c(0,17), expand = c(0,0)) + scale_x_discrete(limits=c("QW","NW","QN"), expand = c(.2,0),labels = c("Quantity and Word", "Numeral and Word", "Quantity and Numeral")) + theme_bw() + theme(legend.position="top", legend.title = element_blank(), axis.title.x=element_blank(), panel.border = element_blank(),panel.grid.minor.y = element_blank(), panel.grid.major.x = element_blank(), panel.grid.minor.x = element_blank(), axis.line = element_line(colour = "black"), text = element_text(size=12, family="Times New Roman"))
       All_Bar + geom_errorbar(aes(ymax=BOOYAH$upper, ymin=BOOYAH$lower, group=AgeGrp), width=.5, position=position_dodge(0.7), data=BOOYAH)
+      All_Bar
 
 #TESTING SIGNIFICANCE BETWEEN BARS#
 t.test(Map5$Sum_Quantity.Numeral_Numeral.Quantity, Map6up$Sum_Quantity.Numeral_Numeral.Quantity, paired = FALSE, alternative = "two.sided") 
