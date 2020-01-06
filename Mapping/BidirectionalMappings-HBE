@@ -311,8 +311,8 @@ t.test(Map56$Sum_Numeral.Word_Word.Numeral, Map7up$Sum_Numeral.Word_Word.Numeral
      mean(Map_HBE$Sum_Quantity.Word_Word.Quantity)
      
      ## AGE GROUP MEANS ##
-     mean(age6.data$value)
-     mean(age5.data$value)
+     mean(age7.data$value)
+     mean(age56.data$value)
      
     ## QN vs QW ##
     t.test(Map_HBE$Sum_Quantity.Numeral_Numeral.Quantity, Map_HBE$Sum_Quantity.Word_Word.Quantity, paired = TRUE, alternative = "two.sided")
