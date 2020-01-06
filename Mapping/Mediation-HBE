@@ -50,9 +50,9 @@ lm.beta(NW_QW_reg)
 # DIRECT REGRESSIONS FOR AGES (NOT INCLUDE AGE COVARIATE)
 #DIRECT REG: NW & QN BY AGES#
 NW_QN_56reg <- lm(Map56$AvgCorrect_Numeral.Word_Word.Numeral~Map56$AvgCorrect_Quantity.Numeral_Numeral.Quantity)
-summary(NW_QN_5reg)
+summary(NW_QN_56reg)
 NW_QN_7reg <- lm(Map7up$AvgCorrect_Numeral.Word_Word.Numeral~Map7up$AvgCorrect_Quantity.Numeral_Numeral.Quantity)
-summary(NW_QN_6reg) 
+summary(NW_QN_7reg) 
 
 #DIRECT REG: QW & QN BY AGES#
 QW_QN_56reg <-lm(Map56$AvgCorrect_Quantity.Word_Word.Quantity~Map56$AvgCorrect_Quantity.Numeral_Numeral.Quantity)
