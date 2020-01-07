@@ -176,6 +176,16 @@ NW_QW_lrg_reg <-lm(Map_HBE$AvgCorrect_Lrg_WN~Map_HBE$AvgCorrect_Lrg_QW + agecova
 summary(NW_QW_lrg_reg) #NOT SIG!
 
 
+# Mediation Analysis COMPARING TO HURST ANALYSIS
+install.packages("mediation")
+library(mediation)
+# https://cran.r-project.org/web/packages/mediation/vignettes/mediation.pdf
+# https://data.library.virginia.edu/introduction-to-mediation-analysis/
+# Emily’s Codes https://github.com/emlini/SLAM-Data-Analysis/blob/master/GiveN_Models_Residuals_Mediation_190304.R
+
+
+Map_HBE$AgeGrp <- ifelse(Map_HBE$Age_Rounded < 7, "5", "7")
+agecovariate <- Map_HBE$AgeGrp
 
 
 
