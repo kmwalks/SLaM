@@ -123,7 +123,7 @@ summary(QW_QN_reg) #SIG!
 lm.beta(QW_QN_reg)
 
 #DIRECT REG: NW & QW#
-NW_QW_reg <-lm(Map_HBE$AvgCorrect_Numeral.Word_Word.Numeral~Map_HBE$Map_HBE$AvgCorrect_Quantity.Word_Word.Quantity + agecovariate)
+NW_QW_reg <-lm(Map_HBE$AvgCorrect_Numeral.Word_Word.Numeral~Map_HBE$AvgCorrect_Quantity.Word_Word.Quantity + agecovariate)
 summary(NW_QW_reg) #SIG!
 lm.beta(NW_QW_reg)
 
