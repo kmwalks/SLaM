@@ -322,3 +322,15 @@ NQ <- ggplot(long_setsizes_NQ2, aes(x=long_setsizes_NQ2$SetSize, y=long_setsizes
 NQ
 
 
+#6. QUANTITY TO NUMERAL SCATTER PLOT#
+which(colnames(Map_HBE)=="SumTotal_QuantityNumeral")
+long_setsizes_QN  <- Map_HBE[,-(77)] #getting rid of sum columns to only have avg ones
+long_setsizes_QN2  <- pivot_longer(data = long_setsizes_QN, cols=c(ends_with("QuantityNumeral")), names_to = c("SetSize"), values_to = "Performance") 
+View(long_setsizes_QN2)
+long_setsizes_QN2$AgeGrp <- ifelse(long_setsizes_QN2$Age_Rounded < 7, "5", "7") #adding age grp column to only have the numbers
+View(long_setsizes_QN2) 
+AgeGrps <- long_setsizes_QN2$AgeGrp #creating short variable
+long_setsizes_QN2$SetSize <- factor(long_setsizes_QN2$SetSize, levels=c("AvgCorrect_Sm_QuantityNumeral", "AvgCorrect_Med_QuantityNumeral", "AvgCorrect_Lrg_QuantityNumeral")) #SETTING IN ORDER, from small to large
+jitter <- position_jitter(width=0.4, height=0.02)
+QN <- ggplot(long_setsizes_QN2, aes(x=long_setsizes_QN2$SetSize, y=long_setsizes_QN2$Performance)) + geom_point(aes(shape=AgeGrps, color=AgeGrps), show.legend = FALSE, position=jitter, size=2)+ stat_smooth(aes(group = AgeGrps, color=AgeGrps), method = "loess", se=FALSE) + labs(x="Set Sizes", y="Quantity-Numeral") + theme(text = element_text(size=14, family="Times New Roman")) + coord_cartesian(ylim= c(0.4,1)) + scale_y_continuous(breaks=c(0.5, 0.6, 0.7, 0.8, 0.9, 1))  + scale_color_manual(values=c("black","blue1")) + scale_x_discrete(labels=c("AvgCorrect_Sm_QuantityNumeral" = "Small", "AvgCorrect_Med_QuantityNumeral" = "Medium", "AvgCorrect_Lrg_QuantityNumeral" = "Large"))
+QN
