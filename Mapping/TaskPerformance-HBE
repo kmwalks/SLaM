@@ -294,3 +294,17 @@ long_setsizes_QW2$SetSize <- factor(long_setsizes_QW2$SetSize, levels=c("AvgCorr
 jitter <- position_jitter(width=0.4, height=0.02)
 QW <- ggplot(long_setsizes_QW2, aes(x=long_setsizes_QW2$SetSize, y=long_setsizes_QW2$Performance)) + geom_point(aes(shape=AgeGrps, color=AgeGrps), show.legend = FALSE, position=jitter, size=2)+ stat_smooth(aes(group = AgeGrps, color=AgeGrps), method = "loess", se=FALSE) + labs(x="Set Sizes", y="Quantity-Word") + theme(text = element_text(size=14, family="Times New Roman")) + coord_cartesian(ylim= c(0.4,1)) + scale_y_continuous(breaks=c(0.5, 0.6, 0.7, 0.8, 0.9, 1))  + scale_color_manual(values=c("black","blue1")) + scale_x_discrete(labels=c("AvgCorrect_Sm_QuantityWord" = "Small", "AvgCorrect_Med_QuantityWord" = "Medium", "AvgCorrect_Lrg_QuantityWord" = "Large"))
 QW
+
+#4. WORD TO QUANTITY SCATTER PLOT#
+which(colnames(Map_HBE)=="SumTotal_WordQuantity")
+long_setsizes_WQ  <- Map_HBE[,-(239)] #getting rid of sum columns to only have avg ones
+long_setsizes_WQ2  <- pivot_longer(data = long_setsizes_WQ, cols=c(ends_with("WordQuantity")), names_to = c("SetSize"), values_to = "Performance") 
+View(long_setsizes_WQ2)
+long_setsizes_WQ2$AgeGrp <- ifelse(long_setsizes_WQ2$Age_Rounded < 7, "5", "7") #adding age grp column to only have the numbers
+View(long_setsizes_WQ2) 
+AgeGrps <- long_setsizes_WQ2$AgeGrp #creating short variable
+long_setsizes_WQ2$SetSize <- factor(long_setsizes_WQ2$SetSize, levels=c("AvgCorrect_Sm_WordQuantity", "AvgCorrect_Med_WordQuantity", "AvgCorrect_Lrg_WordQuantity")) #SETTING IN ORDER, from small to large
+jitter <- position_jitter(width=0.4, height=0.02)
+WQ <- ggplot(long_setsizes_WQ2, aes(x=long_setsizes_WQ2$SetSize, y=long_setsizes_WQ2$Performance)) + geom_point(aes(shape=AgeGrps, color=AgeGrps), show.legend = FALSE, position=jitter, size=2)+ stat_smooth(aes(group = AgeGrps, color=AgeGrps), method = "loess", se=FALSE) + labs(x="Set Sizes", y="Word-Quantity") + theme(text = element_text(size=14, family="Times New Roman")) + coord_cartesian(ylim= c(0.4,1)) + scale_y_continuous(breaks=c(0.5, 0.6, 0.7, 0.8, 0.9, 1))  + scale_color_manual(values=c("black","blue1")) + scale_x_discrete(labels=c("AvgCorrect_Sm_WordQuantity" = "Small", "AvgCorrect_Med_WordQuantity" = "Medium", "AvgCorrect_Lrg_WordQuantity" = "Large"))
+WQ
+
