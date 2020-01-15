@@ -86,6 +86,8 @@ exp(fixef(REG)) #provides Odds Ratios
 ---------------------------------------------------------------------------------
 #Mediation Analysis
 
+setwd("~/Desktop")
+
 Mapping <- read.csv("Mapping_Coding_CH_191119.csv", na.strings = "N/A")
 Map_HBE <- subset(Mapping, Mapping$Including.in.Study == 'Yes' & Mapping$Coded. == "Yes" & Mapping$Hearing_Cat == 'Hearing')
 
