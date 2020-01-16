@@ -99,22 +99,40 @@ View(Map_HBE)
 install.packages("QuantPsyc") #for beta values
 library(QuantPsyc)
 #SOURCE Controlling for variables: https://stats.stackexchange.com/questions/17336/how-exactly-does-one-control-for-other-variables
+
 agecovariate <- Map_HBE$AgeGrp
 
-#DIRECT REG: NW & QN#
+#DIRECT REG: NW PREDICT QN?#
 NW_QN_reg <- lm(Map_HBE$AvgCorrect_Numeral.Word_Word.Numeral~Map_HBE$AvgCorrect_Quantity.Numeral_Numeral.Quantity + agecovariate)
-summary(NW_QN_reg) #NOT SIG! Hurst’s was… 
+summary(NW_QN_reg) 
 lm.beta(NW_QN_reg)
 
-#DIRECT REG: QW & QN#
+#DIRECT REG: QN PREDICT NW?#
+QN_NW_reg <- lm(Map_HBE$AvgCorrect_Quantity.Numeral_Numeral.Quantity$Map_HBE$AvgCorrect_Numeral.Word_Word.Numeral + agecovariate)
+summary(QN_NW_reg ) 
+lm.beta(QN_NW_reg)
+
+#DIRECT REG: QW PREDICT QN?#
 QW_QN_reg <-lm(Map_HBE$AvgCorrect_Quantity.Word_Word.Quantity~Map_HBE$AvgCorrect_Quantity.Numeral_Numeral.Quantity + agecovariate)
-summary(QW_QN_reg) #SIG!
+summary(QW_QN_reg) 
 lm.beta(QW_QN_reg)
 
-#DIRECT REG: NW & QW#
+#DIRECT REG: QN PREDICT QW?#
+QN_QW_reg <-lm(Map_HBE$AvgCorrect_Quantity.Numeral_Numeral.Quantity~Map_HBE$AvgCorrect_Quantity.Word_Word.Quantity + agecovariate)
+summary(QN_QW_reg) 
+lm.beta(QN_QW_reg)
+
+DONE TO HERE
+
+#DIRECT REG: NW PREDICT QW?#
 NW_QW_reg <-lm(Map_HBE$AvgCorrect_Numeral.Word_Word.Numeral~Map_HBE$AvgCorrect_Quantity.Word_Word.Quantity + agecovariate)
-summary(NW_QW_reg) #SIG!
+summary(NW_QW_reg) 
 lm.beta(NW_QW_reg)
+
+#DIRECT REG: QW PREDICT NW?#
+QW_NW_reg <-lm(Map_HBE$AvgCorrect_Quantity.Word_Word.Quantity~Map_HBE$AvgCorrect_Numeral.Word_Word.Numeral + agecovariate)
+summary(QW_NW_reg) 
+lm.beta(QW_NW_reg)
 
 # DIRECT REGRESSIONS FOR AGES (NOT INCLUDE AGE COVARIATE)
 #DIRECT REG: NW & QN BY AGES#
