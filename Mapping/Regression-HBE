@@ -122,7 +122,6 @@ QN_QW_reg <-lm(Map_HBE$AvgCorrect_Quantity.Numeral_Numeral.Quantity~Map_HBE$AvgC
 summary(QN_QW_reg) 
 lm.beta(QN_QW_reg)
 
-DONE TO HERE
 
 #DIRECT REG: NW PREDICT QW?#
 NW_QW_reg <-lm(Map_HBE$AvgCorrect_Numeral.Word_Word.Numeral~Map_HBE$AvgCorrect_Quantity.Word_Word.Quantity + agecovariate)
