@@ -95,19 +95,6 @@ Map_HBE <- subset(Mapping, Mapping$Including.in.Study == 'Yes' & Mapping$Coded. 
 Map_HBE$AgeGrp <- ifelse(Map_HBE$Age_Rounded < 7, "5", "7")
 View(Map_HBE)
 
-# BIVARIATE CORRELATIONS. RESOURCE: http://www.sthda.com/english/wiki/correlation-matrix-a-quick-start-guide-to-analyze-format-and-visualize-a-correlation-matrix-using-r-software # 
-#ONLY WORKS WITH OLD VERSION OF R
-install.packages("Hmisc") 
-library(Hmisc)
-COR <- data.frame(Map_HBE$Sum_Quantity.Numeral_Numeral.Quantity, Map_HBE$Sum_Quantity.Word_Word.Quantity, Map_HBE$Sum_Numeral.Word_Word.Numeral, Map_HBE$AgeGrp)
-View(COR)
-CORPLOT <- rcorr(as.matrix(COR)) #had to change age group to only be numbers for this to work! 
-CORPLOT
-# Extract the correlation coefficients
-CORPLOT$r
-# Extract p-values
-CORPLOT$P
-
 #DIRECT REGRESSIONS
 install.packages("QuantPsyc") #for beta values
 library(QuantPsyc)
@@ -177,6 +164,20 @@ summary(NW_QW_med_reg) #NOT SIG!
 NW_QW_lrg_reg <-lm(Map_HBE$AvgCorrect_Lrg_WN~Map_HBE$AvgCorrect_Lrg_QW + agecovariate)
 summary(NW_QW_lrg_reg) #NOT SIG!
 
+-------------------------------------------------------------------------
+# OLD SHIZ #
+# BIVARIATE CORRELATIONS. RESOURCE: http://www.sthda.com/english/wiki/correlation-matrix-a-quick-start-guide-to-analyze-format-and-visualize-a-correlation-matrix-using-r-software # 
+#ONLY WORKS WITH OLD VERSION OF R
+install.packages("Hmisc") 
+library(Hmisc)
+COR <- data.frame(Map_HBE$Sum_Quantity.Numeral_Numeral.Quantity, Map_HBE$Sum_Quantity.Word_Word.Quantity, Map_HBE$Sum_Numeral.Word_Word.Numeral, Map_HBE$AgeGrp)
+View(COR)
+CORPLOT <- rcorr(as.matrix(COR)) #had to change age group to only be numbers for this to work! 
+CORPLOT
+# Extract the correlation coefficients
+CORPLOT$r
+# Extract p-values
+CORPLOT$P
 
 # Mediation Analysis COMPARING TO HURST ANALYSIS
 install.packages("mediation")
@@ -185,9 +186,51 @@ library(mediation)
 # https://data.library.virginia.edu/introduction-to-mediation-analysis/
 # Emily’s Codes https://github.com/emlini/SLAM-Data-Analysis/blob/master/GiveN_Models_Residuals_Mediation_190304.R
 
-
 Map_HBE$AgeGrp <- ifelse(Map_HBE$Age_Rounded < 7, "5", "7")
 agecovariate <- Map_HBE$AgeGrp
+
+#WAS WORKING THROUGH BELOW... COULD NEVER GET TO WORK: 
+#https://towardsdatascience.com/doing-and-reporting-your-first-mediation-analysis-in-r-2fe423b92171
+#ANSWERING IF NW MEDIATES QW AND QN#
+# 1. Test direct path from QN to QW
+QN_QW_reg <-lm(Map_HBE$AvgCorrect_Quantity.Numeral_Numeral.Quantity ~ Map_HBE$AvgCorrect_Quantity.Word_Word.Quantity + agecovariate) 
+summary(QN_QW_reg) #R-squared:  0.5532, F-statistic: 26.39 on 2 and 39 DF,  p-value: 5.661e-08
+# 2. Test direct path from QN to NW
+QN_NW_reg <<-lm(Map_HBE$AvgCorrect_Quantity.Numeral_Numeral.Quantity ~ Map_HBE$AvgCorrect_Numeral.Word_Word.Numeral + agecovariate)  
+summary(QN_NW_reg) #R-squared:  0.2944, F-statistic: 9.555 on 2 and 39 DF,  p-value: 0.0004197
+#3. TEST DIRECT PATH FROM QW TO QN WITH NW AS MEDIATOR (controlling for age and word–numeral performance)
+#model.m <- lm(job_seek ~ treat) 
+#model.y <- lm(depress2 ~ treat) 
+#med.cont <- mediate(model.m, model.y, sims=1000, treat = "treat", mediator = "job_seek")
+NW <- Map_HBE$AvgCorrect_Numeral.Word_Word.Numeral
+QN <- Map_HBE$AvgCorrect_Quantity.Numeral_Numeral.Quantity
+ARGH <- mediate(QN_QW_reg, QN_NW_reg, sims=1000, boot=TRUE, treat=QN, mediator=NW, control=NULL)
+# Running nonparametric bootstrap Error in `[<-.data.frame`(`*tmp*`, , treat, value = 1):  duplicate subscripts for columns #SAYS DUE TO N/As?
+
+results <- mediate((QN_QW_reg, QN_NW_reg,treat='QN', mediator='NW’, covariates = c("agecovariate", "NW"), boot = TRUE, sims = 1000, conf.level = 0.95, control.value = 0))
+Error: unexpected ',' in "results <- mediate((QN_QW_reg,"
+
+#PREVIOUS CODES...
+#1. TEST DIRECT PATH FROM QW TO NW, HURST WAS SIG#
+QW_NW_reg <-lm(Map_HBE$AvgCorrect_Quantity.Word_Word.Quantity~Map_HBE$AvgCorrect_Numeral.Word_Word.Numeral + agecovariate)
+summary(QW_NW_reg)
+lm.beta(QW_NW_reg)
+#2. TEST DIRECT PATH FROM NW to QN (controlling for age and quantity–word performance), HURST WAS SIG
+QWcovariate <- Map_HBE$AvgCorrect_Quantity.Word_Word.Quantity
+NW_QN_reg <- lm(Map_HBE$AvgCorrect_Numeral.Word_Word.Numeral~Map_HBE$AvgCorrect_Quantity.Numeral_Numeral.Quantity + agecovariate + QWcovariate)
+summary(NW_QN_reg)
+lm.beta(NW_QN_reg)
+
+#3. TEST DIRECT PATH FROM QW TO QN (controlling for age and word–numeral performance) AND INCLUDING MEDIATOR OF NW #HURST NOT SIG
+NWcovariate <- Map_HBE$AvgCorrect_Numeral.Word_Word.Numeral
+QW<- Map_HBE$AvgCorrect_Quantity.Word_Word.Quantity
+#We want to know whether NW mediates relationship btwn QW and QN
+QN ~ QW + age
+NW ~ QW + QN 
+QW_NW_reg <-lm(QW ~ NWcovariate + agecovariate)
+NW_QN_reg <- lm(Map_HBE$AvgCorrect_Numeral.Word_Word.Numeral~Map_HBE$AvgCorrect_Quantity.Numeral_Numeral.Quantity + agecovariate + QWcovariate)
+
+
 
 
 
