@@ -108,7 +108,7 @@ summary(NW_QN_reg)
 lm.beta(NW_QN_reg)
 
 #DIRECT REG: QN PREDICT NW?#
-QN_NW_reg <- lm(Map_HBE$AvgCorrect_Quantity.Numeral_Numeral.Quantity$Map_HBE$AvgCorrect_Numeral.Word_Word.Numeral + agecovariate)
+QN_NW_reg <- lm(Map_HBE$AvgCorrect_Quantity.Numeral_Numeral.Quantity ~ Map_HBE$AvgCorrect_Numeral.Word_Word.Numeral + agecovariate)
 summary(QN_NW_reg ) 
 lm.beta(QN_NW_reg)
 
@@ -121,7 +121,6 @@ lm.beta(QW_QN_reg)
 QN_QW_reg <-lm(Map_HBE$AvgCorrect_Quantity.Numeral_Numeral.Quantity~Map_HBE$AvgCorrect_Quantity.Word_Word.Quantity + agecovariate)
 summary(QN_QW_reg) 
 lm.beta(QN_QW_reg)
-
 
 #DIRECT REG: NW PREDICT QW?#
 NW_QW_reg <-lm(Map_HBE$AvgCorrect_Numeral.Word_Word.Numeral~Map_HBE$AvgCorrect_Quantity.Word_Word.Quantity + agecovariate)
