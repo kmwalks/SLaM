@@ -111,6 +111,14 @@ sd(Map_HBE$SumTotal_NumeralWord, na.rm = TRUE)
       WN_Zstat
       abs(WN_Zstat)/sqrt(17)
  
+ #Asymmetries x Ages#
+QW_56<-wilcox.test(Map56$SumTotal_QuantityWord, Map56$SumTotal_WordQuantity, paired = TRUE, exact=FALSE) #SIG
+QW_7up<-wilcox.test(Map7up$SumTotal_QuantityWord, Map7up$SumTotal_WordQuantity, paired = TRUE, exact=FALSE) #SIG
+QN_56<-wilcox.test(Map56$SumTotal_QuantityNumeral, Map56$SumTotal_NumeralQuantity, paired = TRUE, exact=FALSE) #SIG
+QN_7up<-wilcox.test(Map7up$SumTotal_QuantityNumeral, Map7up$SumTotal_NumeralQuantity, paired = TRUE, exact=FALSE) #SIG
+WN_56<-wilcox.test(Map56$SumTotal_WordNumeral, Map56$SumTotal_NumeralWord, paired = TRUE, exact=FALSE) #SIG
+WN_7up<-wilcox.test(Map7up$SumTotal_WordNumeral, Map7up$SumTotal_NumeralWord, paired = TRUE, exact=FALSE) #SIG
+ 
  #Asymmetries still hold with quantities 1-5 and 5 and 6 years old like hurst? YES THEY DO. SEE BELOW. 
 #create quantities 1-5 dataframe, adding new columns#
 small <- mutate(Map_HBE, smWN= AvgCorrect_Sm_WN * AvgCorrect_Med_WN, smQN= AvgCorrect_Sm_QN * AvgCorrect_Med_QN, smQW= AvgCorrect_Sm_QW * AvgCorrect_Med_QW)
