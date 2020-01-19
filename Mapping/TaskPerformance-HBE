@@ -258,17 +258,19 @@ mean(Map7up$AvgCorrect_Lrg_WN)
 #V = 231, p-value = 5.587e-06, mean 0.97
 
 ## SCATTER PLOTS FOR MAPPING TYPES BY AGE GROUPS AND SET SIZES ##
-#1. WORD TO NUMERAL SCATTER PLOT#
-long_setsizes_WN  <- Map_HBE[,-(298)] #getting rid of sum columns to only have avg ones
-long_setsizes_WN2  <- pivot_longer(data = long_setsizes_WN, cols=c(ends_with("WordNumeral")), names_to = c("SetSize"), values_to = "Performance") 
-View(long_setsizes_WN2)
-long_setsizes_WN2$AgeGrp <- ifelse(long_setsizes_WN2$Age_Rounded < 7, "5", "7") #adding age grp column to only have the numbers
-View(long_setsizes_WN2) 
-AgeGrps <- long_setsizes_WN2$AgeGrp #creating short variable
-long_setsizes_WN2$SetSize <- factor(long_setsizes_WN2$SetSize, levels=c("AvgCorrect_Sm_WordNumeral", "AvgCorrect_Med_WordNumeral", "AvgCorrect_Lrg_WordNumeral")) #SETTING IN ORDER, from small to large
+#1. NUMERAL TO WORD SCATTER PLOT#
+long_setsizes_NW  <- Map_HBE[,-(298)] #getting rid of sum columns to only have avg ones
+long_setsizes_NW2  <- pivot_longer(data = long_setsizes_NW, cols=c(ends_with("WordNumeral")), names_to = c("SetSize"), values_to = "Performance") 
+View(long_setsizes_NW2)
+long_setsizes_NW2$AgeGrp <- ifelse(long_setsizes_NW2$Age_Rounded < 7, "5", "7") #adding age grp column to only have the numbers
+View(long_setsizes_NW2) 
+AgeGrps <- long_setsizes_NW2$AgeGrp #creating short variable
+long_setsizes_NW2$SetSize <- factor(long_setsizes_NW2$SetSize, levels=c("AvgCorrect_Sm_WordNumeral", "AvgCorrect_Med_WordNumeral", "AvgCorrect_Lrg_WordNumeral")) #SETTING IN ORDER, from small to large
 jitter <- position_jitter(width=0.4, height=0.02)
-WN <- ggplot(long_setsizes_WN2, aes(x=long_setsizes_WN2$SetSize, y=long_setsizes_WN2$Performance)) + geom_point(aes(shape=AgeGrps, color=AgeGrps), show.legend = FALSE, position=jitter, size=2)+ stat_smooth(aes(group = AgeGrps, color=AgeGrps), method = "loess", se=FALSE) + labs(x="Set Sizes", y="Word-Numeral") + theme(text = element_text(size=18, family="Times New Roman")) + coord_cartesian(ylim= c(0.4,1)) + scale_y_continuous(breaks=c(0.5, 0.6, 0.7, 0.8, 0.9, 1))  + scale_color_manual(values=c("black","blue1")) + scale_x_discrete(labels=c("AvgCorrect_Sm_WordNumeral" = "Small", "AvgCorrect_Med_WordNumeral" = "Medium", "AvgCorrect_Lrg_WordNumeral" = "Large"))
-WN
+NW <- ggplot(long_setsizes_NW2, aes(x=long_setsizes_NW2$SetSize, y=long_setsizes_NW2$Performance)) + geom_point(aes(shape=AgeGrps, color=AgeGrps), show.legend = FALSE, position=jitter, size=2)+ stat_smooth(aes(group = AgeGrps, color=AgeGrps), method = "loess", se=FALSE) + labs(x="Set Sizes", y="Numeral-Word") + theme(text = element_text(size=20, family="Times New Roman")) + coord_cartesian(ylim= c(0.4,1)) + scale_y_continuous(breaks=c(0.5, 0.6, 0.7, 0.8, 0.9, 1))  + scale_color_manual(values=c("black","blue1")) + scale_x_discrete(labels=c("AvgCorrect_Sm_WordNumeral" = "Small", "AvgCorrect_Med_WordNumeral" = "Medium", "AvgCorrect_Lrg_WordNumeral" = "Large"))
+NW
+
+#### EDITED UP TO HERE ####
 
 #2. NUMERAL TO WORD SCATTER PLOT#
 long_setsizes_NW  <- Map_HBE[,-(270)] #getting rid of sum columns to only have avg ones
