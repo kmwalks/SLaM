@@ -121,7 +121,90 @@ WN_7up<-wilcox.test(Map7up$SumTotal_WordNumeral, Map7up$SumTotal_NumeralWord, pa
  
  
  ## DEVELOMENTAL TRAJECTORY RESULTS FOR FIGURE##
-#### ADD CODES FROM GOOGLE DOC! ####
+#5 YO, 1-5 QUANTITIES#
+small <- mutate(Map_HBE, smWN= AvgCorrect_Sm_WN * AvgCorrect_Med_WN, smQN= AvgCorrect_Sm_QN * AvgCorrect_Med_QN, smQW= AvgCorrect_Sm_QW * AvgCorrect_Med_QW)
+View(small)
+small$AgeGrp <- ifelse(small$Age_Rounded < 6, "5-year-olds", "6 and up")
+sm_Map5 <- subset(small, small$AgeGrp =="5-year-olds")
+View(sm_Map5)
+#MAPPING PAIR COMPARISONS?#
+t.test(sm_Map5$smQN, sm_Map5$smQW, paired = TRUE, alternative = "two.sided") #p-value = 0.37 (QW = QN)
+t.test(sm_Map5$smQN, sm_Map5$smWN, paired = TRUE, alternative = "two.sided") #p-value = 0.024 (NW > QN)
+t.test(sm_Map5$smWN, sm_Map5$smQW, paired = TRUE, alternative = "two.sided") #p-value = 0.019 (NW > QW)
+mean(sm_Map5$smQN) #0.82
+mean(sm_Map5$smQW) #0.77
+mean(sm_Map5$smWN) #0.94
+#ASYMMETRIES?# 
+#DATA FRAME OF SMALL X MEDIUM FOR EACH MAPPING TYPE#
+Small_type <- mutate(Map_HBE, smNQ= AvgCorrect_Sm_QuantityNumeral * AvgCorrect_Med_QuantityNumeral, smQN= AvgCorrect_Sm_NumeralQuantity * AvgCorrect_Med_NumeralQuantity, smNW= AvgCorrect_Sm_WordNumeral * AvgCorrect_Med_WordNumeral, sm_WN= AvgCorrect_Sm_NumeralWord * AvgCorrect_Med_NumeralWord, sm_WQ= AvgCorrect_Sm_QuantityWord, AvgCorrect_Med_QuantityWord, sm_QW= AvgCorrect_Sm_WordQuantity, AvgCorrect_Med_WordQuantity)
+View(Small_type)
+#5 year olds 1-5#
+Small_type$AgeGrp <- ifelse(Small_type$Age_Rounded < 6, "5 year-olds", "6 and up")
+sm_Map5_type <- subset(Small_type, Small_type$AgeGrp =="5 year-olds") 
+View(sm_Map5_type)
+sm_QN_5<-wilcox.test(sm_Map5_type$smQN, sm_Map5_type$smNQ, paired = TRUE, exact=FALSE)
+sm_QN_5 #p-value = 0.41 #no asymmetry for QN
+sm_NW_5<-wilcox.test(sm_Map5_type$sm_WN, sm_Map5_type$smNW, paired = TRUE, exact=FALSE)
+sm_NW_5 #p-value = 0.41 #no asymmetry for NW
+sm_QW_5<-wilcox.test(sm_Map5_type$sm_QW, sm_Map5_type$sm_WQ, paired = TRUE, exact=FALSE)
+sm_QW_5 #p-value = 0.37 #no asymmetry for QW
+#7-9 YO, 1-5 QUANTITIES#
+small <- mutate(Map_HBE, smWN= AvgCorrect_Sm_WN * AvgCorrect_Med_WN, smQN= AvgCorrect_Sm_QN * AvgCorrect_Med_QN, smQW= AvgCorrect_Sm_QW * AvgCorrect_Med_QW)
+View(small)
+small$AgeGrp <- ifelse(small$Age_Rounded < 7, "5- and 6-year-olds", "7 and up")
+sm_Map7up <- subset(small, small$AgeGrp =="7 and up")
+View(sm_Map7up)
+#MAPPING PAIR COMPARISONS?#
+t.test(sm_Map7up$smQN,sm_Map7up$smQW, paired = TRUE, alternative = "two.sided") #p-value = 0.1613 (QW = QN)
+t.test(sm_Map7up$smQN, sm_Map7up$smWN, paired = TRUE, alternative = "two.sided") #p-value = 0.409 (NW = QN)
+t.test(sm_Map7up$smWN, sm_Map7up$smQW, paired = TRUE, alternative = "two.sided") #p-value = 0.4187 (NW = QW)
+mean(sm_Map7up$smQN) #0.98
+mean(sm_Map7up$smQW) #0.9255952
+mean(sm_Map7up$smWN) #0.952381
+#7-9 YO, 6-9 QUANTITIES#
+#CREATE DF#
+large <- mutate(Map_HBE, lrgWN= AvgCorrect_Lrg_WN, lrgQN= AvgCorrect_Lrg_QN, lrgQW= AvgCorrect_Lrg_QW)
+View(large)
+large$AgeGrp <- ifelse(large$Age_Rounded < 7, "5- and 6-year-olds", "7 and up")
+large_Map7up <- subset(large, large$AgeGrp =="7 and up")
+View(large_Map7up)
+#MAPPING PAIR COMPARISONS?#
+t.test(large_Map7up$lrgQN,large_Map7up$lrgQW, paired = TRUE, alternative = "two.sided") #p-value = 0.3519 (QW = QN)
+t.test(large_Map7up$lrgQN, large_Map7up$lrgWN, paired = TRUE, alternative = "two.sided") #p-value = 0.7252 (NW = QN)
+t.test(large_Map7up$lrgWN, large_Map7up$lrgQW, paired = TRUE, alternative = "two.sided") #p-value = 0.2424 (NW = QW)
+mean(large_Map7up$lrgWN) #0.9704762
+mean(large_Map7up$lrgQW) #0.9357143
+mean(large_Map7up$lrgQN) #0.9595238
+ #5-6 YO, 1-5 QUANTITIES#
+#create quantities 1-5 dataframe, adding new columns#
+small <- mutate(Map_HBE, smWN= AvgCorrect_Sm_WN * AvgCorrect_Med_WN, smQN= AvgCorrect_Sm_QN * AvgCorrect_Med_QN, smQW= AvgCorrect_Sm_QW * AvgCorrect_Med_QW)
+View(small)
+#5 and  6 year olds with quantities 1-5#
+small$AgeGrp <- ifelse(small$Age_Rounded < 7, "5- and 6-year-olds", "7 and up")
+sm_Map56 <- subset(small, small$AgeGrp =="5- and 6-year-olds")
+View(sm_Map56)
+#MAPPING PAIR COMPARISONS#
+t.test(sm_Map56$smQN,sm_Map56$smQW, paired = TRUE, alternative = "two.sided") #p-value = 0.217 (QW = QN)
+t.test(sm_Map56$smQN, sm_Map56$smWN, paired = TRUE, alternative = "two.sided") #p-value = 0.007159 (NW > QN)
+t.test(sm_Map56$smWN, sm_Map56$smQW, paired = TRUE, alternative = "two.sided") #p-value = 0.004537 (NW > QW)
+mean(sm_Map56$smQW) #0.7479762
+mean(sm_Map56$smWN) #0.9442857
+mean(sm_Map56$smQN) #0.8172619
+#5-6 YO, 6-9 QUANTITIES#
+#CREATE DF#
+large <- mutate(Map_HBE, lrgWN= AvgCorrect_Lrg_WN, lrgQN= AvgCorrect_Lrg_QN, lrgQW= AvgCorrect_Lrg_QW)
+View(large)
+large$AgeGrp <- ifelse(large$Age_Rounded < 7, "5- and 6-year-olds", "7 and up")
+large_Map56 <- subset(large, large$AgeGrp =="5- and 6-year-olds")
+View(large_Map56)
+#MAPPING PAIR COMPARISONS#
+t.test(large_Map56$lrgQN,large_Map56$lrgQW, paired = TRUE, alternative = "two.sided") #p-value = 0.383 (QW = QN)
+t.test(large_Map56$lrgQN,large_Map56$lrgWN, paired = TRUE, alternative = "two.sided")  #p-value = 0.001778 (NW > QN)
+t.test(large_Map56$lrgWN,large_Map56$lrgQW, paired = TRUE, alternative = "two.sided") #p-value = 8.263e-05 (NW > QW)
+mean(large_Map56$lrgWN) #0.9304762
+mean(large_Map56$lrgQN) #0.787619
+mean(large_Map56$lrgQW) #0.7580952
+
  
  
 # SCATTER PLOTS OF MAPPING PAIRS # 
