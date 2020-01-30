@@ -47,10 +47,9 @@ library(sm)
       View(AE_Inc)
       # 52 of 182 kids included are AE
       AL_Inc <- subset(Total_Inc_Study, Total_Inc_Study$Group_4cat == "ASL Later")
-      View(AE_Inc)
-      # 52 of 182 kids included are AL
+      View(AL_Inc)
+      # 58 of 182 kids included are AL
       
-      #BUT LIKE ABOVE NUMBERS TO NOT ADD UP... 
    
       Total_Not_Inc_Study <- subset(Map_Demo, Map_Demo$Including.in.Study == "No")
       nrow(Total_Not_Inc_Study)
