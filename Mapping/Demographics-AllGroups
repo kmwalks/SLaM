@@ -92,20 +92,21 @@ library(sm)
 
 ## Chi-Square on Table/"Matrix": Does the status of including in study depend on which group kids were in?, aka DNS more likely to not be included? ##
 chisq.test(Table_IncStudy)
-# Test statistic is p-value is 0.5469, do not reject null, conclude that status of inclusion in study is not dependent on group 4 category. GOOD.
+# Test statistic is p-value = 0.5102, do not reject null, conclude that status of inclusion in study is not dependent on group 4 category. GOOD.
 
 # Find observations with missing Age and SES values
-      which(is.na(Total_Inc_Study$Age_Rounded)) # 0 observations missing Age value
+      which(is.na(Total_Inc_Study$Age_Rounded)) # 52 observations missing Age value
       Missing_Age <- Total_Inc_Study[which(is.na(Total_Inc_Study$Age_Rounded)),3]
       View(Missing_Age)
 
-      which(is.na(Total_Inc_Study$SES)) # 9 observations missing SES value
+      which(is.na(Total_Inc_Study$SES)) # 0 observations missing SES value
       Missing_SES <- Total_Inc_Study[which(is.na(Total_Inc_Study$SES_range_8_to_66)),3]
       View(Missing_SES)
       
       Incorrect_SES <- subset(Map_Demo, Map_Demo$SES_range_8_to_66 < 3 | Map_Demo$SES_range_8_to_66 == "") #No observations of SES <3
       View(Incorrect_SES)
-      
+  
+  #### RAN UP TO HERE ON 1/30/19!
       
 # SEX 
   sum(Total_Inc_Study$M.F=='Female') # 57
