@@ -20,13 +20,8 @@ library(sm)
 
 
 #2. Check and Set Working Directory
-      #LAB
-      setwd("/Users/labuser/Documents/R")
-      getwd() #to see where is set to
-      #LAPTOP
       setwd("~/Desktop")
-      getwd()
-      
+      getwd()      
       
 #3. Import Data [[make sure is most recent version and saved as csv]]
       Map <- read.csv("Mapping_Coding_CH_191118.csv", na.strings = "N/A")
