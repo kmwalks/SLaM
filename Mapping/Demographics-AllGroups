@@ -34,7 +34,23 @@ library(sm)
 
       Total_Inc_Study <- subset(Map_Demo, Map_Demo$Including.in.Study == "Yes")
       View(Total_Inc_Study)
-      # 182 total kids included in study
+      # 182 total kids included in study  
+      
+      ## Included: Numbers of Kids Per Group ##
+      EE_Inc <- subset(Total_Inc_Study, Total_Inc_Study$Group_4cat == "English Early")
+      View(EE_Inc)
+      # 42 of 182 kids included are EE
+      EL_Inc <- subset(Total_Inc_Study, Total_Inc_Study$Group_4cat == "English Later")
+      View(EL_Inc)
+      # 30 of 182 kids included are EL
+      AE_Inc <- subset(Total_Inc_Study, Total_Inc_Study$Group_4cat == "ASL Early")
+      View(AE_Inc)
+      # 52 of 182 kids included are AE
+      AL_Inc <- subset(Total_Inc_Study, Total_Inc_Study$Group_4cat == "ASL Later")
+      View(AE_Inc)
+      # 52 of 182 kids included are AL
+      
+      #BUT LIKE ABOVE NUMBERS TO NOT ADD UP... 
    
       Total_Not_Inc_Study <- subset(Map_Demo, Map_Demo$Including.in.Study == "No")
       nrow(Total_Not_Inc_Study)
@@ -66,17 +82,6 @@ library(sm)
       Rest_Not_Inc <- subset(Total_Not_Inc_Study, is.na(Total_Not_Inc_Study$Date.Tested))
       View(Rest_Not_Inc)
       # 10 remaining kids listed as not included were not tested
-
-## Included: Numbers of Kids Per Group ##
-      EE_Inc <- subset(Total_Inc_Study, Total_Inc_Study$Group_4cat == "English Early")
-      # X of X kids included are EE
-      EL_Inc <- subset(Total_Inc_Study, Total_Inc_Study$Group_4cat == "English Later")
-      # X of X kids included are EL
-      AE_Inc <- subset(Total_Inc_Study, Total_Inc_Study$Group_4cat == "ASL Early")
-      # X of X kids included are AE
-      AL_Inc <- subset(Total_Inc_Study, Total_Inc_Study$Group_4cat == "ASL Later")
-      # X of X kids included are AL
-
 
 ## Creating a Table/"Matrix": Included vs Not (& not tested) by Group ##
 
