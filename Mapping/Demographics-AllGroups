@@ -32,7 +32,7 @@ library(sm)
       Map_Demo <- subset(Map, Map$Age_Rounded<10 | is.na(Map$Age_Rounded))
       View(Map_Demo) # 214 total kids
 
-      Total_Inc_Study <- subset(Map_Demo, Map_Demo$Including.in.Study == "Yes")
+      Total_Inc_Study <- subset(Map_Demo, Map_Demo$Including.in.Study == "Yes" & Map_Demo$Coded. == "Yes")
       View(Total_Inc_Study)
       # 182 total kids included in study  
       
