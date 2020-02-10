@@ -76,7 +76,7 @@ View(HBE_short3)
 #Mixed Effects Logistic Regression
 install.packages(“lme4”)
 library(lme4)
-REG <- glmer(Correct ~ AgeGrp + SES_range_8_to_66 + Set_Size + Map_Type + Race + Ethnicity + M.F + (1 | SUBJECT_ID), data = HBE_short3, family = binomial, control = glmerControl(optimizer = "bobyqa"),  nAGQ = 10) #AIC and BIC are numbers for model fit (lower when include race, ethnicity, and sex… lower = better)
+REG <- glmer(Correct ~ Age_Rounded + SES_range_8_to_66 + Set_Size + Map_Type + Race + Ethnicity + M.F + (1 | SUBJECT_ID), data = HBE_short3, family = binomial, control = glmerControl(optimizer = "bobyqa"),  nAGQ = 10) #AIC and BIC are numbers for model fit (lower when include race, ethnicity, and sex… lower = better)
 summary(REG)
 #Without glmerControl() argument model has many scary warnings
 # nAGQ is something like number of iterations, anything >1 is better, takes longer to run (10 took about a minute to run on 2000 trials)
