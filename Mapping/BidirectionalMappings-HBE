@@ -212,8 +212,7 @@ mean(large_Map56$lrgQW) #0.7580952
 jitter <- position_jitter(width=0.7, height=0.04) 
 QNy <- Map_HBE$SumTotal_QuantityNumeral
 QNx <- Map_HBE$SumTotal_NumeralQuantity
-QN <- ggplot(Map_HBE, aes(x=QNx, y=QNy)) + geom_point(position=jitter, size=2)+ labs(x="Quantity-Numeral", y="Numeral-Quantity") + ggtitle("Quantity and Numeral") +
-theme(plot.title = element_text(hjust = 0.5)) + geom_abline() + theme(text = element_text(size=16)) + coord_cartesian(xlim = c(4, 9), ylim= c(4,9))
+QN <- ggplot(Map_HBE, aes(x=QNx, y=QNy)) + geom_point(position=jitter, size=2)+ labs(x="Quantity-to-Numeral", y="Numeral-to-Quantity")  + ggtitle("Quantity-Word") + theme(plot.title = element_text(hjust = 0.5)) + geom_abline() + theme(text = element_text(size=16)) + coord_cartesian(xlim = c(4, 9), ylim= c(4,9))
 QN
 # to get r-squared https://rcompanion.org/rcompanion/e_01.html #
 QNmodel <- lm(QNy~QNx, data=Map_HBE)
