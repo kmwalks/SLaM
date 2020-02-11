@@ -58,6 +58,12 @@ Map_Pair <- c()
 for(i in 1:2142)
 Map_Pair[i] <- ifelse(grepl("NW", HBE_short$Type[i]), "Numeral-Word", ifelse(grepl("WN", HBE_short$Type[i]), "Numeral-Word", ifelse(grepl("QN", HBE_short$Type[i]), "Quantity-Numeral", ifelse(grepl("NQ", HBE_short$Type[i]), "Quantity-Numeral", ifelse(grepl("QW", HBE_short$Type[i]), "Quantity-Word", ifelse(grepl("WQ", HBE_short$Type[i]), "Quantity-Word","bananas"))))))
 
+#Create new column for Map Types
+Map_Type<- c()
+for(i in 1:2142)
+Map_Type[i] <- ifelse(grepl("NW", HBE_short$Type[i]), "Word-to-Numeral", ifelse(grepl("WN", HBE_short$Type[i]), "Numeral-to-Word", ifelse(grepl("QN", HBE_short$Type[i]), "Numeral-to-Quantity", ifelse(grepl("NQ", HBE_short$Type[i]), "Quantity-to-Numeral", ifelse(grepl("QW", HBE_short$Type[i]), "Word-to-Quantity", ifelse(grepl("WQ", HBE_short$Type[i]), "Quantity-to-Word","bananas"))))))
+
+
 HBE_short2 <- cbind(HBE_short, Map_Pair)
 View(HBE_short2)
 
