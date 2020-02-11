@@ -220,14 +220,14 @@ summary(QNmodel)
 
 QWy <- Map_HBE$SumTotal_QuantityWord
 QWx <- Map_HBE$SumTotal_WordQuantity
-QW <- ggplot(Map_HBE, aes(x=QWx, y=QWy)) + geom_point(position=jitter, size=2)+ labs(x="Quantity-Word", y="Word-Quantity") + ggtitle("Quantity and Word") + theme(plot.title = element_text(hjust = 0.5)) + geom_abline() + theme(text = element_text(size=16)) + coord_cartesian(xlim = c(4, 9), ylim= c(4,9))
+QW <- ggplot(Map_HBE, aes(x=QWx, y=QWy)) + geom_point(position=jitter, size=2)+ labs(x="Quantity-to-Word", y="Word-to-Quantity") + ggtitle("Quantity-Word") + theme(plot.title = element_text(hjust = 0.5)) + geom_abline() + theme(text = element_text(size=16)) + coord_cartesian(xlim = c(4, 9), ylim= c(4,9))
 QW
 QWmodel <- lm(QWy~QWx, data=Map_HBE)
 summary(QWmodel) 
 
 NWy <- Map_HBE$SumTotal_NumeralWord
 NWx <- Map_HBE$SumTotal_WordNumeral
-NW <- ggplot(Map_HBE, aes(x=NWx, y=NWy)) + geom_point(position=jitter, size=2)+ labs(x="Numeral-Word", y="Word-Numeral") + ggtitle("Numeral and Word") + theme(plot.title = element_text(hjust = 0.5)) + geom_abline() + theme(text = element_text(size=16)) + coord_cartesian(xlim = c(4, 9), ylim= c(4,9))
+NW <- ggplot(Map_HBE, aes(x=NWx, y=NWy)) + geom_point(position=jitter, size=2)+ labs(x="Numeral-to-Word", y="Word-to-Numeral") + ggtitle("Numeral-Word") + theme(plot.title = element_text(hjust = 0.5)) + geom_abline() + theme(text = element_text(size=16)) + coord_cartesian(xlim = c(4, 9), ylim= c(4,9))
 NW
 NWmodel <- lm(NWy~NWx, data=Map_HBE)
 summary(NWmodel)
