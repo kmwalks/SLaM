@@ -64,7 +64,7 @@ for(i in 1:2142)
 Map_Type[i] <- ifelse(grepl("NW", HBE_short$Type[i]), "Word-to-Numeral", ifelse(grepl("WN", HBE_short$Type[i]), "Numeral-to-Word", ifelse(grepl("QN", HBE_short$Type[i]), "Numeral-to-Quantity", ifelse(grepl("NQ", HBE_short$Type[i]), "Quantity-to-Numeral", ifelse(grepl("QW", HBE_short$Type[i]), "Word-to-Quantity", ifelse(grepl("WQ", HBE_short$Type[i]), "Quantity-to-Word","bananas"))))))
 
 
-HBE_short2 <- cbind(HBE_short, Map_Pair)
+HBE_short2 <- cbind(HBE_short, Map_Pair, Map_Type)
 View(HBE_short2)
 
 #From Quantity column, create Small, Med, Large
