@@ -353,6 +353,26 @@ t.test(Map56$Sum_Quantity.Numeral_Numeral.Quantity, Map7up$Sum_Quantity.Numeral_
 t.test(Map56$Sum_Quantity.Word_Word.Quantity, Map7up$Sum_Quantity.Word_Word.Quantity, paired = FALSE, alternative = "two.sided")
 t.test(Map56$Sum_Numeral.Word_Word.Numeral, Map7up$Sum_Numeral.Word_Word.Numeral, paired = FALSE, alternative = "two.sided") 
 
+#BOX PLOT
+ AgeGrp <- Map56$AgeGrp
+ QW <- Map56$Sum_Quantity.Word_Word.Quantity
+ NW <- Map56$Sum_Numeral.Word_Word.Numeral
+ QN <- Map56$Sum_Quantity.Numeral_Numeral.Quantity
+ age56 <- data.frame(AgeGrp, QW, NW,QN)
+ age56.data <- melt(age56, id.vars='AgeGrp')
+ View(age56.data)
+ AgeGrp <- Map7up$AgeGrp
+ QW <- Map7up$Sum_Quantity.Word_Word.Quantity
+ NW <- Map7up$Sum_Numeral.Word_Word.Numeral
+ QN <- Map7up$Sum_Quantity.Numeral_Numeral.Quantity
+ age7 <- data.frame(AgeGrp, QW,NW,QN)
+ age7.data <- melt(age7, id.vars='AgeGrp')
+ View(age7.data)
+ B <- merge(age56.data, age7.data, by=c("AgeGrp","variable","value"), all = T)
+ names(B)[names(B) == "variable"] <- "Map"
+ View(B)
+All_BOX <- ggplot(B, aes(B$Map, B$value, fill=B$AgeGrp)) + geom_boxplot() + scale_fill_manual(values=c("grey87", "grey51"), labels = c("5 and 6-year-olds", "7-year-olds and older")) + labs( y="Accuracy (out of 17)") + scale_y_continuous (breaks=c(7,8,9,10,11,12,13,14,15,16,17), limits = c(7,17), expand = c(0,0)) + scale_x_discrete(limits=c("QN","QW","NW"), expand = c(.2,0),labels = c("Quantity and Numeral", "Quantity and Word", "Numeral and Word")) + theme_bw() + theme(legend.position="top", legend.title = element_blank(), axis.title.x=element_blank(), panel.border = element_blank(),panel.grid.minor.y = element_blank(), panel.grid.major.x = element_blank(), panel.grid.minor.x = element_blank(), axis.line = element_line(colour = "black"), text = element_text(size=16, family="Times New Roman")) 
+
 
 ## ANOVAS ##
      ## BEFORE RUN, HAVE BOOYAH AS A DF FROM ABOVE CODE ##
