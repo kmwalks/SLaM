@@ -49,7 +49,7 @@ View(HBE_long2)
 HBE_long3 <- cbind(HBE_long, HBE_long2)
 View(HBE_long3)
 HBE_short = HBE_long3[,!grepl("^Item",names(HBE_long3))] # delete columns that contain “item” 
-HBE_short = select(HBE_short, -9:-15) # getting rid of double IDs
+HBE_short<- HBE_short[c(-10,-11,-12,-13,-14,-15,-16,-17)] # getting rid of double info
 View(HBE_short)
 
 # From Type column, create a new column (Map_Type) extracting the “QN” etc part
