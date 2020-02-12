@@ -48,7 +48,8 @@ View(HBE_long2)
 #Combine 2 df into short one (ensure all Quantity-Correct match for each kid!)
 HBE_long3 <- cbind(HBE_long, HBE_long2)
 View(HBE_long3)
-HBE_short = HBE_long3[,!grepl("^Item",names(HBE_long3))] # delete columns that contain “item” 
+HBE_short <- HBE_long3[,!grepl("^Item",names(HBE_long3))] # delete columns that contain “item” 
+
 HBE_short<- HBE_short[c(-10,-11,-12,-13,-14,-15,-16,-17)] # getting rid of double info
 View(HBE_short)
 
