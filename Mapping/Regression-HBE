@@ -24,7 +24,7 @@ setwd("~/Desktop")
 
 Map <- read.csv("Mapping_HBE_RegressionData.csv", na.strings = "N/A") #ALREADY ONLY HBE INCLUDING IN STUDY! 
 #ADD AGE GRP COLUMN#
-Map$AgeGrp <- ifelse(Map_HBE$Age_Rounded < 7, "5- and 6-year-olds", "7 and up")
+Map$AgeGrp <- ifelse(Map$Age_Rounded < 7, "5- and 6-year-olds", "7 and up")
 View(Map)
 
 Quantity_cols <- colnames(select(Map, ends_with("Answer")))
