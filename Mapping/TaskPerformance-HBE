@@ -45,6 +45,23 @@ Map_HBE <- subset(Mapping, Mapping$Including.in.Study == 'Yes' & Mapping$Coded. 
 View(Map_HBE)
 str(Map_HBE)
 
+#OVERALL 
+#HOW MANY AT OR ABOVE CHANCE…
+All <- Map_HBE$SumCorrectTotal_All
+Ch <- 12.75 #51/4 (at chance score)
+Var_Ch <- length(which(All>= Ch)) #number of observations equal to or above chance
+N <- nrow(Map_HBE) #number of total observations
+(Var_Ch/N)*100 #100% at or above chance
+
+#HOW MANY AT CEILING? 
+All <- Map_HBE$SumCorrectTotal_All
+C_All <- 51 #ceiling performance 
+Var_All <- length(which(All>= C_All)) #number of observations equal to ceiling 
+N <- nrow(Map_HBE) #number of total observations
+(Var_All/N)*100 #19% at ceiling… 
+
+
+
 #Q1: What does mapping performance look like with this age range (5-9)?
   
   #Proportion Correct for each Mapping Type (all HBE kids)
