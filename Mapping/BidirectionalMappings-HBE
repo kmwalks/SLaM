@@ -373,6 +373,10 @@ t.test(Map56$Sum_Numeral.Word_Word.Numeral, Map7up$Sum_Numeral.Word_Word.Numeral
 All_BOX <- ggplot(B, aes(B$Map, B$value, fill=B$AgeGrp)) + geom_boxplot() + scale_fill_manual(values=c("grey87", "grey51"), labels = c("5 and 6-year-olds", "7 to 9-year-olds")) + labs( y="Accuracy (out of 17)") + scale_y_continuous (breaks=c(7,8,9,10,11,12,13,14,15,16,17), limits = c(7,17), expand = c(0,0)) + scale_x_discrete(limits=c("QN","QW","NW"), expand = c(.2,0),labels = c("Quantity-Numeral", "Quantity-Word", "Numeral-Word")) + theme_bw() + theme(legend.position="top", legend.title = element_blank(), axis.title.x=element_blank(), panel.border = element_blank(),panel.grid.minor.y = element_blank(), panel.grid.major.x = element_blank(), panel.grid.minor.x = element_blank(), axis.line = element_line(colour = "black"), text = element_text(size=16, family="Times New Roman")) 
 All_BOX
 
+#BOXPLOT AND VIOLIN#
+dodge <- position_dodge(width = 0.5)
+All_BV <- ggplot(B, aes(B$Map, B$value, fill=B$AgeGrp)) + geom_violin (position = dodge)+ geom_boxplot(width=0.2, position = dodge) + scale_fill_manual(values=c("grey87", "grey51"), labels = c("5 and 6-year-olds", "7 to 9-year-olds")) + labs( y="Accuracy (out of 17)") + scale_y_continuous (breaks=c(7,8,9,10,11,12,13,14,15,16,17), limits = c(7,17), expand = c(0,0)) + scale_x_discrete(limits=c("QN","QW","NW"), expand = c(.2,0),labels = c("Quantity-Numeral", "Quantity-Word", "Numeral-Word")) + theme_bw() + theme(legend.position="top", legend.title = element_blank(), axis.title.x=element_blank(), panel.border = element_blank(),panel.grid.minor.y = element_blank(), panel.grid.major.x = element_blank(), panel.grid.minor.x = element_blank(), axis.line = element_line(colour = "black"), text = element_text(size=16, family="Times New Roman")) 
+All_BV
 
 
 ## ANOVAS ##
