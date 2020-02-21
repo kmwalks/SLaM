@@ -169,6 +169,35 @@ wilcox.test(Map7up$AvgCorrect_Numeral.Word, mu = .25, alternative = "greater") #
 wilcox.test(Map7up$SumTotal_NumeralWord, Map7up$SumTotal_WordNumeral, paired=TRUE, exact=FALSE) # ASYMMETRY?  Numeral word better than word numeral?
 #YES, V = 231, p-value = 1.952e-05
 
+##Overall PAIR COMPARISONS:
+MapAvgCorr_Pairs <- colMeans(subset(Map_HBE, select = c(Sum_Quantity.Numeral_Numeral.Quantity, Sum_Quantity.Word_Word.Quantity,Sum_Numeral.Word_Word.Numeral)), na.rm = TRUE)
+MapProp_Pairs <- c((MapAvgCorr_Pairs[1]/17), (MapAvgCorr_Pairs[2]/17), (MapAvgCorr_Pairs[3]/17))
+MapProp_Pairs
+##5-6 YO:
+Map56_AvgCorr_Pair <- colMeans(subset(Map56, select = c(Sum_Quantity.Numeral_Numeral.Quantity, Sum_Quantity.Word_Word.Quantity,Sum_Numeral.Word_Word.Numeral)), na.rm = TRUE)
+Map56_AvgCorr_Pair
+Map56_MapProp_Pairs <- c((Map56_AvgCorr_Pair[1]/17), (Map56_AvgCorr_Pair[2]/17), (Map56_AvgCorr_Pair[3]/17))
+Map56_MapProp_Pairs
+	#COMPARING TO CHANCE
+	Map56_QN <- wilcox.test(Map56$AvgCorrect_Quantity.Numeral, mu = .25, alternative = "greater") 
+Map56_QW <- wilcox.test(Map56$Sum_Quantity.Word_Word.Quantity, mu = .25, alternative = "greater") 
+Map56_NW <- wilcox.test(Map56$Sum_Numeral.Word_Word.Numeral, mu = .25, alternative = "greater") 
+Map56_QN
+Map56_QW
+Map56_NW
+##7 + YO:
+Map7up_AvgCorr_Pair <- colMeans(subset(Map7up, select = c(Sum_Quantity.Numeral_Numeral.Quantity, Sum_Quantity.Word_Word.Quantity,Sum_Numeral.Word_Word.Numeral)), na.rm = TRUE)
+Map7up_MapProp_Pairs <- c((Map7up_AvgCorr_Pair[1]/17), (Map7up_AvgCorr_Pair[2]/17), (Map7up_AvgCorr_Pair[3]/17))
+Map7up_MapProp_Pairs
+	#COMPARING TO CHANCE
+	Map7up_QN <- wilcox.test(Map7up$AvgCorrect_Quantity.Numeral, mu = .25, alternative = "greater") 
+Map7up_QW <- wilcox.test(Map7up$Sum_Quantity.Word_Word.Quantity, mu = .25, alternative = "greater") 
+Map7up_NW <- wilcox.test(Map7up$Sum_Numeral.Word_Word.Numeral, mu = .25, alternative = "greater") 
+Map7up_QN
+Map7up_QW
+Map7up_NW
+
+
 ## SEPARATE INTO SMALL (1-3), MEDIUM (4-5), LARGE (6-9) QUANTITIES BY AGE, OVERALL NOT SEPARATED BY MAPPINGS ##
      #SMALL:
           #Target 1: Items 1, 10, 18, 35, 44
