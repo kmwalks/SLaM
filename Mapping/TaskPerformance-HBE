@@ -16,6 +16,9 @@ install.packages("sure") # package for calculating residuals for ordinal logisti
 install.packages("mediation") # package for testing mediation effects
 install.packages("gridExtra")
 install.packages(“coin”)
+install.packages("dplyr")
+install.packages("tidyr")
+
 
 library(tidyverse) 
 library(ggplot2)
@@ -30,6 +33,8 @@ library(sure)
 library(mediation) 
 library(gridExtra)
 library(coin)
+library(dplyr)
+library(tidyr)
 
 setwd("~/Desktop")
 getwd()
