@@ -308,6 +308,35 @@ wilcox.test(Map7up$AvgCorrect_Lrg_WN, mu = .25, alternative = "greater") # is me
 mean(Map7up$AvgCorrect_Lrg_WN)
 #V = 231, p-value = 5.587e-06, mean 0.97
 
+#MAPPING PAIRS BY AGE AND SET SIZES#
+#NUMERAL-WORD BY AGE AND SET SIZE#
+long_setsizes_NUMWORD  <- pivot_longer(data = Map_HBE, cols=c(ends_with("WN")), names_to = c("SetSize"), values_to = "Performance")
+long_setsizes_NUMWORD$AgeGrp <- ifelse(long_setsizes_NUMWORD$Age_Rounded < 7, "5", "7")
+View(long_setsizes_NUMWORD)
+long_setsizes_NUMWORD$SetSize <- factor(long_setsizes_NUMWORD$SetSize, levels=c("AvgCorrect_Sm_WN", "AvgCorrect_Med_WN", "AvgCorrect_Lrg_WN"))
+jitter <- position_jitter(width=0.4, height=0.02)
+NW_PAIR <- ggplot(long_setsizes_NUMWORD, aes(x=long_setsizes_NUMWORD$SetSize, y=long_setsizes_NUMWORD$Performance)) + geom_point(aes(shape=long_setsizes_NUMWORD$AgeGrp, color=long_setsizes_NUMWORD$AgeGrp), show.legend = FALSE, position=jitter, size=2)+ stat_smooth(aes(group = long_setsizes_NUMWORD$AgeGrp, color=long_setsizes_NUMWORD$AgeGrp), method = "loess", se=FALSE) + labs(x="Set Sizes", y="Numeral-Word") + theme(text = element_text(size=20, family="Times New Roman"), legend.position = "none") + coord_cartesian(ylim= c(0.4,1)) + scale_y_continuous(breaks=c(0.5, 0.6, 0.7, 0.8, 0.9, 1))  + scale_color_manual(values=c("black","blue1")) + scale_x_discrete(labels=c("AvgCorrect_Sm_WN" = "Small", "AvgCorrect_Med_WN" = "Medium", "AvgCorrect_Lrg_WN" = "Large"))
+NW_PAIR
+#QUANTITY-WORD BY AGE AND SET SIZE#
+long_setsizes_QWORD  <- pivot_longer(data = Map_HBE, cols=c(ends_with("QW")), names_to = c("SetSize"), values_to = "Performance")
+long_setsizes_QWORD$AgeGrp <- ifelse(long_setsizes_QWORD$Age_Rounded < 7, "5", "7")
+View(long_setsizes_QWORD)
+long_setsizes_QWORD$SetSize <- factor(long_setsizes_QWORD$SetSize, levels=c("AvgCorrect_Sm_QW", "AvgCorrect_Med_QW", "AvgCorrect_Lrg_QW"))
+jitter <- position_jitter(width=0.4, height=0.02)
+QW_PAIR <- ggplot(long_setsizes_QWORD, aes(x=long_setsizes_QWORD$SetSize, y=long_setsizes_QWORD$Performance)) + geom_point(aes(shape=long_setsizes_QWORD$AgeGrp, color=long_setsizes_QWORD$AgeGrp), show.legend = FALSE, position=jitter, size=2)+ stat_smooth(aes(group = long_setsizes_QWORD$AgeGrp, color=long_setsizes_QWORD$AgeGrp), method = "loess", se=FALSE) + labs(x="Set Sizes", y="Quantity-Word") + theme(text = element_text(size=20, family="Times New Roman"), legend.position = "none") + coord_cartesian(ylim= c(0.4,1)) + scale_y_continuous(breaks=c(0.5, 0.6, 0.7, 0.8, 0.9, 1))  + scale_color_manual(values=c("black","blue1")) + scale_x_discrete(labels=c("AvgCorrect_Sm_QW" = "Small", "AvgCorrect_Med_QW" = "Medium", "AvgCorrect_Lrg_QW" = "Large"))
+QW_PAIR
+#QUANTITY-NUMERAL BY AGE AND SET SIZE#
+long_setsizes_QN  <- pivot_longer(data = Map_HBE, cols=c(ends_with("QN")), names_to = c("SetSize"), values_to = "Performance")
+long_setsizes_QN$AgeGrp <- ifelse(long_setsizes_QN$Age_Rounded < 7, "5", "7")
+View(long_setsizes_QN)
+long_setsizes_QN$SetSize <- factor(long_setsizes_QN$SetSize, levels=c("AvgCorrect_Sm_QN", "AvgCorrect_Med_QN", "AvgCorrect_Lrg_QN"))
+jitter <- position_jitter(width=0.4, height=0.02)
+QN_PAIR <- ggplot(long_setsizes_QN, aes(x=long_setsizes_QN$SetSize, y=long_setsizes_QN$Performance)) + geom_point(aes(shape=long_setsizes_QN$AgeGrp, color=long_setsizes_QN$AgeGrp), show.legend = FALSE, position=jitter, size=2)+ stat_smooth(aes(group = long_setsizes_QN$AgeGrp, color=long_setsizes_QN$AgeGrp), method = "loess", se=FALSE) + labs(x="Set Sizes", y="Quantity-Numeral") + theme(text = element_text(size=20, family="Times New Roman"), legend.position = "none") + coord_cartesian(ylim= c(0.4,1)) + scale_y_continuous(breaks=c(0.5, 0.6, 0.7, 0.8, 0.9, 1))  + scale_color_manual(values=c("black","blue1")) + scale_x_discrete(labels=c("AvgCorrect_Sm_QN" = "Small", "AvgCorrect_Med_QN" = "Medium", "AvgCorrect_Lrg_QN" = "Large"))
+QN_PAIR
+
+grid.arrange(QN_PAIR, QW_PAIR, NW_PAIR, ncol=3) 
+
+
 ## SCATTER PLOTS FOR MAPPING TYPES BY AGE GROUPS AND SET SIZES ##
 #1. NUMERAL TO WORD SCATTER PLOT#
 long_setsizes_NW  <- Map_HBE[,-(298)] #getting rid of sum columns to only have avg ones
