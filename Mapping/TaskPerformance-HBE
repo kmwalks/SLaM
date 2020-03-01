@@ -288,7 +288,7 @@ mean(Map7up$AvgCorrect_Sm_WN)
 
 #MEDIUM#
 wilcox.test(Map7up$AvgCorrect_Med_QW, mu = .25, alternative = "greater") # is mean quantity & word correct for medium quantities & ages 7 and up significantly greater than chance (0.25) 
-mean(Map6up$AvgCorrect_Med_QW)
+mean(Map7up$AvgCorrect_Med_QW)
 #V = 231, p-value = 9.762e-06, mean 0.88
 wilcox.test(Map7up$AvgCorrect_Med_QN, mu = .25, alternative = "greater") # is mean quantity & numeral correct for medium quantities & ages 7 and up significantly greater than chance (0.25) 
 mean(Map7up$AvgCorrect_Med_QN)
