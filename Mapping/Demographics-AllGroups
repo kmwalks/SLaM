@@ -105,25 +105,22 @@ chisq.test(Table_IncStudy)
       Incorrect_SES <- subset(Total_Inc_Study, Total_Inc_Study$SES < 3 & Total_Inc_Study$SES > 66) 
       nrow(Incorrect_SES) #NONE ARE INAPPROPRIATE
  
- 
-    #HERE WITH EDITING!
-  #### RAN UP TO HERE ON 1/30/19!
       
 # SEX 
-  sum(Total_Inc_Study$M.F=='Female') # 57
-  sum(Total_Inc_Study$M.F=='Male') # 73
-  sum(EE_Inc$M.F=='Female') # 20
-  sum(EE_Inc$M.F=='Male') # 22
-  sum(EL_Inc$M.F=='Female') # 5
-  sum(EL_Inc$M.F=='Male') # 5
-  sum(AE_Inc$M.F=='Female') # 14
-  sum(AE_Inc$M.F=='Male') # 19
-  sum(AL_Inc$M.F=='Female') # 18
-  sum(AL_Inc$M.F=='Male') #27
+  sum(Total_Inc_Study$M.F=='Female') # 99
+  sum(Total_Inc_Study$M.F=='Male') # 98
+  sum(EE_Inc$M.F=='Female') # 24
+  sum(EE_Inc$M.F=='Male') # 23
+  sum(EL_Inc$M.F=='Female') # 25
+  sum(EL_Inc$M.F=='Male') # 18
+  sum(AE_Inc$M.F=='Female') # 27
+  sum(AE_Inc$M.F=='Male') # 25
+  sum(AL_Inc$M.F=='Female') # 23
+  sum(AL_Inc$M.F=='Male') #32
 
 # AGE DESCRIPTIVE STATISTICS
 min(EE_Inc$Age_Rounded, na.rm=TRUE) # 5.1
-min(EL_Inc$Age_Rounded, na.rm=TRUE) # 6.1
+min(EL_Inc$Age_Rounded, na.rm=TRUE) # 5
 min(AE_Inc$Age_Rounded, na.rm=TRUE) # 5.2
 min(AL_Inc$Age_Rounded, na.rm=TRUE) # 5.1
 aggregate(Age_Rounded ~ Group_4cat, data=Total_Inc_Study, min) #Creates a table in one 
@@ -134,30 +131,32 @@ max(AE_Inc$Age_Rounded, na.rm=TRUE) # 9.9
 max(AL_Inc$Age_Rounded, na.rm=TRUE) # 9.8
 aggregate(Age_Rounded ~ Group_4cat, data=Total_Inc_Study, max) 
 
-median(EE_Inc$Age_Rounded, na.rm=TRUE) # 6.9
-median(EL_Inc$Age_Rounded, na.rm=TRUE) # 7.4
-median(AE_Inc$Age_Rounded, na.rm=TRUE) # 6.7
+median(EE_Inc$Age_Rounded, na.rm=TRUE) # 6.7
+median(EL_Inc$Age_Rounded, na.rm=TRUE) # 6.2
+median(AE_Inc$Age_Rounded, na.rm=TRUE) # 7.05
 median(AL_Inc$Age_Rounded, na.rm=TRUE) # 7.4
 aggregate(Age_Rounded ~ Group_4cat, data=Total_Inc_Study, median)
 
-mean(EE_Inc$Age_Rounded, na.rm=TRUE) # 6.985714
-mean(EL_Inc$Age_Rounded, na.rm=TRUE) # 7.48
-mean(AE_Inc$Age_Rounded, na.rm=TRUE) # 7.142424
-mean(AL_Inc$Age_Rounded, na.rm=TRUE) # 7.386667
+mean(EE_Inc$Age_Rounded, na.rm=TRUE) # 6.917021
+mean(EL_Inc$Age_Rounded, na.rm=TRUE) # 6.588095
+mean(AE_Inc$Age_Rounded, na.rm=TRUE) # 7.355769
+mean(AL_Inc$Age_Rounded, na.rm=TRUE) # 7.472727
 aggregate(Age_Rounded ~ Group_4cat, data=Total_Inc_Study, mean)
 
-sd(EE_Inc$Age_Rounded, na.rm=TRUE) # 1.319381
-sd(EL_Inc$Age_Rounded, na.rm=TRUE) # 1.323128
-sd(AE_Inc$Age_Rounded, na.rm=TRUE) # 1.619033
-sd(AL_Inc$Age_Rounded, na.rm=TRUE) # 1.471178
+sd(EE_Inc$Age_Rounded, na.rm=TRUE) # 1.304394
+sd(EL_Inc$Age_Rounded, na.rm=TRUE) # 1.283707
+sd(AE_Inc$Age_Rounded, na.rm=TRUE) # 1.526166
+sd(AL_Inc$Age_Rounded, na.rm=TRUE) # 1.457859
 aggregate(Age_Rounded ~ Group_4cat, data=Total_Inc_Study, sd)
 
 range(EE_Inc$Age_Rounded, na.rm=TRUE) # 5.1 9.7
-range(EL_Inc$Age_Rounded, na.rm=TRUE) # 6.1 9.8
+range(EL_Inc$Age_Rounded, na.rm=TRUE) # 5.0 9.8
 range(AE_Inc$Age_Rounded, na.rm=TRUE) # 5.2 9.9
 range(AL_Inc$Age_Rounded, na.rm=TRUE) # 5.1 9.8
 aggregate(Age_Rounded ~ Group_4cat, data=Total_Inc_Study, range)
 
+
+  #HERE WITH EDITING!
 # SES DESCRIPTIVE STATISTICS
 min(EE_Inc$SES_range_8_to_66, na.rm=TRUE) # 17
 min(EL_Inc$SES_range_8_to_66, na.rm=TRUE) # 6
