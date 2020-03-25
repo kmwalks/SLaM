@@ -193,39 +193,46 @@ range(AL_Inc$SES, na.rm=TRUE) # 3 63.5
 aggregate(SES ~ Group_4cat, data=Total_Inc_Study, range)
 
 
-  #HERE WITH EDITING!
-## TIMING VIOLIN PLOTS ## 
-      # TIMING: AGE 
-      TimingGroup <- subset(Total_Inc_Study, Total_Inc_Study$Timing_cat == "Early" | Total_Inc_Study$Timing_2cat == "Later") 
-      TimeGrp <- Total_Inc_Study$Timing_cat
-      ggplot(TimingGroup, aes(x=TimeGrp, y=Total_Inc_Study$Age_Rounded)) + geom_violin() + labs(x="Timing", y="Age(years)")
+#CREATING TIMING/MODALITY DATA FRAMES
+#TIMING GROUPS
+Early <- subset(Total_Inc_Study, Total_Inc_Study$Timing == "Early")
+Later <- subset(Total_Inc_Study, Total_Inc_Study$Timing == "Later")
+#MODALITY GROUPS
+ASL <- subset(Total_Inc_Study, Total_Inc_Study$Modality == "ASL")
+English <- subset(Total_Inc_Study, Total_Inc_Study$Modality == "English")
 
+#VARIABLE SHORTCUTS#  
+Age <- Total_Inc_Study$Age_Rounded
+SES <- Total_Inc_Study$SES
+
+## TIMING VIOLIN PLOTS ## 
+      TimeGrp <- Total_Inc_Study$Timing
+      # TIMING: AGE 
+      ggplot(Total_Inc_Study, aes(x=TimeGrp, y=Age)) + geom_violin() + labs(x="Language Timing", y="Age(years)") 
+      #VISUALLY VERY SIMILAR DISTRIBUTIONS
       # TIMING: SES
-      TimingGroup <- subset(Total_Inc_Study, Total_Inc_Study$Timing_cat == "Early" | Total_Inc_Study$Timing_2cat == "Later")
-      TimeGrp <- Total_Inc_Study$Timing_cat
-      ggplot(TimingGroup, aes(x=TimeGrp, y=Total_Inc_Study$SES_range_8_to_66)) + geom_violin() + labs(x="Timing", y="SES")
+      ggplot(Total_Inc_Study, aes(x=TimeGrp, y=SES)) + geom_violin() + labs(x="Language Timing", y="SES") 
+      #VISUALLY VERY SIMILAR DISTRIBUTIONS
 
 ## MODALITY VIOLIN PLOTS ##
+      ModalityGrp <- Total_Inc_Study$Modality
       # MODALITY: AGE
-      ModalityGroup <- subset(Total_Inc_Study, Total_Inc_Study$Modality_cat == "English" | Total_Inc_Study$Modality_cat == "ASL")
-      ModalityGrp <- Total_Inc_Study$Modality_cat
-      ggplot(ModalityGroup, aes(x=ModalityGrp, y=Total_Inc_Study$Age_Rounded)) + geom_violin() + labs(x="Modality", y="Age(years)")
-
+      ggplot(Total_Inc_Study, aes(x=ModalityGrp, y=Age)) + geom_violin() + labs(x="Language Modality", y="Age(years)")
+      #ASL HAS MORE EVEN AGE DISTRIBUTION, ENGLISH HAS < OLDER KIDS
       # MODALITY: SES
-      ModalityGroup <- subset(Total_Inc_Study, Total_Inc_Study$Modality_cat == "English" | Total_Inc_Study$Modality_cat == "ASL")
-      ModalityGrp <- Total_Inc_Study$Modality_cat
-      ggplot(ModalityGroup, aes(x=ModalityGrp, y=Total_Inc_Study$SES_range_8_to_66)) + geom_violin() + labs(x="Modality", y="SES")
-      
+      ggplot(Total_Inc_Study, aes(x=ModalityGrp, y=SES)) + geom_violin() + labs(x="Language Modality", y="SES")
+      #ENGLISH MORE "TOP HEAVY" FOR SES
+ 
 ## GROUP VIOLIN PLOTS ## 
-      # AGE
-      LngGrp <- cbind(Total_Inc_Study, LanguageGroup) 
-      View(LngGrp)
-
+      Groups <- Total_Inc_Study$Group_4cat
       map.n <- function(x){return(c(y = median(x)*1.05, label = length(x))) }
-      mean.n <- function(x){return(c(y= median(x)*0.97, label = round(mean(x), 2)))}
-      ggplot(LngGrp, aes(x = LanguageGroup, y = LngGrp$SES_range_8_to_66, fill = LanguageGroup)) + geom_violin() + geom_boxplot(width = 0.2) + labs (x= "Language Group", y = "SES") + stat_summary(fun.data = mean.n, geom = "text", fun.y = median) + stat_summary(fun.data = mean.n, geom= "text", fun.y=mean, color= "gainsboro") + theme(legend.position="none") 
+      mean.n <- function(x){return(c(y= median(x)*0.97, label = round(mean(x), 2)))}   
+     #4 GROUPS:AGE
+      ggplot(Total_Inc_Study, aes(x =Groups, y=Age, fill = Groups)) + geom_violin() + geom_boxplot(width = 0.2) + labs (x= "Experimental Groups", y = "Age(years)") + stat_summary(fun.data = mean.n, geom = "text", fun.y = median) + stat_summary(fun.data = mean.n, geom= "text", fun.y=mean, color= "gainsboro") + theme(legend.position="none") 
 
-      # SES
+
+  #HERE WITH EDITING!  
+      #4 GROUPS:SES
       LngGrp <- cbind(Total_Inc_Study, LanguageGroup) 
       View(LngGrp)
       map.n <- function(x){return(c(y = median(x)*1.05, label = length(x))) }
