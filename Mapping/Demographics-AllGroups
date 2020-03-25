@@ -50,44 +50,41 @@ library(sm)
       # 52 of 197 kids included are AE
       AL_Inc <- subset(Total_Inc_Study, Total_Inc_Study$Group_4cat == "ASL Later")
       View(AL_Inc)
-      # 55 of 192 kids included are AL
+      # 55 of 197 kids included are AL
       
-      
-      
-      
-      
-   
       Total_Not_Inc_Study <- subset(Map_Demo, Map_Demo$Including.in.Study == "No")
       nrow(Total_Not_Inc_Study)
       View(Total_Not_Inc_Study)
-      # 13 total kids not included in study
-           
-      Total_Blank_NA <- subset(Map_Demo, Map_Demo$Including.in.Study == "" | is.na(Map_Demo$Including.in.Study))
-      View(Total_Blank_NA)
-      # 19 blanks or N/As
-
-      Tested_Not_Inc <- subset(Map_Demo, Map_Demo$Including.in.Study != "Yes" & Map_Demo$Date.Tested != "")
+      # 17 total kids not included in study
+                     
+      Total_NotTested_NA <- subset(Map_Demo, Map_Demo$Including.in.Study == ""  | Map_Demo$Tested == "Not Yet" | is.na(Map_Demo$Including.in.Study))
+      View(Total_NotTested_NA)
+      # 1 Not Yet Tested
+      
+      Tested_Not_Inc <- subset(Total_Not_Inc_Study, Total_Not_Inc_Study$Tested == "Yes")
       View(Tested_Not_Inc)
-      # 3 kid out of 13 not included in study were tested, NEED TO EXPLAIN WHY NOT INCLUDING! All had additional disabilities/suspected disabilities
+      # 3 kid out of 17 not included in study were tested, NEED TO EXPLAIN WHY NOT INCLUDING! All had additional disabilities/suspected disabilities
 
       ## Tested But Not Included: How many from each group? ## 
-            EE_Not_Inc <- subset(Total_Not_Inc_Study, Total_Not_Inc_Study$Group_4cat == "English Early" & Total_Not_Inc_Study$Date.Tested != "")
-            View(EE_Not_Inc)
-            # 0 of 13 kids tested but not included are EE
-            EL_Not_Inc <- subset(Total_Not_Inc_Study, Total_Not_Inc_Study$Group_4cat == "English Later" & Total_Not_Inc_Study$Date.Tested != "")
-            View(EL_Not_Inc)
-            # 0 of 13 kids tested but not included are EL
-            AE_Not_Inc <- subset(Total_Not_Inc_Study, Total_Not_Inc_Study$Group_4cat == "ASL Early" & Total_Not_Inc_Study$Date.Tested != "")
-            View(AE_Not_Inc)
-            # 1 of 13 kids tested but not included are AE
-            AL_Not_Inc <- subset(Total_Not_Inc_Study, Total_Not_Inc_Study$Group_4cat == "ASL Later" & Total_Not_Inc_Study$Date.Tested != "")
-            View(AL_Not_Inc)
-            # 2 of 13 kids tested but not included are AL
-            
-      Rest_Not_Inc <- subset(Total_Not_Inc_Study, is.na(Total_Not_Inc_Study$Date.Tested))
-      View(Rest_Not_Inc)
-      # 10 remaining kids listed as not included were not tested
+            EE_Not_Inc <- subset(Tested_Not_Inc, Tested_Not_Inc$Group_4cat == "English Early")
+            nrow(EE_Not_Inc)
+            # 0 of 3 kids tested but not included are EE
+            EL_Not_Inc <- subset(Tested_Not_Inc, Tested_Not_Inc$Group_4cat == "English Later")
+            nrow(EL_Not_Inc)
+            # 0 of 3 kids tested but not included are EL
+            AE_Not_Inc <- subset(Tested_Not_Inc, Tested_Not_Inc$Group_4cat == "ASL Early")
+            nrow(AE_Not_Inc)
+            # 1 of 3 kids tested but not included are AE
+            AL_Not_Inc <- subset(Tested_Not_Inc, Tested_Not_Inc$Group_4cat == "ASL Later")
+            nrow(AL_Not_Inc)
+            # 2 of 3 kids tested but not included are AL
+   
+      NotTested_Not_Inc <- subset(Total_Not_Inc_Study, Total_Not_Inc_Study$Tested == "No")
+      nrow(NotTested_Not_Inc)
+      #14 remaining kids listed as not included were not tested
 
+
+   #HERE WITH EDITING!
 ## Creating a Table/"Matrix": Included vs Not (& not tested) by Group ##
 
       rnames <- c("Including in Study","Not Including in Study")
