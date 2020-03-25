@@ -102,7 +102,7 @@ chisq.test(Table_IncStudy)
       sum(is.na(Total_Inc_Study$SES) | Total_Inc_Study$SES=="N/A")
       #MISSING 11 SES VALUES!
       
-      Incorrect_SES <- subset(Total_Inc_Study, Total_Inc_Study$SES < 3 & Total_Inc_Study$SES > 66) 
+      Incorrect_SES <- subset(Total_Inc_Study, Total_Inc_Study$SES < 3) 
       nrow(Incorrect_SES) #NONE ARE INAPPROPRIATE
  
       
@@ -155,45 +155,45 @@ range(AE_Inc$Age_Rounded, na.rm=TRUE) # 5.2 9.9
 range(AL_Inc$Age_Rounded, na.rm=TRUE) # 5.1 9.8
 aggregate(Age_Rounded ~ Group_4cat, data=Total_Inc_Study, range)
 
+# SES DESCRIPTIVE STATISTICS
+min(EE_Inc$SES, na.rm=TRUE) # 17
+min(EL_Inc$SES, na.rm=TRUE) # 6
+min(AE_Inc$SES, na.rm=TRUE) # 3
+min(AL_Inc$SES, na.rm=TRUE) # 3
+aggregate(SES ~ Group_4cat, data=Total_Inc_Study, min)
+
+max(EE_Inc$SES, na.rm=TRUE) # 66.5 #CHECK HOW CAN GET 66.5 WHAT IS HIGHEST POSSIBLE? ADD LIMITATION INTO CHECKING SES RANGE CODE ABOVE
+max(EL_Inc$SES, na.rm=TRUE) # 66
+max(AE_Inc$SES, na.rm=TRUE) # 62
+max(AL_Inc$SES, na.rm=TRUE) # 63.5
+aggregate(SES ~ Group_4cat, data=Total_Inc_Study, max)
+
+median(EE_Inc$SES, na.rm=TRUE) # 61
+median(EL_Inc$SES, na.rm=TRUE) # 53
+median(AE_Inc$SES, na.rm=TRUE) # 48.25
+median(AL_Inc$SES, na.rm=TRUE) # 47
+aggregate(SES ~ Group_4cat, data=Total_Inc_Study, median)
+
+mean(EE_Inc$SES, na.rm=TRUE) # 56.21277
+mean(EL_Inc$SES, na.rm=TRUE) # 48.21951
+mean(AE_Inc$SES, na.rm=TRUE) # 43.83333
+mean(AL_Inc$SES, na.rm=TRUE) # 42.38
+aggregate(SES ~ Group_4cat, data=Total_Inc_Study, mean)
+
+sd(EE_Inc$SES, na.rm=TRUE) # 12.37887
+sd(EL_Inc$SES, na.rm=TRUE) # 13.92078
+sd(AE_Inc$SES, na.rm=TRUE) # 14.43155
+sd(AL_Inc$SES, na.rm=TRUE) # 15.97305
+aggregate(SES ~ Group_4cat, data=Total_Inc_Study, sd)
+
+range(EE_Inc$SES, na.rm=TRUE) # 17.0 66.5 #AGAIN CHECK ON THE 65!
+range(EL_Inc$SES, na.rm=TRUE) # 3 66
+range(AE_Inc$SES, na.rm=TRUE) # 3 62
+range(AL_Inc$SES, na.rm=TRUE) # 3 63.5
+aggregate(SES ~ Group_4cat, data=Total_Inc_Study, range)
+
 
   #HERE WITH EDITING!
-# SES DESCRIPTIVE STATISTICS
-min(EE_Inc$SES_range_8_to_66, na.rm=TRUE) # 17
-min(EL_Inc$SES_range_8_to_66, na.rm=TRUE) # 6
-min(AE_Inc$SES_range_8_to_66, na.rm=TRUE) # 3
-min(AL_Inc$SES_range_8_to_66, na.rm=TRUE) # 3
-aggregate(SES_range_8_to_66 ~ Group_4cat, data=Total_Inc_Study, min)
-
-max(EE_Inc$SES_range_8_to_66, na.rm=TRUE) # 66
-max(EL_Inc$SES_range_8_to_66, na.rm=TRUE) # 66
-max(AE_Inc$SES_range_8_to_66, na.rm=TRUE) # 62
-max(AL_Inc$SES_range_8_to_66, na.rm=TRUE) # 63.5
-aggregate(SES_range_8_to_66 ~ Group_4cat, data=Total_Inc_Study, max)
-
-median(EE_Inc$SES_range_8_to_66, na.rm=TRUE) # 61
-median(EL_Inc$SES_range_8_to_66, na.rm=TRUE) # 51.75
-median(AE_Inc$SES_range_8_to_66, na.rm=TRUE) # 47
-median(AL_Inc$SES_range_8_to_66, na.rm=TRUE) # 45
-aggregate(SES_range_8_to_66 ~ Group_4cat, data=Total_Inc_Study, median)
-
-mean(EE_Inc$SES_range_8_to_66, na.rm=TRUE) # 55.5
-mean(EL_Inc$SES_range_8_to_66, na.rm=TRUE) # 47.6
-mean(AE_Inc$SES_range_8_to_66, na.rm=TRUE) # 44.06897
-mean(AL_Inc$SES_range_8_to_66, na.rm=TRUE) # 40.275
-aggregate(SES_range_8_to_66 ~ Group_4cat, data=Total_Inc_Study, mean)
-
-sd(EE_Inc$SES_range_8_to_66, na.rm=TRUE) # 12.89923
-sd(EL_Inc$SES_range_8_to_66, na.rm=TRUE) # 15.66986
-sd(AE_Inc$SES_range_8_to_66, na.rm=TRUE) # 14.50476
-sd(AL_Inc$SES_range_8_to_66, na.rm=TRUE) # 16.57769
-aggregate(SES_range_8_to_66 ~ Group_4cat, data=Total_Inc_Study, sd)
-
-range(EE_Inc$SES_range_8_to_66, na.rm=TRUE) # 17 66
-range(EL_Inc$SES_range_8_to_66, na.rm=TRUE) # 6 66
-range(AE_Inc$SES_range_8_to_66, na.rm=TRUE) # 3 62
-range(AL_Inc$SES_range_8_to_66, na.rm=TRUE) # 3 63.5
-aggregate(SES_range_8_to_66 ~ Group_4cat, data=Total_Inc_Study, range)
-
 ## TIMING VIOLIN PLOTS ## 
       # TIMING: AGE 
       TimingGroup <- subset(Total_Inc_Study, Total_Inc_Study$Timing_cat == "Early" | Total_Inc_Study$Timing_2cat == "Later") 
