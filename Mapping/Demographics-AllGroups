@@ -228,18 +228,14 @@ SES <- Total_Inc_Study$SES
       map.n <- function(x){return(c(y = median(x)*1.05, label = length(x))) }
       mean.n <- function(x){return(c(y= median(x)*0.97, label = round(mean(x), 2)))}   
      #4 GROUPS:AGE
-      ggplot(Total_Inc_Study, aes(x =Groups, y=Age, fill = Groups)) + geom_violin() + geom_boxplot(width = 0.2) + labs (x= "Experimental Groups", y = "Age(years)") + stat_summary(fun.data = mean.n, geom = "text", fun.y = median) + stat_summary(fun.data = mean.n, geom= "text", fun.y=mean, color= "gainsboro") + theme(legend.position="none") 
+      ggplot(Total_Inc_Study, aes(x=Groups, y=Age, fill = Groups)) + geom_violin() + geom_boxplot(width = 0.2) + labs (x= "Experimental Groups", y = "Age (years)") + stat_summary(fun.data = mean.n, geom = "text", fun.y = median) + stat_summary(fun.data = mean.n, geom= "text", fun.y=mean, color= "gainsboro") + theme(legend.position="none") 
+      #LOOKS GREAT!
 
-
-  #HERE WITH EDITING!  
       #4 GROUPS:SES
-      LngGrp <- cbind(Total_Inc_Study, LanguageGroup) 
-      View(LngGrp)
-      map.n <- function(x){return(c(y = median(x)*1.05, label = length(x))) }
-      mean.n <- function(x){return(c(y= median(x)*0.97, label = round(mean(x), 2)))}
-      ggplot(LngGrp, aes(x = LanguageGroup, y = LngGrp$Age_Rounded, fill = LanguageGroup)) + geom_violin() + geom_boxplot(width = 0.2) + labs (x= "Language Group", y = "Age (years)") + stat_summary(fun.data = mean.n, geom = "text", fun.y = median) + stat_summary(fun.data = mean.n, geom= "text", fun.y=mean, color= "gainsboro") + theme(legend.position="none") 
+    ggplot(Total_Inc_Study, aes(x=Groups, y=SES, fill = Groups)) + geom_violin() + geom_boxplot(width = 0.2) + labs (x= "Experimental Groups", y = "SES") + stat_summary(fun.data = mean.n, geom = "text", fun.y = median) + stat_summary(fun.data = mean.n, geom= "text", fun.y=mean, color= "gainsboro") + theme(legend.position="none")
+    #ENGLISH GROUPS HIGHER SES/"TOP HEAVY"
    
-   
+   #HERE WITH EDITING!  
 #DENSITY PLOT BELOW, NOT WORKING NEED LIBRARY FOR SM.DENSITY.COMPARE
 Labels <- factor(Total_Inc_Study$Group_4cat, levels=c("English Early","English Later","ASL Early","ASL Later"), labels = c("English Early","English Later","ASL Early","ASL Later"))
 sm.density.compare(Total_Inc_Study$SES_range_8_to_66, Total_Inc_Study$Group_4cat, xlab="Socioeconomic Status", lwd=3,xlim=c(3,66),col=c(4,6,2,3))
