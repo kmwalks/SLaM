@@ -235,25 +235,15 @@ SES <- Total_Inc_Study$SES
     ggplot(Total_Inc_Study, aes(x=Groups, y=SES, fill = Groups)) + geom_violin() + geom_boxplot(width = 0.2) + labs (x= "Experimental Groups", y = "SES") + stat_summary(fun.data = mean.n, geom = "text", fun.y = median) + stat_summary(fun.data = mean.n, geom= "text", fun.y=mean, color= "gainsboro") + theme(legend.position="none")
     #ENGLISH GROUPS HIGHER SES/"TOP HEAVY"
    
-   #HERE WITH EDITING!  
-#DENSITY PLOT BELOW, NOT WORKING NEED LIBRARY FOR SM.DENSITY.COMPARE
-Labels <- factor(Total_Inc_Study$Group_4cat, levels=c("English Early","English Later","ASL Early","ASL Later"), labels = c("English Early","English Later","ASL Early","ASL Later"))
-sm.density.compare(Total_Inc_Study$SES_range_8_to_66, Total_Inc_Study$Group_4cat, xlab="Socioeconomic Status", lwd=3,xlim=c(3,66),col=c(4,6,2,3))
-title(main="SES Distribution for each Group 4 Category")
-colfill<-c(2,3,4,6)
-legend(3,0.033, levels(Labels), fill=colfill)
-
-
-      
+   
+   
+   #HERE WITH EDITING!      
 # ANOVA for mean Age and mean SES between groups - is the avergae age or SES sig different between groups?
-
 #AGE#
       # mean Age
       # Ho : mu1=...=mu4
       # Ha : mu2=...≠...mu4
-      # alpha level: 0.05
-      
-      
+      # alpha level: 0.05     
 # RUN THAT ANOVA
 Age_ANOVA <- aov(Total_Inc_Study$Age_Rounded ~ Total_Inc_Study$Group_4cat)
 summary(Age_ANOVA) # p=0.56
