@@ -84,7 +84,6 @@ library(sm)
       #14 remaining kids listed as not included were not tested
 
 
-   #HERE WITH EDITING!
 ## Creating a Table/"Matrix": Included vs Not (& not tested) by Group ##
 
       rnames <- c("Including in Study","Not Including in Study")
@@ -92,11 +91,12 @@ library(sm)
       Table_IncStudy <- matrix(c(nrow(EE_Inc),nrow(EL_Inc),nrow(AE_Inc),nrow(AL_Inc),nrow(EE_Not_Inc),nrow(EL_Not_Inc),nrow(AE_Not_Inc),nrow(AL_Not_Inc)), nrow=2, ncol=4, byrow=TRUE, dimnames=list(rnames,cnames))
       Table_IncStudy
 
-
 ## Chi-Square on Table/"Matrix": Does the status of including in study depend on which group kids were in?, aka DNS more likely to not be included? ##
 chisq.test(Table_IncStudy)
-# Test statistic is p-value = 0.5102, do not reject null, conclude that status of inclusion in study is not dependent on group 4 category. GOOD.
+# Test statistic is p-value = 0.39, do not reject null, conclude that status of inclusion in study is not dependent on group 4 category. GOOD!
 
+
+   #HERE WITH EDITING!
 # Find observations with missing Age and SES values
       which(is.na(Total_Inc_Study$Age_Rounded)) # 52 observations missing Age value
       Missing_Age <- Total_Inc_Study[which(is.na(Total_Inc_Study$Age_Rounded)),3]
