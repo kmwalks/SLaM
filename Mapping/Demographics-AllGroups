@@ -95,20 +95,18 @@ library(sm)
 chisq.test(Table_IncStudy)
 # Test statistic is p-value = 0.39, do not reject null, conclude that status of inclusion in study is not dependent on group 4 category. GOOD!
 
-
-   #HERE WITH EDITING!
 # Find observations with missing Age and SES values
-      which(is.na(Total_Inc_Study$Age_Rounded)) # 52 observations missing Age value
-      Missing_Age <- Total_Inc_Study[which(is.na(Total_Inc_Study$Age_Rounded)),3]
-      View(Missing_Age)
+      sum(is.na(Total_Inc_Study$Age_Rounded) | Total_Inc_Study$Age_Rounded=="N/A")
+      #MISSING 1 AGE VALUE!
 
-      which(is.na(Total_Inc_Study$SES)) # 0 observations missing SES value
-      Missing_SES <- Total_Inc_Study[which(is.na(Total_Inc_Study$SES_range_8_to_66)),3]
-      View(Missing_SES)
+      sum(is.na(Total_Inc_Study$SES) | Total_Inc_Study$SES=="N/A")
+      #MISSING 11 SES VALUES!
       
-      Incorrect_SES <- subset(Map_Demo, Map_Demo$SES_range_8_to_66 < 3 | Map_Demo$SES_range_8_to_66 == "") #No observations of SES <3
-      View(Incorrect_SES)
-  
+      Incorrect_SES <- subset(Total_Inc_Study, Total_Inc_Study$SES < 3 & Total_Inc_Study$SES > 66) 
+      nrow(Incorrect_SES) #NONE ARE INAPPROPRIATE
+ 
+ 
+    #HERE WITH EDITING!
   #### RAN UP TO HERE ON 1/30/19!
       
 # SEX 
