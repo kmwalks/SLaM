@@ -25,12 +25,14 @@ library(sm)
       
 #3. Import Data [[make sure is most recent version and saved as csv]]
       Map <- read.csv("Mapping_Coding_KW_200325.csv", na.strings = "N/A")
+      #224 kids
       View(Map)   
 
 ## BASIC DEMOGRAPHICS ## 
 
       Map_Demo <- subset(Map, Map$Age_Rounded>=5 & Map$Age_Rounded<=10 | is.na(Map$Age_Rounded))
-      View(Map_Demo) # 214 total kids
+      View(Map_Demo) # 215 kids ages 5-9
+      #we lose 9 kids from current age restriction. 5 kids < 5 (4 are DLE & 1 HBE, will include all if change to 4.5-9). 4 kids > 9 (should not include). 
 
       Total_Inc_Study <- subset(Map_Demo, Map_Demo$Including.in.Study == "Yes" & Map_Demo$Coded. == "Yes")
       View(Total_Inc_Study)
