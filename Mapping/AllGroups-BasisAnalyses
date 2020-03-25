@@ -32,6 +32,6 @@ library(ggpubr)
       View(Map)   
 
 ## MAPPING DATA FRAME ## 
-  Map_Inc <- subset(Map, Map$Age_Rounded>=5 & Map$Age_Rounded<=10 & Map$Mappig_Include.=="Yes" & Map$Coded. == "Yes" | is.na(Map$Age_Rounded))
-  View(Map_Inc)  # 157
+  Map_Inc <- subset(Map, Map$Age_Rounded>=5 & Map$Age_Rounded<=10 & Map$Mappig_Include.=="Yes" & Map$Coded. == "Yes")
+  View(Map_Inc) #141
 
