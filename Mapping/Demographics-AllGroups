@@ -29,28 +29,32 @@ library(sm)
       View(Map)   
 
 ## BASIC DEMOGRAPHICS ## 
-
       Map_Demo <- subset(Map, Map$Age_Rounded>=5 & Map$Age_Rounded<=10 | is.na(Map$Age_Rounded))
       View(Map_Demo) # 215 kids ages 5-9
       #we lose 9 kids from current age restriction. 5 kids < 5 (4 are DLE & 1 HBE, will include all if change to 4.5-9). 4 kids > 9 (should not include). 
 
-      Total_Inc_Study <- subset(Map_Demo, Map_Demo$Including.in.Study == "Yes" & Map_Demo$Coded. == "Yes")
+#FOR DEMOGRAPHICS OF ALL POSSIBLE KIDS INCLUDING FOR MAPPING (*for paper will add: Map Include = Yes & Coded = Yes*)
+      Total_Inc_Study <- subset(Map_Demo, Map_Demo$Including.in.Study == "Yes")
       View(Total_Inc_Study)
-      # 182 total kids included in study  
+      # 197 total kids included in study  
       
-      ## Included: Numbers of Kids Per Group ##
+      ## Included OVERALL: Numbers of Kids Per Group ##
       EE_Inc <- subset(Total_Inc_Study, Total_Inc_Study$Group_4cat == "English Early")
       View(EE_Inc)
-      # 42 of 182 kids included are EE
+      # 47 of 197 kids included are EE
       EL_Inc <- subset(Total_Inc_Study, Total_Inc_Study$Group_4cat == "English Later")
       View(EL_Inc)
-      # 30 of 182 kids included are EL
+      # 43 of 197 kids included are EL
       AE_Inc <- subset(Total_Inc_Study, Total_Inc_Study$Group_4cat == "ASL Early")
       View(AE_Inc)
-      # 52 of 182 kids included are AE
+      # 52 of 197 kids included are AE
       AL_Inc <- subset(Total_Inc_Study, Total_Inc_Study$Group_4cat == "ASL Later")
       View(AL_Inc)
-      # 58 of 182 kids included are AL
+      # 55 of 192 kids included are AL
+      
+      
+      
+      
       
    
       Total_Not_Inc_Study <- subset(Map_Demo, Map_Demo$Including.in.Study == "No")
