@@ -1,5 +1,5 @@
   
-#1. Install and Load Libraries 
+#Install and Load Libraries 
 
 install.packages("car")
 install.packages("sm")
@@ -22,11 +22,11 @@ library(sm)
 library(ggpubr)
 
 
-#2. Check and Set Working Directory
+#Check and Set Working Directory
       setwd("~/Desktop")
       getwd()      
       
-#3. Import Data [[make sure is most recent version and saved as csv]]
+#Import Data [[make sure is most recent version and saved as csv]]
       Map <- read.csv("Mapping_Coding_KW_200325.csv", na.strings = "N/A")
       #224 kids
       View(Map)   
@@ -34,4 +34,9 @@ library(ggpubr)
 ## MAPPING DATA FRAME ## 
   Map_Inc <- subset(Map, Map$Age_Rounded>=5 & Map$Age_Rounded<=10 & Map$Mappig_Include.=="Yes" & Map$Coded. == "Yes")
   View(Map_Inc) #141
+
+#RANDOM VISUALIZATIONS/ANALYSES FOR NOW!
+SumTotalCorr <- Map_Inc$SumCorrectTotal_All
+Grps <- Map_Inc$Group_4cat
+ggplot(Map_Inc, aes(x=Grps, y=SumTotalCorr, fill = Grps)) + geom_violin() + geom_boxplot(width = 0.2) + labs (x= "Experimental Groups", y = "Total Correct (out of 51)") + stat_summary(fun.data = mean.n, geom = "text", fun.y = median) + stat_summary(fun.data = mean.n, geom= "text", fun.y=mean, color= "gainsboro") + theme(legend.position="none")
 
