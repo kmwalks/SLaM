@@ -36,7 +36,13 @@ library(ggpubr)
   View(Map_Inc) #141
 
 #RANDOM VISUALIZATIONS/ANALYSES FOR NOW!
-SumTotalCorr <- Map_Inc$SumCorrectTotal_All
-Grps <- Map_Inc$Group_4cat
-ggplot(Map_Inc, aes(x=Grps, y=SumTotalCorr, fill = Grps)) + geom_violin() + geom_boxplot(width = 0.2) + labs (x= "Experimental Groups", y = "Total Correct (out of 51)") + stat_summary(fun.data = mean.n, geom = "text", fun.y = median) + stat_summary(fun.data = mean.n, geom= "text", fun.y=mean, color= "gainsboro") + theme(legend.position="none")
+M_SumTotalCorr <- Map_Inc$SumCorrectTotal_All
+M_Age <- Map_Inc$Age_Rounded
+M_SES <- Map_Inc$SES
+M_Grps <- Map_Inc$Group_4cat
+M_Tim <- Map_Inc$Timing
+M_Mod <- Map_Inc$Modality
+
+#VIOLIN PLOT TOTAL # CORRECT BY 4 GROUPS
+ggplot(Map_Inc, aes(x=M_Grps, y=M_SumTotalCorr, fill = M_Grps)) + geom_violin() + geom_boxplot(width = 0.2) + labs (x= "Experimental Groups", y = "Total Correct (out of 51)") + stat_summary(fun.data = mean.n, geom = "text", fun = median) + stat_summary(fun.data = mean.n, geom= "text", fun=mean, color= "gainsboro") + theme(legend.position="none")
 
