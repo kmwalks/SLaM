@@ -57,11 +57,11 @@ library(ggpubr)
       Total_Not_Inc_Study <- subset(Map_Demo, Map_Demo$Including.in.Study == "No")
       nrow(Total_Not_Inc_Study)
       View(Total_Not_Inc_Study)
-      # 17 total kids not included in study
+      # 18 total kids not included in study
                      
-      Total_NotTested_NA <- subset(Map_Demo, Map_Demo$Including.in.Study == ""  | Map_Demo$Tested == "Not Yet" | is.na(Map_Demo$Including.in.Study))
+      Total_NotTested_NA <- subset(Map_Demo,  Map_Demo$Tested == "No" | Map_Demo$Tested == "Not Yet" | is.na(Map_Demo$Including.in.Study))
       View(Total_NotTested_NA)
-      # 1 Not Yet Tested
+      # 15 Not Tested 
       
       Tested_Not_Inc <- subset(Total_Not_Inc_Study, Total_Not_Inc_Study$Tested == "Yes")
       View(Tested_Not_Inc)
