@@ -42,6 +42,8 @@ M_SES <- Map_Inc$SES
 M_Grps <- Map_Inc$Group_4cat
 M_Tim <- Map_Inc$Timing
 M_Mod <- Map_Inc$Modality
+map.n <- function(x){return(c(y = median(x)*1.05, label = length(x))) }
+mean.n <- function(x){return(c(y= median(x)*0.97, label = round(mean(x), 2)))}   
 
 #VIOLIN PLOT TOTAL # CORRECT BY 4 GROUPS
 ggplot(Map_Inc, aes(x=M_Grps, y=M_SumTotalCorr, fill = M_Grps)) + geom_violin() + geom_boxplot(width = 0.2) + labs (x= "Experimental Groups", y = "Total Correct (out of 51)") + stat_summary(fun.data = mean.n, geom = "text", fun = median) + stat_summary(fun.data = mean.n, geom= "text", fun=mean, color= "gainsboro") + theme(legend.position="none")
