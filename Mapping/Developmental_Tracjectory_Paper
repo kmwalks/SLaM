@@ -21,24 +21,18 @@ library(olsrr)
 library(plyr)
 
 #2. Check and Set Working Directory
-      #LAB
-      setwd("/Users/labuser/Documents/R")
-      getwd() #to see where is set to
-      #LAPTOP
       setwd("~/Desktop")
       getwd()
-      
       
 #3. Import Data [[make sure is most recent version and saved as csv]]
       Map <- read.csv("Mapping_Coding_KW_200401.csv", na.strings = "N/A")
       View(Map)
       # <- saves MC as an object, read.csv() imports it    
   
-  
  ## BASIC DEMOGRAPHICS ## 
 
-      Map_EE_Demo <- subset(Map, Map$Group_4cat == "English Early", Map$Age_Rounded<10 | is.na(Map$Age_Rounded))
-      View(Map_EE_Demo) #44 total English Early kids (no kids > 10)
+      Map_EE_Demo <- subset(Map, Map$Group_4cat == "English Early", Map$Age_Rounded>=5 & Map$Age_Rounded<10 | is.na(Map$Age_Rounded))
+      View(Map_EE_Demo) #44 total English Early kids 
 
       Total_Inc_Study <- subset(Map_EE_Demo, Map_EE_Demo$Including.in.Study == "Yes")
       View(Total_Inc_Study)
