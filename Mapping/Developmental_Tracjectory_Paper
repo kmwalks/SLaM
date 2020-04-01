@@ -133,3 +133,9 @@ library(tidyr)
         Var_All <- length(which(All>= C_All)) #number of observations equal to ceiling 
         N <- nrow(Map_HBE) #number of total observations
         (Var_All/N)*100 #19% at ceiling
+        
+        #Mixed Effects Logistic Regression
+        
+        
+        #Want wide → long, use tidyr's pivot_longer() 
+        #resource https://cran.r-project.org/web/packages/tidyr/vignettes/pivot.html
