@@ -62,7 +62,7 @@ library(psych)
             nrow(Incorrect_SES) #No observations of SES < 3 or > 66
                    
         # SEX 
-        sum(Total_Inc_Study$M.F=='Female') # 25
+        sum(Total_Inc_Study$M.F=='Female') # 24
         sum(Total_Inc_Study$M.F=='Male') # 23
         sum(Total_Inc_Study$M.F=='N/A') # 0
 
