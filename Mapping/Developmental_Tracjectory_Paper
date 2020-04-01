@@ -9,6 +9,18 @@ install.packages("quantreg") # testing quantile plots (geom_quantile) and quanti
 install.packages ("olsrr") #for testing normality
 install.packages("plyr") #for count and other cool things
 install.packages("psych") #obtain descriptive statistics
+install.packages("colorspace") # for fixing colors in plots
+install.packages("stargazer") # for pretty regression output tables
+install.packages("MASS") # for polr package
+install.packages("generalhoslem") # for testing model fit 
+install.packages("qwraps2") # for summary_table use
+install.packages("quantreg") # testing quantile plots (geom_quantile) and quantile regressions
+install.packages("sure") # package for calculating residuals for ordinal logistic regression (https://journal.r-project.org/archive/2018/RJ-2018-004/RJ-2018-004.pdf)
+install.packages("mediation") # package for testing mediation effects
+install.packages("gridExtra")
+install.packages(“coin”)
+install.packages("dplyr")
+install.packages("tidyr")
         
 
 library(car)
@@ -21,6 +33,18 @@ library(quantreg)
 library(olsrr)
 library(plyr)
 library(psych)
+library(colorspace) 
+library(stargazer)
+library(MASS)
+library(generalhoslem) 
+library(qwraps2) 
+library(quantreg) 
+library(sure) 
+library(mediation) 
+library(gridExtra)
+library(coin)
+library(dplyr)
+library(tidyr)
 
 # Check and Set Working Directory
       setwd("~/Desktop")
@@ -90,4 +114,8 @@ library(psych)
             # Skewness and Kurtosis for SES 
                   describe(Total_Inc_Study$SES) #using Psych package, skewness -1.99 & SE 1.8
                   qplot(Total_Inc_Study$SES, geom = 'histogram', binwidth = 2) + xlab('SES') #highly skewed 
+
+#Data Analysis
+        Map_HBE <- subset(Map_EE, Map_EE$Including.in.Study == "Yes" & Map_EE$Mapping_Include. == "Yes") #RENAMING Total_Inc_Study DATA FRAME for coding ease
+        View(Map_HBE)
 
