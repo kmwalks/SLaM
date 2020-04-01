@@ -1,4 +1,4 @@
-#1. Install and Load Libraries 
+# Install and Load Libraries 
 install.packages("car")
 install.packages("sm")
 install.packages("ggplot2") # for general plots
@@ -20,16 +20,16 @@ library(quantreg)
 library(olsrr)
 library(plyr)
 
-#2. Check and Set Working Directory
+# Check and Set Working Directory
       setwd("~/Desktop")
       getwd()
       
-#3. Import Data [[make sure is most recent version and saved as csv]]
+# Import Data [[make sure is most recent version and saved as csv]]
       Map <- read.csv("Mapping_Coding_KW_200401.csv", na.strings = "N/A")
       View(Map)
       # <- saves MC as an object, read.csv() imports it    
   
- ## BASIC DEMOGRAPHICS ## 
+ # Participants
 
       Map_EE <- subset(Map, Map$Group_4cat == "English Early", Map$Age_Rounded>=5 & Map$Age_Rounded<10 | is.na(Map$Age_Rounded))
       View(Map_EE) #44 total English Early kids 
