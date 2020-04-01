@@ -118,4 +118,18 @@ library(tidyr)
 #Data Analysis
         Map_HBE <- subset(Map_EE, Map_EE$Including.in.Study == "Yes" & Map_EE$Mapping_Include. == "Yes") #RENAMING Total_Inc_Study DATA FRAME for coding ease
         View(Map_HBE)
-
+        
+        #Overall Mapping Performance
+        wilcox.test(Map_HBE$AvgCorrect_Total, mu = .25, alternative = "greater") #overall mapping performance compared to chance, p-value = 1.129e-09
+        
+        All <- Map_HBE$SumCorrectTotal_All
+        Ch <- 12.75 #51/4 (at chance score)
+        Var_Ch <- length(which(All>= Ch)) #number of observations equal to or above chance
+        N <- nrow(Map_HBE) #number of total observations
+        (Var_Ch/N)*100 #100% at or above chance
+        
+        All <- Map_HBE$SumCorrectTotal_All
+        C_All <- 51 #ceiling performance 
+        Var_All <- length(which(All>= C_All)) #number of observations equal to ceiling 
+        N <- nrow(Map_HBE) #number of total observations
+        (Var_All/N)*100 #19% at ceiling
