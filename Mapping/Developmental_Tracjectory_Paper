@@ -30,7 +30,7 @@ library(plyr)
       
       
 #3. Import Data [[make sure is most recent version and saved as csv]]
-      Map <- read.csv("Mapping_Coding_CH_191119.csv", na.strings = "N/A")
+      Map <- read.csv("Mapping_Coding_KW_200401.csv", na.strings = "N/A")
       View(Map)
       # <- saves MC as an object, read.csv() imports it    
   
