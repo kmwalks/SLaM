@@ -21,6 +21,8 @@ install.packages("gridExtra")
 install.packages(“coin”)
 install.packages("dplyr")
 install.packages("tidyr")
+install.packages("lme4")
+              
         
 
 library(car)
@@ -45,6 +47,7 @@ library(gridExtra)
 library(coin)
 library(dplyr)
 library(tidyr)
+library(lme4)
 
 # Check and Set Working Directory
       setwd("~/Desktop")
@@ -137,38 +140,36 @@ library(tidyr)
         #Mixed Effects Logistic Regression
               #Want wide → long, use tidyr's pivot_longer() 
               #resource https://cran.r-project.org/web/packages/tidyr/vignettes/pivot.html
-Quantity_cols <- colnames(select(Map_HBE, ends_with("Answer")))
-Correct_cols <- colnames(select(Map_HBE, ends_with("Correct.")))
-Quant_Corr <- c()# Create new empty list
- for(i in 1:47)
-     Quant_Corr[i] <- paste(names(select(Map_HBE, contains(match=Quantity_cols[i]))), names(select(Map_HBE, contains(match=Correct_cols[i]))), sep=("."))
-HBE_long <- pivot_longer(data = Map_HBE, cols=c(ends_with("Answer")), names_to = c("Type"), values_to = "Quantity")
-View(HBE_long)
-HBE_long <- pivot_longer(data = HBE_long, cols=c(ends_with("Correct.")), names_to = c("Type2"), values_to = "Correct")
-View(HBE_long)
+                Quantity_cols <- colnames(select(Map_HBE, ends_with("Answer")))
+                Correct_cols <- colnames(select(Map_HBE, ends_with("Correct.")))
+                Quant_Corr <- c()# Create new empty list
+                 for(i in 1:47)
+                     Quant_Corr[i] <- paste(names(select(Map_HBE, contains(match=Quantity_cols[i]))), names(select(Map_HBE, contains(match=Correct_cols[i]))), sep=("."))
+                HBE_long <- pivot_longer(data = Map_HBE, cols=c(ends_with("Answer")), names_to = c("Type"), values_to = "Quantity")
+                View(HBE_long)
+                HBE_long <- pivot_longer(data = HBE_long, cols=c(ends_with("Correct.")), names_to = c("Type2"), values_to = "Correct")
+                View(HBE_long)
 
-# From Type column, create a new column (Map_Pair)
-#Create new column for which IF HBE_long$Type contains “NW” or “WN”, assign value “Numeral-Word”
- Map_Pair <- c()
-for(i in 1:122247)
-    Map_Pair[i] <- ifelse(grepl("NW", HBE_long$Type[i]), "Numeral-Word", ifelse(grepl("WN", HBE_long$Type[i]), "Numeral-Word", ifelse(grepl("QN", HBE_long$Type[i]), "Quantity-Numeral", ifelse(grepl("NQ", HBE_long$Type[i]), "Quantity-Numeral", ifelse(grepl("QW", HBE_long$Type[i]), "Quantity-Word", ifelse(grepl("WQ", HBE_long$Type[i]), "Quantity-Word","bananas"))))))
-HBE_long <- cbind(HBE_long, Map_Pair)
-#From Quantity column, create Small, Med, Large
-# resource https://stackoverflow.com/questions/15016723/how-to-add-column-into-a-dataframe-based-on-condition 
-Set_Size <- c()
-Set_Size <- case_when(HBE_long$Quantity <= 3 ~ 'Small',
-                       HBE_long$Quantity > 3 & HBE_long$Quantity<= 5 ~ 'Medium',
-                       HBE_long$Quantity > 5 ~ 'Large')
- 
-HBE_long <- cbind(HBE_long,Set_Size)
-View(HBE_long)
-
-#Mixed Effects Logistic Regression
-install.packages("lme4")
-library(lme4)
-REG <- glmer(Correct ~ Age_Rounded + SES + Set_Size + Map_Pair + Race + Ethnicity + M.F + (1 | SUBJECT_ID), data = HBE_long, family = binomial, control = glmerControl(optimizer = "bobyqa"),  nAGQ = 10) #good model fit for AIC and BIC (lower when include race, ethnicity, and sex… lower = better)
-summary(REG)
-exp(fixef(REG)) #provides Odds Ratios
+                # From Type column, create a new column (Map_Pair)
+                #Create new column for which IF HBE_long$Type contains “NW” or “WN”, assign value “Numeral-Word”
+                 Map_Pair <- c()
+                for(i in 1:122247)
+                    Map_Pair[i] <- ifelse(grepl("NW", HBE_long$Type[i]), "Numeral-Word", ifelse(grepl("WN", HBE_long$Type[i]), "Numeral-Word", ifelse(grepl("QN", HBE_long$Type[i]), "Quantity-Numeral", ifelse(grepl("NQ", HBE_long$Type[i]), "Quantity-Numeral", ifelse(grepl("QW", HBE_long$Type[i]), "Quantity-Word", ifelse(grepl("WQ", HBE_long$Type[i]), "Quantity-Word","bananas"))))))
+                HBE_long <- cbind(HBE_long, Map_Pair)
+                #From Quantity column, create Small, Med, Large
+                # resource https://stackoverflow.com/questions/15016723/how-to-add-column-into-a-dataframe-based-on-condition 
+                Set_Size <- c()
+                Set_Size <- case_when(HBE_long$Quantity <= 3 ~ 'Small',
+                                       HBE_long$Quantity > 3 & HBE_long$Quantity<= 5 ~ 'Medium',
+                                       HBE_long$Quantity > 5 ~ 'Large')
+                HBE_long <- cbind(HBE_long,Set_Size)
+                View(HBE_long)
+                HBE_short <- HBE_long[,!grepl("^Item",names(HBE_long))] # delete columns that contain “item” 
+                
+                #Run the regression
+                REG <- glmer(Correct ~ Age_Rounded + SES + Set_Size + Map_Pair + Race + Ethnicity + M.F + (1 | SUBJECT_ID), data = HBE_short, family = binomial, control = glmerControl(optimizer = "bobyqa"),  nAGQ = 10) #good model fit for AIC and BIC (lower when include race, ethnicity, and sex… lower = better)
+                summary(REG)
+                exp(fixef(REG)) #provides Odds Ratios
         
         
         
