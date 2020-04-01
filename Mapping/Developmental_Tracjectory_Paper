@@ -31,84 +31,76 @@ library(plyr)
   
  # Participants
 
-      Map_EE <- subset(Map, Map$Group_4cat == "English Early", Map$Age_Rounded>=5 & Map$Age_Rounded<10 | is.na(Map$Age_Rounded))
-      View(Map_EE) #44 total English Early kids 
+      Map_EE <- subset(Map, Map$Group_4cat == "English Early" & (Map$Age_Rounded>=5 & Map$Age_Rounded<10 | is.na(Map$Age_Rounded)))
+      View(Map_EE) #50 total English Early kids within our age range (5-9)
 
-      Total_Inc_Study <- subset(Map_EE, Map_EE$Including.in.Study == "Yes")
-      View(Total_Inc_Study)
-      # 42 total kids included in study
+      Total_Inc_Study <- subset(Map_EE, Map_EE$Including.in.Study == "Yes" & Map_EE$Mapping_Include. == "Yes")
+      View(Total_Inc_Study)# 47 total kids included in study
 
       Total_Not_Inc_Study <- subset(Map_EE, Map_EE$Including.in.Study == "No" | Map_EE$Including.in.Study== "")
-      nrow(Total_Not_Inc_Study)
-      View(Total_Not_Inc_Study)
-      # 2 total kids not included in study
-      
+      nrow(Total_Not_Inc_Study)# 3 total kids not included in study
+
       Total_Blank_NA <- subset(Map_EE, Map_EE$Including.in.Study == "" | is.na(Map_EE$Including.in.Study))
-      # 0 blanks or N/As
+      nrow(Total_Blank_NA) # 0 blanks or N/As
 
       Tested_Not_Inc <- subset(Map_EE, Map_EE$Including.in.Study != "Yes" & Map_EE$Date.Tested != "")
-      View(Tested_Not_Inc)
-      # 0 kids not included in study that were tested. If do have any, need to explain why they were not included!
+      nrow(Tested_Not_Inc)
+      # 0 kids not included in study that were tested. 
           
                    
-  # SEX 
-  sum(Total_Inc_Study$M.F=='Female') # 20
-  sum(Total_Inc_Study$M.F=='Male') # 22
-  sum(Total_Inc_Study$M.F=='N/A') # 0
-  
-  # RACE DESCRIPTIVE STATISTICS
-   #group N/A & unsure together
-   count((Total_Inc_Study$Race))
-  
-  # ETHNICITY DESCRIPTIVE STATISTICS
-  count((Total_Inc_Study$Ethnicity))
-      
-  # AGE DESCRIPTIVE STATISTICS    
-  min(Total_Inc_Study$Age_Rounded, na.rm=TRUE) # 5.1
-  max(Total_Inc_Study$Age_Rounded, na.rm=TRUE) # 9.7
-  median(Total_Inc_Study$Age_Rounded, na.rm=TRUE) # 6.9
-  mean(Total_Inc_Study$Age_Rounded, na.rm=TRUE) # 6.985714
-  sd(Total_Inc_Study$Age_Rounded, na.rm=TRUE) # 1.319381
-  range(Total_Inc_Study$Age_Rounded, na.rm=TRUE) # 5.1 - 9.7
-  
-      #AGE VIOLIN
-      ggplot(Total_Inc_Study, aes(x=Total_Inc_Study$Group_4cat, y=Total_Inc_Study$Age_Rounded)) + geom_violin()
-  
-  # SES DESCRIPTIVE STATISTICS
-  min(Total_Inc_Study$SES, na.rm=TRUE) # 17
-  max(Total_Inc_Study$SES, na.rm=TRUE) # 66
-  median(Total_Inc_Study$SES, na.rm=TRUE) # 61
-  mean(Total_Inc_Study$SES, na.rm=TRUE) # 55.5
-  sd(Total_Inc_Study$SES, na.rm=TRUE) # 12.9
-  range(Total_Inc_Study$SES, na.rm=TRUE) # 17 - 66
-            
-      #SES VIOLIN
-      ggplot(Total_Inc_Study, aes(x=Total_Inc_Study$Group_4cat, y=Total_Inc_Study$SES)) + geom_violin()
+        # SEX 
+        sum(Total_Inc_Study$M.F=='Female') # 25
+        sum(Total_Inc_Study$M.F=='Male') # 23
+        sum(Total_Inc_Study$M.F=='N/A') # 0
 
-# Skewness and Kurtosis for SES (still cannot figure out to get Standard Error for both)
-      #Option 1
-      install.packages("psych")
-      library(psych)
-      describe(Total_Inc_Study$SES)
-      
-      #Option 2
-      install.packages("moments")
-      library(moments)
-      skewness(Total_Inc_Study$SES) 
-      kurtosis(Total_Inc_Study$SES)
+        # RACE DESCRIPTIVE STATISTICS
+         count((Total_Inc_Study$Race)) #40 white, 3 mixed, 2 american indian/alaska native, 1 other, 1 unsure, 1 N/A
 
-      
-      qplot(Total_Inc_Study$SES, geom = 'histogram', binwidth = 2) + xlab('SES')
+        # ETHNICITY DESCRIPTIVE STATISTICS
+        count((Total_Inc_Study$Ethnicity)) #36 not hispanic or latino, 5 hispanic or latino, 6 N/A, 1 unsure
 
-  # Find observations with missing Age and SES values
-      which(is.na(Total_Inc_Study$Age_Rounded)) # 0 observations missing Age value
-      Missing_Age <- Total_Inc_Study[which(is.na(Total_Inc_Study$Age_Rounded)),3]
-      View(Missing_Age)
+        # AGE DESCRIPTIVE STATISTICS    
+        min(Total_Inc_Study$Age_Rounded, na.rm=TRUE) # 5.1
+        max(Total_Inc_Study$Age_Rounded, na.rm=TRUE) # 9.7
+        median(Total_Inc_Study$Age_Rounded, na.rm=TRUE) # 6.7
+        mean(Total_Inc_Study$Age_Rounded, na.rm=TRUE) # 6.917021
+        sd(Total_Inc_Study$Age_Rounded, na.rm=TRUE) # 1.304394
+        range(Total_Inc_Study$Age_Rounded, na.rm=TRUE) # 5.1 - 9.7
+        ggplot(Total_Inc_Study, aes(x=Group_4cat, y=Age_Rounded)) + geom_violin()
 
-      which(is.na(Total_Inc_Study$SES)) # 0 observations missing SES value
-      Missing_SES <- Total_Inc_Study[which(is.na(Total_Inc_Study$SES_range_8_to_66)),3]
-      View(Missing_SES)
-      
-      Incorrect_SES <- subset(Total_Inc_Study, Total_Inc_Study$SES < 3  & Total_Inc_Study$SES < 66 | Total_Inc_Study$SES_range_8_to_66 == "")
-      View(Incorrect_SES)
-      #No observations of SES < 3 or > 66
+        # SES DESCRIPTIVE STATISTICS
+        min(Total_Inc_Study$SES, na.rm=TRUE) # 17
+        max(Total_Inc_Study$SES, na.rm=TRUE) # 66
+        median(Total_Inc_Study$SES, na.rm=TRUE) # 61
+        mean(Total_Inc_Study$SES, na.rm=TRUE) # 56.20213
+        sd(Total_Inc_Study$SES, na.rm=TRUE) # 12.37005
+        range(Total_Inc_Study$SES, na.rm=TRUE) # 17 - 66
+        ggplot(Total_Inc_Study, aes(x=Group_4cat, y=SES)) + geom_violin()
+
+      # Skewness and Kurtosis for SES (still cannot figure out to get Standard Error for both)
+            #Option 1
+            install.packages("psych")
+            library(psych)
+            describe(Total_Inc_Study$SES)
+
+            #Option 2
+            install.packages("moments")
+            library(moments)
+            skewness(Total_Inc_Study$SES) 
+            kurtosis(Total_Inc_Study$SES)
+
+
+            qplot(Total_Inc_Study$SES, geom = 'histogram', binwidth = 2) + xlab('SES')
+
+        # Find observations with missing Age and SES values
+            which(is.na(Total_Inc_Study$Age_Rounded)) # 0 observations missing Age value
+            Missing_Age <- Total_Inc_Study[which(is.na(Total_Inc_Study$Age_Rounded)),3]
+            View(Missing_Age)
+
+            which(is.na(Total_Inc_Study$SES)) # 0 observations missing SES value
+            Missing_SES <- Total_Inc_Study[which(is.na(Total_Inc_Study$SES_range_8_to_66)),3]
+            View(Missing_SES)
+
+            Incorrect_SES <- subset(Total_Inc_Study, Total_Inc_Study$SES < 3  & Total_Inc_Study$SES < 66 | Total_Inc_Study$SES_range_8_to_66 == "")
+            View(Incorrect_SES)
+            #No observations of SES < 3 or > 66
