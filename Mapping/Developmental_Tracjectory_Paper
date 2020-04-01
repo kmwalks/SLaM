@@ -66,10 +66,8 @@ library(psych)
         sum(Total_Inc_Study$M.F=='Male') # 23
         sum(Total_Inc_Study$M.F=='N/A') # 0
 
-        # RACE DESCRIPTIVE STATISTICS
+        # RACE & ETHNICITY DESCRIPTIVE STATISTICS, grouped Unsure and N/As together
          count((Total_Inc_Study$Race)) #40 white, 3 mixed, 2 american indian/alaska native, 1 other, 1 unsure, 1 N/A
-
-        # ETHNICITY DESCRIPTIVE STATISTICS
         count((Total_Inc_Study$Ethnicity)) #36 not hispanic or latino, 5 hispanic or latino, 6 N/A, 1 unsure
 
         # AGE DESCRIPTIVE STATISTICS    
