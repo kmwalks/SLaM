@@ -8,7 +8,8 @@ install.packages("qwraps2") # for summary_table use
 install.packages("quantreg") # testing quantile plots (geom_quantile) and quantile regressions
 install.packages ("olsrr") #for testing normality
 install.packages("plyr") #for count and other cool things
-
+install.packages("psych") #obtain descriptive statistics
+        
 
 library(car)
 library(sm)
@@ -19,6 +20,7 @@ library(qwraps2)
 library(quantreg) 
 library(olsrr)
 library(plyr)
+library(psych)
 
 # Check and Set Working Directory
       setwd("~/Desktop")
@@ -46,7 +48,18 @@ library(plyr)
       Tested_Not_Inc <- subset(Map_EE, Map_EE$Including.in.Study != "Yes" & Map_EE$Date.Tested != "")
       nrow(Tested_Not_Inc)
       # 0 kids not included in study that were tested. 
-          
+      
+       # Find observations with missing Age and SES values
+            which(is.na(Total_Inc_Study$Age_Rounded)) # 0 observations missing Age value
+            Missing_Age <- Total_Inc_Study[which(is.na(Total_Inc_Study$Age_Rounded)),3]
+            nrow(Missing_Age)
+
+            which(is.na(Total_Inc_Study$SES)) # 0 observations missing SES value
+            Missing_SES <- Total_Inc_Study[which(is.na(Total_Inc_Study$SES)),3]
+            nrow(Missing_SES)
+
+            Incorrect_SES <- subset(Total_Inc_Study, Total_Inc_Study$SES < 3  & Total_Inc_Study$SES < 66 | Total_Inc_Study$SES_range_8_to_66 == "")
+            nrow(Incorrect_SES) #No observations of SES < 3 or > 66
                    
         # SEX 
         sum(Total_Inc_Study$M.F=='Female') # 25
@@ -76,34 +89,7 @@ library(plyr)
         sd(Total_Inc_Study$SES, na.rm=TRUE) # 12.37005
         range(Total_Inc_Study$SES, na.rm=TRUE) # 17 - 66
         ggplot(Total_Inc_Study, aes(x=Group_4cat, y=SES)) + geom_violin()
-        
-        
-    ### UPDATED CODES UNTIL HERE! ###
+            # Skewness and Kurtosis for SES 
+                  describe(Total_Inc_Study$SES) #using Psych package, skewness -1.99 & SE 1.8
+                  qplot(Total_Inc_Study$SES, geom = 'histogram', binwidth = 2) + xlab('SES') #highly skewed 
 
-      # Skewness and Kurtosis for SES (still cannot figure out to get Standard Error for both)
-            #Option 1
-            install.packages("psych")
-            library(psych)
-            describe(Total_Inc_Study$SES)
-
-            #Option 2
-            install.packages("moments")
-            library(moments)
-            skewness(Total_Inc_Study$SES) 
-            kurtosis(Total_Inc_Study$SES)
-
-
-            qplot(Total_Inc_Study$SES, geom = 'histogram', binwidth = 2) + xlab('SES')
-
-        # Find observations with missing Age and SES values
-            which(is.na(Total_Inc_Study$Age_Rounded)) # 0 observations missing Age value
-            Missing_Age <- Total_Inc_Study[which(is.na(Total_Inc_Study$Age_Rounded)),3]
-            View(Missing_Age)
-
-            which(is.na(Total_Inc_Study$SES)) # 0 observations missing SES value
-            Missing_SES <- Total_Inc_Study[which(is.na(Total_Inc_Study$SES_range_8_to_66)),3]
-            View(Missing_SES)
-
-            Incorrect_SES <- subset(Total_Inc_Study, Total_Inc_Study$SES < 3  & Total_Inc_Study$SES < 66 | Total_Inc_Study$SES_range_8_to_66 == "")
-            View(Incorrect_SES)
-            #No observations of SES < 3 or > 66
