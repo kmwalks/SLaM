@@ -76,6 +76,9 @@ library(plyr)
         sd(Total_Inc_Study$SES, na.rm=TRUE) # 12.37005
         range(Total_Inc_Study$SES, na.rm=TRUE) # 17 - 66
         ggplot(Total_Inc_Study, aes(x=Group_4cat, y=SES)) + geom_violin()
+        
+        
+    ### UPDATED CODES UNTIL HERE! ###
 
       # Skewness and Kurtosis for SES (still cannot figure out to get Standard Error for both)
             #Option 1
