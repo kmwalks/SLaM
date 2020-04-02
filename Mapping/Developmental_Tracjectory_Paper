@@ -178,7 +178,7 @@ library(lme4)
                 REG <- glm(Correct ~ Age_Rounded + SES + Set_Size + Map_Pair + Race + Ethnicity + M.F, data = HBE_short, family = "binomial") 
                 summary(REG)
                 exp(fixef(REG)) #provides Odds Ratios
-                #Testing Model Fit
+                #Testing Model Fit, AIC: 963.18
                 with(REG, null.deviance - deviance) #206.6286
                 with(REG, df.null - df.residual) #11, degrees of freedom for the difference between the two models is equal to the number of predictor variables in the mode
                 with(REG, pchisq(null.deviance - deviance, df.null - df.residual, lower.tail = FALSE)) #p-value = 3.127361e-38, likelihood ratio test, associated p-value of less than 0.001 tells us that our model as a whole fits significantly better than an empty model
