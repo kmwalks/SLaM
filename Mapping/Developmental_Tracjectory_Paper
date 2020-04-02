@@ -176,11 +176,11 @@ library(lme4)
                 
                 
                 #Run the regression
-                REG <- glmer(Correct ~ Age_Rounded + SES + Set_Size + Map_Pair + Race + Ethnicity + M.F + (1 | SUBJECT_ID), data = HBE_short, family = binomial, control = glmerControl(optimizer = "bobyqa"),  nAGQ = 10) #good model fit for AIC and BIC (lower when include race, ethnicity, and sex… lower = better)
+                REG <- glm(Correct ~ Age_Rounded + SES + Set_Size + Map_Pair + Race + Ethnicity + M.F, data = HBE_short, family = "binomial") 
                 summary(REG)
                 exp(fixef(REG)) #provides Odds Ratios
                 
-                #WITH NEW KIDS, TAKING A LONG TIME TO RUN... HAS NOT COMPLETED RUNNING ONCE YET... 
+     
         
         
         
