@@ -165,6 +165,10 @@ library(lme4)
                 HBE_long <- cbind(HBE_long,Set_Size)
                 View(HBE_long)
                 HBE_short <- HBE_long[,!grepl("^Item",names(HBE_long))] # delete columns that contain “item” 
+                which(colnames(HBE_short)=="Child_LanguageTested") #19th column
+                which(colnames(HBE_short)=="Sum_Numeral.Word_Word.Numeral") #71st column
+                HBE_short <- HBE_short[, -c(19:71)] #removes unnecessary columns
+                View(HBE_short)
                 
                 #Run the regression
                 REG <- glmer(Correct ~ Age_Rounded + SES + Set_Size + Map_Pair + Race + Ethnicity + M.F + (1 | SUBJECT_ID), data = HBE_short, family = binomial, control = glmerControl(optimizer = "bobyqa"),  nAGQ = 10) #good model fit for AIC and BIC (lower when include race, ethnicity, and sex… lower = better)
