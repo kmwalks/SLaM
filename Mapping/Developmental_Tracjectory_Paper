@@ -212,11 +212,15 @@ library(lme4)
       #FINDINGS: Not sig different: 5 vs 6, 6 vs 7, 7 vs 8, 7 vs 9, 8 vs 9, 6 vs 8, 6 vs 9, SIG different: 5 vs 7, 6 vs 9 
       #Age Group decision: 5-6 year olds vs 7-9 year olds
       
-      
+#SEPARATING BY AGE GROUPS
+  Map_HBE$AgeGrp <- ifelse(Map_HBE$Age_Rounded < 7, "5- and 6-year-olds", "7 and up")
+  Map56 <- subset(Map_HBE, Map_HBE$AgeGrp =="5- and 6-year-olds")
+  Map7up <- subset(Map_HBE, Map_HBE$AgeGrp =="7 and up")   
       
  ##GROUPED BAR PLOT##
       ##SOURCE: https://onunicornsandgenes.blog/2014/03/19/using-r-barplot-with-ggplot2/##
       ## 1. CREATE DF FOR AGE GRP 5 ##
+      View(Map56)
       AgeGrp <- Map56$AgeGrp
       QW <- mean(Map56$Sum_Quantity.Word_Word.Quantity)
       NW <- mean(Map56$Sum_Numeral.Word_Word.Numeral)
