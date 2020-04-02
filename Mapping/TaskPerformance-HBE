@@ -36,23 +36,7 @@ MapMeans
 
 ## 5 and 6 YO vs 7 and UP ##
 
-##AGE GROUPS DECISONS ##
-AGEGRP <- Map_HBE$AgeGrp %>% mutate(AGEGRP = case_when(Map_HBE$Age_Rounded >= 5  & Map_HBE$Age_Rounded < 6 ~ '5', Map_HBE$Age_Rounded >= 6  & Map_HBE$Age_Rounded < 7 ~ '6', Map_HBE$Age_Rounded >= 7  & Map_HBE$Age_Rounded < 8 ~ '7', Map_HBE$Age_Rounded >= 8  & Map_HBE$Age_Rounded < 9 ~ '8', Map_HBE$Age_Rounded >= 9  & Map_HBE$Age_Rounded < 10 ~ '9'))
-Map_HBE2 <- cbind(Map_HBE, AGEGRP)
-View(Map_HBE2)
-YO5 <- subset(Map_HBE2, Map_HBE2$AGEGRP =="5")
-YO6 <- subset(Map_HBE2, Map_HBE2$AGEGRP =="6")
-YO7 <- subset(Map_HBE2, Map_HBE2$AGEGRP =="7")
-YO8 <- subset(Map_HBE2, Map_HBE2$AGEGRP =="8")
-YO9 <- subset(Map_HBE2, Map_HBE2$AGEGRP =="9")
-t.test(YO5$AvgCorrect_Total, YO6$AvgCorrect_Total, paired = FALSE, alternative = "two.sided")  #t = -1.3824, df = 18.414, p-value = 0.1834, 5 vs 6 NOT
-t.test(YO5$AvgCorrect_Total, YO7$AvgCorrect_Total, paired = FALSE, alternative = "two.sided")  # 6 vs 7 SIG DIFFERENT
-t.test(YO7$AvgCorrect_Total, YO8$AvgCorrect_Total, paired = FALSE, alternative = "two.sided") #7 vs 8 NOT 
-t.test(YO7$AvgCorrect_Total, YO9$AvgCorrect_Total, paired = FALSE, alternative = "two.sided") #7 vs 9 NOT
-t.test(YO8$AvgCorrect_Total, YO9$AvgCorrect_Total, paired = FALSE, alternative = "two.sided") #8 vs 9 NOT
-t.test(YO6$AvgCorrect_Total, YO8$AvgCorrect_Total, paired = FALSE, alternative = "two.sided") # t = -2.2195, df = 8.8544, p-value = 0.05408, BARELY NOT SIG
-t.test(YO6$AvgCorrect_Total, YO9$AvgCorrect_Total, paired = FALSE, alternative = "two.sided") #SIG DIFF
-# SIG FINDINGS: 5 vs 6 NO, 6 vs 7 YES, 7 vs 8 NO, 7 vs 9 NO, 8 vs 9 NO, 6 vs 8 NO (but barely p = 0.054), 6 vs 9 YES… so good support for 5 and 6 year olds vs 7 year olds and up
+
 
 #SETTING UP
 #create a column for age group
