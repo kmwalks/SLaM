@@ -296,7 +296,7 @@ t.test(Map56$Sum_Quantity.Numeral_Numeral.Quantity, Map7up$Sum_Quantity.Numeral_
 t.test(Map56$Sum_Quantity.Word_Word.Quantity, Map7up$Sum_Quantity.Word_Word.Quantity, paired = FALSE, alternative = "two.sided")
 t.test(Map56$Sum_Numeral.Word_Word.Numeral, Map7up$Sum_Numeral.Word_Word.Numeral, paired = FALSE, alternative = "two.sided") 
 
-#BOX PLOT
+#BOX PLOT ONLY
  AgeGrp <- Map56$AgeGrp
  QW <- Map56$Sum_Quantity.Word_Word.Quantity
  NW <- Map56$Sum_Numeral.Word_Word.Numeral
@@ -323,11 +323,10 @@ All_BV <- ggplot(B, aes(B$Map, B$value, fill=B$AgeGrp)) + geom_violin (position 
 All_BV
 
 
-## ANOVAS ##
-     ## BEFORE RUN, HAVE BOOYAH AS A DF FROM ABOVE CODE ##
-     ## REMEMBER TYPE 2 IS FOR BETWEEN SUBJECTS ##
-     
-     replications(BOOYAH) # CHECK BALANCE OF THE DATA TO ENSURE CAN USE AOV FXN. AOV can be used for balanced & unbalanced, but to a certain extent#
+#ANOVAS
+
+#CHANGE FOR THESE BELOW TO BE ALL IN ONE ANOVA!
+
 
      ## AGE GROUP (2 LEVELS) --> SUM SCORES? One-way ANOVA unbalanced (different sample sizes), between subjects design ##
      aov_age<- aov(BOOYAH$mean ~ BOOYAH$AgeGrp)
