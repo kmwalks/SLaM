@@ -22,6 +22,7 @@ install.packages(“coin”)
 install.packages("dplyr")
 install.packages("tidyr")
 install.packages("lme4")
+install.packages("plotrix")
               
         
 
@@ -48,6 +49,7 @@ library(coin)
 library(dplyr)
 library(tidyr)
 library(lme4)
+library("plotrix")
 
 # Check and Set Working Directory
       setwd("~/Desktop")
