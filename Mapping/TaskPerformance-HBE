@@ -1,29 +1,4 @@
-
-#Q1: What does mapping performance look like with this age range (5-9)?
-  
-  #Proportion Correct for each Mapping Type (all HBE kids)
-  nq <- ggplot(Map_HBE, aes(x=Map_HBE$Age_Rounded, y=Map_HBE$AvgCorrect_Quantity.Numeral)) + geom_point() + geom_smooth(method="loess", se = FALSE) + labs(x="Age (Years)", y="Numeral-Quantity") + theme(text = element_text(size=11)) + coord_cartesian(xlim = c(5, 10), ylim= c(0.4,1)) + scale_y_continuous(breaks=c(0.5, 0.6, 0.7, 0.8, 0.9, 1)) + scale_x_continuous(breaks=c(5, 6, 7, 8, 9))
-  qn <- ggplot(Map_HBE, aes(x=Map_HBE$Age_Rounded, y=Map_HBE$AvgCorrect_Numeral.Quantity)) + geom_point() + geom_smooth(method="loess", se = FALSE) + labs(x="Age (Years)", y="Quantity-Numeral") + theme(text = element_text(size=11)) + coord_cartesian(xlim = c(5, 10), ylim= c(0.4,1)) + scale_y_continuous(breaks=c(0.5, 0.6, 0.7, 0.8, 0.9, 1)) + scale_x_continuous(breaks=c(5, 6, 7, 8, 9))
-
-  nw <- ggplot(Map_HBE, aes(x=Map_HBE$Age_Rounded, y=Map_HBE$AvgCorrect_Word.Numeral)) + geom_point() + geom_smooth(method="loess", se = FALSE) + labs(x="Age (Years)", y="Numeral-Word") + theme(text = element_text(size=11)) + coord_cartesian(xlim = c(5, 10), ylim= c(0.4,1)) + scale_y_continuous(breaks=c(0.5, 0.6, 0.7, 0.8, 0.9, 1)) + scale_x_continuous(breaks=c(5, 6, 7, 8, 9))
-  wn <- ggplot(Map_HBE, aes(x=Map_HBE$Age_Rounded, y=Map_HBE$AvgCorrect_Numeral.Word)) + geom_point() + geom_smooth(method="loess", se = FALSE) + labs(x="Age (Years)", y="Word-Numeral") + theme(text = element_text(size=11)) + coord_cartesian(xlim = c(5, 10), ylim= c(0.4,1)) + scale_y_continuous(breaks=c(0.5, 0.6, 0.7, 0.8, 0.9, 1)) + scale_x_continuous(breaks=c(5, 6, 7, 8, 9))
-
-  wq <- ggplot(Map_HBE, aes(x=Map_HBE$Age_Rounded, y=Map_HBE$AvgCorrect_Quantity.Word)) + geom_point() + geom_smooth(method="loess", se = FALSE) + labs(x="Age (Years)", y="Word-Quantity") + theme(text = element_text(size=11)) + coord_cartesian(xlim = c(5, 10), ylim= c(0.4,1)) + scale_y_continuous(breaks=c(0.5, 0.6, 0.7, 0.8, 0.9, 1)) + scale_x_continuous(breaks=c(5, 6, 7, 8, 9))
-  qw <- ggplot(Map_HBE, aes(x=Map_HBE$Age_Rounded, y=Map_HBE$AvgCorrect_Word.Quantity)) + geom_point() + geom_smooth(method="loess", se = FALSE) + labs(x="Age (Years)", y="Quantity-Word") + theme(text = element_text(size=11)) + coord_cartesian(xlim = c(5, 10), ylim= c(0.4,1)) + scale_y_continuous(breaks=c(0.5, 0.6, 0.7, 0.8, 0.9, 1)) + scale_x_continuous(breaks=c(5, 6, 7, 8, 9))
-  
-  grid.arrange(nq,wq,wn, qn,qw,nw, ncol = 3)
-  
-  #performance not normally distributed, why using wilcoxon tests
-  shapiro.test(Map_HBE2$AvgCorrect_Total)
-
-# COMPARE each type to chance - Hurst et al used one-sample Wilcoxon Signed Rank tests (use median and assume roughly normal distribution around MEDIAN)
-  wilcox.test(Map_HBE$AvgCorrect_Quantity.Numeral, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) #p-value = 3.211e-09, YES
-  wilcox.test(Map_HBE$AvgCorrect_Numeral.Quantity, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) #p-value = 3.813e-09, YES
-  wilcox.test(Map_HBE$AvgCorrect_Quantity.Word, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) #p-value = 2.702e-09, YES
-  wilcox.test(Map_HBE$AvgCorrect_Word.Quantity, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) #p-value = 6.062e-09, YES
-  wilcox.test(Map_HBE$AvgCorrect_Word.Numeral, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) #p-value = 2.301e-09, YES
-  wilcox.test(Map_HBE$AvgCorrect_Numeral.Word, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) #p-value = 4.516e-10, YES
-#GOOD. ALL SIG ABOVE CHANCE. 
+# MAPPING TYPE INFO!
 
 # get average RAW NUMBER correct for each mapping type across all kids 
 MapAvgCorr <- colMeans(subset(Map_HBE, select = c(SumTotal_QuantityNumeral, SumTotal_NumeralQuantity, SumTotal_QuantityWord, SumTotal_WordQuantity, SumTotal_NumeralWord, SumTotal_WordNumeral)), na.rm = TRUE)
