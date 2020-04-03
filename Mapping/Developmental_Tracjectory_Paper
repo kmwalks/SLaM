@@ -392,7 +392,7 @@ All_BV
 	mean(Map7up$Sum_Numeral.Word_Word.Numeral) 
 	mean(Map56$Sum_Quantity.Numeral_Numeral.Quantity) 
 	mean(Map7up$Sum_Quantity.Numeral_Numeral.Quantity) 
-	mean(Map56up$Sum_Quantity.Word_Word.Quantity) 
+	mean(Map56$Sum_Quantity.Word_Word.Quantity) 
 	mean(Map7up$Sum_Numeral.Word_Word.Numeral)
 	  #QN vs NW
 	      #5 and 6
