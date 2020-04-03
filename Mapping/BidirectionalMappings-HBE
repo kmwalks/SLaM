@@ -401,3 +401,38 @@ shapiro.test(Map_HBE$Difference_Numeral.Word_Word.Numeral)
     
        
     
+
+# T TESTS FOR MAPPING TYPES! #
+
+# 5 and 6 YOs
+wilcox.test(Map56$AvgCorrect_Quantity.Numeral, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) #YES, p-value = 2.54e-05
+wilcox.test(Map56$AvgCorrect_Numeral.Quantity, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) #YES, p-value = 2.784e-05
+wilcox.test(Map56$SumTotal_QuantityNumeral, Map56$SumTotal_NumeralQuantity, paired=TRUE, exact=FALSE) # ASYMMETRY? Quantity numeral better than numeral quantity? 
+#YES, p-value = p-value = 0.001521
+
+wilcox.test(Map56$AvgCorrect_Quantity.Word, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) #YES, p-value = 2.612e-05
+wilcox.test(Map56$AvgCorrect_Word.Quantity, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) #YES, p-value = 2.956e-05
+wilcox.test(Map56$SumTotal_QuantityWord, Map56$SumTotal_WordQuantity, paired=TRUE, exact=FALSE) # ASYMMETRY? Quantity word better than word quantity?
+#YES, p-value = 0.0009956
+
+wilcox.test(Map56$AvgCorrect_Word.Numeral, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) #YES, p-value = 1.905e-05
+wilcox.test(Map56$AvgCorrect_Numeral.Word, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) #YES, p-value = 1.396e-05
+wilcox.test(Map56$SumTotal_NumeralWord, Map56$SumTotal_WordNumeral, paired=TRUE, exact=FALSE) # ASYMMETRY?  Numeral word better than word numeral?
+#YES, p-value = 0.0002018
+
+# 7-9 YOs
+
+wilcox.test(Map7up$AvgCorrect_Quantity.Numeral, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) #YES, V = 231, p-value = 7.534e-06
+wilcox.test(Map7up$AvgCorrect_Numeral.Quantity, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) #YES, V = 231, p-value = 1.204e-05
+wilcox.test(Map7up$SumTotal_QuantityNumeral, Map7up$SumTotal_NumeralQuantity, paired=TRUE, exact=FALSE) # ASYMMETRY? Quantity numeral better than numeral quantity?
+#YES, V = 190, p-value = 6.333e-05
+
+wilcox.test(Map7up$AvgCorrect_Quantity.Word, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) #YES, V = 231, p-value = 7.573e-06
+wilcox.test(Map7up$AvgCorrect_Word.Quantity, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) #YES, V = 231, p-value = 1.925e-05
+wilcox.test(Map7up$SumTotal_QuantityWord, Map7up$SumTotal_WordQuantity, paired=TRUE, exact=FALSE) # ASYMMETRY? Quantity word better than word quantity?
+#YES, V = 210, p-value = 4.749e-05
+
+wilcox.test(Map7up$AvgCorrect_Word.Numeral, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) #YES, V = 210, p-value = 1.255e-05
+wilcox.test(Map7up$AvgCorrect_Numeral.Word, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) #YES, V = 231, p-value = 2.525e-06
+wilcox.test(Map7up$SumTotal_NumeralWord, Map7up$SumTotal_WordNumeral, paired=TRUE, exact=FALSE) # ASYMMETRY?  Numeral word better than word numeral?
+#YES, V = 231, p-value = 1.952e-05
