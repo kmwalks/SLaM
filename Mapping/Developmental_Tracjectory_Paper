@@ -347,76 +347,23 @@ All_BV
      etaSquared(aov, type=2)
 
 #T-tests evaluating the interaction between age and map pairs
-#RAW NUMBER correct & PROPORTION correct, TABLES
-Map56AvgCorr <- colMeans(subset(Map56, select = c(SumTotal_QuantityNumeral, SumTotal_NumeralQuantity, SumTotal_QuantityWord, SumTotal_WordQuantity, SumTotal_NumeralWord, SumTotal_WordNumeral)), na.rm = TRUE) 
-Map56AvgCorr
-Map56Means <- c((Map56AvgCorr[1]/9), (Map56AvgCorr[2]/8), (Map56AvgCorr[3]/9), (Map56AvgCorr[4]/8), (Map56AvgCorr[5]/9), (Map56AvgCorr[6]/8))
-Map56Means
+	#RAW NUMBER correct & PROPORTION correct & Significance from chance, TABLES
+	Map56AvgCorr <- colMeans(subset(Map56, select = c(Sum_Quantity.Numeral_Numeral.Quantity, Sum_Quantity.Word_Word.Quantity, Sum_Numeral.Word_Word.Numeral)), na.rm = TRUE) 
+	Map56AvgCorr
+	Map56Means <- c((Map56AvgCorr[1]/17), (Map56AvgCorr[2]/17), (Map56AvgCorr[3]/17))
+	Map56Means
+	
+	wilcox.test(Map56$Sum_Quantity.Numeral_Numeral.Quantity, mu = .25, alternative = "greater") 
+	wilcox.test(Map56$Sum_Quantity.Word_Word.Quantity, mu = .25, alternative = "greater") 
+	wilcox.test(Map56$Sum_Numeral.Word_Word.Numeral, mu = .25, alternative = "greater") 
 
-Map7upAvgCorr <- colMeans(subset(Map7up, select = c(SumTotal_QuantityNumeral, SumTotal_NumeralQuantity, SumTotal_QuantityWord, SumTotal_WordQuantity, SumTotal_NumeralWord, SumTotal_WordNumeral)), na.rm = TRUE) 
-Map7upAvgCorr
-Map7Means <- c((Map7upAvgCorr[1]/9), (Map7upAvgCorr[2]/8), (Map7upAvgCorr[3]/9), (Map7upAvgCorr[4]/8), (Map7upAvgCorr[5]/9), (Map7upAvgCorr[6]/8))
-Map7Means
+	Map7upAvgCorr <- colMeans(subset(Map7up, select = c(Sum_Quantity.Numeral_Numeral.Quantity, Sum_Quantity.Word_Word.Quantity, Sum_Numeral.Word_Word.Numeral)), na.rm = TRUE) 
+	Map7upAvgCorr
+	Map7upMeans <- c((Map7upAvgCorr[1]/17), (Map7upAvgCorr[2]/17), (Map7upAvgCorr[3]/17))
+	Map7upMeans
 
-#ALL SIGNIFICANTLY DIFFERENT FROM CHANCE?, THESE ARE FOR SIGNIFICANCE ON TABLES
-# 5 and 6 YO 
-wilcox.test(Map56$AvgCorrect_Quantity.Numeral, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) #YES, p-value = 2.54e-05
-wilcox.test(Map56$AvgCorrect_Numeral.Quantity, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) #YES, p-value = 2.784e-05
-wilcox.test(Map56$SumTotal_QuantityNumeral, Map56$SumTotal_NumeralQuantity, paired=TRUE, exact=FALSE) # ASYMMETRY? Quantity numeral better than numeral quantity? 
-#YES, p-value = p-value = 0.001521
+	wilcox.test(Map7up$Sum_Quantity.Numeral_Numeral.Quantity, mu = .25, alternative = "greater") 
+	wilcox.test(Map7up$Sum_Quantity.Word_Word.Quantity, mu = .25, alternative = "greater") 
+	wilcox.test(Map7up$Sum_Numeral.Word_Word.Numeral, mu = .25, alternative = "greater") 
 
-wilcox.test(Map56$AvgCorrect_Quantity.Word, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) #YES, p-value = 2.612e-05
-wilcox.test(Map56$AvgCorrect_Word.Quantity, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) #YES, p-value = 2.956e-05
-wilcox.test(Map56$SumTotal_QuantityWord, Map56$SumTotal_WordQuantity, paired=TRUE, exact=FALSE) # ASYMMETRY? Quantity word better than word quantity?
-#YES, p-value = 0.0009956
-
-wilcox.test(Map56$AvgCorrect_Word.Numeral, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) #YES, p-value = 1.905e-05
-wilcox.test(Map56$AvgCorrect_Numeral.Word, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) #YES, p-value = 1.396e-05
-wilcox.test(Map56$SumTotal_NumeralWord, Map56$SumTotal_WordNumeral, paired=TRUE, exact=FALSE) # ASYMMETRY?  Numeral word better than word numeral?
-#YES, p-value = 0.0002018
-
-# 7 YO & >
-
-wilcox.test(Map7up$AvgCorrect_Quantity.Numeral, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) #YES, V = 231, p-value = 7.534e-06
-wilcox.test(Map7up$AvgCorrect_Numeral.Quantity, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) #YES, V = 231, p-value = 1.204e-05
-wilcox.test(Map7up$SumTotal_QuantityNumeral, Map7up$SumTotal_NumeralQuantity, paired=TRUE, exact=FALSE) # ASYMMETRY? Quantity numeral better than numeral quantity?
-#YES, V = 190, p-value = 6.333e-05
-
-wilcox.test(Map7up$AvgCorrect_Quantity.Word, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) #YES, V = 231, p-value = 7.573e-06
-wilcox.test(Map7up$AvgCorrect_Word.Quantity, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) #YES, V = 231, p-value = 1.925e-05
-wilcox.test(Map7up$SumTotal_QuantityWord, Map7up$SumTotal_WordQuantity, paired=TRUE, exact=FALSE) # ASYMMETRY? Quantity word better than word quantity?
-#YES, V = 210, p-value = 4.749e-05
-
-wilcox.test(Map7up$AvgCorrect_Word.Numeral, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) #YES, V = 210, p-value = 1.255e-05
-wilcox.test(Map7up$AvgCorrect_Numeral.Word, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) #YES, V = 231, p-value = 2.525e-06
-wilcox.test(Map7up$SumTotal_NumeralWord, Map7up$SumTotal_WordNumeral, paired=TRUE, exact=FALSE) # ASYMMETRY?  Numeral word better than word numeral?
-#YES, V = 231, p-value = 1.952e-05
-
-##Overall PAIR COMPARISONS:
-MapAvgCorr_Pairs <- colMeans(subset(Map_HBE, select = c(Sum_Quantity.Numeral_Numeral.Quantity, Sum_Quantity.Word_Word.Quantity,Sum_Numeral.Word_Word.Numeral)), na.rm = TRUE)
-MapProp_Pairs <- c((MapAvgCorr_Pairs[1]/17), (MapAvgCorr_Pairs[2]/17), (MapAvgCorr_Pairs[3]/17))
-MapProp_Pairs
-##5-6 YO:
-Map56_AvgCorr_Pair <- colMeans(subset(Map56, select = c(Sum_Quantity.Numeral_Numeral.Quantity, Sum_Quantity.Word_Word.Quantity,Sum_Numeral.Word_Word.Numeral)), na.rm = TRUE)
-Map56_AvgCorr_Pair
-Map56_MapProp_Pairs <- c((Map56_AvgCorr_Pair[1]/17), (Map56_AvgCorr_Pair[2]/17), (Map56_AvgCorr_Pair[3]/17))
-Map56_MapProp_Pairs
-	#COMPARING TO CHANCE
-	Map56_QN <- wilcox.test(Map56$AvgCorrect_Quantity.Numeral, mu = .25, alternative = "greater") 
-Map56_QW <- wilcox.test(Map56$Sum_Quantity.Word_Word.Quantity, mu = .25, alternative = "greater") 
-Map56_NW <- wilcox.test(Map56$Sum_Numeral.Word_Word.Numeral, mu = .25, alternative = "greater") 
-Map56_QN
-Map56_QW
-Map56_NW
-##7 + YO:
-Map7up_AvgCorr_Pair <- colMeans(subset(Map7up, select = c(Sum_Quantity.Numeral_Numeral.Quantity, Sum_Quantity.Word_Word.Quantity,Sum_Numeral.Word_Word.Numeral)), na.rm = TRUE)
-Map7up_MapProp_Pairs <- c((Map7up_AvgCorr_Pair[1]/17), (Map7up_AvgCorr_Pair[2]/17), (Map7up_AvgCorr_Pair[3]/17))
-Map7up_MapProp_Pairs
-	#COMPARING TO CHANCE
-	Map7up_QN <- wilcox.test(Map7up$AvgCorrect_Quantity.Numeral, mu = .25, alternative = "greater") 
-Map7up_QW <- wilcox.test(Map7up$Sum_Quantity.Word_Word.Quantity, mu = .25, alternative = "greater") 
-Map7up_NW <- wilcox.test(Map7up$Sum_Numeral.Word_Word.Numeral, mu = .25, alternative = "greater") 
-Map7up_QN
-Map7up_QW
-Map7up_NW
 
