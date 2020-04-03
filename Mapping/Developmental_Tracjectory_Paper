@@ -346,12 +346,7 @@ All_BV
      library(lsr)
      etaSquared(aov, type=2)
 
+#T-tests evaluating the interaction between age and map pairs
 
 
 
-     #REGRESSION FOR SES ON MAPPING PERFORMANCE
-     SES <- Total_Inc_Study$SES_range_8_to_66 
-     REG = lm(Total_Inc_Study$SumCorrectTotal_All ~ SES, data =Total_Inc_Study)
-     anova(REG)
-     etaSquared(REG,type = 1, anova = TRUE)
-   
