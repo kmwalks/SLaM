@@ -347,16 +347,7 @@ All_BV
      etaSquared(aov, type=2)
 
 #T-tests evaluating the interaction between age and map pairs
-
-
-#SETTING UP
-#create a column for age group
-Map_HBE$AgeGrp <- ifelse(Map_HBE$Age_Rounded < 7, "5- and 6-year-olds", "7 and up")
-
-Map56 <- subset(Map_HBE, Map_HBE$AgeGrp =="5- and 6-year-olds")
-Map7up <- subset(Map_HBE, Map_HBE$AgeGrp =="7 and up")
-
-#RAW NUMBER correct & PROPORTION correct, THESE ARE FOR TABLES
+#RAW NUMBER correct & PROPORTION correct, TABLES
 Map56AvgCorr <- colMeans(subset(Map56, select = c(SumTotal_QuantityNumeral, SumTotal_NumeralQuantity, SumTotal_QuantityWord, SumTotal_WordQuantity, SumTotal_NumeralWord, SumTotal_WordNumeral)), na.rm = TRUE) 
 Map56AvgCorr
 Map56Means <- c((Map56AvgCorr[1]/9), (Map56AvgCorr[2]/8), (Map56AvgCorr[3]/9), (Map56AvgCorr[4]/8), (Map56AvgCorr[5]/9), (Map56AvgCorr[6]/8))
