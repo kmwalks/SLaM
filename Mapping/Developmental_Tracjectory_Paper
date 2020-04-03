@@ -388,12 +388,6 @@ All_BV
 	    cohen.d(Map56$Sum_Numeral.Word_Word.Numeral, Map7up$Sum_Numeral.Word_Word.Numeral,pooled=TRUE,paired=FALSE, na.rm=FALSE, hedges.correction=FALSE, conf.level=0.95,noncentral=FALSE) 
      
       #Age Group comparisons ACROSS mapping pairs
-	mean(Map56$Sum_Numeral.Word_Word.Numeral) 
-	mean(Map7up$Sum_Numeral.Word_Word.Numeral) 
-	mean(Map56$Sum_Quantity.Numeral_Numeral.Quantity) 
-	mean(Map7up$Sum_Quantity.Numeral_Numeral.Quantity) 
-	mean(Map56$Sum_Quantity.Word_Word.Quantity) 
-	mean(Map7up$Sum_Numeral.Word_Word.Numeral)
 	  #QN vs NW
 	      #5 and 6
 	      t.test(Map56$Sum_Quantity.Numeral_Numeral.Quantity,Map56$Sum_Numeral.Word_Word.Numeral, paired = TRUE, alternative = "two.sided")
