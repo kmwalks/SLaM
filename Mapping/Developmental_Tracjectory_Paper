@@ -366,34 +366,39 @@ All_BV
 	wilcox.test(Map7up$Sum_Quantity.Word_Word.Quantity, mu = .25, alternative = "greater") 
 	wilcox.test(Map7up$Sum_Numeral.Word_Word.Numeral, mu = .25, alternative = "greater") 
 	
-	#T-TESTS
-	
-	 ## t-tests and Cohen’s d, paired t-test (same sample, different variables) ##
-     install.packages("effsize") #compute cohen's d
-     library(effsize)
+	#Paired t-tests (same sample, different variables)
+	     install.packages("effsize") #compute cohen's d
+	     library(effsize)
      
-     ## MAPPING PAIRS MEANS ##
-     mean(Map_HBE$Sum_Quantity.Numeral_Numeral.Quantity)
-     mean(Map_HBE$Sum_Numeral.Word_Word.Numeral)
-     mean(Map_HBE$Sum_Quantity.Word_Word.Quantity)
+        #Age Group comparisons WITHIN mapping pairs
+	    #QN
+	    t.test(Map56$Sum_Quantity.Numeral_Numeral.Quantity,Map7up$Sum_Quantity.Numeral_Numeral.Quantity, paired = FALSE, alternative = "two.sided") 
+	    mean(Map56$Sum_Quantity.Numeral_Numeral.Quantity)
+	    mean(Map7up$Sum_Quantity.Numeral_Numeral.Quantity) 
+	    cohen.d(Map56$Sum_Quantity.Numeral_Numeral.Quantity,Map7up$Sum_Quantity.Numeral_Numeral.Quantity,pooled=TRUE,paired=FALSE, na.rm=FALSE, hedges.correction=FALSE, conf.level=0.95,noncentral=FALSE) 
+	    #QW
+	    t.test(Map56$Sum_Quantity.Word_Word.Quantity,Map7up$Sum_Quantity.Word_Word.Quantity, paired = FALSE, alternative = "two.sided") 
+	    mean(Map56$Sum_Quantity.Word_Word.Quantity) 
+	    mean(Map7up$Sum_Quantity.Word_Word.Quantity) 
+	    cohen.d(Map56$Sum_Quantity.Word_Word.Quantity,Map7up$Sum_Quantity.Word_Word.Quantity,pooled=TRUE,paired=FALSE, na.rm=FALSE, hedges.correction=FALSE, conf.level=0.95,noncentral=FALSE) 
+	    #NW
+	    t.test(Map56$Sum_Numeral.Word_Word.Numeral, Map7up$Sum_Numeral.Word_Word.Numeral, paired = FALSE, alternative = "two.sided") 
+	    mean(Map56$Sum_Numeral.Word_Word.Numeral) 
+	    mean(Map7up$Sum_Numeral.Word_Word.Numeral) 
+	    cohen.d(Map56$Sum_Numeral.Word_Word.Numeral, Map7up$Sum_Numeral.Word_Word.Numeral,pooled=TRUE,paired=FALSE, na.rm=FALSE, hedges.correction=FALSE, conf.level=0.95,noncentral=FALSE) 
      
-     ## AGE GROUP MEANS ##
-     mean(age7.data$value)
-     mean(age56.data$value)
-     t.test(Map56$AvgCorrect_Total, Map7up$AvgCorrect_Total, paired = TRUE, alternative = "two.sided") #OLDER AGE GROUP BETTER OVERALL
-     cohen.d(Map56$AvgCorrect_Total, Map7up$AvgCorrect_Total,pooled=TRUE,paired=FALSE, na.rm=FALSE, hedges.correction=FALSE, conf.level=0.95,noncentral=FALSE)
-     
-    ## QN vs QW ##
-    t.test(Map_HBE$Sum_Quantity.Numeral_Numeral.Quantity, Map_HBE$Sum_Quantity.Word_Word.Quantity, paired = TRUE, alternative = "two.sided")
-    cohen.d(Map_HBE$Sum_Quantity.Numeral_Numeral.Quantity,Map_HBE$Sum_Quantity.Word_Word.Quantity,pooled=TRUE,paired=FALSE, na.rm=FALSE, hedges.correction=FALSE, conf.level=0.95,noncentral=FALSE)
+      #Age Group comparisons ACROSS mapping pairs
+	    ## QN vs QW ##
+	    t.test(Map_HBE$Sum_Quantity.Numeral_Numeral.Quantity, Map_HBE$Sum_Quantity.Word_Word.Quantity, paired = TRUE, alternative = "two.sided")
+	    cohen.d(Map_HBE$Sum_Quantity.Numeral_Numeral.Quantity,Map_HBE$Sum_Quantity.Word_Word.Quantity,pooled=TRUE,paired=FALSE, na.rm=FALSE, hedges.correction=FALSE, conf.level=0.95,noncentral=FALSE)
 
-    ## QN vs NW ##
-    t.test(Map_HBE$Sum_Quantity.Numeral_Numeral.Quantity, Map_HBE$Sum_Numeral.Word_Word.Numeral, paired = TRUE, alternative = "two.sided")
-    cohen.d(Map_HBE$Sum_Quantity.Numeral_Numeral.Quantity, Map_HBE$Sum_Numeral.Word_Word.Numeral,pooled=TRUE,paired=FALSE, na.rm=FALSE, hedges.correction=FALSE, conf.level=0.95,noncentral=FALSE)
-    
-    ## NW vs QW ##
-    t.test(Map_HBE$Sum_Numeral.Word_Word.Numeral, Map_HBE$Sum_Quantity.Word_Word.Quantity, paired = TRUE, alternative = "two.sided")
-    cohen.d(Map_HBE$Sum_Numeral.Word_Word.Numeral, Map_HBE$Sum_Quantity.Word_Word.Quantity,pooled=TRUE,paired=FALSE, na.rm=FALSE, hedges.correction=FALSE, conf.level=0.95,noncentral=FALSE)
+	    ## QN vs NW ##
+	    t.test(Map_HBE$Sum_Quantity.Numeral_Numeral.Quantity, Map_HBE$Sum_Numeral.Word_Word.Numeral, paired = TRUE, alternative = "two.sided")
+	    cohen.d(Map_HBE$Sum_Quantity.Numeral_Numeral.Quantity, Map_HBE$Sum_Numeral.Word_Word.Numeral,pooled=TRUE,paired=FALSE, na.rm=FALSE, hedges.correction=FALSE, conf.level=0.95,noncentral=FALSE)
+
+	    ## NW vs QW ##
+	    t.test(Map_HBE$Sum_Numeral.Word_Word.Numeral, Map_HBE$Sum_Quantity.Word_Word.Quantity, paired = TRUE, alternative = "two.sided")
+	    cohen.d(Map_HBE$Sum_Numeral.Word_Word.Numeral, Map_HBE$Sum_Quantity.Word_Word.Quantity,pooled=TRUE,paired=FALSE, na.rm=FALSE, hedges.correction=FALSE, conf.level=0.95,noncentral=FALSE)
     
 
 
