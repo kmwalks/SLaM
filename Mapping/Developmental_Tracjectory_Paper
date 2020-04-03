@@ -323,40 +323,32 @@ All_BV <- ggplot(B, aes(B$Map, B$value, fill=B$AgeGrp)) + geom_violin (position 
 All_BV
 
 
-#ANOVAS
-
-#CHANGE FOR THESE BELOW TO BE ALL IN ONE ANOVA!
-
-
-     ## AGE GROUP (2 LEVELS) --> SUM SCORES? One-way ANOVA unbalanced (different sample sizes), between subjects design ##
-     aov_age<- aov(BOOYAH$mean ~ BOOYAH$AgeGrp)
-     summary(aov_age)
-     tuk_age<- TukeyHSD(aov_age)
-     tuk_age  #can see WHICH variables are significantly different#
-
-     ## MAP PAIR (3 LEVELS) --> SUM SCORES? One-way ANOVA balanced, within subjects/repeated measures design ##
-     aov_map<- aov(BOOYAH$mean ~ BOOYAH$Map)
-     summary(aov_map)
-     tuk_map<- TukeyHSD(aov_map)
-     tuk_map #can see WHICH variables are significantly different#
-
-     ## INTERACTION BETWEEN INDEPENDENT VARIABLES? ##
-     ## Source: https://rcompanion.org/handbook/G_09.html ##
-     install.packages("car")
-     library(car)
-     model = lm(BOOYAH$mean ~ BOOYAH$AgeGrp + BOOYAH$Map + BOOYAH$AgeGrp:BOOYAH$Map, data = BOOYAH)
-     anova(model)
-     
-     
-     ## ETA-SQUARED, WITH ANOVA=TRUE CAN OBTAIN ANOVA TABLES AS WELL, DOUBLE CHECK ##
-     # SOURCE: https://cran.r-project.org/web/packages/lsr/lsr.pdf #
+#ANOVA: Map Pair, Age Grp, Interaction
+      #Creating Data Frame with Summed Scores, Map Pair, and Age Grp
+      which(colnames(Map_HBE)=="Difference_Numeral.Word_Word.Numeral" #323
+      HBE_AOV <- Map_HBE[, -c(1:323)] 
+      View(HBE_AOV)
+      HBE_AOV <- pivot_longer(data = HBE_AOV, cols=c(starts_with("Sum")), names_to = c("Type"), values_to = "Sum Correct Per Map Pair")
+      View(HBE_AOV) 
+      Map_Pair <- c()
+      for(i in 1:141)
+          Map_Pair[i] <- ifelse(grepl("Sum_Numeral.Word_Word.Numeral", HBE_AOV$Type[i]), "Numeral-Word", ifelse(grepl("Sum_Quantity.Numeral_Numeral.Quantity", HBE_AOV$Type[i]), "Quantity-Numeral", ifelse(grepl("Sum_Quantity.Word_Word.Quantity", HBE_AOV$Type[i]), "Quantity-Word", "bananas")))
+      HBE_AOV <- cbind(HBE_AOV, Map_Pair)
+      View(HBE_AOV)
+      #Running the ANOVA
+      aov <- aov(`Sum Correct Per Map Pair` ~ Map_Pair + AgeGrp + Map_Pair:AgeGrp, data = HBE_AOV)
+      summary(aov) 
+      TukeyHSD(aov)
+ 
+     #Obtaining ETA-SQUARED
+     #SOURCE: https://cran.r-project.org/web/packages/lsr/lsr.pdf
      install.packages("lsr")
      library(lsr)
-     
-     etaSquared(aov_age,type = 1, anova = TRUE)
-     etaSquared(aov_map,type = 1, anova = TRUE)
-     etaSquared(model,type = 2, anova = TRUE)
-     
+     etaSquared(aov, type=2)
+
+
+
+
      #REGRESSION FOR SES ON MAPPING PERFORMANCE
      SES <- Total_Inc_Study$SES_range_8_to_66 
      REG = lm(Total_Inc_Study$SumCorrectTotal_All ~ SES, data =Total_Inc_Study)
