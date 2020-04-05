@@ -612,23 +612,25 @@ All_BV
 	mean(Map79$AvgCorrect_Lrg_WN) #0.9718182
 
 	#Significantly above chance?
-	  wilcox.test(Map56$AvgCorrect_Sm_QW, mu = .25, alternative = "greater") #p-value = 
-	  wilcox.test(Map56$AvgCorrect_Med_QW, mu = .25, alternative = "greater") #p-value = 
-	 wilcox.test(Map56$AvgCorrect_Lrg_QW, mu = .25, alternative = "greater") #p-value =
-	  
-	  Map56$AvgCorrect_Sm_QN
-	  Map56$AvgCorrect_Med_QN
-	  Map56$AvgCorrect_Lrg_QN
-	  Map56$AvgCorrect_Sm_WN
-	Map56$AvgCorrect_Med_WN
-	Map56$AvgCorrect_Lrg_WN
-	Map79$AvgCorrect_Sm_QW
-	Map79$AvgCorrect_Med_QW
-	AvgCorrect_Lrg_QW
-	Map79$AvgCorrect_Sm_QN
-	Map79$AvgCorrect_Med_QN
-	Map79$AvgCorrect_Lrg_QN
-	Map79$AvgCorrect_Sm_WN
-	Map79$AvgCorrect_Med_WN
-	Map79$AvgCorrect_Lrg_WN
+	wilcox.test(Map56$AvgCorrect_Sm_QW, mu = .25, alternative = "greater") #p-value = V = 325, p-value = 1.66e-06
+	wilcox.test(Map56$AvgCorrect_Med_QW, mu = .25, alternative = "greater") #p-value = V = 273.5, p-value = 1.296e-05
+	wilcox.test(Map56$AvgCorrect_Lrg_QW, mu = .25, alternative = "greater") #p-value = V = 325, p-value = 5.945e-06
+	wilcox.test(Map56$AvgCorrect_Sm_QN, mu = .25, alternative = "greater") #p-value = V = 325, p-value = 9.825e-07
+	wilcox.test(Map56$AvgCorrect_Med_QN, mu = .25, alternative = "greater") #p-value = V = 325, p-value = 3.995e-06
+	wilcox.test(Map56$AvgCorrect_Lrg_QN, mu = .25, alternative = "greater") #p-value =  V = 325, p-value = 5.794e-06
+	wilcox.test(Map56$AvgCorrect_Sm_WN, mu = .25, alternative = "greater") #p-value = V = 325, p-value = 1.303e-06
+	wilcox.test(Map56$AvgCorrect_Med_WN, mu = .25, alternative = "greater") #p-value = V = 325, p-value = 4.831e-07
+	wilcox.test(Map56$AvgCorrect_Lrg_WN, mu = .25, alternative = "greater") #p-value = V = 325, p-value = 3.528e-06
+
+	wilcox.test(Map79$AvgCorrect_Sm_QW, mu = .25, alternative = "greater") #p-value = V = 253, p-value = 3.324e-06
+	wilcox.test(Map79$AvgCorrect_Med_QW, mu = .25, alternative = "greater") #p-value = V = 253, p-value = 5.904e-06
+	wilcox.test(Map79$AvgCorrect_Lrg_QW, mu = .25, alternative = "greater") #p-value = V = 253, p-value = 1.312e-05
+	wilcox.test(Map79$AvgCorrect_Sm_QN, mu = .25, alternative = "greater") #p-value = V = 253, p-value = 2.305e-06
+	wilcox.test(Map79$AvgCorrect_Med_QN, mu = .25, alternative = "greater") #p-value = V = 253, p-value = 2.305e-06
+	wilcox.test(Map79$AvgCorrect_Lrg_QN, mu = .25, alternative = "greater") #p-value = V = 253, p-value = 8.796e-06
+	wilcox.test(Map79$AvgCorrect_Sm_WN, mu = .25, alternative = "greater") #p-value = V = 253, p-value = 2.305e-06
+	wilcox.test(Map79$AvgCorrect_Med_WN, mu = .25, alternative = "greater") #p-value = V = 253, p-value = 3.329e-06
+	wilcox.test(Map79$AvgCorrect_Lrg_WN, mu = .25, alternative = "greater") #p-value = V = 253, p-value = 3.329e-06 
+	
+
 	
