@@ -1,24 +1,3 @@
- #MAPPING PAIRS COMPARING TO HURST, WITH YOUNGER AGES AND QUANITIES 1-5#
-    #create quantities 1-5 dataframe, adding new columns#
-    small <- mutate(Map_HBE, smWN= AvgCorrect_Sm_WN * AvgCorrect_Med_WN, smQN= AvgCorrect_Sm_QN * AvgCorrect_Med_QN, smQW= AvgCorrect_Sm_QW * AvgCorrect_Med_QW)
-    View(small)
-    #5 and  6 year olds with quantities 1-5#
-    small$AgeGrp <- ifelse(small$Age_Rounded < 7, "5- and 6-year-olds", "7 and up")
-    sm_Map56 <- subset(small, small$AgeGrp =="5- and 6-year-olds")
-    View(sm_Map56)
-    #5 year olds with quantities 1-5#
-    small$AgeGrp <- ifelse(small$Age_Rounded < 6, "5", "6 and up")
-    sm_Map5 <- subset(small, small$AgeGrp =="5")
-    View(sm_Map5)
-    ## QN vs QW ##
-    5 and 6 year olds: t.test(sm_Map56$smQN, sm_Map56$smQW, paired = TRUE, alternative = "two.sided") #t = 1.2748, df = 20, p-value = 0.217
-    5 year olds: t.test(sm_Map5$smQN, sm_Map5$smQW, paired = TRUE, alternative = "two.sided") #t = 0.92789, df = 11, p-value = 0.3734
-    ## QN vs NW ##
-    5 and 6 year olds: t.test(sm_Map56$smQN, sm_Map56$smWN, paired = TRUE, alternative = "two.sided") #t = -2.9948, df = 20, p-value = 0.007159, NW HIGHER 
-    5 year olds: NW HIGHER 
-    ## NW vs QW ##
-    5 and 6 year olds: t.test(sm_Map56$smQW, sm_Map56$smWN, paired = TRUE, alternative = "two.sided") #t = -3.1961, df = 20, p-value = 0.004537, NW HIGHER
-    5 year olds: NW HIGHER
 
 
 ## MAPPING MEANS FOR QUANTITY SIZES ##
