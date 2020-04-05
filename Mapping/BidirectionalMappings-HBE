@@ -184,11 +184,6 @@ summary(NWmodel)
          N <- nrow(Map_HBE) #gives # of observations
          (QN_1/N)*100
 
-# TESTING NORMALITY OF DIFFERENCE SCORES # 
-shapiro.test(Map_HBE$Difference_Numeral.Word_Word.Numeral)
-#ETC FOR TWO OTHER PAIRS
-
-
       
 
     #MAPPING PAIRS COMPARING TO HURST, WITH YOUNGER AGES AND QUANITIES 1-5#
