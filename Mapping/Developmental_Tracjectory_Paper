@@ -23,6 +23,7 @@ install.packages("dplyr")
 install.packages("tidyr")
 install.packages("lme4")
 install.packages("plotrix")
+install.packages("VGAM") #for tobit model
               
         
 
@@ -50,6 +51,7 @@ library(dplyr)
 library(tidyr)
 library(lme4)
 library("plotrix")
+library(VGAM)
 
 # Check and Set Working Directory
       setwd("~/Desktop")
@@ -473,5 +475,9 @@ All_BV
 	sm_NW_5 #V = 5, p-value = 0.4142
 	sm_QW_5<-wilcox.test(sm_Map5_type$sm_QW, sm_Map5_type$sm_WQ, paired = TRUE, exact=FALSE)
 	sm_QW_5 #V = 0, p-value = 0.1736
+		
+#Set size comparisons by mapping pairs and age
+	#Creating the DF
 	
-	
+
+
