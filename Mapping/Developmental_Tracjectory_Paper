@@ -412,7 +412,7 @@ All_BV
 	       t.test(Map7up$Sum_Numeral.Word_Word.Numeral, Map7up$Sum_Quantity.Word_Word.Quantity, paired = TRUE, alternative = "two.sided")
 	       cohen.d(Map7up$Sum_Numeral.Word_Word.Numeral, Map7up$Sum_Quantity.Word_Word.Quantity,pooled=TRUE,paired=FALSE, na.rm=FALSE, hedges.correction=FALSE, conf.level=0.95,noncentral=FALSE)
        
-#Analyzing Mapping Types 
+#Analyzing Mapping Types, our spreadsheet was set up prior to determining mapping type nomenclature. The mapping type names in these codes are opposite to the mapping type in our paper, i.e. numeral_word in coding is really what we refer to as word-to-numeral.
 	  # COMPARE each type to chance 
 	  wilcox.test(Map_HBE$AvgCorrect_Quantity.Numeral, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) #p-value = 4.642e-10
 	  wilcox.test(Map_HBE$AvgCorrect_Numeral.Quantity, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) #p-value = 5.379e-10
