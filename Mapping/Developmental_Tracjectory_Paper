@@ -632,12 +632,65 @@ All_BV
 	wilcox.test(Map79$AvgCorrect_Med_WN, mu = .25, alternative = "greater") #p-value = V = 253, p-value = 3.329e-06
 	wilcox.test(Map79$AvgCorrect_Lrg_WN, mu = .25, alternative = "greater") #p-value = V = 253, p-value = 3.329e-06 
 	
-#Tobit Models
+#Tobit Models, resource: https://stats.idre.ucla.edu/r/dae/tobit-models/
 	HBE_long2$AgeGrp <- ifelse(Map_HBE$Age_Rounded < 7, "5-6", "7-9")
 	HBE_long2 <-  mutate(HBE_long2, SetSize = case_when(grepl("Sm", HBE_long2$name) ~ "Small", grepl("Med", HBE_long2$name) ~"Medium", grepl("Lrg", HBE_long2$name) ~"Large"))
 	HBE_long2$Set_Size <- as.factor(factor(as.character(HBE_long2$SetSize), levels=c("Small", "Medium", "Large"), exclude=""))
+	HBE_long2 <- mutate(HBE_long2, MapPair = case_when(grepl("QW", HBE_long2$name) ~ "Quantity-Word", grepl("QN", HBE_long2$name) ~"Quantity-Numeral", grepl("WN", HBE_long2$name) ~"Numeral-Word"))
+	HBE_long2$MapPair <- as.factor(factor(as.character(HBE_long2$MapPair), levels=c("Numeral-Word","Quantity-Numeral", "Quantity-Word"), exclude=""))
 	View(HBE_long2)
-	#5-6 vs 7-9 YO model produced Hauck-Donner effects
-	summary(agegrps <- vglm(HBE_long2$Pair_Size ~ HBE_long2$Set_Size + HBE_long2$Age_Rounded, tobit(Lower=0, Upper = 1), data = HBE_long2))
+	#5-6 vs 7-9 YO model below produced Hauck-Donner effects
+	summary(agegrps <- vglm(HBE_long2$Pair_Size ~ HBE_long2$Set_Size + HBE_long2$MapPair + HBE_long2$Age_Rounded, tobit(Lower=0, Upper = 1), data = HBE_long2))
+	#5 vs 6 year olds
+	summary(agegrp56 <- vglm(HBE_short2_5$Pair_Size ~ HBE_short2_5$Set_Size + HBE_short2_5$MapPair + HBE_short2_5$AgeGrp, tobit(Lower=0, Upper = 1), data = HBE_short2_5))
+	#6-year-olds only
+	summary(nw6_t <- vglm(nw_6_only$Pair_Size ~ nw_6_only$Set_Size, tobit(Lower=0, Upper = 1), data = nw_6_only)) 
+	#Numeral-Word does not run b/c AT CEILING
+	summary(qn6_t <- vglm(qn_6_only$Pair_Size ~ qn_6_only$Set_Size, tobit(Lower=0, Upper = 1), data = qn_6_only))
+	#Checking model fit for 6 yo QN
+	qn_6_only$yhat <- fitted(qn6_t)[,1]
+	qn_6_only$rr <- resid(qn6_t, type = "response")
+	qn_6_only$rp <- resid(qn6_t, type = "pearson")[,1]
+	par(mfcol = c(2, 3))
+	with(qn_6_only, {
+	    plot(yhat, rr, main = "Fitted vs Residuals")
+	    qqnorm(rr)
+	    plot(yhat, rp, main = "Fitted vs Pearson Residuals")
+	    qqnorm(rp)
+	    plot(Pair_Size, rp, main = "Actual vs Pearson Residuals")
+	    plot(Pair_Size, yhat, main = "Actual vs Fitted")
+	})
+	r <- with(qn_6_only, cor(yhat, Pair_Size)) #0.3706062
+	r 
+	r^2 #0.1373489
+	summary(qn6_t <- vglm(qn_6_only$Pair_Size ~ qn_6_only$Set_Size_refM + qn_6_only$Age_Rounded, tobit(Lower=0, Upper = 1), data = qn_6_only))
+	summary(qw6_t <- vglm(qw_6_only$Pair_Size ~ qw_6_only$Set_Size + qw_6_only$Age_Rounded, tobit(Lower=0, Upper = 1), data = qw_6_only))
+	#Checking model fit for 6 YO QW
+	qw_6_only$yhat <- fitted(qw6_t)[,1]
+	qw_6_only$rr <- resid(qw6_t, type = "response")
+	qw_6_only$rp <- resid(qw6_t, type = "pearson")[,1]
+	par(mfcol = c(2, 3))
+	with(qw_6_only, {
+	    plot(yhat, rr, main = "Fitted vs Residuals")
+	    qqnorm(rr)
+	    plot(yhat, rp, main = "Fitted vs Pearson Residuals")
+	    qqnorm(rp)
+	    plot(Pair_Size, rp, main = "Actual vs Pearson Residuals")
+	    plot(Pair_Size, yhat, main = "Actual vs Fitted")
+	})
+	r <- with(qw_6_only, cor(yhat, Pair_Size)) #0.3188118
+	r 
+	r^2 #0.1016409
+	summary(qw6_t <- vglm(qw_6_only$Pair_Size ~ qw_6_only$Set_Size_refM + qw_6_only$Age_Rounded, tobit(Lower=0, Upper = 1), data = qw_6_only))
 	
 	
+	#5-year-olds only
+	summary(Map5_t <- vglm(Pair_Size ~ Set_Size + MapPair, tobit(Upper = 1), data = Map5))
+	summary(Map5_t <- vglm(Pair_Size ~ Set_Size_refM + MapPair, tobit(Upper = 1), data = Map5))
+	summary(nw5_t <- vglm(nw_5_only$Pair_Size ~ nw_5_only$Set_Size, tobit(Lower=0, Upper = 1), data = nw_5_only)) #convergence error, “convergence not obtained in 30 IRLS iterations”
+	summary(nw5_t <- vglm(nw_5_only$Pair_Size ~ nw_5_only$Set_Size_refM, tobit(Lower=0, Upper = 1), data = nw_5_only)) #convergence error, “convergence not obtained in 30 IRLS iterations”
+	summary(qn5_t <- vglm(qn_5_only$Pair_Size ~ qn_5_only$Set_Size, tobit(Lower=0, Upper = 1), data = qn_5_only))
+	summary(qn5_t <- vglm(qn_5_only$Pair_Size ~ qn_5_only$Set_Size_refM + qn_5_only$Age_Rounded, tobit(Lower=0, Upper = 1), data = qn_5_only))
+	summary(qw5_t <- vglm(qw_5_only$Pair_Size ~ qw_5_only$Set_Size + qw_5_only$Age_Rounded, tobit(Lower=0, Upper = 1), data = qw_5_only))
+	summary(qw5_t <- vglm(qw_5_only$Pair_Size ~ qw_5_only$Set_Size_refM + qw_5_only$Age_Rounded, tobit(Lower=0, Upper = 1), data = qw_5_only))
+
