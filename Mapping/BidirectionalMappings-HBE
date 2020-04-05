@@ -32,88 +32,6 @@ library(plyr)
 library(reshape2)
 library(plotrix)
 
-setwd("~/Desktop")
-getwd()
-
-Mapping <- read.csv("Mapping_Coding_CH_191119.csv", na.strings = "N/A")
- 
-typeof(Mapping) # when importing using read.csv, resulting obj type is a list (data frame)
-View(Mapping)
-
-####HEARING KIDS ONLY####
-
-Map_HBE <- subset(Mapping, Mapping$Including.in.Study == 'Yes' & Mapping$Coded. == "Yes" & Mapping$Hearing_Cat == 'Hearing')
-View(Map_HBE)
-str(Map_HBE)
-
-
-# TESTING AGE GROUP DIFFERENCES #
-boxplot(Map_HBE$AvgCorrect_Total~Map_HBE$AgeGrp,data=Map_HBE, xlab="Age Groups", ylab="Average Performance")
- #TESTING VARIANCES#
- #http://www.sthda.com/english/wiki/f-test-compare-two-variances-in-r
- res.ftest <- var.test(Map_HBE$AvgCorrect_Total~Map_HBE$AgeGrp, data = Map_HBE) #NOT SIG… 
- leveneTest(Map_HBE$AvgCorrect_Total~Map_HBE$AgeGrp, data=Map_HBE)  #NOT SIG
- fligner.test(Map_HBE$AvgCorrect_Total~Map_HBE$AgeGrp, data=Map_HBE) # chi-squared = 3.9292, df = 1, p-value = 0.04745, SIG DIFF
- #Correlations for age and percent correct for each mapping type#
-  install.packages("ggpubr")
-  library("ggpubr")
-  #ALL SIX TYPES
-  cor.test(Map_HBE$Age_Rounded, Map_HBE$AvgCorrect_Word.Quantity, method=c("pearson", "kendall", "spearman")) #t = 2.962, df = 40, p-value = 0.005123
-  cor.test(Map_HBE$Age_Rounded, Map_HBE$AvgCorrect_Quantity.Word, method=c("pearson", "kendall", "spearman")) #t = 2.6532, df = 40, p-value = 0.01138
-  cor.test(Map_HBE$Age_Rounded, Map_HBE$AvgCorrect_Quantity.Numeral, method=c("pearson", "kendall", "spearman")) #t = 2.9464, df = 40, p-value = 0.005339
-  cor.test(Map_HBE$Age_Rounded, Map_HBE$AvgCorrect_Numeral.Quantity, method=c("pearson", "kendall", "spearman")) #t = 3.7277, df = 40, p-value = 0.000598
-  cor.test(Map_HBE$Age_Rounded, Map_HBE$AvgCorrect_Numeral.Word, method=c("pearson", "kendall", "spearman")) #t = 3.4694, df = 40, p-value = 0.001264
-  cor.test(Map_HBE$Age_Rounded, Map_HBE$AvgCorrect_Word.Numeral, method=c("pearson", "kendall", "spearman")) #t = 0.801, df = 40, p-value = 0.4279
-  #ALL 3 PAIRS
-  cor.test(Map_HBE$Age_Rounded, Map_HBE$AvgCorrect_Quantity.Numeral_Numeral.Quantity, method=c("pearson", "kendall", "spearman")) #t = 3.9084, df = 40, p-value = 0.0003501
-  cor.test(Map_HBE$Age_Rounded, Map_HBE$AvgCorrect_Quantity.Word_Word.Quantity, method=c("pearson", "kendall", "spearman")) #t = 3.4769, df = 40, p-value = 0.001237
-  cor.test(Map_HBE$Age_Rounded, Map_HBE$AvgCorrect_Numeral.Word_Word.Numeral, method=c("pearson", "kendall", "spearman")) #t = 1.7641, df = 40, p-value = 0.08535
-
-
-## MEDIAN AND SD FOR EACH MAPPING TYPE #
-median(Map_HBE$SumTotal_QuantityWord)
-sd(Map_HBE$SumTotal_QuantityWord, na.rm = TRUE)
-median(Map_HBE$SumTotal_WordQuantity)
-sd(Map_HBE$SumTotal_WordQuantity, na.rm = TRUE)
-median(Map_HBE$SumTotal_QuantityNumeral)
-sd(Map_HBE$SumTotal_QuantityNumeral, na.rm = TRUE)
-median(Map_HBE$SumTotal_NumeralQuantity)
-sd(Map_HBE$SumTotal_NumeralQuantity, na.rm = TRUE)
-median(Map_HBE$SumTotal_WordNumeral)
-sd(Map_HBE$SumTotal_WordNumeral, na.rm = TRUE)
-median(Map_HBE$SumTotal_NumeralWord)
-sd(Map_HBE$SumTotal_NumeralWord, na.rm = TRUE)
-
-## ASYMMETRIES? ## 
-  #QUANTITY-WORD#
-      QW<-wilcox.test(Map_HBE$SumTotal_QuantityWord, Map_HBE$SumTotal_WordQuantity, paired = TRUE, exact=FALSE)
-      QW
-      QW_Zstat<-qnorm(QW$p.value/2)
-      QW_Zstat
-      abs(QW_Zstat)/sqrt(17) #calculates r value
-      
-  #QUANTITY-NUMERAL#
-      QN<-wilcox.test(Map_HBE$SumTotal_QuantityNumeral, Map_HBE$SumTotal_NumeralQuantity, paired = TRUE, exact=FALSE)
-      QN
-      QN_Zstat<-qnorm(QN$p.value/2)
-      QN_Zstat
-      abs(QN_Zstat)/sqrt(17)
-      
-  #WORD-NUMERAL#
-      WN<-wilcox.test(Map_HBE$SumTotal_WordNumeral, Map_HBE$SumTotal_NumeralWord, paired = TRUE, exact=FALSE)
-      WN
-      WN_Zstat<-qnorm(WN$p.value/2)
-      WN_Zstat
-      abs(WN_Zstat)/sqrt(17)
- 
- #Asymmetries x Ages#
-QW_56<-wilcox.test(Map56$SumTotal_QuantityWord, Map56$SumTotal_WordQuantity, paired = TRUE, exact=FALSE) #SIG
-QW_7up<-wilcox.test(Map7up$SumTotal_QuantityWord, Map7up$SumTotal_WordQuantity, paired = TRUE, exact=FALSE) #SIG
-QN_56<-wilcox.test(Map56$SumTotal_QuantityNumeral, Map56$SumTotal_NumeralQuantity, paired = TRUE, exact=FALSE) #SIG
-QN_7up<-wilcox.test(Map7up$SumTotal_QuantityNumeral, Map7up$SumTotal_NumeralQuantity, paired = TRUE, exact=FALSE) #SIG
-WN_56<-wilcox.test(Map56$SumTotal_WordNumeral, Map56$SumTotal_NumeralWord, paired = TRUE, exact=FALSE) #SIG
-WN_7up<-wilcox.test(Map7up$SumTotal_WordNumeral, Map7up$SumTotal_NumeralWord, paired = TRUE, exact=FALSE) #SIG
- 
  
  ## DEVELOMENTAL TRAJECTORY RESULTS FOR FIGURE##
 #5 YO, 1-5 QUANTITIES#
@@ -199,7 +117,6 @@ t.test(large_Map56$lrgWN,large_Map56$lrgQW, paired = TRUE, alternative = "two.si
 mean(large_Map56$lrgWN) #0.9304762
 mean(large_Map56$lrgQN) #0.787619
 mean(large_Map56$lrgQW) #0.7580952
-
  
  
 # SCATTER PLOTS OF MAPPING PAIRS # 
@@ -398,41 +315,4 @@ shapiro.test(Map_HBE$Difference_Numeral.Word_Word.Numeral)
       cohen.d(Map56$AvgCorrect_Med_WN,Map56$AvgCorrect_Lrg_WN, pooled=TRUE,paired=FALSE, na.rm=FALSE, hedges.correction=FALSE, conf.level=0.95,noncentral=FALSE)
       t.test(Map7up$AvgCorrect_Med_WN,Map7up$AvgCorrect_Lrg_WN, paired = TRUE, alternative = "two.sided")
       cohen.d(Map7up$AvgCorrect_Med_WN,Map7up$AvgCorrect_Lrg_WN, pooled=TRUE,paired=FALSE, na.rm=FALSE, hedges.correction=FALSE, conf.level=0.95,noncentral=FALSE)
-    
-       
-    
-
-# T TESTS FOR MAPPING TYPES! #
-
-# 5 and 6 YOs
-wilcox.test(Map56$AvgCorrect_Quantity.Numeral, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) #YES, p-value = 2.54e-05
-wilcox.test(Map56$AvgCorrect_Numeral.Quantity, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) #YES, p-value = 2.784e-05
-wilcox.test(Map56$SumTotal_QuantityNumeral, Map56$SumTotal_NumeralQuantity, paired=TRUE, exact=FALSE) # ASYMMETRY? Quantity numeral better than numeral quantity? 
-#YES, p-value = p-value = 0.001521
-
-wilcox.test(Map56$AvgCorrect_Quantity.Word, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) #YES, p-value = 2.612e-05
-wilcox.test(Map56$AvgCorrect_Word.Quantity, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) #YES, p-value = 2.956e-05
-wilcox.test(Map56$SumTotal_QuantityWord, Map56$SumTotal_WordQuantity, paired=TRUE, exact=FALSE) # ASYMMETRY? Quantity word better than word quantity?
-#YES, p-value = 0.0009956
-
-wilcox.test(Map56$AvgCorrect_Word.Numeral, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) #YES, p-value = 1.905e-05
-wilcox.test(Map56$AvgCorrect_Numeral.Word, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) #YES, p-value = 1.396e-05
-wilcox.test(Map56$SumTotal_NumeralWord, Map56$SumTotal_WordNumeral, paired=TRUE, exact=FALSE) # ASYMMETRY?  Numeral word better than word numeral?
-#YES, p-value = 0.0002018
-
-# 7-9 YOs
-
-wilcox.test(Map7up$AvgCorrect_Quantity.Numeral, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) #YES, V = 231, p-value = 7.534e-06
-wilcox.test(Map7up$AvgCorrect_Numeral.Quantity, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) #YES, V = 231, p-value = 1.204e-05
-wilcox.test(Map7up$SumTotal_QuantityNumeral, Map7up$SumTotal_NumeralQuantity, paired=TRUE, exact=FALSE) # ASYMMETRY? Quantity numeral better than numeral quantity?
-#YES, V = 190, p-value = 6.333e-05
-
-wilcox.test(Map7up$AvgCorrect_Quantity.Word, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) #YES, V = 231, p-value = 7.573e-06
-wilcox.test(Map7up$AvgCorrect_Word.Quantity, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) #YES, V = 231, p-value = 1.925e-05
-wilcox.test(Map7up$SumTotal_QuantityWord, Map7up$SumTotal_WordQuantity, paired=TRUE, exact=FALSE) # ASYMMETRY? Quantity word better than word quantity?
-#YES, V = 210, p-value = 4.749e-05
-
-wilcox.test(Map7up$AvgCorrect_Word.Numeral, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) #YES, V = 210, p-value = 1.255e-05
-wilcox.test(Map7up$AvgCorrect_Numeral.Word, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) #YES, V = 231, p-value = 2.525e-06
-wilcox.test(Map7up$SumTotal_NumeralWord, Map7up$SumTotal_WordNumeral, paired=TRUE, exact=FALSE) # ASYMMETRY?  Numeral word better than word numeral?
-#YES, V = 231, p-value = 1.952e-05
+ 
