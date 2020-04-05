@@ -586,16 +586,49 @@ All_BV
 	grid.arrange(yo_5,yo_6,ncol=1)
 
 #Means for Set Sizes across map pairs & 2 age groups
+	Map56 <- subset(Map_HBE, Map_HBE$Age_Rounded < 7)
+	Map79 <- subset(Map_HBE, Map_HBE$Age_Rounded >= 7)
+	View(Map56)
+	View(Map79)
+	
+	mean(Map56$AvgCorrect_Sm_QW) #0.9432
+	mean(Map56$AvgCorrect_Med_QW) #0.78
+	mean(Map56$AvgCorrect_Lrg_QW) #0.7424
+	mean(Map56$AvgCorrect_Sm_QN) #0.9632
+	mean(Map56$AvgCorrect_Med_QN) #0.85
+	mean(Map56$AvgCorrect_Lrg_QN) #0.7768
+	mean(Map56$AvgCorrect_Sm_WN) #0.9632
+	mean(Map56$AvgCorrect_Med_WN) #0.99
+	mean(Map56$AvgCorrect_Lrg_WN) #0.9416
+	
+	mean(Map79$AvgCorrect_Sm_QW) #0.9772727
+	mean(Map79$AvgCorrect_Med_QW) #0.9431818
+	mean(Map79$AvgCorrect_Lrg_QW) #0.9331818
+	mean(Map79$AvgCorrect_Sm_QN) #0.9922727
+	mean(Map79$AvgCorrect_Med_QN) #0.9886364
+	mean(Map79$AvgCorrect_Lrg_QN) #0.9613636
+	mean(Map79$AvgCorrect_Sm_WN) #0.9886364
+	mean(Map79$AvgCorrect_Med_WN) #0.9659091
+	mean(Map79$AvgCorrect_Lrg_WN) #0.9718182
 
-
-
-#Significantly above chance?
-
-	  wilcox.test(Map_HBE$AvgCorrect_Quantity.Numeral, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) #p-value = 4.642e-10
-	  wilcox.test(Map_HBE$AvgCorrect_Numeral.Quantity, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) #p-value = 5.379e-10
-	  wilcox.test(Map_HBE$AvgCorrect_Quantity.Word, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) #p-value = 4.401e-10
-	  wilcox.test(Map_HBE$AvgCorrect_Word.Quantity, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) #p-value = 8.511e-10
-	  wilcox.test(Map_HBE$AvgCorrect_Word.Numeral, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) #p-value = 2.106e-10
-	  wilcox.test(Map_HBE$AvgCorrect_Numeral.Word, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) #p-value = 3.737e-11
-
-
+	#Significantly above chance?
+	  wilcox.test(Map56$AvgCorrect_Sm_QW, mu = .25, alternative = "greater") #p-value = 
+	  wilcox.test(Map56$AvgCorrect_Med_QW, mu = .25, alternative = "greater") #p-value = 
+	 wilcox.test(Map56$AvgCorrect_Lrg_QW, mu = .25, alternative = "greater") #p-value =
+	  
+	  Map56$AvgCorrect_Sm_QN
+	  Map56$AvgCorrect_Med_QN
+	  Map56$AvgCorrect_Lrg_QN
+	  Map56$AvgCorrect_Sm_WN
+	Map56$AvgCorrect_Med_WN
+	Map56$AvgCorrect_Lrg_WN
+	Map79$AvgCorrect_Sm_QW
+	Map79$AvgCorrect_Med_QW
+	AvgCorrect_Lrg_QW
+	Map79$AvgCorrect_Sm_QN
+	Map79$AvgCorrect_Med_QN
+	Map79$AvgCorrect_Lrg_QN
+	Map79$AvgCorrect_Sm_WN
+	Map79$AvgCorrect_Med_WN
+	Map79$AvgCorrect_Lrg_WN
+	
