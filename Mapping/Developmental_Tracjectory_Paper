@@ -416,12 +416,12 @@ All_BV
        
 #Analyzing Mapping Types, our spreadsheet was set up prior to determining mapping type nomenclature. The mapping type names in these codes are opposite to the mapping type in our paper, i.e. numeral_word in coding is really what we refer to as word-to-numeral.
 	  # COMPARE each type to chance 
-	  wilcox.test(Map_HBE$AvgCorrect_Quantity.Numeral, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) #p-value = 4.642e-10
-	  wilcox.test(Map_HBE$AvgCorrect_Numeral.Quantity, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) #p-value = 5.379e-10
-	  wilcox.test(Map_HBE$AvgCorrect_Quantity.Word, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) #p-value = 4.401e-10
-	  wilcox.test(Map_HBE$AvgCorrect_Word.Quantity, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) #p-value = 8.511e-10
-	  wilcox.test(Map_HBE$AvgCorrect_Word.Numeral, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) #p-value = 2.106e-10
-	  wilcox.test(Map_HBE$AvgCorrect_Numeral.Word, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) #p-value = 3.737e-11
+	  wilcox.test(Map_HBE$AvgCorrect_Quantity.Numeral, mu = .25, alternative = "greater") #p-value = 4.642e-10
+	  wilcox.test(Map_HBE$AvgCorrect_Numeral.Quantity, mu = .25, alternative = "greater") #p-value = 5.379e-10
+	  wilcox.test(Map_HBE$AvgCorrect_Quantity.Word, mu = .25, alternative = "greater") #p-value = 4.401e-10
+	  wilcox.test(Map_HBE$AvgCorrect_Word.Quantity, mu = .25, alternative = "greater") #p-value = 8.511e-10
+	  wilcox.test(Map_HBE$AvgCorrect_Word.Numeral, mu = .25, alternative = "greater") #p-value = 2.106e-10
+	  wilcox.test(Map_HBE$AvgCorrect_Numeral.Word, mu = .25, alternative = "greater") #p-value = 3.737e-11
 	  
 	  #Scatterplots of Proportion Corrects for Mapping Types 
 	  nq <- ggplot(Map_HBE, aes(x=Map_HBE$Age_Rounded, y=Map_HBE$AvgCorrect_Quantity.Numeral)) + geom_point() + geom_smooth(method="loess", se = FALSE) + labs(x="Age (Years)", y="Numeral-Quantity", title = "A") + theme(text = element_text(size=11)) + coord_cartesian(xlim = c(5, 10), ylim= c(0.4,1)) + scale_y_continuous(breaks=c(0.5, 0.6, 0.7, 0.8, 0.9, 1)) + scale_x_continuous(breaks=c(5, 6, 7, 8, 9))
@@ -584,3 +584,18 @@ All_BV
 	yo_5 <- grid.arrange(qn_5_only_box,qw_5_only_box,nw_5_only_box, ncol = 3, top=textGrob("5-year-olds (n=15)", gp=gpar(fontsize=16,fontface = "bold",fontfamily="Times")))
 	yo_6 <- grid.arrange(qn_6_only_box,qw_6_only_box,nw_6_only_box, ncol = 3, top=textGrob("6-year-olds (n=10)", gp=gpar(fontsize=16,fontface = "bold",fontfamily="Times")))
 	grid.arrange(yo_5,yo_6,ncol=1)
+
+#Means for Set Sizes across map pairs & 2 age groups
+
+
+
+#Significantly above chance?
+
+	  wilcox.test(Map_HBE$AvgCorrect_Quantity.Numeral, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) #p-value = 4.642e-10
+	  wilcox.test(Map_HBE$AvgCorrect_Numeral.Quantity, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) #p-value = 5.379e-10
+	  wilcox.test(Map_HBE$AvgCorrect_Quantity.Word, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) #p-value = 4.401e-10
+	  wilcox.test(Map_HBE$AvgCorrect_Word.Quantity, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) #p-value = 8.511e-10
+	  wilcox.test(Map_HBE$AvgCorrect_Word.Numeral, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) #p-value = 2.106e-10
+	  wilcox.test(Map_HBE$AvgCorrect_Numeral.Word, mu = .25, alternative = "greater") # is median numeral correct significantly greater than chance (0.25) #p-value = 3.737e-11
+
+
