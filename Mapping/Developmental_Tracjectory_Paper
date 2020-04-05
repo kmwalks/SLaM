@@ -455,5 +455,24 @@ All_BV
 	shapiro.test(Map_HBE$Difference_Quantity.Numeral_Numeral.Quantity) #W = 0.83811, p-value = 1.276e-05
 	shapiro.test(Map_HBE$Difference_Quantity.Word_Word.Quantity) #W = 0.91952, p-value = 0.003215
 
+	#Are there still asymmetries for the youngest children (5-year-olds) & quantities 1-5 (comparing to Hurst et al. 2017)
+	small <- mutate(Map_HBE, smWN= AvgCorrect_Sm_WN * AvgCorrect_Med_WN, smQN= AvgCorrect_Sm_QN * AvgCorrect_Med_QN, smQW= AvgCorrect_Sm_QW * AvgCorrect_Med_QW)
+	View(small)
+	small$AgeGrp <- ifelse(small$Age_Rounded < 6, "5-year-olds", "6 and up")
+	sm_Map5 <- subset(small, small$AgeGrp =="5-year-olds")
+	View(sm_Map5)
 	
+	#DATA FRAME OF SMALL X MEDIUM FOR EACH MAPPING TYPE#
+	Small_type <- mutate(Map_HBE, smNQ= AvgCorrect_Sm_QuantityNumeral * AvgCorrect_Med_QuantityNumeral, smQN= AvgCorrect_Sm_NumeralQuantity * AvgCorrect_Med_NumeralQuantity, smNW= AvgCorrect_Sm_WordNumeral * AvgCorrect_Med_WordNumeral, sm_WN= AvgCorrect_Sm_NumeralWord * AvgCorrect_Med_NumeralWord, sm_WQ= AvgCorrect_Sm_QuantityWord, AvgCorrect_Med_QuantityWord, sm_QW= AvgCorrect_Sm_WordQuantity, AvgCorrect_Med_WordQuantity)
+	View(Small_type)
+	#5 year olds 1-5#
+	Small_type$AgeGrp <- ifelse(Small_type$Age_Rounded < 6, "5 year-olds", "6 and up")
+	sm_Map5_type <- subset(Small_type, Small_type$AgeGrp =="5 year-olds") 
+	View(sm_Map5_type)
 	
+	sm_QN_5<-wilcox.test(sm_Map5_type$smQN, sm_Map5_type$smNQ, paired = TRUE, exact=FALSE)
+	sm_QN_5 #p-value = 0.41 #no asymmetry for QN
+	sm_NW_5<-wilcox.test(sm_Map5_type$sm_WN, sm_Map5_type$smNW, paired = TRUE, exact=FALSE)
+	sm_NW_5 #p-value = 0.41 #no asymmetry for NW
+	sm_QW_5<-wilcox.test(sm_Map5_type$sm_QW, sm_Map5_type$sm_WQ, paired = TRUE, exact=FALSE)
+	sm_QW_5 #p-value = 0.37 #no asymmetry for QW
