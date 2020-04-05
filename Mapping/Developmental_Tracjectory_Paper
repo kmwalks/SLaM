@@ -478,6 +478,30 @@ All_BV
 		
 #Set size comparisons by mapping pairs and age
 	#Creating the DF
+	which(colnames(Map_HBE)=="AvgCorrect_Sm_QW") #312th column 
+	which(colnames(Map_HBE)=="AvgCorrect_Lrg_WN") #320th column
+	HBE_long2 <- pivot_longer(Map_HBE, cols = 312:320, values_to = "Pair_Size")
+	View(HBE_long2)
+	which(colnames(HBE_long2)=="Item1_QN_Answer") #21
+	which(colnames(HBE_long2)=="Sum_Numeral.Word_Word.Numeral") #317
+	HBE_short2 <- HBE_long2[,-c(21:317)]
+	View(HBE_short2)
+	#Add Set Size Columns
+	HBE_short2 <-  mutate(HBE_short2, SetSize = case_when(grepl("Sm", HBE_short2$name) ~ "Small", grepl("Med", HBE_short2$name) ~"Medium", grepl("Lrg", HBE_short2$name) ~"Large"))
+	HBE_short2$Set_Size <- as.factor(factor(as.character(HBE_short2$SetSize), levels=c("Small", "Medium", "Large"), exclude=""))
+	HBE_short2$Set_Size_refM <- as.factor(factor(as.character(HBE_short2$SetSize), levels=c("Medium", "Small", "Large"), exclude=""))
+	HBE_short2$Set_Size_refL <- as.factor(factor(as.character(HBE_short2$SetSize), levels=c("Large","Medium", "Small"), exclude=""))
+	#Add Map Pair Columns
+	HBE_short2 <- mutate(HBE_short2, MapPair = case_when(grepl("QW", HBE_short2$name) ~ "Quantity-Word", grepl("QN", HBE_short2$name) ~"Quantity-Numeral", grepl("WN", HBE_short2$name) ~"Numeral-Word"))
+	HBE_short2$MapPair <- as.factor(factor(as.character(HBE_short2$MapPair), levels=c("Numeral-Word","Quantity-Numeral", "Quantity-Word"), exclude=""))
+	HBE_short2$MapPair_refQN <- as.factor(factor(as.character(HBE_short2$MapPair), levels=c("Quantity-Numeral", "Quantity-Word","Numeral-Word"), exclude=""))
+	HBE_short2$MapPair_refQW <- as.factor(factor(as.character(HBE_short2$MapPair), levels=c("Quantity-Word","Numeral-Word","Quantity-Numeral"), exclude=""))
+	View(HBE_short2)
 	
+	#Creating 2 DFs for 5-year-olds and 6-year-olds
+	
+	
+
+
 
 
