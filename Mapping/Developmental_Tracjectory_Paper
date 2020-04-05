@@ -634,5 +634,10 @@ All_BV
 	
 #Tobit Models
 	HBE_long2$AgeGrp <- ifelse(Map_HBE$Age_Rounded < 7, "5-6", "7-9")
-	summary(56_vs_79 <- vglm(HBE_long2$Pair_Size ~ HBE_long2$Set_Size_refM + HBE_long2$Age_Rounded, tobit(Lower=0, Upper = 1), data = HBE_long2))
-	#NEED TO ADD Set_Size to HBE_LONG2 DF!!!
+	HBE_long2 <-  mutate(HBE_long2, SetSize = case_when(grepl("Sm", HBE_long2$name) ~ "Small", grepl("Med", HBE_long2$name) ~"Medium", grepl("Lrg", HBE_long2$name) ~"Large"))
+	HBE_long2$Set_Size <- as.factor(factor(as.character(HBE_long2$SetSize), levels=c("Small", "Medium", "Large"), exclude=""))
+	View(HBE_long2)
+	#5-6 vs 7-9 YO model produced Hauck-Donner effects
+	summary(agegrps <- vglm(HBE_long2$Pair_Size ~ HBE_long2$Set_Size + HBE_long2$Age_Rounded, tobit(Lower=0, Upper = 1), data = HBE_long2))
+	
+	
