@@ -89,7 +89,7 @@ library(VGAM)
             Missing_SES <- Total_Inc_Study[which(is.na(Total_Inc_Study$SES)),3]
             nrow(Missing_SES)
 
-            Incorrect_SES <- subset(Total_Inc_Study, Total_Inc_Study$SES < 3  & Total_Inc_Study$SES < 66 | Total_Inc_Study$SES_range_8_to_66 == "")
+            Incorrect_SES <- subset(Total_Inc_Study, Total_Inc_Study$SES < 3  & Total_Inc_Study$SES < 66 | Total_Inc_Study$SES == "")
             nrow(Incorrect_SES) #No observations of SES < 3 or > 66
                    
         # SEX 
@@ -477,7 +477,7 @@ All_BV
 	sm_QW_5 #V = 0, p-value = 0.1736
 		
 #Set size comparisons by mapping pairs and age
-	#Creating the DF
+	#Creating the DFs
 	which(colnames(Map_HBE)=="AvgCorrect_Sm_QW") #312th column 
 	which(colnames(Map_HBE)=="AvgCorrect_Lrg_WN") #320th column
 	HBE_long2 <- pivot_longer(Map_HBE, cols = 312:320, values_to = "Pair_Size")
@@ -498,10 +498,64 @@ All_BV
 	HBE_short2$MapPair_refQW <- as.factor(factor(as.character(HBE_short2$MapPair), levels=c("Quantity-Word","Numeral-Word","Quantity-Numeral"), exclude=""))
 	View(HBE_short2)
 	
-	#Creating 2 DFs for 5-year-olds and 6-year-olds
+	HBE_short2$AgeGrp <- ifelse(HBE_short2$Age_Rounded < 6, "5-year-olds", "6-year-olds")
+	Map5 <- subset(HBE_short2, HBE_short2$AgeGrp == "5-year-olds")
+	Map6 <- subset(HBE_short2, HBE_short2$AgeGrp == "6-year-olds")
+	#Create 2 DFs for 5 and 6-year-olds and 7 to 9-year-olds
+	HBE_short2$AgeGrp_5v7 <- ifelse(HBE_short2$Age_Rounded < 7, "5 and 6-year-olds", "7 to 9-year-olds")
+	View(HBE_short2)
+	HBE_short2_5 <- subset(HBE_short2, AgeGrp_5v7 == "5 and 6-year-olds")
+	View(HBE_short2_5)
+	HBE_short2_7 <- subset(HBE_short2, AgeGrp_5v7 == "7 to 9-year-olds")
+	View(HBE_short2_7) 
 	
+	qw_5 <- subset (HBE_short2_5, HBE_short2_5$MapPair == "Quantity-Word")
+	View(qw_5)
+	qn_5 <- subset (HBE_short2_5, HBE_short2_5$MapPair == "Quantity-Numeral")
+	View(qn_5)
+	nw_5 <- subset (HBE_short2_5, HBE_short2_5$MapPair == "Numeral-Word")
+	View(nw_5)
+
+	qn_5_only <- subset (qn_5, qn_5$Age_Rounded < 6)
+	View(qn_5_only)
+	qn_6_only <- subset (qn_5, qn_5$Age_Rounded >=6)
+	View(qn_6_only)
+	qw_5_only <- subset (qw_5, qw_5$Age_Rounded < 6)
+	View(qw_5_only)
+	qw_6_only <- subset (qw_5, qw_5$Age_Rounded >=6)
+	View(qw_6_only)
+	nw_5_only <- subset (nw_5, nw_5$Age_Rounded < 6)
+	View(nw_5_only)
+	nw_6_only <- subset (nw_5, nw_5$Age_Rounded >=6)
+	View(nw_6_only)
+
+	#Boxplot of 2 age groups & 3 mapping pairs (proportion correct)
+	MapPair <- HBE_short2$MapPair
+	Prop <- HBE_short2$Pair_Size
+	AgeGrp <- HBE_short2$AgeGrp
+	dodge <- position_dodge(width = 0.5)
+	ALL_B <- ggplot(HBE_short2, aes(MapPair, Prop, fill=AgeGrp)) + geom_boxplot(width=0.2, position = dodge) + scale_fill_manual(values=c("grey87", "grey51"), labels = c("5 and 6-year-olds (n=25)", "7 to 9-year-olds (n=22)")) + labs( y="Proportion Correct") + scale_y_continuous (breaks=c(0.0, 0.2, 0.4,0.6,0.8,1.0), limits = c(0,1), expand = c(0,0)) + scale_x_discrete(limits=c("Quantity-Numeral","Quantity-Word","Numeral-Word"), expand = c(.2,0),labels = c("Quantity-Numeral", "Quantity-Word", "Numeral-Word")) + theme_bw() + theme(legend.position="top", legend.title = element_blank(), axis.title.x=element_blank(), panel.border = element_blank(),panel.grid.minor.y = element_blank(), panel.grid.major.x = element_blank(), panel.grid.minor.x = element_blank(), axis.line = element_line(colour = "black"), text = element_text(size=16, family="Times New Roman")) 
+	ALL_B
+#BOX PLOTS Prop Correct for 7-9 year olds by set size#
+	qw_7 <- subset (HBE_short2_7, HBE_short2_7$MapPair == "Quantity-Word")
+	View(qw_7)
+	qn_7 <- subset (HBE_short2_7, HBE_short2_7$MapPair == "Quantity-Numeral")
+	View(qn_7)
+	nw_7 <- subset (HBE_short2_7, HBE_short2_7$MapPair == "Numeral-Word")
+	View(nw_7)
+	dodge <- position_dodge(width = 0.5)
+	qn_7_b <- ggplot(qn_7, aes(Set_Size,Pair_Size)) + geom_boxplot(width=0.2, position = dodge) + ggtitle("Quantity-Numeral") + labs( y="Proportion Correct") + scale_y_continuous (breaks=c(0.0, 0.2, 0.4,0.6,0.8,1.0), limits = c(0,1), expand = c(0,0)) + scale_x_discrete(limits=c("Small","Medium","Large"), expand = c(.2,0),labels = c("Small", "Medium", "Large")) + theme_bw() + theme(legend.position="top", plot.title=element_text(hjust = 0.5),axis.title.x=element_blank(), panel.border = element_blank(),panel.grid.minor.y = element_blank(), panel.grid.major.x = element_blank(), panel.grid.minor.x = element_blank(), axis.line = element_line(colour = "black"), text = element_text(size=16, family="Times New Roman")) 
+	qn_7_b
+	qw_7_b <- ggplot(qw_7, aes(Set_Size,Pair_Size)) + geom_boxplot(width=0.2, position = dodge) + ggtitle("Quantity-Word") + labs( y="Proportion Correct") + scale_y_continuous (breaks=c(0.0, 0.2, 0.4,0.6,0.8,1.0), limits = c(0,1), expand = c(0,0)) + scale_x_discrete(limits=c("Small","Medium","Large"), expand = c(.2,0),labels = c("Small", "Medium", "Large")) + theme_bw() + theme(legend.position="top", plot.title=element_text(hjust = 0.5),axis.title.x=element_blank(), panel.border = element_blank(),panel.grid.minor.y = element_blank(), panel.grid.major.x = element_blank(), panel.grid.minor.x = element_blank(), axis.line = element_line(colour = "black"), text = element_text(size=16, family="Times New Roman")) 
+	qw_7_b
+	nw_7_b <- ggplot(nw_7, aes(Set_Size,Pair_Size)) + geom_boxplot(width=0.2, position = dodge) + ggtitle("Numeral-Word") + labs( y="Proportion Correct") + scale_y_continuous (breaks=c(0.0, 0.2, 0.4,0.6,0.8,1.0), limits = c(0,1), expand = c(0,0)) + scale_x_discrete(limits=c("Small","Medium","Large"), expand = c(.2,0),labels = c("Small", "Medium", "Large")) + theme_bw() + theme(legend.position="top", plot.title=element_text(hjust = 0.5),axis.title.x=element_blank(), panel.border = element_blank(),panel.grid.minor.y = element_blank(), panel.grid.major.x = element_blank(), panel.grid.minor.x = element_blank(), axis.line = element_line(colour = "black"), text = element_text(size=16, family="Times New Roman")) 
+	nw_7_b
+	grid.arrange(qn_7_b,qw_7_b,nw_7_b,ncol = 3)
 	
-
-
+#5 vs 6 year olds
+	#Boxplot 5 vs 6 year olds, map pairs, proportion correct
+	dodge <- position_dodge(width = 0.5)
+	ALL_56 <- ggplot(HBE_short2_5, aes(MapPair, Pair_Size, fill=AgeGrp)) + geom_boxplot(width=0.2, position = dodge) + scale_fill_manual(values=c("grey87", "grey51"), labels = c("5-year-olds (n=15)", "6-year-olds (n=10)")) + labs( y="Proportion Correct") + scale_y_continuous (breaks=c(0.0, 0.2, 0.4,0.6,0.8,1.0), limits = c(0,1), expand = c(0,0)) + scale_x_discrete(limits=c("Quantity-Numeral","Quantity-Word","Numeral-Word"), expand = c(.2,0),labels = c("Quantity-Numeral", "Quantity-Word", "Numeral-Word")) + theme_bw() + theme(legend.position="top", legend.title = element_blank(), axis.title.x=element_blank(), panel.border = element_blank(),panel.grid.minor.y = element_blank(), panel.grid.major.x = element_blank(), panel.grid.minor.x = element_blank(), axis.line = element_line(colour = "black"), text = element_text(size=16, family="Times New Roman")) 
+	ALL_56
 
 
