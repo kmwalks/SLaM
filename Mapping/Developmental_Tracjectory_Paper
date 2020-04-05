@@ -430,57 +430,30 @@ All_BV
 	  nw <- ggplot(Map_HBE, aes(x=Map_HBE$Age_Rounded, y=Map_HBE$AvgCorrect_Word.Numeral)) + geom_point() + geom_smooth(method="loess", se = FALSE) + labs(x="Age (Years)", y="Numeral-Word", title = "F") + theme(text = element_text(size=11)) + coord_cartesian(xlim = c(5, 10), ylim= c(0.4,1)) + scale_y_continuous(breaks=c(0.5, 0.6, 0.7, 0.8, 0.9, 1)) + scale_x_continuous(breaks=c(5, 6, 7, 8, 9))
 	  grid.arrange(nq,wq,wn,qn,qw,nw,ncol = 3)
 
-
-
- #Correlations for age and percent correct for each mapping type#
-  install.packages("ggpubr")
-  library("ggpubr")
-  #ALL SIX TYPES
-  cor.test(Map_HBE$Age_Rounded, Map_HBE$AvgCorrect_Word.Quantity, method=c("pearson", "kendall", "spearman")) #t = 2.962, df = 40, p-value = 0.005123
-  cor.test(Map_HBE$Age_Rounded, Map_HBE$AvgCorrect_Quantity.Word, method=c("pearson", "kendall", "spearman")) #t = 2.6532, df = 40, p-value = 0.01138
-  cor.test(Map_HBE$Age_Rounded, Map_HBE$AvgCorrect_Quantity.Numeral, method=c("pearson", "kendall", "spearman")) #t = 2.9464, df = 40, p-value = 0.005339
-  cor.test(Map_HBE$Age_Rounded, Map_HBE$AvgCorrect_Numeral.Quantity, method=c("pearson", "kendall", "spearman")) #t = 3.7277, df = 40, p-value = 0.000598
-  cor.test(Map_HBE$Age_Rounded, Map_HBE$AvgCorrect_Numeral.Word, method=c("pearson", "kendall", "spearman")) #t = 3.4694, df = 40, p-value = 0.001264
-  cor.test(Map_HBE$Age_Rounded, Map_HBE$AvgCorrect_Word.Numeral, method=c("pearson", "kendall", "spearman")) #t = 0.801, df = 40, p-value = 0.4279
-  #ALL 3 PAIRS
-  cor.test(Map_HBE$Age_Rounded, Map_HBE$AvgCorrect_Quantity.Numeral_Numeral.Quantity, method=c("pearson", "kendall", "spearman")) #t = 3.9084, df = 40, p-value = 0.0003501
-  cor.test(Map_HBE$Age_Rounded, Map_HBE$AvgCorrect_Quantity.Word_Word.Quantity, method=c("pearson", "kendall", "spearman")) #t = 3.4769, df = 40, p-value = 0.001237
-  cor.test(Map_HBE$Age_Rounded, Map_HBE$AvgCorrect_Numeral.Word_Word.Numeral, method=c("pearson", "kendall", "spearman")) #t = 1.7641, df = 40, p-value = 0.08535
-
-
-## MEDIAN AND SD FOR EACH MAPPING TYPE #
-median(Map_HBE$SumTotal_QuantityWord)
-sd(Map_HBE$SumTotal_QuantityWord, na.rm = TRUE)
-median(Map_HBE$SumTotal_WordQuantity)
-sd(Map_HBE$SumTotal_WordQuantity, na.rm = TRUE)
-median(Map_HBE$SumTotal_QuantityNumeral)
-sd(Map_HBE$SumTotal_QuantityNumeral, na.rm = TRUE)
-median(Map_HBE$SumTotal_NumeralQuantity)
-sd(Map_HBE$SumTotal_NumeralQuantity, na.rm = TRUE)
-median(Map_HBE$SumTotal_WordNumeral)
-sd(Map_HBE$SumTotal_WordNumeral, na.rm = TRUE)
-median(Map_HBE$SumTotal_NumeralWord)
-sd(Map_HBE$SumTotal_NumeralWord, na.rm = TRUE)
-
-## ASYMMETRIES? ## 
-  #QUANTITY-WORD#
+#Asymmetries?: Comparing mapping types within a pair (i.e., numeral-to-word vs word-to-numeral)
+	#Group Comparisons
       QW<-wilcox.test(Map_HBE$SumTotal_QuantityWord, Map_HBE$SumTotal_WordQuantity, paired = TRUE, exact=FALSE)
-      QW
+      QW #V = 865.5, p-value = 1.427e-07
       QW_Zstat<-qnorm(QW$p.value/2)
       QW_Zstat
-      abs(QW_Zstat)/sqrt(17) #calculates r value
+      abs(QW_Zstat)/sqrt(17) #calculates r value, 1.27615
       
-  #QUANTITY-NUMERAL#
       QN<-wilcox.test(Map_HBE$SumTotal_QuantityNumeral, Map_HBE$SumTotal_NumeralQuantity, paired = TRUE, exact=FALSE)
-      QN
+      QN #V = 799, p-value = 8.193e-07
       QN_Zstat<-qnorm(QN$p.value/2)
       QN_Zstat
-      abs(QN_Zstat)/sqrt(17)
+      abs(QN_Zstat)/sqrt(17) #1.195876
       
-  #WORD-NUMERAL#
       WN<-wilcox.test(Map_HBE$SumTotal_WordNumeral, Map_HBE$SumTotal_NumeralWord, paired = TRUE, exact=FALSE)
-      WN
+      WN #V = 0, p-value = 1.478e-09
       WN_Zstat<-qnorm(WN$p.value/2)
       WN_Zstat
-      abs(WN_Zstat)/sqrt(17)
- 
+      abs(WN_Zstat)/sqrt(17) #1.466557
+ 	
+	#Individual Comparisons using difference scores
+	shapiro.test(Map_HBE$Difference_Numeral.Word_Word.Numeral) #W = 0.58571, p-value = 2.706e-10
+	shapiro.test(Map_HBE$Difference_Quantity.Numeral_Numeral.Quantity) #W = 0.83811, p-value = 1.276e-05
+	shapiro.test(Map_HBE$Difference_Quantity.Word_Word.Quantity) #W = 0.91952, p-value = 0.003215
+
+	
+	
