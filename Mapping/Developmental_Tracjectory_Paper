@@ -632,5 +632,7 @@ All_BV
 	wilcox.test(Map79$AvgCorrect_Med_WN, mu = .25, alternative = "greater") #p-value = V = 253, p-value = 3.329e-06
 	wilcox.test(Map79$AvgCorrect_Lrg_WN, mu = .25, alternative = "greater") #p-value = V = 253, p-value = 3.329e-06 
 	
-
-	
+#Tobit Models
+	HBE_long2$AgeGrp <- ifelse(Map_HBE$Age_Rounded < 7, "5-6", "7-9")
+	summary(56_vs_79 <- vglm(HBE_long2$Pair_Size ~ HBE_long2$Set_Size_refM + HBE_long2$Age_Rounded, tobit(Lower=0, Upper = 1), data = HBE_long2))
+	#NEED TO ADD Set_Size to HBE_LONG2 DF!!!
