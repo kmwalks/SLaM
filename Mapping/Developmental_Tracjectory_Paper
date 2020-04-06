@@ -181,6 +181,10 @@ library(VGAM)
      #Mixed Effects Logistic Regression. Resource: https://stats.idre.ucla.edu/r/dae/mixed-effects-logistic-regression/
        REG2 <- glmer(Correct ~ Age_Rounded + SES + Set_Size + Map_Pair + (1 | SUBJECT_ID), data = HBE_short, family = binomial, control = glmerControl(optimizer ="bobyqa"), nAGQ = 10)
        REG2 
+       #Obtaining Descriptives of Model
+       se <- sqrt(diag(vcov(REG2)))
+       (tab <- cbind(Est = fixef(REG2), LL = fixef(REG2) - 1.96 * se, UL = fixef(REG2) + 1.96 * se))
+       exp(tab) #provides odds ratios
         
 #Age Group Decision
       AGEGRP <- Map_HBE %>% mutate(AGEGRP = case_when(Map_HBE$Age_Rounded >= 5  & Map_HBE$Age_Rounded < 6 ~ '5', Map_HBE$Age_Rounded >= 6  & Map_HBE$Age_Rounded < 7 ~ '6', Map_HBE$Age_Rounded >= 7  & Map_HBE$Age_Rounded < 8 ~ '7', Map_HBE$Age_Rounded >= 8  & Map_HBE$Age_Rounded < 9 ~ '8', Map_HBE$Age_Rounded >= 9  & Map_HBE$Age_Rounded < 10 ~ '9'))
