@@ -177,24 +177,10 @@ library(VGAM)
                                        HBE_short$Quantity > 5 ~ 'Large')
                 HBE_short <- cbind(HBE_short,Set_Size)
                 View(HBE_short)
-                
-                
-                #BASIC LOG REG CODE... NOT APPROPRIATE? NEED MIXED EFFECTS?
-                #Run the regression, resource: https://stats.idre.ucla.edu/r/dae/logit-regression/
-                REG <- glm(Correct ~ Age_Rounded + SES + Set_Size + Map_Pair + Race + Ethnicity + M.F, data = HBE_short, family = "binomial") 
-                summary(REG)
-                exp(fixef(REG)) #provides Odds Ratios
-                #Testing Model Fit, AIC: 963.18
-                with(REG, null.deviance - deviance) #206.6286
-                with(REG, df.null - df.residual) #11, degrees of freedom for the difference between the two models is equal to the number of predictor variables in the mode
-                with(REG, pchisq(null.deviance - deviance, df.null - df.residual, lower.tail = FALSE)) #p-value = 3.127361e-38, likelihood ratio test, associated p-value of less than 0.001 tells us that our model as a whole fits significantly better than an empty model
-                logLik(REG) #log likelihood, -469.5919 (df=12)
      
-     #FOLLOWING MIXED EFFECTS CODE RUNNING, BUT LOTS OF ERRORS. Resource: https://stats.idre.ucla.edu/r/dae/mixed-effects-logistic-regression/
-        REG2 <- glmer(Correct ~ Age_Rounded + SES + Set_Size + Map_Pair + Race + Ethnicity + M.F +
-                (1 | SUBJECT_ID), data = HBE_short, family = binomial, control = glmerControl(optimizer = "bobyqa"),
-            nAGQ = 10)
-        
+     #Mixed Effects Logistic Regression. Resource: https://stats.idre.ucla.edu/r/dae/mixed-effects-logistic-regression/
+       REG2 <- glmer(Correct ~ Age_Rounded + SES + Set_Size + Map_Pair + (1 | SUBJECT_ID), data = HBE_short, family = binomial, control = glmerControl(optimizer ="bobyqa"), nAGQ = 10)
+       REG2 
         
 #Age Group Decision
       AGEGRP <- Map_HBE %>% mutate(AGEGRP = case_when(Map_HBE$Age_Rounded >= 5  & Map_HBE$Age_Rounded < 6 ~ '5', Map_HBE$Age_Rounded >= 6  & Map_HBE$Age_Rounded < 7 ~ '6', Map_HBE$Age_Rounded >= 7  & Map_HBE$Age_Rounded < 8 ~ '7', Map_HBE$Age_Rounded >= 8  & Map_HBE$Age_Rounded < 9 ~ '8', Map_HBE$Age_Rounded >= 9  & Map_HBE$Age_Rounded < 10 ~ '9'))
