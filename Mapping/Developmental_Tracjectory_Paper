@@ -644,6 +644,27 @@ All_BV
 	#5 vs 6 year olds
 	summary(agegrp56 <- vglm(HBE_short2_5$Pair_Size ~ HBE_short2_5$Set_Size + HBE_short2_5$MapPair + HBE_short2_5$AgeGrp, tobit(Lower=0, Upper = 1), data = HBE_short2_5))
 	#6-year-olds only
+	Map6 <- subset(HBE_short2_5, HBE_short2_5$AgeGrp == "6-year-olds")
+	View(Map6)
+	summary(Map6_t <- vglm(Pair_Size ~ Set_Size + MapPair, tobit(Upper = 1), data = Map6))
+	summary(Map6_t <- vglm(Pair_Size ~ Set_Size_refM + MapPair, tobit(Upper = 1), data = Map6))
+	#Checking model fit for 6 yo 
+	Map6$yhat <- fitted(Map6_t)[,1]
+	Map6$rr <- resid(Map6_t, type = "response")
+	Map6$rp <- resid(Map6_t, type = "pearson")[,1]
+	par(mfcol = c(2, 3))
+	with(Map6, {
+	    plot(yhat, rr, main = "Fitted vs Residuals")
+	    qqnorm(rr)
+	    plot(yhat, rp, main = "Fitted vs Pearson Residuals")
+	    qqnorm(rp)
+	    plot(Pair_Size, rp, main = "Actual vs Pearson Residuals")
+	    plot(Pair_Size, yhat, main = "Actual vs Fitted")
+	})
+	r <- with(Map6, cor(yhat, Pair_Size)) #0.3629535
+	r 
+	r^2 #0.3629535
+	#Looking at Map Pairs	
 	summary(nw6_t <- vglm(nw_6_only$Pair_Size ~ nw_6_only$Set_Size, tobit(Lower=0, Upper = 1), data = nw_6_only)) 
 	#Numeral-Word does not run b/c AT CEILING
 	summary(qn6_t <- vglm(qn_6_only$Pair_Size ~ qn_6_only$Set_Size, tobit(Lower=0, Upper = 1), data = qn_6_only))
@@ -683,14 +704,79 @@ All_BV
 	r^2 #0.1016409
 	summary(qw6_t <- vglm(qw_6_only$Pair_Size ~ qw_6_only$Set_Size_refM + qw_6_only$Age_Rounded, tobit(Lower=0, Upper = 1), data = qw_6_only))
 	
-	
 	#5-year-olds only
 	summary(Map5_t <- vglm(Pair_Size ~ Set_Size + MapPair, tobit(Upper = 1), data = Map5))
+	#Checking model fit for 5 yo 
+	Map5$yhat <- fitted(Map5_t)[,1]
+	Map5$rr <- resid(Map5_t, type = "response")
+	Map5$rp <- resid(Map5_t, type = "pearson")[,1]
+	par(mfcol = c(2, 3))
+	with(Map5, {
+	    plot(yhat, rr, main = "Fitted vs Residuals")
+	    qqnorm(rr)
+	    plot(yhat, rp, main = "Fitted vs Pearson Residuals")
+	    qqnorm(rp)
+	    plot(Pair_Size, rp, main = "Actual vs Pearson Residuals")
+	    plot(Pair_Size, yhat, main = "Actual vs Fitted")
+	})
+	r <- with(Map5, cor(yhat, Pair_Size)) #0.5339397
+	r 
+	r^2 #0.2850916
 	summary(Map5_t <- vglm(Pair_Size ~ Set_Size_refM + MapPair, tobit(Upper = 1), data = Map5))
-	summary(nw5_t <- vglm(nw_5_only$Pair_Size ~ nw_5_only$Set_Size, tobit(Lower=0, Upper = 1), data = nw_5_only)) #convergence error, “convergence not obtained in 30 IRLS iterations”
-	summary(nw5_t <- vglm(nw_5_only$Pair_Size ~ nw_5_only$Set_Size_refM, tobit(Lower=0, Upper = 1), data = nw_5_only)) #convergence error, “convergence not obtained in 30 IRLS iterations”
+	#Looking at Map Pairs
+	summary(nw5_t <- vglm(nw_5_only$Pair_Size ~ nw_5_only$Set_Size, tobit(Lower=0, Upper = 1), data = nw_5_only)) 
+	#Checking model fit for 5 yo NW
+	nw_5_only$yhat <- fitted(nw5_t)[,1]
+	nw_5_only$rr <- resid(nw5_t, type = "response")
+	nw_5_only$rp <- resid(nw5_t, type = "pearson")[,1]
+	par(mfcol = c(2, 3))
+	with(nw_5_only, {
+	    plot(yhat, rr, main = "Fitted vs Residuals")
+	    qqnorm(rr)
+	    plot(yhat, rp, main = "Fitted vs Pearson Residuals")
+	    qqnorm(rp)
+	    plot(Pair_Size, rp, main = "Actual vs Pearson Residuals")
+	    plot(Pair_Size, yhat, main = "Actual vs Fitted")
+	})
+	r <- with(nw_5_only, cor(yhat, Pair_Size)) #0.3517367
+	r 
+	r^2 #0.1237187
+	summary(nw5_t <- vglm(nw_5_only$Pair_Size ~ nw_5_only$Set_Size_refM, tobit(Lower=0, Upper = 1), data = nw_5_only)) 
 	summary(qn5_t <- vglm(qn_5_only$Pair_Size ~ qn_5_only$Set_Size, tobit(Lower=0, Upper = 1), data = qn_5_only))
+	#Checking model fit for 5 yo QN
+	qn_5_only$yhat <- fitted(qn5_t)[,1]
+	qn_5_only$rr <- resid(qn5_t, type = "response")
+	qn_5_only$rp <- resid(qn5_t, type = "pearson")[,1]
+	par(mfcol = c(2, 3))
+	with(qn_5_only, {
+	    plot(yhat, rr, main = "Fitted vs Residuals")
+	    qqnorm(rr)
+	    plot(yhat, rp, main = "Fitted vs Pearson Residuals")
+	    qqnorm(rp)
+	    plot(Pair_Size, rp, main = "Actual vs Pearson Residuals")
+	    plot(Pair_Size, yhat, main = "Actual vs Fitted")
+	})
+	r <- with(qn_5_only, cor(yhat, Pair_Size)) #0.54546
+	r 
+	r^2 #0.2975266
 	summary(qn5_t <- vglm(qn_5_only$Pair_Size ~ qn_5_only$Set_Size_refM + qn_5_only$Age_Rounded, tobit(Lower=0, Upper = 1), data = qn_5_only))
 	summary(qw5_t <- vglm(qw_5_only$Pair_Size ~ qw_5_only$Set_Size + qw_5_only$Age_Rounded, tobit(Lower=0, Upper = 1), data = qw_5_only))
 	summary(qw5_t <- vglm(qw_5_only$Pair_Size ~ qw_5_only$Set_Size_refM + qw_5_only$Age_Rounded, tobit(Lower=0, Upper = 1), data = qw_5_only))
+	#Checking model fit for 5 yo QW
+	qw_5_only$yhat <- fitted(qw5_t)[,1]
+	qw_5_only$rr <- resid(qw5_t, type = "response")
+	qw_5_only$rp <- resid(qw5_t, type = "pearson")[,1]
+	par(mfcol = c(2, 3))
+	with(qw_5_only, {
+	    plot(yhat, rr, main = "Fitted vs Residuals")
+	    qqnorm(rr)
+	    plot(yhat, rp, main = "Fitted vs Pearson Residuals")
+	    qqnorm(rp)
+	    plot(Pair_Size, rp, main = "Actual vs Pearson Residuals")
+	    plot(Pair_Size, yhat, main = "Actual vs Fitted")
+	})
+	r <- with(qw_5_only, cor(yhat, Pair_Size)) #0.4718548
+	r 
+	r^2 #0.2226469
+
 
