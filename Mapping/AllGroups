@@ -35,7 +35,11 @@ library(ggpubr)
       View(Map_Demo) # 215 kids ages 5-9
       #we lose 9 kids from current age restriction. 5 kids < 5 (4 are DLE & 1 HBE, will include all if change to 4.5-9). 4 kids > 9 (should not include). 
 
-#FOR DEMOGRAPHICS OF ALL POSSIBLE KIDS INCLUDING FOR MAPPING (*for paper will add: Map Include = Yes & Coded = Yes*)
+#FOR DEMOGRAPHICS OF ALL POSSIBLE KIDS INCLUDING FOR MAPPING 
+
+(*for paper will add: Map Include = Yes & Coded = Yes*)
+
+
       Total_Inc_Study <- subset(Map_Demo, Map_Demo$Including.in.Study == "Yes")
       View(Total_Inc_Study)
       # 197 total kids included in study  
