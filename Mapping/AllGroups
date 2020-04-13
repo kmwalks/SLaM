@@ -31,9 +31,8 @@ library(ggpubr)
       View(Map)   
 
 ## BASIC DEMOGRAPHICS ## 
-      Map_Demo <- subset(Map, Map$Age_Rounded>=5 & Map$Age_Rounded<=10 | is.na(Map$Age_Rounded))
-      View(Map_Demo) # 215 kids ages 5-9
-      #we lose 9 kids from current age restriction. 5 kids < 5 (4 are DLE & 1 HBE, will include all if change to 4.5-9). 4 kids > 9 (should not include). 
+      Map_Demo <- subset(Map, Map$Age_Rounded>=4.5 & Map$Age_Rounded<=10 | is.na(Map$Age_Rounded))
+      View(Map_Demo) # ?? kids ages 4.5-9
 
 #FOR DEMOGRAPHICS OF ALL POSSIBLE KIDS INCLUDING FOR MAPPING 
 
