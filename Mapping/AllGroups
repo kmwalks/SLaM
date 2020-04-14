@@ -400,6 +400,10 @@ mean.n <- function(x){return(c(y= median(x)*0.97, label = round(mean(x), 2)))}
 #VIOLIN PLOT TOTAL # CORRECT BY 4 GROUPS
 ggplot(Map_Inc, aes(x=M_Grps, y=M_SumTotalCorr, fill = M_Grps)) + geom_violin() + geom_boxplot(width = 0.2) + labs (x= "Experimental Groups", y = "Total Correct (out of 51)") + stat_summary(fun.data = mean.n, geom = "text", fun = median) + stat_summary(fun.data = mean.n, geom= "text", fun=mean, color= "gainsboro") + theme(legend.position="none")
 
+#Violin plot proportion correct by 4 groups
+ggplot(Map_Inc, aes(x=M_Grps, y=AvgCorrect_Total)) + geom_violin() + geom_boxplot(width = 0.2) + labs (x= "Experimental Groups", y = "Proportion Correct") + stat_summary(fun.data = mean.n, geom = "text", fun = median) + stat_summary(fun.data = mean.n, geom= "text", fun=mean) + theme(legend.position="none") + scale_fill_grey() + theme_classic()
+
+
 #VIOLIN PLOT TIMING GROUPS BY OVERALL PROP CORRECT
 T_AvgCorr <- ggplot(Map_Inc, aes(Timing, y=AvgCorrect_Total, fill=Timing)) + geom_violin() + labs(x="Language Timing", y="Overall Proportion Correct")
 T_AvgCorr
