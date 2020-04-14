@@ -344,6 +344,33 @@ kruskal.test(SES ~ Group_4cat, data = Total_Inc_Study)
 pairwise.wilcox.test(Total_Inc_Study$SES,Total_Inc_Study$Group_4cat,p.adjust.method="none")
 
 *************************************************************************************
+#Modality
+Age_M_ANOVA <- aov(Total_Inc_Study$Age_Rounded ~ Total_Inc_Study$Modality)
+summary(Age_M_ANOVA)  #p=7.01e-05 (not equal!)
+Age_M_residuals <- residuals(Age_M_ANOVA)
+shapiro.test(Age_M_residuals) #Shapiro-Wilk normality test = W = 0.95778, p-value = 1.147e-05
+kruskal.test(Total_Inc_Study$Age_Rounded ~ Total_Inc_Study$Modality, data = Total_Inc_Study) #p-value = 0.0001087
+
+SES_M_ANOVA <- aov(Total_Inc_Study$SES ~ Total_Inc_Study$Modality)
+summary(SES_M_ANOVA)  #p=1.24e-05 (not equal)
+SES_M_residuals <- residuals(SES_M_ANOVA)
+shapiro.test(SES_M_residuals)  #Shapiro-Wilk normality test = W = 0.88351, p-value = 5.155e-11
+
+#Timing
+Age_T_ANOVA <- aov(Total_Inc_Study$Age_Rounded ~ Total_Inc_Study$Timing)
+summary(Age_T_ANOVA) #p = 0.398, NO DIFFERENCE!
+Age_T_residuals <- residuals(Age_T_ANOVA) 
+shapiro.test(Age_T_residuals) #Shapiro-Wilk normality test = W = 0.94401, p-value = 5.201e-07
+kruskal.test(Total_Inc_Study$Age_Rounded ~ Total_Inc_Study$Timing, data = Total_Inc_Study) 
+
+SES_T_ANOVA <- aov(Total_Inc_Study$SES ~ Total_Inc_Study$Timing)
+summary(SES_T_ANOVA)  #p = 0.0213, different
+SES_T_residuals <- residuals(SES_T_ANOVA)
+shapiro.test(SES_T_residuals) #Shapiro-Wilk normality test = W = 0.86037, p-value = 3.031e-12
+kruskal.test(Total_Inc_Study$SES ~ Total_Inc_Study$Timing, data = Total_Inc_Study) #p-value = 0.001756
+
+
+*************************************************************************************
 #Analysis---- HAVE NOT YET UPDATED BELOW CODES!
 
 ## MAPPING DATA FRAME ## 
