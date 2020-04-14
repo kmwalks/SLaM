@@ -380,19 +380,20 @@ kruskal.test(Total_Inc_Study$SES ~ Total_Inc_Study$Timing, data = Total_Inc_Stud
 
 
 *************************************************************************************
-#Analysis---- HAVE NOT YET UPDATED BELOW CODES!
+#Analysis
 
 ## MAPPING DATA FRAME ## 
-  Map_Inc <- subset(Map, Map$Age_Rounded>=5 & Map$Age_Rounded<=10 & Map$Mappig_Include.=="Yes" & Map$Coded. == "Yes")
-  View(Map_Inc) #141
+  Map_Inc <- Total_Inc_Study #renaming for ease
+  View(Map_Inc) #200 kids
 
-#RANDOM VISUALIZATIONS/ANALYSES FOR NOW!
+#Create Shortened Variables
 M_SumTotalCorr <- Map_Inc$SumCorrectTotal_All
 M_Age <- Map_Inc$Age_Rounded
 M_SES <- Map_Inc$SES
 M_Grps <- Map_Inc$Group_4cat
 M_Tim <- Map_Inc$Timing
 M_Mod <- Map_Inc$Modality
+M_Lang <- Map_Inc$Age.of.Exposure..mo..Language
 map.n <- function(x){return(c(y = median(x)*1.05, label = length(x))) }
 mean.n <- function(x){return(c(y= median(x)*0.97, label = round(mean(x), 2)))}   
 
