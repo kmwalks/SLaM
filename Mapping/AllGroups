@@ -183,6 +183,12 @@ range(AE_Inc$SES, na.rm=TRUE) # 3 62
 range(AL_Inc$SES, na.rm=TRUE) # 3 63.5
 aggregate(SES ~ Group_4cat, data=Total_Inc_Study, range)
 
+#Age of Language Exposure
+aggregate(Age.of.Exposure..mo..Language ~ Group_4cat, data=Total_Inc_Study, min)
+aggregate(Age.of.Exposure..mo..Language ~ Group_4cat, data=Total_Inc_Study, max)
+aggregate(Age.of.Exposure..mo..Language ~ Group_4cat, data=Total_Inc_Study, median)
+aggregate(Age.of.Exposure..mo..Language ~ Group_4cat, data=Total_Inc_Study, mean)
+aggregate(Age.of.Exposure..mo..Language ~ Group_4cat, data=Total_Inc_Study, sd)
 
 #Race
 sum(is.na(Total_Inc_Study$Race)) #16 N/As
@@ -244,7 +250,10 @@ SES <- Total_Inc_Study$SES
       #4 GROUPS:SES
     ggplot(Total_Inc_Study, aes(x=Groups, y=SES, fill = Groups)) + geom_violin() + geom_boxplot(width = 0.2) + labs (x= "Experimental Groups", y = "SES") + stat_summary(fun.data = mean.n, geom = "text", fun.y = median) + stat_summary(fun.data = mean.n, geom= "text", fun.y=mean, color= "gainsboro") + theme(legend.position="none")
     #ENGLISH GROUPS HIGHER SES/"TOP HEAVY"
- 
+    
+    #4 GROUPS: AGE OF LANGUAGE EXPOSURE
+      AgeLang <- Total_Inc_Study$Age.of.Exposure..mo..Language
+      ggplot(Total_Inc_Study, aes(x=Groups, y=AgeLang, fill = Groups)) + geom_violin() + geom_boxplot(width = 0.2) + labs (x= "Experimental Groups", y = "Age of Language Exposure (months)") + stat_summary(fun.data = mean.n, geom = "text", fun.y = median) + stat_summary(fun.data = mean.n, geom= "text", fun.y=mean, color= "gainsboro") + theme(legend.position="none")
  
 # ANOVA for mean Age and mean SES between groups - is the avergae age or SES sig different between groups?
 #AGE#
