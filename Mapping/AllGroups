@@ -9,6 +9,7 @@ install.packages("qwraps2") # for summary_table use
 install.packages("quantreg") # testing quantile plots (geom_quantile) and quantile regressions
 install.packages ("olsrr") #for testing normality
 install.packages("ggpubr") #for density plots
+install.packages("dplyr")
 
 library(ggplot2) 
 library(MASS) 
@@ -19,6 +20,7 @@ library(olsrr)
 library(car)
 library(sm)
 library(ggpubr)
+library(dplyr)
 
 #Import Data 
       setwd("~/Desktop")   
@@ -182,6 +184,25 @@ range(AL_Inc$SES, na.rm=TRUE) # 3 63.5
 aggregate(SES ~ Group_4cat, data=Total_Inc_Study, range)
 
 
+#Race
+sum(is.na(Total_Inc_Study$Race)) #16 N/As
+nrow(filter(Total_Inc_Study, Race == "White")) #1401
+nrow(filter(Total_Inc_Study, Race == "Black or African American")) #11
+nrow(filter(Total_Inc_Study, Race == "American Indian or Alaska Native")) #3
+nrow(filter(Total_Inc_Study, Race == "Asian")) #10
+nrow(filter(Total_Inc_Study, Race == "Native Hawaiian or Other Pacific Islander")) #0
+nrow(filter(Total_Inc_Study, Race == "Unsure")) #1
+nrow(filter(Total_Inc_Study, Race == "Mixed")) #6
+nrow(filter(Total_Inc_Study, Race == "Other")) #12
+nrow(filter(Total_Inc_Study, Race == "")) #0
+
+#Ethnicity
+nrow(filter(Total_Inc_Study, Ethnicity == "Not Hispanic or Latino")) #118
+nrow(filter(Total_Inc_Study, Ethnicity == "Hispanic or Latino")) #35
+nrow(filter(Total_Inc_Study, Ethnicity == "")) #0
+nrow(filter(Total_Inc_Study, Ethnicity == "Unsure")) #6
+sum(is.na(Total_Inc_Study$Ethnicity)) #41
+
 #CREATING TIMING/MODALITY DATA FRAMES
 #TIMING GROUPS
 Early <- subset(Total_Inc_Study, Total_Inc_Study$Timing == "Early")
@@ -193,9 +214,6 @@ English <- subset(Total_Inc_Study, Total_Inc_Study$Modality == "English")
 #VARIABLE SHORTCUTS#  
 Age <- Total_Inc_Study$Age_Rounded
 SES <- Total_Inc_Study$SES
-
-
-###HERE WITH RERUNNING!
 
 ## TIMING VIOLIN PLOTS ## 
       TimeGrp <- Total_Inc_Study$Timing
@@ -213,7 +231,7 @@ SES <- Total_Inc_Study$SES
       #ASL HAS MORE EVEN AGE DISTRIBUTION, ENGLISH HAS < OLDER KIDS
       # MODALITY: SES
       ggplot(Total_Inc_Study, aes(x=ModalityGrp, y=SES)) + geom_violin() + labs(x="Language Modality", y="SES")
-      #ENGLISH MORE "TOP HEAVY" FOR SES
+      #ENGLISH MORE "TOP HEAVY" FOR SES 
  
 ## GROUP VIOLIN PLOTS ## 
       Groups <- Total_Inc_Study$Group_4cat
@@ -221,12 +239,11 @@ SES <- Total_Inc_Study$SES
       mean.n <- function(x){return(c(y= median(x)*0.97, label = round(mean(x), 2)))}   
      #4 GROUPS:AGE
       ggplot(Total_Inc_Study, aes(x=Groups, y=Age, fill = Groups)) + geom_violin() + geom_boxplot(width = 0.2) + labs (x= "Experimental Groups", y = "Age (years)") + stat_summary(fun.data = mean.n, geom = "text", fun.y = median) + stat_summary(fun.data = mean.n, geom= "text", fun.y=mean, color= "gainsboro") + theme(legend.position="none") 
-      #LOOKS GREAT!
+      #Very similar across groups!
 
       #4 GROUPS:SES
     ggplot(Total_Inc_Study, aes(x=Groups, y=SES, fill = Groups)) + geom_violin() + geom_boxplot(width = 0.2) + labs (x= "Experimental Groups", y = "SES") + stat_summary(fun.data = mean.n, geom = "text", fun.y = median) + stat_summary(fun.data = mean.n, geom= "text", fun.y=mean, color= "gainsboro") + theme(legend.position="none")
     #ENGLISH GROUPS HIGHER SES/"TOP HEAVY"
- 
  
  
 # ANOVA for mean Age and mean SES between groups - is the avergae age or SES sig different between groups?
@@ -237,7 +254,7 @@ SES <- Total_Inc_Study$SES
       # alpha level: 0.05     
 # RUN THAT ANOVA 
 Age_ANOVA <- aov(Total_Inc_Study$Age_Rounded ~ Total_Inc_Study$Group_4cat)
-summary(Age_ANOVA) # p=0.0089 #NOT EQUAL BETWEEN GROUPS!
+summary(Age_ANOVA) #p= 0.000379 #NOT EQUAL BETWEEN GROUPS!
       # If > 0.5, conclude that population means for Age are equal between groups
       # If <0.05, reject null, conclude that population means for Age are not equal between groups, which ones differ?
             #Post-Hoc
@@ -248,39 +265,38 @@ summary(Age_ANOVA) # p=0.0089 #NOT EQUAL BETWEEN GROUPS!
                   par(mar=c(5,8,4,2)) 
                   plot(TukeyHSD(Age_ANOVA))
                   par(opar)
-       
-       #NEED TO FIGURE OUT HOW TO INTERPRET THE OUTPUT!#
 
 # Assumptions to be able to USE ANOVA  
       #1. Normality   - NOT PASS
       qqPlot(Age_ANOVA) #qq plot: scatterplot of observed vs expected normality and want linear line 
       Age_residuals <- residuals(Age_ANOVA) #residual: all data's mean then overall mean subtracted from each data point (indiv-datasetmean)
       shapiro.test(Age_residuals) #do not reject null, assume normality aka bell curve? WANT THAT HIGH P = normally distributed
-      ##p-value = 1.381e-05, NOT NORMALLY DISTRIBUTED!
+      #W = 0.95929, p-value = 1.66e-05, NOT NORMALLY DISTRIBUTED!
       ggdensity(Total_Inc_Study$Age_Rounded, main = "Density plot of AGE", xlab = "Age (years)") #NOT A BELL CURVE!
       #BY GROUPS:
-      shapiro.test(EE_Inc$Age_Rounded) #p-value = 0.01202<0.05, reject null, can't assume normality
-      shapiro.test(AE_Inc$Age_Rounded)#p-value = 0.002556<0.05, reject null, can't assume normality
-      shapiro.test(EL_Inc$Age_Rounded)#p-value = 0.003191<0.05, reject null, can't assume normality
+      shapiro.test(EE_Inc$Age_Rounded) #p-value = 0.02365<0.05, reject null, can't assume normality
+      shapiro.test(AE_Inc$Age_Rounded)#p-value = 0.005251<0.05, reject null, can't assume normality
+      shapiro.test(EL_Inc$Age_Rounded)#p-value = 0.002507<0.05, reject null, can't assume normality
       shapiro.test(AL_Inc$Age_Rounded)#p-value = 0.009083<0.05, reject null, can't assume normality
 
       #2. Homeogeneity of Variances Between Groups    -PASS
-      bartlett.test(Total_Inc_Study$Age_Rounded, Total_Inc_Study$Group_4cat) # p=0.5755, HAVE HOMOGENEITY
+      bartlett.test(Total_Inc_Study$Age_Rounded, Total_Inc_Study$Group_4cat) 
+      #Bartlett's K-squared = 1.2209, df = 3, p-value = 0.748, HAVE HOMOGENEITY
             # IF p > 0.5 WANT THAT HIGH P! = HOMOGENEITY ACHIEVED
             # IF p<0.05, reject the null hypothesis, do not assume variances are equal, is the variance for each of the groups similar? 
       plot(Age_ANOVA,1) #x-axis all indiv group means and for each group mean has observations and how spread from group mean, want bands to have same spread aka start and end points 
       #PLOT LOOKS GOOD, SIMILAR SPREAD
      
       #BY GROUPS:
-      bartlett.test(Age_Rounded ~ Group_4cat, data=Total_Inc_Study) # p= 0.5755
-      leveneTest(Age_Rounded ~ Group_4cat, data=Total_Inc_Study) #p= 0.2832
+      bartlett.test(Age_Rounded ~ Group_4cat, data=Total_Inc_Study) #p-value = 0.748
+      leveneTest(Age_Rounded ~ Group_4cat, data=Total_Inc_Study) #p-value = 0.4146
 
 # IF SHAPIRO AND BARLETT ARE >.O5 YAH GOOD, IF NOT: LEVENE AS BACKUP FOR BARLETT, IF STILL NAH, NON-PARAMETRIC METHOD NEEDS TO BE USED / NOT ANOVA 
       # Violated variances assumption, re-run using kruskal-wallis test (non-parametric)
       # IF ASSUMPTIONS DO NOT HOLD, USE KRUSKAL NON-PARAMATRIC TEST/PAIRWISE.WILCOX.TEST FOR POST-HOC)
       kruskal.test(Total_Inc_Study$Age_Rounded ~ Group_4cat, data = Total_Inc_Study)
-      pairwise.wilcox.test(Total_Inc_Study$Age, Total_Inc_Study$Group_4cat, p.adjust.method="none")
-      # Which p-value adjustment method should be used?
+      #Kruskal-Wallis chi-squared = 17.831, df = 3, p-value = 0.0004767
+      pairwise.wilcox.test(Total_Inc_Study$Age_Rounded, Total_Inc_Study$Group_4cat, p.adjust.method="none", paired = FALSE)
 
 *********************************
 #SES#
@@ -292,7 +308,7 @@ summary(Age_ANOVA) # p=0.0089 #NOT EQUAL BETWEEN GROUPS!
 
 # All samples drawn independently
 SES_ANOVA <- aov(Total_Inc_Study$SES ~ Total_Inc_Study$Group_4cat)
-summary(SES_ANOVA) # p = 1.26e-05 #SES MEANS ARE NOT EQUAL BETWEEN GROUPS
+summary(SES_ANOVA) # p = 6.02e-06 #SES MEANS ARE NOT EQUAL BETWEEN GROUPS
       # p=IF>0.05, do not reject null, conclude that population means for SES are equal between groups
 
       #If different, perform Post-Hoc: 
@@ -304,10 +320,10 @@ summary(SES_ANOVA) # p = 1.26e-05 #SES MEANS ARE NOT EQUAL BETWEEN GROUPS
       plot(TukeyHSD(SES_ANOVA))
       par(opar)
 
-      #1. Normality  
+      #1. Normality  - FAIL
       qqPlot(SES_ANOVA)
       SES_residuals <- residuals(SES_ANOVA) 
-      shapiro.test(SES_residuals) #p-value = 1.597e-11 #NOT NORMALLY DISTRIBUTED
+      shapiro.test(SES_residuals) #p-value = 1.021e-11 #NOT NORMALLY DISTRIBUTED
       ggdensity(Total_Inc_Study$SES, main = "Density plot of SES", xlab = "SES") #RIGHT SKEWED
       #BY GROUPS: #ALSO ALL < 0.05
             shapiro.test(EE_Inc$SES)
@@ -315,20 +331,20 @@ summary(SES_ANOVA) # p = 1.26e-05 #SES MEANS ARE NOT EQUAL BETWEEN GROUPS
             shapiro.test(AE_Inc$SES) 
             shapiro.test(AL_Inc$SES) 
   
-      #2. Homeogeneity of Variances Between Groups
+      #2. Homeogeneity of Variances Between Groups - PASS
       bartlett.test(Total_Inc_Study$SES, Total_Inc_Study$Group_4cat) # p >0.05, do not reject the null hypothesis, assume variances are equal
       plot(SES_ANOVA,1) #x-axis all indiv group means and for each group mean has observations and how spread from group mean, want bands to have same spread aka start and end points 
       
-      bartlett.test(SES ~ Group_4cat, data=Total_Inc_Study) # p-value = 0.3807
+      bartlett.test(SES ~ Group_4cat, data=Total_Inc_Study) # p-value = 0.2997
       
-      leveneTest(SES ~ Group_4cat, data=Total_Inc_Study) #p = 0.08446
+      leveneTest(SES ~ Group_4cat, data=Total_Inc_Study) #p-value = 0.05584
 
 # IF FAIL ABOVE ASSUMPTIONS, SWITCH TO NON-PARAMETRIC TEST # 
 kruskal.test(SES ~ Group_4cat, data = Total_Inc_Study)
 pairwise.wilcox.test(Total_Inc_Study$SES,Total_Inc_Study$Group_4cat,p.adjust.method="none")
 
 *************************************************************************************
-#Analysis
+#Analysis---- HAVE NOT YET UPDATED BELOW CODES!
 
 ## MAPPING DATA FRAME ## 
   Map_Inc <- subset(Map, Map$Age_Rounded>=5 & Map$Age_Rounded<=10 & Map$Mappig_Include.=="Yes" & Map$Coded. == "Yes")
