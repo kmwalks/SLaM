@@ -20,73 +20,58 @@ library(car)
 library(sm)
 library(ggpubr)
 
-
-#Check and Set Working Directory
-      setwd("~/Desktop")
-      getwd()      
-      
 #Import Data 
+      setwd("~/Desktop")   
       Map <- read.csv("Mapping_Coding_KW_200414.csv", na.strings = "N/A")
-      View(Map)   
+      View(Map) #224 kids  
 
 ## BASIC DEMOGRAPHICS ## 
       Map_Demo <- subset(Map, Map$Age_Rounded>=4.5 & Map$Age_Rounded<=10 | is.na(Map$Age_Rounded))
-      View(Map_Demo) # ?? kids ages 4.5-9
+      View(Map_Demo) # 220 kids total ages 4.5-9 (including kids we never tested)
 
 #FOR DEMOGRAPHICS OF ALL POSSIBLE KIDS INCLUDING FOR MAPPING 
-
-(*for paper will add: Map Include = Yes & Coded = Yes*)
-
-
-      Total_Inc_Study <- subset(Map_Demo, Map_Demo$Including.in.Study == "Yes")
+      Total_Inc_Study <- subset(Map_Demo, Map_Demo$Including.in.Study == "Yes" & Map_Demo$Coded. == "Yes" & Map_Demo$Mapping_Include. == "Yes")
       View(Total_Inc_Study)
-      # 197 total kids included in study  
+      # 200 total kids included in study  
       
       ## Included OVERALL: Numbers of Kids Per Group ##
       EE_Inc <- subset(Total_Inc_Study, Total_Inc_Study$Group_4cat == "English Early")
-      View(EE_Inc)
-      # 47 of 197 kids included are EE
+      View(EE_Inc) #48
       EL_Inc <- subset(Total_Inc_Study, Total_Inc_Study$Group_4cat == "English Later")
-      View(EL_Inc)
-      # 43 of 197 kids included are EL
+      View(EL_Inc) #47
       AE_Inc <- subset(Total_Inc_Study, Total_Inc_Study$Group_4cat == "ASL Early")
-      View(AE_Inc)
-      # 52 of 197 kids included are AE
+      View(AE_Inc) #50
       AL_Inc <- subset(Total_Inc_Study, Total_Inc_Study$Group_4cat == "ASL Later")
-      View(AL_Inc)
-      # 55 of 197 kids included are AL
+      View(AL_Inc) #55
       
-      Total_Not_Inc_Study <- subset(Map_Demo, Map_Demo$Including.in.Study == "No")
+      Total_Not_Inc_Study <- subset(Map_Demo, Map_Demo$Mapping_Include. == "No")
       nrow(Total_Not_Inc_Study)
       View(Total_Not_Inc_Study)
-      # 18 total kids not included in study
+      # 20 total kids not included in mapping analyses (if not included in study overall, not including in mapping)
                      
       Total_NotTested_NA <- subset(Map_Demo,  Map_Demo$Tested == "No" | Map_Demo$Tested == "Not Yet" | is.na(Map_Demo$Including.in.Study))
       View(Total_NotTested_NA)
       # 15 Not Tested 
       
+      NotTested_Not_Inc <- subset(Total_Not_Inc_Study, Total_Not_Inc_Study$Tested == "No")
+      nrow(NotTested_Not_Inc)
+      #15 remaining kids listed as not included were not tested
+      
       Tested_Not_Inc <- subset(Total_Not_Inc_Study, Total_Not_Inc_Study$Tested == "Yes")
       View(Tested_Not_Inc)
-      # 3 kid out of 17 not included in study were tested, NEED TO EXPLAIN WHY NOT INCLUDING! All had additional disabilities/suspected disabilities
+      # 5 kid out of 15 not included in study were tested
+      #3 had additional disabilities/suspected disabilities, 1 refused to participate, 1 due to technical difficulties (not filmed entirely)
 
       ## Tested But Not Included: How many from each group? ## 
             EE_Not_Inc <- subset(Tested_Not_Inc, Tested_Not_Inc$Group_4cat == "English Early")
-            nrow(EE_Not_Inc)
-            # 0 of 3 kids tested but not included are EE
+            nrow(EE_Not_Inc) # 0 of 5 kids tested but not included are EE
             EL_Not_Inc <- subset(Tested_Not_Inc, Tested_Not_Inc$Group_4cat == "English Later")
-            nrow(EL_Not_Inc)
-            # 0 of 3 kids tested but not included are EL
+            nrow(EL_Not_Inc) # 0 of 5 kids tested but not included are EL
             AE_Not_Inc <- subset(Tested_Not_Inc, Tested_Not_Inc$Group_4cat == "ASL Early")
-            nrow(AE_Not_Inc)
-            # 1 of 3 kids tested but not included are AE
+            nrow(AE_Not_Inc)# 3 of 5 kids tested but not included are AE
             AL_Not_Inc <- subset(Tested_Not_Inc, Tested_Not_Inc$Group_4cat == "ASL Later")
-            nrow(AL_Not_Inc)
-            # 2 of 3 kids tested but not included are AL
+            nrow(AL_Not_Inc) # 2 of 5 kids tested but not included are AL
    
-      NotTested_Not_Inc <- subset(Total_Not_Inc_Study, Total_Not_Inc_Study$Tested == "No")
-      nrow(NotTested_Not_Inc)
-      #14 remaining kids listed as not included were not tested
-
 
 ## Creating a Table/"Matrix": Included vs Not (& not tested) by Group ##
 
@@ -95,36 +80,36 @@ library(ggpubr)
       Table_IncStudy <- matrix(c(nrow(EE_Inc),nrow(EL_Inc),nrow(AE_Inc),nrow(AL_Inc),nrow(EE_Not_Inc),nrow(EL_Not_Inc),nrow(AE_Not_Inc),nrow(AL_Not_Inc)), nrow=2, ncol=4, byrow=TRUE, dimnames=list(rnames,cnames))
       Table_IncStudy
 
-## Chi-Square on Table/"Matrix": Does the status of including in study depend on which group kids were in?, aka DNS more likely to not be included? ##
+## Chi-Square on Table/"Matrix": Does the status of including in study depend on which group kids were in?, aka Early ASL more likely to not be included? ##
 chisq.test(Table_IncStudy)
-# Test statistic is p-value = 0.39, do not reject null, conclude that status of inclusion in study is not dependent on group 4 category. GOOD!
+# Test statistic is X-squared = 4.9604, df = 3, p-value = 0.1747, do not reject null, conclude that status of inclusion in study is not dependent on group 4 category
 
 # Find observations with missing Age and SES values
       sum(is.na(Total_Inc_Study$Age_Rounded) | Total_Inc_Study$Age_Rounded=="N/A")
-      #MISSING 1 AGE VALUE!
+      #Not missing any age values
 
       sum(is.na(Total_Inc_Study$SES) | Total_Inc_Study$SES=="N/A")
-      #MISSING 11 SES VALUES!
+      #Missing 9 SES values
       
       Incorrect_SES <- subset(Total_Inc_Study, Total_Inc_Study$SES < 3) 
       nrow(Incorrect_SES) #NONE ARE INAPPROPRIATE
  
       
 # SEX 
-  sum(Total_Inc_Study$M.F=='Female') # 99
-  sum(Total_Inc_Study$M.F=='Male') # 98
-  sum(EE_Inc$M.F=='Female') # 24
+  sum(Total_Inc_Study$M.F=='Female') # 103
+  sum(Total_Inc_Study$M.F=='Male') # 97
+  sum(EE_Inc$M.F=='Female') # 25
   sum(EE_Inc$M.F=='Male') # 23
-  sum(EL_Inc$M.F=='Female') # 25
-  sum(EL_Inc$M.F=='Male') # 18
-  sum(AE_Inc$M.F=='Female') # 27
-  sum(AE_Inc$M.F=='Male') # 25
+  sum(EL_Inc$M.F=='Female') # 27
+  sum(EL_Inc$M.F=='Male') # 20
+  sum(AE_Inc$M.F=='Female') # 28
+  sum(AE_Inc$M.F=='Male') # 22
   sum(AL_Inc$M.F=='Female') # 23
   sum(AL_Inc$M.F=='Male') #32
 
 # AGE DESCRIPTIVE STATISTICS
-min(EE_Inc$Age_Rounded, na.rm=TRUE) # 5.1
-min(EL_Inc$Age_Rounded, na.rm=TRUE) # 5
+min(EE_Inc$Age_Rounded, na.rm=TRUE) # 4.8
+min(EL_Inc$Age_Rounded, na.rm=TRUE) #4.5
 min(AE_Inc$Age_Rounded, na.rm=TRUE) # 5.2
 min(AL_Inc$Age_Rounded, na.rm=TRUE) # 5.1
 aggregate(Age_Rounded ~ Group_4cat, data=Total_Inc_Study, min) #Creates a table in one 
@@ -137,31 +122,31 @@ aggregate(Age_Rounded ~ Group_4cat, data=Total_Inc_Study, max)
 
 median(EE_Inc$Age_Rounded, na.rm=TRUE) # 6.7
 median(EL_Inc$Age_Rounded, na.rm=TRUE) # 6.2
-median(AE_Inc$Age_Rounded, na.rm=TRUE) # 7.05
+median(AE_Inc$Age_Rounded, na.rm=TRUE) # 7.3
 median(AL_Inc$Age_Rounded, na.rm=TRUE) # 7.4
 aggregate(Age_Rounded ~ Group_4cat, data=Total_Inc_Study, median)
 
-mean(EE_Inc$Age_Rounded, na.rm=TRUE) # 6.917021
-mean(EL_Inc$Age_Rounded, na.rm=TRUE) # 6.588095
-mean(AE_Inc$Age_Rounded, na.rm=TRUE) # 7.355769
-mean(AL_Inc$Age_Rounded, na.rm=TRUE) # 7.472727
+mean(EE_Inc$Age_Rounded, na.rm=TRUE) # 6.87
+mean(EL_Inc$Age_Rounded, na.rm=TRUE) # 6.41
+mean(AE_Inc$Age_Rounded, na.rm=TRUE) # 7.43
+mean(AL_Inc$Age_Rounded, na.rm=TRUE) # 7.47
 aggregate(Age_Rounded ~ Group_4cat, data=Total_Inc_Study, mean)
 
-sd(EE_Inc$Age_Rounded, na.rm=TRUE) # 1.304394
-sd(EL_Inc$Age_Rounded, na.rm=TRUE) # 1.283707
-sd(AE_Inc$Age_Rounded, na.rm=TRUE) # 1.526166
-sd(AL_Inc$Age_Rounded, na.rm=TRUE) # 1.457859
+sd(EE_Inc$Age_Rounded, na.rm=TRUE) # 1.33
+sd(EL_Inc$Age_Rounded, na.rm=TRUE) # 1.33
+sd(AE_Inc$Age_Rounded, na.rm=TRUE) # 1.51
+sd(AL_Inc$Age_Rounded, na.rm=TRUE) # 1.46
 aggregate(Age_Rounded ~ Group_4cat, data=Total_Inc_Study, sd)
 
-range(EE_Inc$Age_Rounded, na.rm=TRUE) # 5.1 9.7
-range(EL_Inc$Age_Rounded, na.rm=TRUE) # 5.0 9.8
+range(EE_Inc$Age_Rounded, na.rm=TRUE) # 4.8 9.7
+range(EL_Inc$Age_Rounded, na.rm=TRUE) # 4.5 9.8
 range(AE_Inc$Age_Rounded, na.rm=TRUE) # 5.2 9.9
 range(AL_Inc$Age_Rounded, na.rm=TRUE) # 5.1 9.8
 aggregate(Age_Rounded ~ Group_4cat, data=Total_Inc_Study, range)
 
 # SES DESCRIPTIVE STATISTICS
 min(EE_Inc$SES, na.rm=TRUE) # 17
-min(EL_Inc$SES, na.rm=TRUE) # 6
+min(EL_Inc$SES, na.rm=TRUE) # 3
 min(AE_Inc$SES, na.rm=TRUE) # 3
 min(AL_Inc$SES, na.rm=TRUE) # 3
 aggregate(SES ~ Group_4cat, data=Total_Inc_Study, min)
@@ -173,24 +158,24 @@ max(AL_Inc$SES, na.rm=TRUE) # 63.5
 aggregate(SES ~ Group_4cat, data=Total_Inc_Study, max)
 
 median(EE_Inc$SES, na.rm=TRUE) # 61
-median(EL_Inc$SES, na.rm=TRUE) # 53
-median(AE_Inc$SES, na.rm=TRUE) # 48.25
+median(EL_Inc$SES, na.rm=TRUE) # 52.75
+median(AE_Inc$SES, na.rm=TRUE) # 49.50
 median(AL_Inc$SES, na.rm=TRUE) # 47
 aggregate(SES ~ Group_4cat, data=Total_Inc_Study, median)
 
-mean(EE_Inc$SES, na.rm=TRUE) # 56.20213
-mean(EL_Inc$SES, na.rm=TRUE) # 48.21951
-mean(AE_Inc$SES, na.rm=TRUE) # 43.83333
+mean(EE_Inc$SES, na.rm=TRUE) # 56.25
+mean(EL_Inc$SES, na.rm=TRUE) # 48.25
+mean(AE_Inc$SES, na.rm=TRUE) # 43.85
 mean(AL_Inc$SES, na.rm=TRUE) # 42.38
 aggregate(SES ~ Group_4cat, data=Total_Inc_Study, mean)
 
-sd(EE_Inc$SES, na.rm=TRUE) # 12.37005
-sd(EL_Inc$SES, na.rm=TRUE) # 13.92078
-sd(AE_Inc$SES, na.rm=TRUE) # 14.43155
-sd(AL_Inc$SES, na.rm=TRUE) # 15.97305
+sd(EE_Inc$SES, na.rm=TRUE) # 12.32
+sd(EL_Inc$SES, na.rm=TRUE) # 13.21
+sd(AE_Inc$SES, na.rm=TRUE) # 14.59
+sd(AL_Inc$SES, na.rm=TRUE) # 15.97
 aggregate(SES ~ Group_4cat, data=Total_Inc_Study, sd)
 
-range(EE_Inc$SES, na.rm=TRUE) # 17.0 66
+range(EE_Inc$SES, na.rm=TRUE) # 17 66
 range(EL_Inc$SES, na.rm=TRUE) # 3 66
 range(AE_Inc$SES, na.rm=TRUE) # 3 62
 range(AL_Inc$SES, na.rm=TRUE) # 3 63.5
@@ -208,6 +193,9 @@ English <- subset(Total_Inc_Study, Total_Inc_Study$Modality == "English")
 #VARIABLE SHORTCUTS#  
 Age <- Total_Inc_Study$Age_Rounded
 SES <- Total_Inc_Study$SES
+
+
+###HERE WITH RERUNNING!
 
 ## TIMING VIOLIN PLOTS ## 
       TimeGrp <- Total_Inc_Study$Timing
