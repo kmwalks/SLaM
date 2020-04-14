@@ -1,4 +1,4 @@
-#1. Install and Load Libraries 
+#Install and Load Libraries 
 
 install.packages("car")
 install.packages("sm")
@@ -21,13 +21,12 @@ library(sm)
 library(ggpubr)
 
 
-#2. Check and Set Working Directory
+#Check and Set Working Directory
       setwd("~/Desktop")
       getwd()      
       
-#3. Import Data [[make sure is most recent version and saved as csv]]
-      Map <- read.csv("Mapping_Coding_KW_200410.csv", na.strings = "N/A")
-      #224 kids
+#Import Data 
+      Map <- read.csv("Mapping_Coding_KW_200414.csv", na.strings = "N/A")
       View(Map)   
 
 ## BASIC DEMOGRAPHICS ## 
