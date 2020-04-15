@@ -390,32 +390,6 @@ kruskal.test(Total_Inc_Study$SES ~ Total_Inc_Study$Timing, data = Total_Inc_Stud
   Map_Inc <- Total_Inc_Study #renaming for ease
   View(Map_Inc) #200 kids
 
-#Create Shortened Variables
-M_SumTotalCorr <- Map_Inc$SumCorrectTotal_All
-M_Age <- Map_Inc$Age_Rounded
-M_SES <- Map_Inc$SES
-M_Grps <- Map_Inc$Group_4cat
-M_Tim <- Map_Inc$Timing
-M_Mod <- Map_Inc$Modality
-M_Lang <- Map_Inc$Age.of.Exposure..mo..Language
-map.n <- function(x){return(c(y = median(x)*1.05, label = length(x))) }
-mean.n <- function(x){return(c(y= median(x)*0.97, label = round(mean(x), 2)))}   
-
-#VIOLIN PLOT TOTAL # CORRECT BY 4 GROUPS
-ggplot(Map_Inc, aes(x=M_Grps, y=M_SumTotalCorr, fill = M_Grps)) + geom_violin() + geom_boxplot(width = 0.2) + labs (x= "Experimental Groups", y = "Total Correct (out of 51)") + stat_summary(fun.data = mean.n, geom = "text", fun = median) + stat_summary(fun.data = mean.n, geom= "text", fun=mean, color= "gainsboro") + theme(legend.position="none")
-
-#Violin plot proportion correct by 4 groups
-ggplot(Map_Inc, aes(x=M_Grps, y=AvgCorrect_Total)) + geom_violin() + geom_boxplot(width = 0.2) + labs (x= "Experimental Groups", y = "Proportion Correct") + stat_summary(fun.data = mean.n, geom = "text", fun = median) + stat_summary(fun.data = mean.n, geom= "text", fun=mean) + theme(legend.position="none") + scale_fill_grey() + theme_classic()
-
-
-#VIOLIN PLOT TIMING GROUPS BY OVERALL PROP CORRECT
-T_AvgCorr <- ggplot(Map_Inc, aes(Timing, y=AvgCorrect_Total, fill=Timing)) + geom_violin() + labs(x="Language Timing", y="Overall Proportion Correct")
-T_AvgCorr
-
-#VIOLIN PLOT MODALITY GROUPS BY OVERALL PROP CORRECT
-M_AvgCorr <- ggplot(Map_Inc, aes(Modality, y=AvgCorrect_Total, fill=Modality)) + geom_violin() + labs(x="Language Modality", y="Overall Proportion Correct")
-M_AvgCorr
-
 #MIXED EFFECTS LOGISTIC REGRESSION
             Map_long <- pivot_longer(data = Map_Inc, cols=c(ends_with("Answer")), names_to = c("Type"), values_to = "Quantity")
             View(Map_long) 
