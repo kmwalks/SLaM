@@ -10,6 +10,8 @@ install.packages("quantreg") # testing quantile plots (geom_quantile) and quanti
 install.packages ("olsrr") #for testing normality
 install.packages("ggpubr") #for density plots
 install.packages("dplyr")
+install.packages("tidyr")
+install.packages("lme4")
 
 library(ggplot2) 
 library(MASS) 
@@ -21,6 +23,8 @@ library(car)
 library(sm)
 library(ggpubr)
 library(dplyr)
+library(tidyr)
+library(lme4)
 
 #Import Data 
       setwd("~/Desktop")   
@@ -412,4 +416,46 @@ T_AvgCorr
 M_AvgCorr <- ggplot(Map_Inc, aes(Modality, y=AvgCorrect_Total, fill=Modality)) + geom_violin() + labs(x="Language Modality", y="Overall Proportion Correct")
 M_AvgCorr
 
+#MIXED EFFECTS LOGISTIC REGRESSION
+            Map_long <- pivot_longer(data = Map_Inc, cols=c(ends_with("Answer")), names_to = c("Type"), values_to = "Quantity")
+            View(Map_long) 
+            Map_long2 <- pivot_longer(data = Map_Inc, cols=c(ends_with("Correct.")), names_to = c("Type2"), values_to = "Correct")
+            View(Map_long2)
+            Map_longest <- cbind(Map_long, Map_long2)
+            View(Map_longest)
+            Map_short <- Map_longest[,!grepl("^Item",names(Map_longest))] # delete columns that contain “item” 
+            View(Map_short)
+            which(colnames(Map_short)=="Child_LanguageTested") #19th column
+            which(colnames(Map_short)=="Quantity") #73rd column, WANT TO KEEP THIS COLUMN 
+            Map_short <- Map_short[, -c(19:72)] #removes unnecessary columns
+            View(Map_short)
+            which(colnames(Map_short)=="Comments.1") #20
+            which(colnames(Map_short)=="Sum_Numeral.Word_Word.Numeral.1") #90
+            Map_short <- Map_short[, -c(20:90)] #removes unnecessary columns
+            View(Map_short)
+
+            # From Type column, create a new column (Map_Pair)
+            #Create new column for which IF Map_short$Type contains “NW” or “WN”, assign value “Numeral-Word”
+            Map_Pair <- c()
+            for(i in 1:10200)
+            Map_Pair[i] <- ifelse(grepl("NW", Map_short$Type[i]), "Numeral-Word", ifelse(grepl("WN", Map_short$Type[i]), "Numeral-Word", ifelse(grepl("QN", Map_short$Type[i]), "Quantity-Numeral", ifelse(grepl("NQ", Map_short$Type[i]), "Quantity-Numeral", ifelse(grepl("QW", Map_short$Type[i]), "Quantity-Word", ifelse(grepl("WQ", Map_short$Type[i]), "Quantity-Word","bananas"))))))
+            Map_short <- cbind(Map_short, Map_Pair)
+            View(Map_short)
+
+            #From Quantity column, create Small, Med, Large
+            Set_Size <- c()
+            Set_Size <- case_when(Map_short$Quantity <= 3 ~ 'Small',
+                                  Map_short$Quantity > 3 & Map_short$Quantity<= 5 ~ 'Medium',
+                                  Map_short$Quantity > 5 ~ 'Large')
+            Map_short <- cbind(Map_short,Set_Size)
+            View(Map_short)
+
+            #Running Mixed Effects Logistic Regression
+            MixReg <- glmer(Correct ~ Age_Rounded + SES + Set_Size + Map_Pair + Age.of.Exposure..mo..Language + (1 | SUBJECT_ID), data = Map_short, family = binomial, control = glmerControl(optimizer ="bobyqa"), nAGQ = 10)
+            summary(MixReg)
+
+            #Obtain Model Descriptives
+            se <- sqrt(diag(vcov(MixReg)))
+            (tab <- cbind(Est = fixef(MixReg), LL = fixef(MixReg) - 1.96 * se, UL = fixef(MixReg) + 1.96 * se))
+            exp(tab) #provides odds ratios
 
