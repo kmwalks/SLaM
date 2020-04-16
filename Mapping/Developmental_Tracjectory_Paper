@@ -130,7 +130,7 @@ library(VGAM)
         wilcox.test(Map_HBE$AvgCorrect_Total, mu = .25, alternative = "greater") #overall mapping performance compared to chance, p-value = 1.129e-09
         
         All <- Map_HBE$SumCorrectTotal_All
-        Ch <- 12.75 #51/4 (at chance score)
+        Ch <- 13 #51/4 (rounded up, at chance score)
         Var_Ch <- length(which(All>= Ch)) #number of observations equal to or above chance
         N <- nrow(Map_HBE) #number of total observations
         (Var_Ch/N)*100 #100% at or above chance
