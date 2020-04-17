@@ -442,3 +442,45 @@ kruskal.test(Total_Inc_Study$SES ~ Total_Inc_Study$Timing, data = Total_Inc_Stud
             (tab <- cbind(Est = fixef(MixReg), LL = fixef(MixReg) - 1.96 * se, UL = fixef(MixReg) + 1.96 * se))
             exp(tab) #provides odds ratios
 
+#OVERALL
+#Create 4 group data frames
+EE <- subset(Map_Inc, Map_Inc$Group_4cat == "English Early")
+EL <- subset(Map_Inc, Map_Inc$Group_4cat == "English Later")
+AE <- subset(Map_Inc, Map_Inc$Group_4cat == "ASL Early")
+AL <- subset(Map_Inc, Map_Inc$Group_4cat == "ASL Later")
+
+#Overall Performance compared to chance for each group, all p < 0.001
+wilcox.test(EE$AvgCorrect_Total, mu = .25, alternative = "greater") #V = 1176, p-value = 7.702e-10
+wilcox.test(EL$AvgCorrect_Total, mu = .25, alternative = "greater") #V = 1128, p-value = 1.178e-09
+wilcox.test(AE$AvgCorrect_Total, mu = .25, alternative = "greater") #V = 1275, p-value = 3.419e-10
+wilcox.test(AL$AvgCorrect_Total, mu = .25, alternative = "greater") #V = 1485, p-value = 7.906e-11
+
+#Performance at Ceiling per group
+EE_Ceil <- EE$SumCorrectTotal_All
+EE_All <- 51 #ceiling performance 
+Var_EE <- length(which(EE_Ceil>= EE_All)) #number of observations equal to ceiling 
+N <- nrow(EE) #number of total observations
+(Var_EE/N)*100 #18.75% at ceiling
+
+EL_Ceil <- EL$SumCorrectTotal_All
+EL_All <- 51 #ceiling performance 
+Var_EL <- length(which(EL_Ceil>= EL_All)) #number of observations equal to ceiling 
+N <- nrow(EL) #number of total observations
+(Var_EL/N)*100 #12.77% at ceiling
+
+AE_Ceil <- AE$SumCorrectTotal_All
+AE_All <- 51 #ceiling performance 
+Var_AE <- length(which(AE_Ceil>= AE_All)) #number of observations equal to ceiling 
+N <- nrow(AE) #number of total observations
+(Var_AE/N)*100 #26% at ceiling
+
+AL_Ceil <- AL$SumCorrectTotal_All
+AL_All <- 51 #ceiling performance 
+Var_AL <- length(which(AL_Ceil>= AL_All)) #number of observations equal to ceiling 
+N <- nrow(AL) #number of total observations
+(Var_AL/N)*100 #20% at ceiling
+
+
+     
+     
+     
