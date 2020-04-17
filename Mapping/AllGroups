@@ -187,6 +187,10 @@ range(AE_Inc$SES, na.rm=TRUE) # 3 62
 range(AL_Inc$SES, na.rm=TRUE) # 3 63.5
 aggregate(SES ~ Group_4cat, data=Total_Inc_Study, range)
 
+describe(Total_Inc_Study$SES) #overall skewness 
+HBE <- subset(Total_Inc_Study, Total_Inc_Study$Group_4cat == "English Early") 
+describe(HBE$SES) # skewness of -2.01 (SE =1.8)
+
 #Age of Language Exposure
 aggregate(Age.of.Exposure..mo..Language ~ Group_4cat, data=Total_Inc_Study, min)
 aggregate(Age.of.Exposure..mo..Language ~ Group_4cat, data=Total_Inc_Study, max)
