@@ -257,7 +257,7 @@ SES <- Total_Inc_Study$SES
     
     #4 GROUPS: AGE OF LANGUAGE EXPOSURE
       AgeLang <- Total_Inc_Study$Age.of.Exposure..mo..Language
-      ggplot(Total_Inc_Study, aes(x=Groups, y=AgeLang, fill = Groups)) + geom_violin() + geom_boxplot(width = 0.2) + labs (x= "Experimental Groups", y = "Age of Language Exposure (months)") + stat_summary(fun.data = mean.n, geom = "text", fun.y = median) + stat_summary(fun.data = mean.n, geom= "text", fun.y=mean, color= "gainsboro") + theme(legend.position="none")
+      ggplot(Total_Inc_Study, aes(x=Groups, y=AgeLang, fill = Groups)) + geom_violin() + geom_boxplot(width = 0.2) + labs (x= "Experimental Groups", y = "Age of Language Exposure (months)") + scale_fill_grey(start = 0.5, end = 0.9) + stat_summary(fun.data = mean.n, geom = "text", fun = median, vjust=-2) + stat_summary(fun.data = mean.n, geom= "text", fun=mean, color= "black", vjust=-2) + theme(legend.position = "none", axis.title.x = element_text(color="black", size=14, family = "Calibri"), axis.text.x = element_text(color="black", size=12, family = "Calibri"), axis.title.y = element_text(color="black", size=14, family = "Calibri"), axis.text.y = element_text(color="black", size=12, family = "Calibri"))
  
 # ANOVA for mean Age and mean SES between groups - is the avergae age or SES sig different between groups?
 #AGE#
