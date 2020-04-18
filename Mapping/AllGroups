@@ -493,8 +493,6 @@ M_Lang <- Map_Inc$Age.of.Exposure..mo..Language
 map.n <- function(x){return(c(y = median(x)*1.05, label = length(x))) }
 mean.n <- function(x){return(c(y= median(x)*0.97, label = round(mean(x), 2)))}   
 
-ggplot(Map_Inc, aes(x=M_Grps, y=M_SumTotalCorr, fill = M_Grps)) + geom_violin() + geom_boxplot(width = 0.2) + labs (x= "Experimental Groups", y = "Total Correct (out of 51)") + scale_fill_grey(start = 0.5, end = 0.9) + stat_summary(fun.data = mean.n, geom = "text", fun = median) + stat_summary(fun.data = mean.n, geom= "text", fun=mean, color= "black") + theme(legend.position = "none", axis.title.x = element_text(color="black", size=14, family = "Calibri"), axis.text.x = element_text(color="black", size=12, family = "Calibri"), axis.title.y = element_text(color="black", size=14, family = "Calibri"), axis.text.y = element_text(color="black", size=12, family = "Calibri"))
-
       #4 Groups
       aov_grps<- aov(Map_Inc$AvgCorrect_Total ~ Map_Inc$Group_4cat)
       summary(aov_grps)  #p-value = 0.0053, df = 3, f = 4.366
@@ -504,6 +502,29 @@ ggplot(Map_Inc, aes(x=M_Grps, y=M_SumTotalCorr, fill = M_Grps)) + geom_violin() 
       mean(EL$AvgCorrect_Total) #0.88
       mean(AE$AvgCorrect_Total) #0.92
       mean(AL$AvgCorrect_Total) #0.85
+      ggplot(Map_Inc, aes(x=M_Grps, y=M_SumTotalCorr, fill = M_Grps)) + geom_violin() + geom_boxplot(width = 0.2) + labs (x= "Experimental Groups", y = "Total Correct (out of 51)") + scale_fill_grey(start = 0.5, end = 0.9) + stat_summary(fun.data = mean.n, geom = "text", fun = median) + stat_summary(fun.data = mean.n, geom= "text", fun=mean, color= "black") + theme(legend.position = "none", axis.title.x = element_text(color="black", size=14, family = "Calibri"), axis.text.x = element_text(color="black", size=12, family = "Calibri"), axis.title.y = element_text(color="black", size=14, family = "Calibri"), axis.text.y = element_text(color="black", size=12, family = "Calibri"))
 
-     
+     #Modality
+      aov_mod<- aov(Map_Inc$AvgCorrect_Total ~ Map_Inc$Modality)
+      summary(aov_mod) #p = 0.46, df = 1, f = 0.548 #Not differ by modality!
+      ASL <- subset(Map_Inc, Map_Inc$Modality == "ASL")
+      View(ASL)
+      mean(ASL$AvgCorrect_Total) #0.88
+      English <- subset(Map_Inc, Map_Inc$Modality == "English")
+      View(English)
+      mean(English$AvgCorrect_Total) #0.90
+      ggplot(Map_Inc, aes(x=M_Mod, y=M_SumTotalCorr, fill = M_Mod)) + geom_violin() + geom_boxplot(width = 0.2) + labs (x= "Language Modality", y = "Total Correct (out of 51)") + scale_fill_grey(start = 0.5, end = 0.9) + stat_summary(fun.data = mean.n, geom = "text", fun = median) + stat_summary(fun.data = mean.n, geom= "text", fun=mean, color= "black") + theme(legend.position = "none", axis.title.x = element_text(color="black", size=14, family = "Calibri"), axis.text.x = element_text(color="black", size=12, family = "Calibri"), axis.title.y = element_text(color="black", size=14, family = "Calibri"), axis.text.y = element_text(color="black", size=12, family = "Calibri"))
+
+      #Timing
+      aov_tim<- aov(Map_Inc$AvgCorrect_Total ~ Map_Inc$Timing)
+      summary(aov_tim) #p = 0.000856, df = 1, f = 11.46 #differ by timing! 
+      Early <- subset(Map_Inc, Map_Inc$Timing == "Early")
+      View (Early)
+      mean(Early$AvgCorrect_Total) #0.92
+      Later <- subset(Map_Inc, Map_Inc$Timing == "Later")
+      View (Later)
+      mean(Later$AvgCorrect_Total) #0.86
+      ggplot(Map_Inc, aes(x=M_Tim, y=M_SumTotalCorr, fill = M_Tim)) + geom_violin() + geom_boxplot(width = 0.2) + labs (x= "Language Timing", y = "Total Correct (out of 51)") + scale_fill_grey(start = 0.5, end = 0.9) + stat_summary(fun.data = mean.n, geom = "text", fun = median) + stat_summary(fun.data = mean.n, geom= "text", fun=mean, color= "black") + theme(legend.position = "none", axis.title.x = element_text(color="black", size=14, family = "Calibri"), axis.text.x = element_text(color="black", size=12, family = "Calibri"), axis.title.y = element_text(color="black", size=14, family = "Calibri"), axis.text.y = element_text(color="black", size=12, family = "Calibri"))
+
+
      
