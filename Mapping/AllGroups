@@ -526,5 +526,109 @@ mean.n <- function(x){return(c(y= median(x)*0.97, label = round(mean(x), 2)))}
       mean(Later$AvgCorrect_Total) #0.86
       ggplot(Map_Inc, aes(x=M_Tim, y=M_SumTotalCorr, fill = M_Tim)) + geom_violin() + geom_boxplot(width = 0.2) + labs (x= "Language Timing", y = "Total Correct (out of 51)") + scale_fill_grey(start = 0.5, end = 0.9) + stat_summary(fun.data = mean.n, geom = "text", fun = median) + stat_summary(fun.data = mean.n, geom= "text", fun=mean, color= "black") + theme(legend.position = "none", axis.title.x = element_text(color="black", size=14, family = "Calibri"), axis.text.x = element_text(color="black", size=12, family = "Calibri"), axis.title.y = element_text(color="black", size=14, family = "Calibri"), axis.text.y = element_text(color="black", size=12, family = "Calibri"))
 
+# BREAKING DOWN BY MAPPING PAIRS
+QW <- Map_Inc$Sum_Quantity.Word_Word.Quantity
+QN <- Map_Inc$Sum_Quantity.Numeral_Numeral.Quantity
+NW <- Map_Inc$Sum_Numeral.Word_Word.Numeral
+Map_Inc <- data.frame(Map_Inc,QW, QN, NW)
+View(Map_Inc)
 
+      #Experimental Groups by Mapping Pairs
+      BoxDF <- data.frame(QW,QN,NW,Map_Inc$Group_4cat)
+      View(BoxDF)
+      groups.data <- melt(BoxDF, id.vars='Map_Inc.Group_4cat')
+      View(groups.data)
+      groups.data$Map_Inc.Group_4cat <- factor(groups.data$Map_Inc.Group_4cat, levels = c("English Early", "ASL Early", "English Later", "ASL Later")) #order we want to present data
+      groups_map <- ggplot(groups.data, aes(variable, value, fill=Map_Inc.Group_4cat)) + geom_boxplot() + labs(x="Map Pairs", y="Accuracy (out of 17)", fill = "Experimental Groups") + scale_y_continuous (breaks=c(7,8,9,10,11,12,13,14,15,16,17), limits = c(7,17), expand = c(0,0)) + scale_x_discrete(limits=c("QN","QW","NW"), expand = c(.2,0),labels = c("Quantity-Numeral", "Quantity-Word", "Numeral-Word")) + scale_fill_grey(start = 0.5, end = 0.9) + theme(plot.title = element_text(color="black", size=14, family = "Calibri"), axis.title.x = element_text(color="black", size=14, family = "Calibri"), axis.text.x = element_text(color="black", size=12, family = "Calibri"), axis.title.y = element_text(color="black", size=14, family = "Calibri"), axis.text.y = element_text(color="black", size=12, family = "Calibri"), legend.title = element_text(color="black", size=14, family = "Calibri"), legend.text = element_text(color="black", size=14, family = "Calibri"))
+      groups_map
      
+      All_NW <- subset(groups.data, groups.data$variable == "NW")
+      View(All_NW)
+      aov_grpsNW<- aov(All_NW$value ~ All_NW$Map_Inc.Group_4cat)
+      summary(aov_grpsNW) #p = 0.508, df = 3, f = 0.777  #NW performance DOES NOT DIFFER by 4 groups
+      mean(EE$Sum_Numeral.Word_Word.Numeral) #16.44
+      mean(AE$Sum_Numeral.Word_Word.Numeral) #16.32
+      mean(EL$Sum_Numeral.Word_Word.Numeral) #16.23
+      mean(AL$Sum_Numeral.Word_Word.Numeral) #15.95
+      
+      All_QW <- subset(groups.data, groups.data$variable == "QW")
+      View(All_QW)
+      aov_grpsQW<- aov(All_QW$value ~ All_QW$Map_Inc.Group_4cat)
+      summary(aov_grpsQW) #p =0.00785, df = 3, f = 4.067, #QW performance DIFFERS by 4 groups
+      tuk_grpsQW<- TukeyHSD(aov_grpsQW)
+      tuk_grpsQW
+      mean(EE$Sum_Quantity.Word_Word.Quantity) #14.90
+      mean(AE$Sum_Quantity.Word_Word.Quantity) #15.16
+      mean(EL$Sum_Quantity.Word_Word.Quantity) #14.04
+      mean(AL$Sum_Quantity.Word_Word.Quantity) #13.55
+
+      All_QN <- subset(groups.data, groups.data$variable == "QN")
+      View(All_QN)
+      aov_grpsQN<- aov(All_QN$value ~ All_QN$Map_Inc.Group_4cat)
+      summary(aov_grpsQN) #p =0.00279, df = 3, f = 4.855, QN performance DIFFERS by 4 groups
+      tuk_grpsQN<- TukeyHSD(aov_grpsQN)
+      tuk_grpsQN
+      mean(EE$Sum_Quantity.Numeral_Numeral.Quantity) #15.40
+      mean(AE$Sum_Quantity.Numeral_Numeral.Quantity) #15.66
+      mean(EL$Sum_Quantity.Numeral_Numeral.Quantity) #14.49
+      mean(AL$Sum_Quantity.Numeral_Numeral.Quantity) #13.74
+
+      #TIMING by Mapping Pairs      
+      BoxDF_Timing <- data.frame(QW,QN,NW,Map_Inc$Timing)
+      View(BoxDF_Timing)
+      timing.data <- melt(BoxDF_Timing, id.vars='Map_Inc.Timing')
+      View(timing.data)
+      timing_map <- ggplot(timing.data, aes(variable, value, fill=Map_Inc.Timing)) + geom_boxplot() + scale_fill_manual(values=c("grey87", "grey51"), labels = c("Early", "Later")) + labs( y="Accuracy (out of 17)") + scale_y_continuous (breaks=c(7,8,9,10,11,12,13,14,15,16,17), limits = c(7,17), expand = c(0,0)) + scale_x_discrete(limits=c("QN","QW","NW"), expand = c(.2,0),labels = c("Quantity-Numeral", "Quantity-Word", "Numeral-Word")) + theme_bw() + theme(legend.position="top", legend.title = element_blank(), axis.title.x=element_blank(), panel.border = element_blank(),panel.grid.minor.y = element_blank(), panel.grid.major.x = element_blank(), panel.grid.minor.x = element_blank(), axis.line = element_line(colour = "black"), text = element_text(size=20, family="Calibri"))
+      timing_map
+      
+      Tim_NW <- subset(timing.data, timing.data$variable == "NW")
+      View(Tim_NW)
+      aov_timNW<- aov(Tim_NW$value ~ Tim_NW$Map_Inc.Timing)
+      summary(aov_timNW) #p = 0.22, df = 1, f =  1.515, NW DOES NOT DIFFER by timing
+      mean(Early$Sum_Numeral.Word_Word.Numeral) #16.38
+      mean(Later$Sum_Numeral.Word_Word.Numeral) #16.08
+
+      Tim_QW <- subset(timing.data, timing.data$variable == "QW")
+      View(Tim_QW)
+      aov_timQW<- aov(Tim_QW$value ~ Tim_QW$Map_Inc.Timing)
+      summary(aov_timQW) #p = 0.00101, df =1, f = 11.13 #QW DOES DIFFER by timing
+	mean(Early$Sum_Quantity.Word_Word.Quantity) #15.03
+      mean(Later$Sum_Quantity.Word_Word.Quantity) #13.77
+
+      Tim_QN <- subset(timing.data, timing.data$variable == "QN")
+      View(Tim_QN)
+      aov_timQN<- aov(Tim_QN$value ~ Tim_QN$Map_Inc.Timing)
+      summary(aov_timQN) #p = 0.000468, df =1, f = 12.66 #QN DOES DIFFER by timing
+      mean(Early$Sum_Quantity.Numeral_Numeral.Quantity) #15.53
+      mean(Later$Sum_Quantity.Numeral_Numeral.Quantity) #14.09
+
+      #MODALITY by Mapping Pairs
+      BoxDF_Modality <- data.frame(QW,QN,NW,Map_Inc$Modality)
+      View(BoxDF_Modality)
+      modality.data <- melt(BoxDF_Modality, id.vars='Map_Inc.Modality')
+      View(modality.data)
+      modality_map <- ggplot(modality.data, aes(variable, value, fill=Map_Inc.Modality)) + geom_boxplot() + scale_fill_manual(values=c("grey87", "grey51"), labels = c("English", "ASL")) + labs( y="Accuracy (out of 17)") + scale_y_continuous (breaks=c(7,8,9,10,11,12,13,14,15,16,17), limits = c(7,17), expand = c(0,0)) + scale_x_discrete(limits=c("QN","QW","NW"), expand = c(.2,0),labels = c("Quantity-Numeral", "Quantity-Word", "Numeral-Word")) + theme_bw() + theme(legend.position="top", legend.title = element_blank(), axis.title.x=element_blank(), panel.border = element_blank(),panel.grid.minor.y = element_blank(), panel.grid.major.x = element_blank(), panel.grid.minor.x = element_blank(), axis.line = element_line(colour = "black"), text = element_text(size=20, family="Calibri"))
+      modality_map
+
+      Mod_NW <- subset(modality.data, modality.data$variable == "NW")
+      View(Mod_NW)
+      aov_modNW<- aov(Mod_NW$value ~ Mod_NW$Map_Inc.Modality)
+      summary(aov_modNW) #p = 0.383, df = 1, f =  0.764, NW DOES NOT DIFFER by modality
+      mean(ASL$Sum_Numeral.Word_Word.Numeral) #16.12
+      mean(English$Sum_Numeral.Word_Word.Numeral) #16.34
+      
+      Mod_QW <- subset(modality.data, modality.data$variable == "QW")
+      View(Mod_QW)
+      aov_modQW<- aov(Mod_QW$value ~ Mod_QW$Map_Inc.Modality)
+      summary(aov_modQW) #p = 0.681, df = 1, f =  0.169, QW DOES NOT DIFFER by modality
+      mean(ASL$Sum_Quantity.Word_Word.Quantity) #14.31
+      mean(English$Sum_Quantity.Word_Word.Quantity) #14.47
+
+      Mod_QN <- subset(modality.data, modality.data$variable == "QN")
+      View(Mod_QN)
+      aov_modQN<- aov(Mod_QN$value ~ Mod_QN$Map_Inc.Modality)
+      summary(aov_modQN) #p = 0.488, df = 1, f =  0.482, QN DOES NOT DIFFER by modality
+      mean(ASL$Sum_Quantity.Numeral_Numeral.Quantity) #14.66
+      mean(English$Sum_Quantity.Numeral_Numeral.Quantity) #14.95
+
+
