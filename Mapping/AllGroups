@@ -481,6 +481,29 @@ N <- nrow(AL) #number of total observations
 (Var_AL/N)*100 #20% at ceiling
 
 
-     
+#ANOVAS, Overall Performance
+#Create Shortened Variables
+M_SumTotalCorr <- Map_Inc$SumCorrectTotal_All
+M_Age <- Map_Inc$Age_Rounded
+M_SES <- Map_Inc$SES
+M_Grps <- Map_Inc$Group_4cat
+M_Tim <- Map_Inc$Timing
+M_Mod <- Map_Inc$Modality
+M_Lang <- Map_Inc$Age.of.Exposure..mo..Language
+map.n <- function(x){return(c(y = median(x)*1.05, label = length(x))) }
+mean.n <- function(x){return(c(y= median(x)*0.97, label = round(mean(x), 2)))}   
+
+ggplot(Map_Inc, aes(x=M_Grps, y=M_SumTotalCorr, fill = M_Grps)) + geom_violin() + geom_boxplot(width = 0.2) + labs (x= "Experimental Groups", y = "Total Correct (out of 51)") + scale_fill_grey(start = 0.5, end = 0.9) + stat_summary(fun.data = mean.n, geom = "text", fun = median) + stat_summary(fun.data = mean.n, geom= "text", fun=mean, color= "black") + theme(legend.position = "none", axis.title.x = element_text(color="black", size=14, family = "Calibri"), axis.text.x = element_text(color="black", size=12, family = "Calibri"), axis.title.y = element_text(color="black", size=14, family = "Calibri"), axis.text.y = element_text(color="black", size=12, family = "Calibri"))
+
+      #4 Groups
+      aov_grps<- aov(Map_Inc$AvgCorrect_Total ~ Map_Inc$Group_4cat)
+      summary(aov_grps)  #p-value = 0.0053, df = 3, f = 4.366
+      tuk_grps<- TukeyHSD(aov_grps)
+      tuk_grps
+      mean(EE$AvgCorrect_Total) #0.92
+      mean(EL$AvgCorrect_Total) #0.88
+      mean(AE$AvgCorrect_Total) #0.92
+      mean(AL$AvgCorrect_Total) #0.85
+
      
      
