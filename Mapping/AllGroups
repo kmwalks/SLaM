@@ -400,22 +400,17 @@ kruskal.test(Total_Inc_Study$SES ~ Total_Inc_Study$Timing, data = Total_Inc_Stud
   View(Map_Inc) #200 kids
 
 #MIXED EFFECTS LOGISTIC REGRESSION
-            Map_long <- pivot_longer(data = Map_Inc, cols=c(ends_with("Answer")), names_to = c("Type"), values_to = "Quantity")
-            View(Map_long) 
-            Map_long2 <- pivot_longer(data = Map_Inc, cols=c(ends_with("Correct.")), names_to = c("Type2"), values_to = "Correct")
-            View(Map_long2)
-            Map_longest <- cbind(Map_long, Map_long2)
-            View(Map_longest)
-            Map_short <- Map_longest[,!grepl("^Item",names(Map_longest))] # delete columns that contain “item” 
-            View(Map_short)
-            which(colnames(Map_short)=="Child_LanguageTested") #19th column
-            which(colnames(Map_short)=="Quantity") #73rd column, WANT TO KEEP THIS COLUMN 
-            Map_short <- Map_short[, -c(19:72)] #removes unnecessary columns
-            View(Map_short)
-            which(colnames(Map_short)=="Comments.1") #20
-            which(colnames(Map_short)=="Sum_Numeral.Word_Word.Numeral.1") #90
-            Map_short <- Map_short[, -c(20:90)] #removes unnecessary columns
-            View(Map_short)
+	Map_long <- pivot_longer(data = Map_Inc, cols=c(ends_with("Answer")), names_to = c("Type"), values_to = "Quantity")
+	Map_long <- Map_long[,!grepl("^Item",names(Map_long))] # delete columns that contain “item” 
+	Map_long <- Map_long[, -c(20:71)]
+	View(Map_long) 
+	Map_long2 <- pivot_longer(data = Map_Inc, cols=c(ends_with("Correct.")), names_to = c("Type2"), values_to = "Correct")
+	Map_long2 <- Map_long2[,!grepl("^Item",names(Map_long2))] # delete columns that contain “item” 
+	View(Map_long2)
+	Map_longest <- cbind(Map_long, Map_long2$Correct)
+	View(Map_longest)
+	Map_short <- Map_longest
+	View(Map_short)
 
             # From Type column, create a new column (Map_Pair)
             #Create new column for which IF Map_short$Type contains “NW” or “WN”, assign value “Numeral-Word”
@@ -431,16 +426,26 @@ kruskal.test(Total_Inc_Study$SES ~ Total_Inc_Study$Timing, data = Total_Inc_Stud
                                   Map_short$Quantity > 3 & Map_short$Quantity<= 5 ~ 'Medium',
                                   Map_short$Quantity > 5 ~ 'Large')
             Map_short <- cbind(Map_short,Set_Size)
+	    names(Map_short)[names(Map_short) == "Map_long2$Correct"] <- "Correct"
             View(Map_short)
 
             #Running Mixed Effects Logistic Regression
             MixReg <- glmer(Correct ~ Age_Rounded + SES + Set_Size + Map_Pair + Age.of.Exposure..mo..Language + (1 | SUBJECT_ID), data = Map_short, family = binomial, control = glmerControl(optimizer ="bobyqa"), nAGQ = 10)
             summary(MixReg)
-
             #Obtain Model Descriptives
             se <- sqrt(diag(vcov(MixReg)))
             (tab <- cbind(Est = fixef(MixReg), LL = fixef(MixReg) - 1.96 * se, UL = fixef(MixReg) + 1.96 * se))
             exp(tab) #provides odds ratios
+	    
+	    #References (change Set Size and Map Pair)
+	    Map_short$SetSize_refM <- as.factor(factor(as.character(Map_short$Set_Size), levels=c("Medium", "Small", "Large"), exclude=""))
+	    Map_short$MapPair_refQW <- as.factor(factor(as.character(Map_short$Map_Pair), levels=c("Quantity-Word","Numeral-Word","Quantity-Numeral"), exclude=""))
+	    View(Map_short)
+	    MixReg_Ref <- glmer(Correct ~ Age_Rounded + SES + SetSize_refM + MapPair_refQW + Age.of.Exposure..mo..Language + (1 | SUBJECT_ID), data = Map_short, family = binomial, control = glmerControl(optimizer ="bobyqa"), nAGQ = 10)
+            summary(MixReg_Ref)
+	    se <- sqrt(diag(vcov(MixReg_Ref)))
+            (tab2 <- cbind(Est = fixef(MixReg_Ref), LL = fixef(MixReg_Ref) - 1.96 * se, UL = fixef(MixReg) + 1.96 * se))
+            exp(tab2)
 
 #OVERALL
 #Create 4 group data frames
