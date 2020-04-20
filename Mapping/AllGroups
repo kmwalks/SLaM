@@ -637,3 +637,23 @@ View(Map_Inc)
       mean(English$Sum_Quantity.Numeral_Numeral.Quantity) #14.95
 
 
+#Mixed Effects Logistic Regressions testing timing and modality
+	MixReg_MT <- glmer(Correct ~ Modality + Timing + (1 | SUBJECT_ID), data = Map_short, family = binomial, control = glmerControl(optimizer ="bobyqa"), nAGQ = 10)
+	summary(MixReg_MT)
+	NW_reg <- subset(Map_short, Map_short$Map_Pair == "Numeral-Word")
+	View(NW_reg)
+	MixReg_MT_NW <- glmer(Correct ~ Modality + Timing + (1 | SUBJECT_ID), data = NW_reg, family = binomial, control = glmerControl(optimizer ="bobyqa"), nAGQ = 10)
+	summary(MixReg_MT_NW)
+
+	QW_reg <- subset(Map_short, Map_short$Map_Pair == "Quantity-Word")
+	View(QW_reg)
+	MixReg_MT_QW <- glmer(Correct ~ Modality + Timing + (1 | SUBJECT_ID), data = QW_reg, family = binomial, control = glmerControl(optimizer ="bobyqa"), nAGQ = 10)
+	summary(MixReg_MT_QW)
+
+	QN_reg <- subset(Map_short, Map_short$Map_Pair == "Quantity-Numeral")
+	View(QN_reg)
+	MixReg_MT_QN <- glmer(Correct ~ Modality + Timing + (1 | SUBJECT_ID), data = QN_reg, family = binomial, control = glmerControl(optimizer ="bobyqa"), nAGQ = 10)
+	summary(MixReg_MT_QN)
+
+
+
