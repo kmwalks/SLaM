@@ -17,15 +17,13 @@ install.packages("qwraps2") # for summary_table use
 install.packages("quantreg") # testing quantile plots (geom_quantile) and quantile regressions
 install.packages("sure") # package for calculating residuals for ordinal logistic regression (https://journal.r-project.org/archive/2018/RJ-2018-004/RJ-2018-004.pdf)
 install.packages("mediation") # package for testing mediation effects
-install.packages("gridExtra")
+install.packages("gridExtra") 
 install.packages(“coin”)
-install.packages("dplyr")
+install.packages("dplyr") #reshaping data frames 
 install.packages("tidyr")
 install.packages("lme4")
 install.packages("plotrix")
-install.packages("VGAM") #for tobit model
-              
-        
+install.packages("VGAM") #for tobit model 
 
 library(car)
 library(sm)
@@ -57,10 +55,9 @@ library(VGAM)
       setwd("~/Desktop")
       getwd()
       
-# Import Data [[make sure is most recent version and saved as csv]]
+# Import Data 
       Map <- read.csv("Mapping_Coding_KW_200401.csv", na.strings = "N/A")
       View(Map)
-      # <- saves MC as an object, read.csv() imports it    
   
  # Participants
 
@@ -98,8 +95,8 @@ library(VGAM)
         sum(Total_Inc_Study$M.F=='N/A') # 0
 
         # RACE & ETHNICITY DESCRIPTIVE STATISTICS, grouped Unsure and N/As together
-         count((Total_Inc_Study$Race)) #40 white, 3 mixed, 1 american indian/alaska native, 1 other, 1 unsure, 1 N/A
-        count((Total_Inc_Study$Ethnicity)) #36 not hispanic or latino, 4 hispanic or latino, 6 N/A, 1 unsure
+        Total_Inc_Study %>% count(Race) #40 white, 3 mixed, 1 american indian/alaska native, 1 other, 1 unsure, 1 N/A
+        Total_Inc_Study %>% count(Ethnicity) #36 not hispanic or latino, 4 hispanic or latino, 6 N/A, 1 unsure
 
         # AGE DESCRIPTIVE STATISTICS    
         min(Total_Inc_Study$Age_Rounded, na.rm=TRUE) # 5.1
@@ -124,7 +121,7 @@ library(VGAM)
 
 #Data Analysis
         Map_HBE <- subset(Map_EE, Map_EE$Including.in.Study == "Yes" & Map_EE$Mapping_Include. == "Yes") #RENAMING Total_Inc_Study DATA FRAME for coding ease
-        View(Map_HBE)
+        View(Map_HBE) #HBE means "hearing born English" 
         
         #Overall Mapping Performance
         wilcox.test(Map_HBE$AvgCorrect_Total, mu = .25, alternative = "greater") #overall mapping performance compared to chance, p-value = 1.129e-09
@@ -151,7 +148,7 @@ library(VGAM)
                 HBE_longest <- cbind(HBE_long, HBE_long2)
                 View(HBE_longest)
                 HBE_short <- HBE_longest[,!grepl("^Item",names(HBE_longest))] # delete columns that contain “item” 
-                View(HBE_short)
+     		View(HBE_short)
                 which(colnames(HBE_short)=="Child_LanguageTested") #19th column
                 which(colnames(HBE_short)=="Quantity") #73rd column, WANT TO KEEP THIS COLUMN 
                 HBE_short <- HBE_short[, -c(19:72)] #removes unnecessary columns
@@ -179,12 +176,12 @@ library(VGAM)
                 View(HBE_short)
      
      #Mixed Effects Logistic Regression. Resource: https://stats.idre.ucla.edu/r/dae/mixed-effects-logistic-regression/
-       REG2 <- glmer(Correct ~ Age_Rounded + SES + Set_Size + Map_Pair + (1 | SUBJECT_ID), data = HBE_short, family = binomial, control = glmerControl(optimizer ="bobyqa"), nAGQ = 10)
-       REG2 
+       REG_Overall <- glmer(Correct ~ Age_Rounded + SES + Set_Size + Map_Pair + (1 | SUBJECT_ID), data = HBE_short, family = binomial, control = glmerControl(optimizer ="bobyqa"), nAGQ = 10)
+       REG_Overall 
        #Obtaining Descriptives of Model
-       se <- sqrt(diag(vcov(REG2)))
-       (tab <- cbind(Est = fixef(REG2), LL = fixef(REG2) - 1.96 * se, UL = fixef(REG2) + 1.96 * se))
-       exp(tab) #provides odds ratios
+       se <- sqrt(diag(vcov(REG_Overall)))
+       (odds <- cbind(Est = fixef(REG_Overall), LL = fixef(REG_Overall) - 1.96 * se, UL = fixef(REG_Overall) + 1.96 * se))
+       exp(odds) #provides odds ratios
         
 #Age Group Decision
       AGEGRP <- Map_HBE %>% mutate(AGEGRP = case_when(Map_HBE$Age_Rounded >= 5  & Map_HBE$Age_Rounded < 6 ~ '5', Map_HBE$Age_Rounded >= 6  & Map_HBE$Age_Rounded < 7 ~ '6', Map_HBE$Age_Rounded >= 7  & Map_HBE$Age_Rounded < 8 ~ '7', Map_HBE$Age_Rounded >= 8  & Map_HBE$Age_Rounded < 9 ~ '8', Map_HBE$Age_Rounded >= 9  & Map_HBE$Age_Rounded < 10 ~ '9'))
@@ -211,7 +208,7 @@ library(VGAM)
   Map56 <- subset(Map_HBE, Map_HBE$AgeGrp =="5- and 6-year-olds")
   Map7up <- subset(Map_HBE, Map_HBE$AgeGrp =="7 and up")   
       
- ##GROUPED BAR PLOT##
+ ##AGE GROUPED BAR PLOT by Map Pairs##
       ##SOURCE: https://onunicornsandgenes.blog/2014/03/19/using-r-barplot-with-ggplot2/##
       ## 1. CREATE DF FOR AGE GRP 5 ##
       View(Map56)
@@ -267,20 +264,21 @@ library(VGAM)
       View(K2)
 
       ## 6. MERGE PREVIOUSLY COMBINED DATAFRAME WITH SEM DATA FRAME ##
-      BOOYAH <- merge(K, K2, by=c("AgeGrp","Map"), all = T)
-      names(BOOYAH)[names(BOOYAH) == "value.x"] <- "mean"
-      names(BOOYAH)[names(BOOYAH) == "value.y"] <- "sem"
-      View(BOOYAH)
+      Pairs_Age <- merge(K, K2, by=c("AgeGrp","Map"), all = T) #setting up to create plot of mapping pair performance by age groups
+      names(Pairs_Age)[names(Pairs_Age) == "value.x"] <- "mean"
+      names(Pairs_Age)[names(Pairs_Age) == "value.y"] <- "sem"
+      View(Pairs_Age)
 
       ## 7. ADD COLUMNS FOR ERROR BARS ##
-             lower <- BOOYAH$mean - BOOYAH$sem
-             upper <- BOOYAH$mean + BOOYAH$sem
-             BOOYAH<- cbind(BOOYAH, lower, upper)
-             View(BOOYAH)
+             lower <- Pairs_Age$mean - Pairs_Age$sem
+             upper <- Pairs_Age$mean + Pairs_Age$sem
+             Pairs_Age<- cbind(Pairs_Age, lower, upper)
+             View(Pairs_Age)
+            
 
       ## 8. CREATE BAR PLOT ##
-All_Bar <- ggplot(BOOYAH, aes(BOOYAH$Map, BOOYAH$mean)) + geom_bar(aes(fill = BOOYAH$AgeGrp), width = 0.6, position = position_dodge(width=0.7), stat="identity") + scale_fill_manual(values=c("grey87", "grey51"), labels = c("5 and 6-year-olds", "7 to 9-year-olds")) + labs( y="Accuracy (out of 17)") + scale_y_continuous (breaks=c(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17), limits = c(0,17), expand = c(0,0)) + scale_x_discrete(limits=c("QN","QW","NW"), expand = c(.2,0),labels = c("Quantity and Numeral", "Quantity and Word", "Numeral and Word")) + theme_bw() + theme(legend.position="top", legend.title = element_blank(), axis.title.x=element_blank(), panel.border = element_blank(),panel.grid.minor.y = element_blank(), panel.grid.major.x = element_blank(), panel.grid.minor.x = element_blank(), axis.line = element_line(colour = "black"), text = element_text(size=18, family="Calibri"))
-BARS <- All_Bar + geom_errorbar(aes(ymax=BOOYAH$upper, ymin=BOOYAH$lower, group=AgeGrp), width=.5, position=position_dodge(0.7), data=BOOYAH)
+All_Bar <- ggplot(Pairs_Age, aes(Pairs_Age$Map, Pairs_Age$mean)) + geom_bar(aes(fill = Pairs_Age$AgeGrp), width = 0.6, position = position_dodge(width=0.7), stat="identity") + scale_fill_manual(values=c("grey87", "grey51"), labels = c("5 and 6-year-olds", "7 to 9-year-olds")) + labs( y="Accuracy (out of 17)") + scale_y_continuous (breaks=c(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17), limits = c(0,17), expand = c(0,0)) + scale_x_discrete(limits=c("QN","QW","NW"), expand = c(.2,0),labels = c("Quantity and Numeral", "Quantity and Word", "Numeral and Word")) + theme_bw() + theme(legend.position="top", legend.title = element_blank(), axis.title.x=element_blank(), panel.border = element_blank(),panel.grid.minor.y = element_blank(), panel.grid.major.x = element_blank(), panel.grid.minor.x = element_blank(), axis.line = element_line(colour = "black"), text = element_text(size=18, family="Calibri"))
+BARS <- All_Bar + geom_errorbar(aes(ymax=Pairs_Age$upper, ymin=Pairs_Age$lower, group=AgeGrp), width=.5, position=position_dodge(0.7), data=Pairs_Age)
 BARS
 
 #TESTING SIGNIFICANCE BETWEEN BARS#
@@ -303,21 +301,20 @@ t.test(Map56$Sum_Numeral.Word_Word.Numeral, Map7up$Sum_Numeral.Word_Word.Numeral
  age7 <- data.frame(AgeGrp, QW,NW,QN)
  age7.data <- melt(age7, id.vars='AgeGrp')
  View(age7.data)
- B <- merge(age56.data, age7.data, by=c("AgeGrp","variable","value"), all = T)
- names(B)[names(B) == "variable"] <- "Map"
- View(B)
-All_BOX <- ggplot(B, aes(B$Map, B$value, fill=B$AgeGrp)) + geom_boxplot() + scale_fill_manual(values=c("grey87", "grey51"), labels = c("5 and 6-year-olds", "7 to 9-year-olds")) + labs( y="Accuracy (out of 17)") + scale_y_continuous (breaks=c(7,8,9,10,11,12,13,14,15,16,17), limits = c(7,17), expand = c(0,0)) + scale_x_discrete(limits=c("QN","QW","NW"), expand = c(.2,0),labels = c("Quantity-Numeral", "Quantity-Word", "Numeral-Word")) + theme_bw() + theme(legend.position="top", legend.title = element_blank(), axis.title.x=element_blank(), panel.border = element_blank(),panel.grid.minor.y = element_blank(), panel.grid.major.x = element_blank(), panel.grid.minor.x = element_blank(), axis.line = element_line(colour = "black"), text = element_text(size=20, family="Calibri")) 
+ Box_Pairs_Age <- merge(age56.data, age7.data, by=c("AgeGrp","variable","value"), all = T)
+ names( Box_Pairs_Age )[names(Box_Pairs_Age) == "variable"] <- "Map"
+ View(Box_Pairs_Age)
+All_BOX <- ggplot(Box_Pairs_Age, aes(Map, value, fill=AgeGrp)) + geom_boxplot() + scale_fill_manual(values=c("grey87", "grey51"), labels = c("5 and 6-year-olds", "7 to 9-year-olds")) + labs( y="Accuracy (out of 17)") + scale_y_continuous (breaks=c(7,8,9,10,11,12,13,14,15,16,17), limits = c(7,17), expand = c(0,0)) + scale_x_discrete(limits=c("QN","QW","NW"), expand = c(.2,0),labels = c("Quantity-Numeral", "Quantity-Word", "Numeral-Word")) + theme_bw() + theme(legend.position="top", legend.title = element_blank(), axis.title.x=element_blank(), panel.border = element_blank(),panel.grid.minor.y = element_blank(), panel.grid.major.x = element_blank(), panel.grid.minor.x = element_blank(), axis.line = element_line(colour = "black"), text = element_text(size=20, family="Calibri")) 
 All_BOX
 
 #BOXPLOT AND VIOLIN#
 dodge <- position_dodge(width = 0.7)
-All_BV <- ggplot(B, aes(B$Map, B$value, fill=B$AgeGrp)) + geom_violin (position = dodge)+ geom_boxplot(width=0.2, position = dodge) + scale_fill_manual(values=c("grey87", "grey51"), labels = c("5 and 6-year-olds", "7 to 9-year-olds")) + labs( y="Accuracy (out of 17)") + scale_y_continuous (breaks=c(7,8,9,10,11,12,13,14,15,16,17), limits = c(7,17), expand = c(0,0)) + scale_x_discrete(limits=c("QN","QW","NW"), expand = c(.2,0),labels = c("Quantity-Numeral", "Quantity-Word", "Numeral-Word")) + theme_bw() + theme(legend.position="top", legend.title = element_blank(), axis.title.x=element_blank(), panel.border = element_blank(),panel.grid.minor.y = element_blank(), panel.grid.major.x = element_blank(), panel.grid.minor.x = element_blank(), axis.line = element_line(colour = "black"), text = element_text(size=20, family="Calibri")) 
+All_BV <- ggplot(Box_Pairs_Age, aes(Map, value, fill=AgeGrp)) + geom_violin (position = dodge)+ geom_boxplot(width=0.2, position = dodge) + scale_fill_manual(values=c("grey87", "grey51"), labels = c("5 and 6-year-olds", "7 to 9-year-olds")) + labs( y="Accuracy (out of 17)") + scale_y_continuous (breaks=c(7,8,9,10,11,12,13,14,15,16,17), limits = c(7,17), expand = c(0,0)) + scale_x_discrete(limits=c("QN","QW","NW"), expand = c(.2,0),labels = c("Quantity-Numeral", "Quantity-Word", "Numeral-Word")) + theme_bw() + theme(legend.position="top", legend.title = element_blank(), axis.title.x=element_blank(), panel.border = element_blank(),panel.grid.minor.y = element_blank(), panel.grid.major.x = element_blank(), panel.grid.minor.x = element_blank(), axis.line = element_line(colour = "black"), text = element_text(size=20, family="Calibri")) 
 All_BV
-
 
 #ANOVA: Map Pair, Age Grp, Interaction
       #Creating Data Frame with Summed Scores, Map Pair, and Age Grp
-      which(colnames(Map_HBE)=="Difference_Numeral.Word_Word.Numeral" #323
+      which(colnames(Map_HBE)=="Difference_Numeral.Word_Word.Numeral") #323
       HBE_AOV <- Map_HBE[, -c(1:323)] 
       View(HBE_AOV)
       HBE_AOV <- pivot_longer(data = HBE_AOV, cols=c(starts_with("Sum")), names_to = c("Type"), values_to = "Sum Correct Per Map Pair")
@@ -495,10 +492,11 @@ All_BV
 	HBE_short2$AgeGrp_5v7 <- ifelse(HBE_short2$Age_Rounded < 7, "5 and 6-year-olds", "7 to 9-year-olds")
 	View(HBE_short2)
 	HBE_short2_5 <- subset(HBE_short2, AgeGrp_5v7 == "5 and 6-year-olds")
-	View(HBE_short2_5)
+	View(HBE_short2_5) # 5 and 6 year olds
 	HBE_short2_7 <- subset(HBE_short2, AgeGrp_5v7 == "7 to 9-year-olds")
-	View(HBE_short2_7) 
+	View(HBE_short2_7) #7-9 year olds 
 	
+	#Creating data frames for 2 age groups by mapping pairs 
 	qw_5 <- subset (HBE_short2_5, HBE_short2_5$MapPair == "Quantity-Word")
 	View(qw_5)
 	qn_5 <- subset (HBE_short2_5, HBE_short2_5$MapPair == "Quantity-Numeral")
@@ -524,30 +522,16 @@ All_BV
 	Prop <- HBE_short2$Pair_Size
 	AgeGrp <- HBE_short2$AgeGrp
 	dodge <- position_dodge(width = 0.5)
-	ALL_B <- ggplot(HBE_short2, aes(MapPair, Prop, fill=AgeGrp)) + geom_boxplot(width=0.2, position = dodge) + scale_fill_manual(values=c("grey87", "grey51"), labels = c("5 and 6-year-olds (n=25)", "7 to 9-year-olds (n=22)")) + labs( y="Proportion Correct") + scale_y_continuous (breaks=c(0.0, 0.2, 0.4,0.6,0.8,1.0), limits = c(0,1), expand = c(0,0)) + scale_x_discrete(limits=c("Quantity-Numeral","Quantity-Word","Numeral-Word"), expand = c(.2,0),labels = c("Quantity-Numeral", "Quantity-Word", "Numeral-Word")) + theme_bw() + theme(legend.position="top", legend.title = element_blank(), axis.title.x=element_blank(), panel.border = element_blank(),panel.grid.minor.y = element_blank(), panel.grid.major.x = element_blank(), panel.grid.minor.x = element_blank(), axis.line = element_line(colour = "black"), text = element_text(size=20, family="Calibri")) 
-	ALL_B
-#BOX PLOTS Prop Correct for 7-9 year olds by set size#
-	qw_7 <- subset (HBE_short2_7, HBE_short2_7$MapPair == "Quantity-Word")
-	View(qw_7)
-	qn_7 <- subset (HBE_short2_7, HBE_short2_7$MapPair == "Quantity-Numeral")
-	View(qn_7)
-	nw_7 <- subset (HBE_short2_7, HBE_short2_7$MapPair == "Numeral-Word")
-	View(nw_7)
-	dodge <- position_dodge(width = 0.5)
-	qn_7_b <- ggplot(qn_7, aes(Set_Size,Pair_Size)) + geom_boxplot(width=0.2, position = dodge) + ggtitle("Quantity-Numeral") + labs( y="Proportion Correct") + scale_y_continuous (breaks=c(0.0, 0.2, 0.4,0.6,0.8,1.0), limits = c(0,1), expand = c(0,0)) + scale_x_discrete(limits=c("Small","Medium","Large"), expand = c(.2,0),labels = c("Small", "Medium", "Large")) + theme_bw() + theme(legend.position="top", plot.title=element_text(hjust = 0.5),axis.title.x=element_blank(), panel.border = element_blank(),panel.grid.minor.y = element_blank(), panel.grid.major.x = element_blank(), panel.grid.minor.x = element_blank(), axis.line = element_line(colour = "black"), text = element_text(size=18, family="Calibri")) 
-	qn_7_b
-	qw_7_b <- ggplot(qw_7, aes(Set_Size,Pair_Size)) + geom_boxplot(width=0.2, position = dodge) + ggtitle("Quantity-Word") + labs( y="Proportion Correct") + scale_y_continuous (breaks=c(0.0, 0.2, 0.4,0.6,0.8,1.0), limits = c(0,1), expand = c(0,0)) + scale_x_discrete(limits=c("Small","Medium","Large"), expand = c(.2,0),labels = c("Small", "Medium", "Large")) + theme_bw() + theme(legend.position="top", plot.title=element_text(hjust = 0.5),axis.title.x=element_blank(), panel.border = element_blank(),panel.grid.minor.y = element_blank(), panel.grid.major.x = element_blank(), panel.grid.minor.x = element_blank(), axis.line = element_line(colour = "black"), text = element_text(size=18, family="Calibri")) 
-	qw_7_b
-	nw_7_b <- ggplot(nw_7, aes(Set_Size,Pair_Size)) + geom_boxplot(width=0.2, position = dodge) + ggtitle("Numeral-Word") + labs( y="Proportion Correct") + scale_y_continuous (breaks=c(0.0, 0.2, 0.4,0.6,0.8,1.0), limits = c(0,1), expand = c(0,0)) + scale_x_discrete(limits=c("Small","Medium","Large"), expand = c(.2,0),labels = c("Small", "Medium", "Large")) + theme_bw() + theme(legend.position="top", plot.title=element_text(hjust = 0.5),axis.title.x=element_blank(), panel.border = element_blank(),panel.grid.minor.y = element_blank(), panel.grid.major.x = element_blank(), panel.grid.minor.x = element_blank(), axis.line = element_line(colour = "black"), text = element_text(size=18, family="Calibri")) 
-	nw_7_b
-	grid.arrange(qn_7_b,qw_7_b,nw_7_b,ncol = 3)
+	Box_Prop <- ggplot(HBE_short2, aes(MapPair, Prop, fill=AgeGrp)) + geom_boxplot(width=0.2, position = dodge) + scale_fill_manual(values=c("grey87", "grey51"), labels = c("5 and 6-year-olds (n=25)", "7 to 9-year-olds (n=22)")) + labs( y="Proportion Correct") + scale_y_continuous (breaks=c(0.0, 0.2, 0.4,0.6,0.8,1.0), limits = c(0,1), expand = c(0,0)) + scale_x_discrete(limits=c("Quantity-Numeral","Quantity-Word","Numeral-Word"), expand = c(.2,0),labels = c("Quantity-Numeral", "Quantity-Word", "Numeral-Word")) + theme_bw() + theme(legend.position="top", legend.title = element_blank(), axis.title.x=element_blank(), panel.border = element_blank(),panel.grid.minor.y = element_blank(), panel.grid.major.x = element_blank(), panel.grid.minor.x = element_blank(), axis.line = element_line(colour = "black"), text = element_text(size=20, family="Calibri")) 
+	Box_Prop
 	
-#5 vs 6 year olds
 	#Boxplot 5 vs 6 year olds, map pairs, proportion correct
 	dodge <- position_dodge(width = 0.5)
 	ALL_56 <- ggplot(HBE_short2_5, aes(MapPair, Pair_Size, fill=AgeGrp)) + geom_boxplot(width=0.2, position = dodge) + scale_fill_manual(values=c("grey87", "grey51"), labels = c("5-year-olds (n=15)", "6-year-olds (n=10)")) + labs(y="Proportion Correct") + scale_y_continuous (breaks=c(0.0, 0.2, 0.4,0.6,0.8,1.0), limits = c(0,1), expand = c(0,0)) + scale_x_discrete(limits=c("Quantity-Numeral","Quantity-Word","Numeral-Word"), expand = c(.2,0),labels = c("Quantity-Numeral", "Quantity-Word", "Numeral-Word")) + theme_bw() + theme(legend.position="top", legend.title = element_blank(), axis.title.x=element_blank(), panel.border = element_blank(),panel.grid.minor.y = element_blank(), panel.grid.major.x = element_blank(), panel.grid.minor.x = element_blank(), axis.line = element_line(colour = "black"), text = element_text(size=16, family="Times New Roman")) 
 	ALL_56
 
+
+#### HERE WITH CODE EDITING!! ####
 	#Boxplots by Map Pairs & Set Sizes#
 	library(grid)
 	dodge <- position_dodge(width = 0.5)
@@ -573,7 +557,29 @@ All_BV
 	nw_6_only_box
 	yo_5 <- grid.arrange(qn_5_only_box,qw_5_only_box,nw_5_only_box, ncol = 3, top=textGrob("5-year-olds (n=15)", gp=gpar(fontsize=16,fontface = "bold",fontfamily="Calibri")))
 	yo_6 <- grid.arrange(qn_6_only_box,qw_6_only_box,nw_6_only_box, ncol = 3, top=textGrob("6-year-olds (n=10)", gp=gpar(fontsize=16,fontface = "bold",fontfamily="Calibri")))
-	grid.arrange(yo_5,yo_6,ncol=1)
+	
+	#NEED TO DO THE SAME ABOVE FOR 7 YO, ALL IN ONE FIGURE!#
+	#BOX PLOTS Prop Correct for 7-9 year olds by set size#
+	qw_7 <- subset (HBE_short2_7, HBE_short2_7$MapPair == "Quantity-Word")
+	View(qw_7)
+	qn_7 <- subset (HBE_short2_7, HBE_short2_7$MapPair == "Quantity-Numeral")
+	View(qn_7)
+	nw_7 <- subset (HBE_short2_7, HBE_short2_7$MapPair == "Numeral-Word")
+	View(nw_7)
+	dodge <- position_dodge(width = 0.5)
+	qn_7_b <- ggplot(qn_7, aes(Set_Size,Pair_Size)) + geom_boxplot(width=0.2, position = dodge) + ggtitle("Quantity-Numeral") + labs( y="Proportion Correct") + scale_y_continuous (breaks=c(0.0, 0.2, 0.4,0.6,0.8,1.0), limits = c(0,1), expand = c(0,0)) + scale_x_discrete(limits=c("Small","Medium","Large"), expand = c(.2,0),labels = c("Small", "Medium", "Large")) + theme_bw() + theme(legend.position="top", plot.title=element_text(hjust = 0.5),axis.title.x=element_blank(), panel.border = element_blank(),panel.grid.minor.y = element_blank(), panel.grid.major.x = element_blank(), panel.grid.minor.x = element_blank(), axis.line = element_line(colour = "black"), text = element_text(size=18, family="Calibri")) 
+	qn_7_b
+	qw_7_b <- ggplot(qw_7, aes(Set_Size,Pair_Size)) + geom_boxplot(width=0.2, position = dodge) + ggtitle("Quantity-Word") + labs( y="Proportion Correct") + scale_y_continuous (breaks=c(0.0, 0.2, 0.4,0.6,0.8,1.0), limits = c(0,1), expand = c(0,0)) + scale_x_discrete(limits=c("Small","Medium","Large"), expand = c(.2,0),labels = c("Small", "Medium", "Large")) + theme_bw() + theme(legend.position="top", plot.title=element_text(hjust = 0.5),axis.title.x=element_blank(), panel.border = element_blank(),panel.grid.minor.y = element_blank(), panel.grid.major.x = element_blank(), panel.grid.minor.x = element_blank(), axis.line = element_line(colour = "black"), text = element_text(size=18, family="Calibri")) 
+	qw_7_b
+	nw_7_b <- ggplot(nw_7, aes(Set_Size,Pair_Size)) + geom_boxplot(width=0.2, position = dodge) + ggtitle("Numeral-Word") + labs( y="Proportion Correct") + scale_y_continuous (breaks=c(0.0, 0.2, 0.4,0.6,0.8,1.0), limits = c(0,1), expand = c(0,0)) + scale_x_discrete(limits=c("Small","Medium","Large"), expand = c(.2,0),labels = c("Small", "Medium", "Large")) + theme_bw() + theme(legend.position="top", plot.title=element_text(hjust = 0.5),axis.title.x=element_blank(), panel.border = element_blank(),panel.grid.minor.y = element_blank(), panel.grid.major.x = element_blank(), panel.grid.minor.x = element_blank(), axis.line = element_line(colour = "black"), text = element_text(size=18, family="Calibri")) 
+	nw_7_b
+	yo_7 <- grid.arrange(qn_7_b,qw_7_b,nw_7_b,ncol = 3)
+	
+	
+	
+	
+	
+	grid.arrange(yo_5,yo_6,yo_7,ncol=1) #5, 6, and 6-9 YO figures of mapping pairs by set sizes 
 
 #Means for Set Sizes across map pairs & 2 age groups
 	Map56 <- subset(Map_HBE, Map_HBE$Age_Rounded < 7)
@@ -623,6 +629,10 @@ All_BV
 	wilcox.test(Map79$AvgCorrect_Lrg_WN, mu = .25, alternative = "greater") #p-value = V = 253, p-value = 3.329e-06 
 	
 #Tobit Models, resource: https://stats.idre.ucla.edu/r/dae/tobit-models/
+	
+	
+	#BELOW CODES SHOULD BE USING HBE_short2 !!!!
+	
 	HBE_long2$AgeGrp <- ifelse(Map_HBE$Age_Rounded < 7, "5-6", "7-9")
 	HBE_long2 <-  mutate(HBE_long2, SetSize = case_when(grepl("Sm", HBE_long2$name) ~ "Small", grepl("Med", HBE_long2$name) ~"Medium", grepl("Lrg", HBE_long2$name) ~"Large"))
 	HBE_long2$Set_Size <- as.factor(factor(as.character(HBE_long2$SetSize), levels=c("Small", "Medium", "Large"), exclude=""))
