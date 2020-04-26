@@ -194,168 +194,86 @@ library(VGAM)
       YO9 <- subset(Map_HBE2, Map_HBE2$AGEGRP =="9")
       t.test(YO5$AvgCorrect_Total, YO6$AvgCorrect_Total, paired = FALSE, alternative = "two.sided")  # 5 vs 6 not Different, t = -1.9814, df = 19.599, p-value = 0.06175
       t.test(YO5$AvgCorrect_Total, YO7$AvgCorrect_Total, paired = FALSE, alternative = "two.sided")  #5 vs 7 SIG DIFFERENT, t = -3.6593, df = 22.555, p-value = 0.001337
+      t.test(YO5$AvgCorrect_Total, YO8$AvgCorrect_Total, paired = FALSE, alternative = "two.sided")  #5 vs 8 SIG DIFFERENT, t = -5.4696, df = 15.766, p-value = 5.417e-05
+      t.test(YO5$AvgCorrect_Total, YO9$AvgCorrect_Total, paired = FALSE, alternative = "two.sided")  #5 vs 9 SIG DIFFERENT, t = -5.6128, df = 17.174, p-value = 2.99e-05
       t.test(YO6$AvgCorrect_Total, YO7$AvgCorrect_Total, paired = FALSE, alternative = "two.sided")  #6 vs 7 not Different, t = -1.2263, df = 16.815, p-value = 0.237
       t.test(YO6$AvgCorrect_Total, YO8$AvgCorrect_Total, paired = FALSE, alternative = "two.sided") #6 vs 8 not Different, t = -2.0488, df = 9.8067, p-value = 0.06819
       t.test(YO6$AvgCorrect_Total, YO9$AvgCorrect_Total, paired = FALSE, alternative = "two.sided") #6 vs 9 SIG DIFFERENT, t = -2.2875, df = 10.692, p-value = 0.04361
-     t.test(YO7$AvgCorrect_Total, YO8$AvgCorrect_Total, paired = FALSE, alternative = "two.sided") #7 vs 8 not Different, t = -0.69919, df = 10.37, p-value = 0.4998 
+      t.test(YO7$AvgCorrect_Total, YO8$AvgCorrect_Total, paired = FALSE, alternative = "two.sided") #7 vs 8 not Different, t = -0.69919, df = 10.37, p-value = 0.4998 
       t.test(YO7$AvgCorrect_Total, YO9$AvgCorrect_Total, paired = FALSE, alternative = "two.sided") #7 vs 9 not Different, t = -1.041, df = 11.649, p-value = 0.319
       t.test(YO8$AvgCorrect_Total, YO9$AvgCorrect_Total, paired = FALSE, alternative = "two.sided") #8 vs 9 not Different, t = -0.79799, df = 7.3601, p-value = 0.4499
-
-      #FINDINGS: Not sig different: 5 vs 6, 6 vs 7, 7 vs 8, 7 vs 9, 8 vs 9, 6 vs 8, 6 vs 9, SIG different: 5 vs 7, 6 vs 9 
-      #Age Group decision: 5-6 year olds vs 7-9 year olds
-      
-#SEPARATING BY AGE GROUPS
-  Map_HBE$AgeGrp <- ifelse(Map_HBE$Age_Rounded < 7, "5- and 6-year-olds", "7 and up")
-  Map56 <- subset(Map_HBE, Map_HBE$AgeGrp =="5- and 6-year-olds")
-  Map7up <- subset(Map_HBE, Map_HBE$AgeGrp =="7 and up")   
-      
- ##AGE GROUPED BAR PLOT by Map Pairs##
-      ##SOURCE: https://onunicornsandgenes.blog/2014/03/19/using-r-barplot-with-ggplot2/##
-      ## 1. CREATE DF FOR AGE GRP 5 ##
-      View(Map56)
-      AgeGrp <- Map56$AgeGrp
-      QW <- mean(Map56$Sum_Quantity.Word_Word.Quantity)
-      NW <- mean(Map56$Sum_Numeral.Word_Word.Numeral)
-      QN <- mean(Map56$Sum_Quantity.Numeral_Numeral.Quantity)
-      age56 <- data.frame(AgeGrp, QW, NW,QN)
-      age56.data <- melt(age56, id.vars='AgeGrp')
-      View(age56.data)
-
-      ## 2. CREATE DF FOR AGE GRP 6 > ##
-      AgeGrp <- Map7up$AgeGrp
-      QW <- mean(Map7up$Sum_Quantity.Word_Word.Quantity)
-      NW <- mean(Map7up$Sum_Numeral.Word_Word.Numeral)
-      QN <- mean(Map7up$Sum_Quantity.Numeral_Numeral.Quantity)
-      age7 <- data.frame(AgeGrp, QW,NW,QN)
-      age7.data <- melt(age7, id.vars='AgeGrp')
-      View(age7.data)
-
-      ## 3. MERGE 2 AGE GROUP DFS ##
-      K <- merge(age56.data, age7.data, by=c("AgeGrp","variable","value"), all = T)
-      names(K)[names(K) == "variable"] <- "Map"
-      View(K)
-
-      ## 4. CREATE NEW DATA FRAME WITH SEMS ##
-          #AGE 5 and 6#         
-          AgeGrp <- Map56$AgeGrp
-          QW_SE <- std.error(Map56$Sum_Quantity.Word_Word.Quantity)
-          NW_SE <- std.error(Map56$Sum_Numeral.Word_Word.Numeral)
-          QN_SE <- std.error(Map56$Sum_Quantity.Numeral_Numeral.Quantity)
-          SE_56 <- data.frame(AgeGrp, QW_SE, NW_SE, QN_SE)
-          SE_56 <- melt(SE_56, id.vars='AgeGrp')
-          View(SE_56)
-
-         #AGE 7 and up#
-         AgeGrp <- Map7up$AgeGrp
-         QW_SE <- std.error(Map7up$Sum_Quantity.Word_Word.Quantity)
-         NW_SE <- std.error(Map7up$Sum_Numeral.Word_Word.Numeral)
-         QN_SE <- std.error(Map7up$Sum_Quantity.Numeral_Numeral.Quantity)
-         SE_7 <- data.frame(AgeGrp, QW_SE, NW_SE, QN_SE)
-         SE_7 <- melt(SE_7, id.vars='AgeGrp')
-         View(SE_7)
-
-      ## 5. MERGE 2 SEM DATA FRAMES & PREP TO MERGE WITH OTHER MERGED DF ##
-      K2 <- merge(SE_56, SE_7, by=c("AgeGrp","variable","value"), all = T)
-      View(K2)
-      K2 <- data.frame(K2$AgeGrp, K2$value, K2$variable, K$Map)
-      names(K2)[names(K2) == "K2.value"] <- "value"
-      names(K2)[names(K2) == "K2.AgeGrp"] <- "AgeGrp"
-      names(K2)[names(K2) == "K.Map"] <- "Map"
-      names(K2)[names(K2) == "K2.variable"] <- "variable"
-      View(K2)
-
-      ## 6. MERGE PREVIOUSLY COMBINED DATAFRAME WITH SEM DATA FRAME ##
-      Pairs_Age <- merge(K, K2, by=c("AgeGrp","Map"), all = T) #setting up to create plot of mapping pair performance by age groups
-      names(Pairs_Age)[names(Pairs_Age) == "value.x"] <- "mean"
-      names(Pairs_Age)[names(Pairs_Age) == "value.y"] <- "sem"
-      View(Pairs_Age)
-
-      ## 7. ADD COLUMNS FOR ERROR BARS ##
-             lower <- Pairs_Age$mean - Pairs_Age$sem
-             upper <- Pairs_Age$mean + Pairs_Age$sem
-             Pairs_Age<- cbind(Pairs_Age, lower, upper)
-             View(Pairs_Age)
-            
-
-      ## 8. CREATE BAR PLOT ##
-All_Bar <- ggplot(Pairs_Age, aes(Pairs_Age$Map, Pairs_Age$mean)) + geom_bar(aes(fill = Pairs_Age$AgeGrp), width = 0.6, position = position_dodge(width=0.7), stat="identity") + scale_fill_manual(values=c("grey87", "grey51"), labels = c("5 and 6-year-olds", "7 to 9-year-olds")) + labs( y="Accuracy (out of 17)") + scale_y_continuous (breaks=c(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17), limits = c(0,17), expand = c(0,0)) + scale_x_discrete(limits=c("QN","QW","NW"), expand = c(.2,0),labels = c("Quantity and Numeral", "Quantity and Word", "Numeral and Word")) + theme_bw() + theme(legend.position="top", legend.title = element_blank(), axis.title.x=element_blank(), panel.border = element_blank(),panel.grid.minor.y = element_blank(), panel.grid.major.x = element_blank(), panel.grid.minor.x = element_blank(), axis.line = element_line(colour = "black"), text = element_text(size=18, family="Calibri"))
-BARS <- All_Bar + geom_errorbar(aes(ymax=Pairs_Age$upper, ymin=Pairs_Age$lower, group=AgeGrp), width=.5, position=position_dodge(0.7), data=Pairs_Age)
-BARS
-
-#TESTING SIGNIFICANCE BETWEEN BARS#
-t.test(Map56$Sum_Quantity.Numeral_Numeral.Quantity, Map7up$Sum_Quantity.Numeral_Numeral.Quantity, paired = FALSE, alternative = "two.sided") 
-t.test(Map56$Sum_Quantity.Word_Word.Quantity, Map7up$Sum_Quantity.Word_Word.Quantity, paired = FALSE, alternative = "two.sided")
-t.test(Map56$Sum_Numeral.Word_Word.Numeral, Map7up$Sum_Numeral.Word_Word.Numeral, paired = FALSE, alternative = "two.sided") 
-
-#BOX PLOT ONLY
- AgeGrp <- Map56$AgeGrp
- QW <- Map56$Sum_Quantity.Word_Word.Quantity
- NW <- Map56$Sum_Numeral.Word_Word.Numeral
- QN <- Map56$Sum_Quantity.Numeral_Numeral.Quantity
- age56 <- data.frame(AgeGrp, QW, NW,QN)
- age56.data <- melt(age56, id.vars='AgeGrp')
- View(age56.data)
- AgeGrp <- Map7up$AgeGrp
- QW <- Map7up$Sum_Quantity.Word_Word.Quantity
- NW <- Map7up$Sum_Numeral.Word_Word.Numeral
- QN <- Map7up$Sum_Quantity.Numeral_Numeral.Quantity
- age7 <- data.frame(AgeGrp, QW,NW,QN)
- age7.data <- melt(age7, id.vars='AgeGrp')
- View(age7.data)
- Box_Pairs_Age <- merge(age56.data, age7.data, by=c("AgeGrp","variable","value"), all = T)
- names( Box_Pairs_Age )[names(Box_Pairs_Age) == "variable"] <- "Map"
- View(Box_Pairs_Age)
-All_BOX <- ggplot(Box_Pairs_Age, aes(Map, value, fill=AgeGrp)) + geom_boxplot() + scale_fill_manual(values=c("grey87", "grey51"), labels = c("5 and 6-year-olds", "7 to 9-year-olds")) + labs( y="Accuracy (out of 17)") + scale_y_continuous (breaks=c(7,8,9,10,11,12,13,14,15,16,17), limits = c(7,17), expand = c(0,0)) + scale_x_discrete(limits=c("QN","QW","NW"), expand = c(.2,0),labels = c("Quantity-Numeral", "Quantity-Word", "Numeral-Word")) + theme_bw() + theme(legend.position="top", legend.title = element_blank(), axis.title.x=element_blank(), panel.border = element_blank(),panel.grid.minor.y = element_blank(), panel.grid.major.x = element_blank(), panel.grid.minor.x = element_blank(), axis.line = element_line(colour = "black"), text = element_text(size=20, family="Calibri")) 
-All_BOX
-
-#BOXPLOT AND VIOLIN#
-dodge <- position_dodge(width = 0.7)
-All_BV <- ggplot(Box_Pairs_Age, aes(Map, value, fill=AgeGrp)) + geom_violin (position = dodge)+ geom_boxplot(width=0.2, position = dodge) + scale_fill_manual(values=c("grey87", "grey51"), labels = c("5 and 6-year-olds", "7 to 9-year-olds")) + labs( y="Accuracy (out of 17)") + scale_y_continuous (breaks=c(7,8,9,10,11,12,13,14,15,16,17), limits = c(7,17), expand = c(0,0)) + scale_x_discrete(limits=c("QN","QW","NW"), expand = c(.2,0),labels = c("Quantity-Numeral", "Quantity-Word", "Numeral-Word")) + theme_bw() + theme(legend.position="top", legend.title = element_blank(), axis.title.x=element_blank(), panel.border = element_blank(),panel.grid.minor.y = element_blank(), panel.grid.major.x = element_blank(), panel.grid.minor.x = element_blank(), axis.line = element_line(colour = "black"), text = element_text(size=20, family="Calibri")) 
-All_BV
-
-#ANOVA: Map Pair, Age Grp, Interaction
-      #Creating Data Frame with Summed Scores, Map Pair, and Age Grp
-      which(colnames(Map_HBE)=="Difference_Numeral.Word_Word.Numeral") #323
-      HBE_AOV <- Map_HBE[, -c(1:323)] 
-      View(HBE_AOV)
-      HBE_AOV <- pivot_longer(data = HBE_AOV, cols=c(starts_with("Sum")), names_to = c("Type"), values_to = "Sum Correct Per Map Pair")
-      View(HBE_AOV) 
-      Map_Pair <- c()
-      for(i in 1:141)
-          Map_Pair[i] <- ifelse(grepl("Sum_Numeral.Word_Word.Numeral", HBE_AOV$Type[i]), "Numeral-Word", ifelse(grepl("Sum_Quantity.Numeral_Numeral.Quantity", HBE_AOV$Type[i]), "Quantity-Numeral", ifelse(grepl("Sum_Quantity.Word_Word.Quantity", HBE_AOV$Type[i]), "Quantity-Word", "bananas")))
-      HBE_AOV <- cbind(HBE_AOV, Map_Pair)
-      View(HBE_AOV)
-      #Running the ANOVA
-      aov <- aov(`Sum Correct Per Map Pair` ~ Map_Pair + AgeGrp + Map_Pair:AgeGrp, data = HBE_AOV)
-      summary(aov) 
-      TukeyHSD(aov)
  
-     #Obtaining ETA-SQUARED
-     #SOURCE: https://cran.r-project.org/web/packages/lsr/lsr.pdf
-     install.packages("lsr")
-     library(lsr)
-     etaSquared(aov, type=2)
-
-#Evaluating the interaction between age and map pairs
-	#RAW NUMBER correct & PROPORTION correct & Significance from chance, TABLES
-	Map56AvgCorr <- colMeans(subset(Map56, select = c(Sum_Quantity.Numeral_Numeral.Quantity, Sum_Quantity.Word_Word.Quantity, Sum_Numeral.Word_Word.Numeral)), na.rm = TRUE) 
-	Map56AvgCorr
-	Map56Means <- c((Map56AvgCorr[1]/17), (Map56AvgCorr[2]/17), (Map56AvgCorr[3]/17))
-	Map56Means
+#SEPARATING BY AGE GROUPS
+	Map_HBE$Age3cat <- case_when(Map_HBE$Age_Rounded < 6 ~ '5-year-olds', Map_HBE$Age_Rounded >= 6 & Map_HBE$Age_Rounded< 7 ~ '6-year-olds', Map_HBE$Age_Rounded >= 7 ~ '7 to 9-year-olds')
+	View(Map_HBE)
 	
-	wilcox.test(Map56$Sum_Quantity.Numeral_Numeral.Quantity, mu = .25, alternative = "greater") 
-	wilcox.test(Map56$Sum_Quantity.Word_Word.Quantity, mu = .25, alternative = "greater") 
-	wilcox.test(Map56$Sum_Numeral.Word_Word.Numeral, mu = .25, alternative = "greater") 
+	#Setting up 3 age group data frames 
+	Map_5only <- subset(Map_HBE, Map_HBE$Age3cat == "5-year-olds")
+	View(Map_5only)
+	Map_6only <- subset(Map_HBE, Map_HBE$Age3cat == "6-year-olds")
+	View(Map_6only)
+	Map_79only <- subset(Map_HBE, Map_HBE$Age3cat == "7 to 9-year-olds")
+	View(Map_79only)
 
-	Map7upAvgCorr <- colMeans(subset(Map7up, select = c(Sum_Quantity.Numeral_Numeral.Quantity, Sum_Quantity.Word_Word.Quantity, Sum_Numeral.Word_Word.Numeral)), na.rm = TRUE) 
-	Map7upAvgCorr
-	Map7upMeans <- c((Map7upAvgCorr[1]/17), (Map7upAvgCorr[2]/17), (Map7upAvgCorr[3]/17))
-	Map7upMeans
+#Average Correct Total by 3 Age Grps
+	dodge <- position_dodge(width = 0.7)
+	map.n <- function(x){return(c(y = median(x)*1.05, label = length(x))) }
+	mean.n <- function(x){return(c(y= median(x)*0.97, label = round(mean(x), 2)))}  
+	Age3cat_BV <- ggplot(Map_HBE, aes(x=Age3cat, y=SumCorrectTotal_All, fill=Age3cat)) + geom_violin (position = dodge)+ geom_boxplot(width=0.2, position = dodge) + labs (x= "Age Groups", y = "Average Correct (out of 51)") + scale_fill_grey(start = 0.5, end = 0.9) + stat_summary(fun.data = mean.n, geom = "text", fun = median) + stat_summary(fun.data = mean.n, geom= "text", fun=mean, color= "black") + theme(legend.position = "none", axis.title.x = element_text(color="black", size=14, family = "Calibri"), axis.text.x = element_text(color="black", size=12, family = "Calibri"), axis.title.y = element_text(color="black", size=14, family = "Calibri"), axis.text.y = element_text(color="black", size=12, family = "Calibri"))
+	Age3cat_BV
 
-	wilcox.test(Map7up$Sum_Quantity.Numeral_Numeral.Quantity, mu = .25, alternative = "greater") 
-	wilcox.test(Map7up$Sum_Quantity.Word_Word.Quantity, mu = .25, alternative = "greater") 
-	wilcox.test(Map7up$Sum_Numeral.Word_Word.Numeral, mu = .25, alternative = "greater") 
-	
+#Scatterplots of Proportion Corrects for Mapping Pairs
+	  qn <- ggplot(Map_HBE, aes(x=Age_Rounded, y=QN)) + geom_point() + geom_smooth(method="loess", se = FALSE) + labs(x="Age (Years)", y="Proportion Correct", title = "(a) Quantity-Numeral") + theme(text = element_text(size=16, family="Calibri")) + coord_cartesian(xlim = c(5, 10), ylim= c(0.4,1)) + scale_y_continuous(breaks=c(0.5, 0.6, 0.7, 0.8, 0.9, 1)) + scale_x_continuous(breaks=c(5, 6, 7, 8, 9))
+	  qw <- ggplot(Map_HBE, aes(x=Age_Rounded, y=QW)) + geom_point() + geom_smooth(method="loess", se = FALSE) + labs(x="Age (Years)", y="Proportion Correct", title = "(b) Quantity-Word") + theme(text = element_text(size=16, family="Calibri")) + coord_cartesian(xlim = c(5, 10), ylim= c(0.4,1)) + scale_y_continuous(breaks=c(0.5, 0.6, 0.7, 0.8, 0.9, 1)) + scale_x_continuous(breaks=c(5, 6, 7, 8, 9))    
+	  nw <- ggplot(Map_HBE, aes(x=Age_Rounded, y=NW)) + geom_point() + geom_smooth(method="loess", se = FALSE) + labs(x="Age (Years)", y="Proportion Correct", title = "(c) Numeral-Word") + theme(text = element_text(size=16, family="Calibri")) + coord_cartesian(xlim = c(5, 10), ylim= c(0.4,1)) + scale_y_continuous(breaks=c(0.5, 0.6, 0.7, 0.8, 0.9, 1)) + scale_x_continuous(breaks=c(5, 6, 7, 8, 9))
+	  grid.arrange(qn,qw,nw,ncol = 3)
+ 
+#Setting up data frame for mapping pair figure
+	Age3cat <- Map_HBE$Age3cat
+	Age_Rounded <- Map_HBE$Age_Rounded
+	QW <- Map_HBE$AvgCorrect_Quantity.Word_Word.Quantity
+	NW <- Map_HBE$AvgCorrect_Numeral.Word_Word.Numeral
+	QN <- Map_HBE$AvgCorrect_Quantity.Numeral_Numeral.Quantity
+	Map_HBE2 <- data.frame(Age3cat, QW, NW,QN)
+	Map_HBE2 <- melt(Map_HBE2, id.vars='Age3cat')
+	names(Map_HBE2)[names(Map_HBE2) == "variable"] <- "Map Pair"
+	names(Map_HBE2)[names(Map_HBE2) == "value"] <- "mean"
+	View(Map_HBE2)
+
+#Boxplot of Mapping Pair Proportion Correct Performance by 3 Age Groups
+	Map_BV <- ggplot(Map_HBE2, aes(`Map Pair`, mean, fill=Age3cat)) + geom_boxplot(width=.6, position = dodge) + scale_fill_manual(values=c("grey36", "grey69", "grey80"), labels = c("5-year-olds", "6-year-olds", "7 to 9-year-olds")) + labs(y="Proportion Correct") + scale_y_continuous (breaks=c(0.0, .1, .2, .3, .4, .5, .6, .7, .8, .9, 1.0), limits = c(0,1), expand = c(0,0)) + scale_x_discrete(limits=c("QN","QW","NW"), expand = c(.2,0),labels = c("Quantity-Numeral", "Quantity-Word", "Numeral-Word")) + theme_bw() + theme(legend.position="top", legend.title = element_blank(), axis.title.x=element_blank(), panel.border = element_blank(),panel.grid.minor.y = element_blank(), panel.grid.major.x = element_blank(), panel.grid.minor.x = element_blank(), axis.line = element_line(colour = "black"), text = element_text(size=20, family="Calibri")) 
+	Map_BV
+
+#Proportion Correct table of Map Pairs and Age Grps and Checking compared to chance (0.25)
+	#Quantity-Numeral
+		mean(Map_5only$AvgCorrect_Quantity.Numeral_Numeral.Quantity)
+		wilcox.test(Map_5only$AvgCorrect_Quantity.Numeral_Numeral.Quantity, mu = .25, alternative = "greater") 
+		mean(Map_6only$AvgCorrect_Quantity.Numeral_Numeral.Quantity)
+		wilcox.test(Map_6only$AvgCorrect_Quantity.Numeral_Numeral.Quantity, mu = .25, alternative = "greater") 
+		mean(Map_79only$AvgCorrect_Quantity.Numeral_Numeral.Quantity)
+		wilcox.test(Map_79only$AvgCorrect_Quantity.Numeral_Numeral.Quantity, mu = .25, alternative = "greater") 
+	#Quantity-Word
+		mean(Map_5only$AvgCorrect_Quantity.Word_Word.Quantity)
+		wilcox.test(Map_5only$AvgCorrect_Quantity.Word_Word.Quantity, mu = .25, alternative = "greater") 
+		mean(Map_6only$AvgCorrect_Quantity.Word_Word.Quantity)
+		wilcox.test(Map_6only$AvgCorrect_Quantity.Word_Word.Quantity, mu = .25, alternative = "greater") 
+		mean(Map_79only$AvgCorrect_Quantity.Word_Word.Quantity)
+		wilcox.test(Map_79only$AvgCorrect_Quantity.Word_Word.Quantity, mu = .25, alternative = "greater") 
+	#Numeral-Word
+		mean(Map_5only$AvgCorrect_Numeral.Word_Word.Numeral)
+		wilcox.test(Map_5only$AvgCorrect_Numeral.Word_Word.Numeral, mu = .25, alternative = "greater") 
+		mean(Map_6only$AvgCorrect_Numeral.Word_Word.Numeral)
+		wilcox.test(Map_6only$AvgCorrect_Numeral.Word_Word.Numeral, mu = .25, alternative = "greater") 
+		mean(Map_79only$AvgCorrect_Numeral.Word_Word.Numeral)
+		wilcox.test(Map_79only$AvgCorrect_Numeral.Word_Word.Numeral, mu = .25, alternative = "greater") 
+
+ 
+ 
+ 
+ ##EDITED UP TO HERE!!!###
+ 
+ 
+#Evaluating the interaction between age and map pairs	
 	#Paired t-tests (same sample, different variables)
 	     install.packages("effsize") #compute cohen's d
 	     library(effsize)
@@ -401,68 +319,6 @@ All_BV
 	       #7 & up
 	       t.test(Map7up$Sum_Numeral.Word_Word.Numeral, Map7up$Sum_Quantity.Word_Word.Quantity, paired = TRUE, alternative = "two.sided")
 	       cohen.d(Map7up$Sum_Numeral.Word_Word.Numeral, Map7up$Sum_Quantity.Word_Word.Quantity,pooled=TRUE,paired=FALSE, na.rm=FALSE, hedges.correction=FALSE, conf.level=0.95,noncentral=FALSE)
-       
-#Analyzing Mapping Types, our spreadsheet was set up prior to determining mapping type nomenclature. The mapping type names in these codes are opposite to the mapping type in our paper, i.e. numeral_word in coding is really what we refer to as word-to-numeral.
-	  # COMPARE each type to chance 
-	  wilcox.test(Map_HBE$AvgCorrect_Quantity.Numeral, mu = .25, alternative = "greater") #p-value = 4.642e-10
-	  wilcox.test(Map_HBE$AvgCorrect_Numeral.Quantity, mu = .25, alternative = "greater") #p-value = 5.379e-10
-	  wilcox.test(Map_HBE$AvgCorrect_Quantity.Word, mu = .25, alternative = "greater") #p-value = 4.401e-10
-	  wilcox.test(Map_HBE$AvgCorrect_Word.Quantity, mu = .25, alternative = "greater") #p-value = 8.511e-10
-	  wilcox.test(Map_HBE$AvgCorrect_Word.Numeral, mu = .25, alternative = "greater") #p-value = 2.106e-10
-	  wilcox.test(Map_HBE$AvgCorrect_Numeral.Word, mu = .25, alternative = "greater") #p-value = 3.737e-11
-	  
-	  #Scatterplots of Proportion Corrects for Mapping Types 
-	  nq <- ggplot(Map_HBE, aes(x=Map_HBE$Age_Rounded, y=Map_HBE$AvgCorrect_Quantity.Numeral)) + geom_point() + geom_smooth(method="loess", se = FALSE) + labs(x="Age (Years)", y="Numeral-Quantity", title = "a") + theme(text = element_text(size=16, family="Calibri")) + coord_cartesian(xlim = c(5, 10), ylim= c(0.4,1)) + scale_y_continuous(breaks=c(0.5, 0.6, 0.7, 0.8, 0.9, 1)) + scale_x_continuous(breaks=c(5, 6, 7, 8, 9))
-	  qn <- ggplot(Map_HBE, aes(x=Map_HBE$Age_Rounded, y=Map_HBE$AvgCorrect_Numeral.Quantity)) + geom_point() + geom_smooth(method="loess", se = FALSE) + labs(x="Age (Years)", y="Quantity-Numeral", title="b") + theme(text = element_text(size=16, family="Calibri")) + coord_cartesian(xlim = c(5, 10), ylim= c(0.4,1)) + scale_y_continuous(breaks=c(0.5, 0.6, 0.7, 0.8, 0.9, 1)) + scale_x_continuous(breaks=c(5, 6, 7, 8, 9))
-	  wq <- ggplot(Map_HBE, aes(x=Map_HBE$Age_Rounded, y=Map_HBE$AvgCorrect_Quantity.Word)) + geom_point() + geom_smooth(method="loess", se = FALSE) + labs(x="Age (Years)", y="Word-Quantity", title = "c") + theme(text = element_text(size=16, family="Calibri")) + coord_cartesian(xlim = c(5, 10), ylim= c(0.4,1)) + scale_y_continuous(breaks=c(0.5, 0.6, 0.7, 0.8, 0.9, 1)) + scale_x_continuous(breaks=c(5, 6, 7, 8, 9))
-	  qw <- ggplot(Map_HBE, aes(x=Map_HBE$Age_Rounded, y=Map_HBE$AvgCorrect_Word.Quantity)) + geom_point() + geom_smooth(method="loess", se = FALSE) + labs(x="Age (Years)", y="Quantity-Word", title = "d") + theme(text = element_text(size=16, family="Calibri")) + coord_cartesian(xlim = c(5, 10), ylim= c(0.4,1)) + scale_y_continuous(breaks=c(0.5, 0.6, 0.7, 0.8, 0.9, 1)) + scale_x_continuous(breaks=c(5, 6, 7, 8, 9))    
-	  wn <- ggplot(Map_HBE, aes(x=Map_HBE$Age_Rounded, y=Map_HBE$AvgCorrect_Numeral.Word)) + geom_point() + geom_smooth(method="loess", se = FALSE) + labs(x="Age (Years)", y="Word-Numeral", title = "e") + theme(text = element_text(size=16, family="Calibri")) + coord_cartesian(xlim = c(5, 10), ylim= c(0.4,1)) + scale_y_continuous(breaks=c(0.5, 0.6, 0.7, 0.8, 0.9, 1)) + scale_x_continuous(breaks=c(5, 6, 7, 8, 9))
-	  nw <- ggplot(Map_HBE, aes(x=Map_HBE$Age_Rounded, y=Map_HBE$AvgCorrect_Word.Numeral)) + geom_point() + geom_smooth(method="loess", se = FALSE) + labs(x="Age (Years)", y="Numeral-Word", title = "f") + theme(text = element_text(size=16, family="Calibri")) + coord_cartesian(xlim = c(5, 10), ylim= c(0.4,1)) + scale_y_continuous(breaks=c(0.5, 0.6, 0.7, 0.8, 0.9, 1)) + scale_x_continuous(breaks=c(5, 6, 7, 8, 9))
-	  grid.arrange(nq,wq,wn,qn,qw,nw,ncol = 3)
-
-#Asymmetries?: Comparing mapping types within a pair (i.e., numeral-to-word vs word-to-numeral)
-	#Group Comparisons
-      QW<-wilcox.test(Map_HBE$SumTotal_QuantityWord, Map_HBE$SumTotal_WordQuantity, paired = TRUE, exact=FALSE)
-      QW #V = 865.5, p-value = 1.427e-07
-      QW_Zstat<-qnorm(QW$p.value/2)
-      QW_Zstat
-      abs(QW_Zstat)/sqrt(17) #calculates r value, 1.27615
-      
-      QN<-wilcox.test(Map_HBE$SumTotal_QuantityNumeral, Map_HBE$SumTotal_NumeralQuantity, paired = TRUE, exact=FALSE)
-      QN #V = 799, p-value = 8.193e-07
-      QN_Zstat<-qnorm(QN$p.value/2)
-      QN_Zstat
-      abs(QN_Zstat)/sqrt(17) #1.195876
-      
-      WN<-wilcox.test(Map_HBE$SumTotal_WordNumeral, Map_HBE$SumTotal_NumeralWord, paired = TRUE, exact=FALSE)
-      WN #V = 0, p-value = 1.478e-09
-      WN_Zstat<-qnorm(WN$p.value/2)
-      WN_Zstat
-      abs(WN_Zstat)/sqrt(17) #1.466557
- 	
-	#Individual Comparisons using difference scores
-	shapiro.test(Map_HBE$Difference_Numeral.Word_Word.Numeral) #W = 0.58571, p-value = 2.706e-10
-	shapiro.test(Map_HBE$Difference_Quantity.Numeral_Numeral.Quantity) #W = 0.83811, p-value = 1.276e-05
-	shapiro.test(Map_HBE$Difference_Quantity.Word_Word.Quantity) #W = 0.91952, p-value = 0.003215
-
-	#Are there still asymmetries for the youngest children (5-year-olds) & quantities 1-5 (comparing to Hurst et al. 2017)
-	small <- mutate(Map_HBE, smWN= AvgCorrect_Sm_WN * AvgCorrect_Med_WN, smQN= AvgCorrect_Sm_QN * AvgCorrect_Med_QN, smQW= AvgCorrect_Sm_QW * AvgCorrect_Med_QW)
-	View(small)
-	small$AgeGrp <- ifelse(small$Age_Rounded < 6, "5-year-olds", "6 and up")
-	sm_Map5 <- subset(small, small$AgeGrp =="5-year-olds")
-	View(sm_Map5)
-	Small_type <- mutate(Map_HBE, smNQ= AvgCorrect_Sm_QuantityNumeral * AvgCorrect_Med_QuantityNumeral, smQN= AvgCorrect_Sm_NumeralQuantity * AvgCorrect_Med_NumeralQuantity, smNW= AvgCorrect_Sm_WordNumeral * AvgCorrect_Med_WordNumeral, sm_WN= AvgCorrect_Sm_NumeralWord * AvgCorrect_Med_NumeralWord, sm_WQ= AvgCorrect_Sm_QuantityWord, AvgCorrect_Med_QuantityWord, sm_QW= AvgCorrect_Sm_WordQuantity, AvgCorrect_Med_WordQuantity)
-	View(Small_type)
-	Small_type$AgeGrp <- ifelse(Small_type$Age_Rounded < 6, "5 year-olds", "6 and up")
-	sm_Map5_type <- subset(Small_type, Small_type$AgeGrp =="5 year-olds") 
-	View(sm_Map5_type)
-	
-	sm_QN_5<-wilcox.test(sm_Map5_type$smQN, sm_Map5_type$smNQ, paired = TRUE, exact=FALSE)
-	sm_QN_5 #V = 13, p-value = 0.9301
-	sm_NW_5<-wilcox.test(sm_Map5_type$sm_WN, sm_Map5_type$smNW, paired = TRUE, exact=FALSE)
-	sm_NW_5 #V = 5, p-value = 0.4142
-	sm_QW_5<-wilcox.test(sm_Map5_type$sm_QW, sm_Map5_type$sm_WQ, paired = TRUE, exact=FALSE)
-	sm_QW_5 #V = 0, p-value = 0.1736
 		
 #Set size comparisons by mapping pairs and age
 	#Creating the DFs
@@ -559,7 +415,7 @@ All_BV
 	nw_5_only_box
 	nw_6_only_box <- ggplot(nw_6_only, aes(Set_Size,Pair_Size)) + geom_boxplot(width=0.2, position = dodge) + labs(x="Numeral-Word", y="Proportion Correct", title="f") + scale_y_continuous (breaks=c(0.0, 0.2, 0.4,0.6,0.8,1.0), limits = c(0,1), expand = c(0,0)) + scale_x_discrete(limits=c("Small","Medium","Large"), expand = c(.2,0),labels = c("Small", "Medium", "Large")) + theme_bw() + theme(legend.position="top", panel.border = element_blank(),panel.grid.minor.y = element_blank(), panel.grid.major.x = element_blank(), panel.grid.minor.x = element_blank(), axis.line = element_line(colour = "black"), text = element_text(size=12, family="Calibri")) 
 	nw_6_only_box
-	nw_79_box <- ggplot(nw_7, aes(Set_Size,Pair_Size)) + geom_boxplot(width=0.2, position = dodge) + labs(x="Quantity-Word", y="Proportion Correct", title="i") + scale_y_continuous (breaks=c(0.0, 0.2, 0.4,0.6,0.8,1.0), limits = c(0,1), expand = c(0,0)) + scale_x_discrete(limits=c("Small","Medium","Large"), expand = c(.2,0),labels = c("Small", "Medium", "Large")) + theme_bw() + theme(legend.position="top", panel.border = element_blank(),panel.grid.minor.y = element_blank(), panel.grid.major.x = element_blank(), panel.grid.minor.x = element_blank(), axis.line = element_line(colour = "black"), text = element_text(size=12, family="Calibri")) 
+	nw_79_box <- ggplot(nw_7, aes(Set_Size,Pair_Size)) + geom_boxplot(width=0.2, position = dodge) + labs(x="Numeral-Word", y="Proportion Correct", title="i") + scale_y_continuous (breaks=c(0.0, 0.2, 0.4,0.6,0.8,1.0), limits = c(0,1), expand = c(0,0)) + scale_x_discrete(limits=c("Small","Medium","Large"), expand = c(.2,0),labels = c("Small", "Medium", "Large")) + theme_bw() + theme(legend.position="top", panel.border = element_blank(),panel.grid.minor.y = element_blank(), panel.grid.major.x = element_blank(), panel.grid.minor.x = element_blank(), axis.line = element_line(colour = "black"), text = element_text(size=12, family="Calibri")) 
 	nw_79_box
 	
 #Creating figures for Map Pair by Set Size Performance for three age groups 
@@ -851,6 +707,71 @@ All_BV
 	r 
 	r^2 #0.03241987
 
+
+	
+#SUPPLEMENTARY MATERIALS
+#Analyzing Mapping Types, our spreadsheet was set up prior to determining mapping type nomenclature. The mapping type names in these codes are opposite to the mapping type in our paper, i.e. numeral_word in coding is really what we refer to as word-to-numeral.
+	  # COMPARE each type to chance 
+	  wilcox.test(Map_HBE$AvgCorrect_Quantity.Numeral, mu = .25, alternative = "greater") #p-value = 4.642e-10
+	  wilcox.test(Map_HBE$AvgCorrect_Numeral.Quantity, mu = .25, alternative = "greater") #p-value = 5.379e-10
+	  wilcox.test(Map_HBE$AvgCorrect_Quantity.Word, mu = .25, alternative = "greater") #p-value = 4.401e-10
+	  wilcox.test(Map_HBE$AvgCorrect_Word.Quantity, mu = .25, alternative = "greater") #p-value = 8.511e-10
+	  wilcox.test(Map_HBE$AvgCorrect_Word.Numeral, mu = .25, alternative = "greater") #p-value = 2.106e-10
+	  wilcox.test(Map_HBE$AvgCorrect_Numeral.Word, mu = .25, alternative = "greater") #p-value = 3.737e-11
+	  
+	  #Scatterplots of Proportion Corrects for Mapping Types 
+	  nq <- ggplot(Map_HBE, aes(x=Map_HBE$Age_Rounded, y=Map_HBE$AvgCorrect_Quantity.Numeral)) + geom_point() + geom_smooth(method="loess", se = FALSE) + labs(x="Age (Years)", y="Numeral-Quantity", title = "a") + theme(text = element_text(size=16, family="Calibri")) + coord_cartesian(xlim = c(5, 10), ylim= c(0.4,1)) + scale_y_continuous(breaks=c(0.5, 0.6, 0.7, 0.8, 0.9, 1)) + scale_x_continuous(breaks=c(5, 6, 7, 8, 9))
+	  qn <- ggplot(Map_HBE, aes(x=Map_HBE$Age_Rounded, y=Map_HBE$AvgCorrect_Numeral.Quantity)) + geom_point() + geom_smooth(method="loess", se = FALSE) + labs(x="Age (Years)", y="Quantity-Numeral", title="b") + theme(text = element_text(size=16, family="Calibri")) + coord_cartesian(xlim = c(5, 10), ylim= c(0.4,1)) + scale_y_continuous(breaks=c(0.5, 0.6, 0.7, 0.8, 0.9, 1)) + scale_x_continuous(breaks=c(5, 6, 7, 8, 9))
+	  wq <- ggplot(Map_HBE, aes(x=Map_HBE$Age_Rounded, y=Map_HBE$AvgCorrect_Quantity.Word)) + geom_point() + geom_smooth(method="loess", se = FALSE) + labs(x="Age (Years)", y="Word-Quantity", title = "c") + theme(text = element_text(size=16, family="Calibri")) + coord_cartesian(xlim = c(5, 10), ylim= c(0.4,1)) + scale_y_continuous(breaks=c(0.5, 0.6, 0.7, 0.8, 0.9, 1)) + scale_x_continuous(breaks=c(5, 6, 7, 8, 9))
+	  qw <- ggplot(Map_HBE, aes(x=Map_HBE$Age_Rounded, y=Map_HBE$AvgCorrect_Word.Quantity)) + geom_point() + geom_smooth(method="loess", se = FALSE) + labs(x="Age (Years)", y="Quantity-Word", title = "d") + theme(text = element_text(size=16, family="Calibri")) + coord_cartesian(xlim = c(5, 10), ylim= c(0.4,1)) + scale_y_continuous(breaks=c(0.5, 0.6, 0.7, 0.8, 0.9, 1)) + scale_x_continuous(breaks=c(5, 6, 7, 8, 9))    
+	  wn <- ggplot(Map_HBE, aes(x=Map_HBE$Age_Rounded, y=Map_HBE$AvgCorrect_Numeral.Word)) + geom_point() + geom_smooth(method="loess", se = FALSE) + labs(x="Age (Years)", y="Word-Numeral", title = "e") + theme(text = element_text(size=16, family="Calibri")) + coord_cartesian(xlim = c(5, 10), ylim= c(0.4,1)) + scale_y_continuous(breaks=c(0.5, 0.6, 0.7, 0.8, 0.9, 1)) + scale_x_continuous(breaks=c(5, 6, 7, 8, 9))
+	  nw <- ggplot(Map_HBE, aes(x=Map_HBE$Age_Rounded, y=Map_HBE$AvgCorrect_Word.Numeral)) + geom_point() + geom_smooth(method="loess", se = FALSE) + labs(x="Age (Years)", y="Numeral-Word", title = "f") + theme(text = element_text(size=16, family="Calibri")) + coord_cartesian(xlim = c(5, 10), ylim= c(0.4,1)) + scale_y_continuous(breaks=c(0.5, 0.6, 0.7, 0.8, 0.9, 1)) + scale_x_continuous(breaks=c(5, 6, 7, 8, 9))
+	  grid.arrange(nq,wq,wn,qn,qw,nw,ncol = 3)
+
+#Asymmetries?: Comparing mapping types within a pair (i.e., numeral-to-word vs word-to-numeral)
+	#Group Comparisons
+      QW<-wilcox.test(Map_HBE$SumTotal_QuantityWord, Map_HBE$SumTotal_WordQuantity, paired = TRUE, exact=FALSE)
+      QW #V = 865.5, p-value = 1.427e-07
+      QW_Zstat<-qnorm(QW$p.value/2)
+      QW_Zstat
+      abs(QW_Zstat)/sqrt(17) #calculates r value, 1.27615
+      
+      QN<-wilcox.test(Map_HBE$SumTotal_QuantityNumeral, Map_HBE$SumTotal_NumeralQuantity, paired = TRUE, exact=FALSE)
+      QN #V = 799, p-value = 8.193e-07
+      QN_Zstat<-qnorm(QN$p.value/2)
+      QN_Zstat
+      abs(QN_Zstat)/sqrt(17) #1.195876
+      
+      WN<-wilcox.test(Map_HBE$SumTotal_WordNumeral, Map_HBE$SumTotal_NumeralWord, paired = TRUE, exact=FALSE)
+      WN #V = 0, p-value = 1.478e-09
+      WN_Zstat<-qnorm(WN$p.value/2)
+      WN_Zstat
+      abs(WN_Zstat)/sqrt(17) #1.466557
+ 	
+	#Individual Comparisons using difference scores
+	shapiro.test(Map_HBE$Difference_Numeral.Word_Word.Numeral) #W = 0.58571, p-value = 2.706e-10
+	shapiro.test(Map_HBE$Difference_Quantity.Numeral_Numeral.Quantity) #W = 0.83811, p-value = 1.276e-05
+	shapiro.test(Map_HBE$Difference_Quantity.Word_Word.Quantity) #W = 0.91952, p-value = 0.003215
+
+	#Are there still asymmetries for the youngest children (5-year-olds) & quantities 1-5 (comparing to Hurst et al. 2017)
+	small <- mutate(Map_HBE, smWN= AvgCorrect_Sm_WN * AvgCorrect_Med_WN, smQN= AvgCorrect_Sm_QN * AvgCorrect_Med_QN, smQW= AvgCorrect_Sm_QW * AvgCorrect_Med_QW)
+	View(small)
+	small$AgeGrp <- ifelse(small$Age_Rounded < 6, "5-year-olds", "6 and up")
+	sm_Map5 <- subset(small, small$AgeGrp =="5-year-olds")
+	View(sm_Map5)
+	Small_type <- mutate(Map_HBE, smNQ= AvgCorrect_Sm_QuantityNumeral * AvgCorrect_Med_QuantityNumeral, smQN= AvgCorrect_Sm_NumeralQuantity * AvgCorrect_Med_NumeralQuantity, smNW= AvgCorrect_Sm_WordNumeral * AvgCorrect_Med_WordNumeral, sm_WN= AvgCorrect_Sm_NumeralWord * AvgCorrect_Med_NumeralWord, sm_WQ= AvgCorrect_Sm_QuantityWord, AvgCorrect_Med_QuantityWord, sm_QW= AvgCorrect_Sm_WordQuantity, AvgCorrect_Med_WordQuantity)
+	View(Small_type)
+	Small_type$AgeGrp <- ifelse(Small_type$Age_Rounded < 6, "5 year-olds", "6 and up")
+	sm_Map5_type <- subset(Small_type, Small_type$AgeGrp =="5 year-olds") 
+	View(sm_Map5_type)
+	
+	sm_QN_5<-wilcox.test(sm_Map5_type$smQN, sm_Map5_type$smNQ, paired = TRUE, exact=FALSE)
+	sm_QN_5 #V = 13, p-value = 0.9301
+	sm_NW_5<-wilcox.test(sm_Map5_type$sm_WN, sm_Map5_type$smNW, paired = TRUE, exact=FALSE)
+	sm_NW_5 #V = 5, p-value = 0.4142
+	sm_QW_5<-wilcox.test(sm_Map5_type$sm_QW, sm_Map5_type$sm_WQ, paired = TRUE, exact=FALSE)
+	sm_QW_5 #V = 0, p-value = 0.1736	
+	
 #Creating model figures for supplementary materials. Models for 5 and 6 year olds. 6 models for 6 yos (numeral-word ones not run), 8 models for 5 yos. TOTAL = 14 models
 	#Resource: https://strengejacke.github.io/sjPlot/articles/tab_model_estimates.html
 	install.packages("sjPlot")
@@ -904,6 +825,5 @@ All_BV
 	#14. 6 on on quantity-word (reference medium)
 	tab_model(qw6_t_ref, auto.label = FALSE, show.ci = FALSE)
 	tab_model(qw6_t_ref, auto.label = FALSE, show.ci = FALSE, show.se = TRUE, show.stat = TRUE, show.est = TRUE, pred.labels = c("Intercept 1", "Intercept 2", "Small", "Large"), dv.labels = c("6-year-olds on Quantity-Word (reference: medium)"), string.p = "P-Values", string.se = "Standard Errors", string.stat = "t-statistics")
-	
 	
 	
