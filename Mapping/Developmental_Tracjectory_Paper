@@ -265,61 +265,9 @@ library(VGAM)
 		mean(Map_6only$AvgCorrect_Numeral.Word_Word.Numeral)
 		wilcox.test(Map_6only$AvgCorrect_Numeral.Word_Word.Numeral, mu = .25, alternative = "greater") 
 		mean(Map_79only$AvgCorrect_Numeral.Word_Word.Numeral)
-		wilcox.test(Map_79only$AvgCorrect_Numeral.Word_Word.Numeral, mu = .25, alternative = "greater") 
+		wilcox.test(Map_79only$AvgCorrect_Numeral.Word_Word.Numeral, mu = .25, alternative = "greater")
+ 
 
- 
- 
- 
- ##EDITED UP TO HERE!!!###
- 
- 
-#Evaluating the interaction between age and map pairs	
-	#Paired t-tests (same sample, different variables)
-	     install.packages("effsize") #compute cohen's d
-	     library(effsize)
-     
-        #Age Group comparisons WITHIN mapping pairs
-	    #QN
-	    t.test(Map56$Sum_Quantity.Numeral_Numeral.Quantity,Map7up$Sum_Quantity.Numeral_Numeral.Quantity, paired = FALSE, alternative = "two.sided") 
-	    mean(Map56$Sum_Quantity.Numeral_Numeral.Quantity)
-	    mean(Map7up$Sum_Quantity.Numeral_Numeral.Quantity) 
-	    cohen.d(Map56$Sum_Quantity.Numeral_Numeral.Quantity,Map7up$Sum_Quantity.Numeral_Numeral.Quantity,pooled=TRUE,paired=FALSE, na.rm=FALSE, hedges.correction=FALSE, conf.level=0.95,noncentral=FALSE) 
-	    #QW
-	    t.test(Map56$Sum_Quantity.Word_Word.Quantity,Map7up$Sum_Quantity.Word_Word.Quantity, paired = FALSE, alternative = "two.sided") 
-	    mean(Map56$Sum_Quantity.Word_Word.Quantity) 
-	    mean(Map7up$Sum_Quantity.Word_Word.Quantity) 
-	    cohen.d(Map56$Sum_Quantity.Word_Word.Quantity,Map7up$Sum_Quantity.Word_Word.Quantity,pooled=TRUE,paired=FALSE, na.rm=FALSE, hedges.correction=FALSE, conf.level=0.95,noncentral=FALSE) 
-	    #NW
-	    t.test(Map56$Sum_Numeral.Word_Word.Numeral, Map7up$Sum_Numeral.Word_Word.Numeral, paired = FALSE, alternative = "two.sided") 
-	    mean(Map56$Sum_Numeral.Word_Word.Numeral) 
-	    mean(Map7up$Sum_Numeral.Word_Word.Numeral) 
-	    cohen.d(Map56$Sum_Numeral.Word_Word.Numeral, Map7up$Sum_Numeral.Word_Word.Numeral,pooled=TRUE,paired=FALSE, na.rm=FALSE, hedges.correction=FALSE, conf.level=0.95,noncentral=FALSE) 
-     
-      #Age Group comparisons ACROSS mapping pairs
-	  #QN vs NW
-	      #5 and 6
-	      t.test(Map56$Sum_Quantity.Numeral_Numeral.Quantity,Map56$Sum_Numeral.Word_Word.Numeral, paired = TRUE, alternative = "two.sided")
-	      cohen.d(Map56$Sum_Quantity.Numeral_Numeral.Quantity,Map56$Sum_Numeral.Word_Word.Numeral, pooled=TRUE,paired=FALSE, na.rm=FALSE, hedges.correction=FALSE, conf.level=0.95,noncentral=FALSE)
-	      #7 & up
-	      t.test(Map7up$Sum_Quantity.Numeral_Numeral.Quantity,Map7up$Sum_Numeral.Word_Word.Numeral, paired = TRUE, alternative = "two.sided")
-	      cohen.d(Map7up$Sum_Quantity.Numeral_Numeral.Quantity,Map7up$Sum_Numeral.Word_Word.Numeral,pooled=TRUE,paired=FALSE, na.rm=FALSE, hedges.correction=FALSE, conf.level=0.95,noncentral=FALSE)
-
-	    #QN vs QW
-	       #5 and 6
-	       t.test(Map56$Sum_Quantity.Numeral_Numeral.Quantity, Map56$Sum_Quantity.Word_Word.Quantity, paired = TRUE, alternative = "two.sided")
-	       cohen.d(Map56$Sum_Quantity.Numeral_Numeral.Quantity, Map56$Sum_Quantity.Word_Word.Quantity,pooled=TRUE,paired=FALSE, na.rm=FALSE, hedges.correction=FALSE, conf.level=0.95,noncentral=FALSE)
-	       #7 & up
-	       t.test(Map7up$Sum_Quantity.Numeral_Numeral.Quantity, Map7up$Sum_Quantity.Word_Word.Quantity, paired = TRUE, alternative = "two.sided")
-	       cohen.d(Map7up$Sum_Quantity.Numeral_Numeral.Quantity, Map7up$Sum_Quantity.Word_Word.Quantity,pooled=TRUE,paired=FALSE, na.rm=FALSE, hedges.correction=FALSE, conf.level=0.95,noncentral=FALSE)
-
-	    #NW vs QW
-	       #5 and 6
-	       t.test(Map56$Sum_Numeral.Word_Word.Numeral, Map56$Sum_Quantity.Word_Word.Quantity, paired = TRUE, alternative = "two.sided")
-	       cohen.d(Map56$Sum_Numeral.Word_Word.Numeral, Map56$Sum_Quantity.Word_Word.Quantity,pooled=TRUE,paired=FALSE, na.rm=FALSE, hedges.correction=FALSE, conf.level=0.95,noncentral=FALSE)
-	       #7 & up
-	       t.test(Map7up$Sum_Numeral.Word_Word.Numeral, Map7up$Sum_Quantity.Word_Word.Quantity, paired = TRUE, alternative = "two.sided")
-	       cohen.d(Map7up$Sum_Numeral.Word_Word.Numeral, Map7up$Sum_Quantity.Word_Word.Quantity,pooled=TRUE,paired=FALSE, na.rm=FALSE, hedges.correction=FALSE, conf.level=0.95,noncentral=FALSE)
-		
 #Set size comparisons by mapping pairs and age
 	#Creating the DFs
 	which(colnames(Map_HBE)=="AvgCorrect_Sm_QW") #312th column 
@@ -424,85 +372,12 @@ library(VGAM)
 	yo_7 <- grid.arrange(qn_79_box,qw_79_box,nw_79_box, ncol = 3, top=textGrob("7 to 9-year-olds (n=22)", gp=gpar(fontsize=14,fontface = "bold",fontfamily="Calibri")))
 #Combining above figures into one 
 	grid.arrange(yo_5,yo_6,yo_7,ncol=1) #5, 6, and 7-9 YO figures of mapping pairs by set sizes 
-
-#Means for Set Sizes across map pairs & 2 age groups
-	Map56 <- subset(Map_HBE, Map_HBE$Age_Rounded < 7)
-	Map79 <- subset(Map_HBE, Map_HBE$Age_Rounded >= 7)
-	View(Map56)
-	View(Map79)
-	
-	mean(Map56$AvgCorrect_Sm_QW) #0.9432
-	mean(Map56$AvgCorrect_Med_QW) #0.78
-	mean(Map56$AvgCorrect_Lrg_QW) #0.7424
-	mean(Map56$AvgCorrect_Sm_QN) #0.9632
-	mean(Map56$AvgCorrect_Med_QN) #0.85
-	mean(Map56$AvgCorrect_Lrg_QN) #0.7768
-	mean(Map56$AvgCorrect_Sm_WN) #0.9632
-	mean(Map56$AvgCorrect_Med_WN) #0.99
-	mean(Map56$AvgCorrect_Lrg_WN) #0.9416
-	
-	mean(Map79$AvgCorrect_Sm_QW) #0.9772727
-	mean(Map79$AvgCorrect_Med_QW) #0.9431818
-	mean(Map79$AvgCorrect_Lrg_QW) #0.9331818
-	mean(Map79$AvgCorrect_Sm_QN) #0.9922727
-	mean(Map79$AvgCorrect_Med_QN) #0.9886364
-	mean(Map79$AvgCorrect_Lrg_QN) #0.9613636
-	mean(Map79$AvgCorrect_Sm_WN) #0.9886364
-	mean(Map79$AvgCorrect_Med_WN) #0.9659091
-	mean(Map79$AvgCorrect_Lrg_WN) #0.9718182
-
-	#Significantly above chance?
-	wilcox.test(Map56$AvgCorrect_Sm_QW, mu = .25, alternative = "greater") #p-value = V = 325, p-value = 1.66e-06
-	wilcox.test(Map56$AvgCorrect_Med_QW, mu = .25, alternative = "greater") #p-value = V = 273.5, p-value = 1.296e-05
-	wilcox.test(Map56$AvgCorrect_Lrg_QW, mu = .25, alternative = "greater") #p-value = V = 325, p-value = 5.945e-06
-	wilcox.test(Map56$AvgCorrect_Sm_QN, mu = .25, alternative = "greater") #p-value = V = 325, p-value = 9.825e-07
-	wilcox.test(Map56$AvgCorrect_Med_QN, mu = .25, alternative = "greater") #p-value = V = 325, p-value = 3.995e-06
-	wilcox.test(Map56$AvgCorrect_Lrg_QN, mu = .25, alternative = "greater") #p-value =  V = 325, p-value = 5.794e-06
-	wilcox.test(Map56$AvgCorrect_Sm_WN, mu = .25, alternative = "greater") #p-value = V = 325, p-value = 1.303e-06
-	wilcox.test(Map56$AvgCorrect_Med_WN, mu = .25, alternative = "greater") #p-value = V = 325, p-value = 4.831e-07
-	wilcox.test(Map56$AvgCorrect_Lrg_WN, mu = .25, alternative = "greater") #p-value = V = 325, p-value = 3.528e-06
-
-	wilcox.test(Map79$AvgCorrect_Sm_QW, mu = .25, alternative = "greater") #p-value = V = 253, p-value = 3.324e-06
-	wilcox.test(Map79$AvgCorrect_Med_QW, mu = .25, alternative = "greater") #p-value = V = 253, p-value = 5.904e-06
-	wilcox.test(Map79$AvgCorrect_Lrg_QW, mu = .25, alternative = "greater") #p-value = V = 253, p-value = 1.312e-05
-	wilcox.test(Map79$AvgCorrect_Sm_QN, mu = .25, alternative = "greater") #p-value = V = 253, p-value = 2.305e-06
-	wilcox.test(Map79$AvgCorrect_Med_QN, mu = .25, alternative = "greater") #p-value = V = 253, p-value = 2.305e-06
-	wilcox.test(Map79$AvgCorrect_Lrg_QN, mu = .25, alternative = "greater") #p-value = V = 253, p-value = 8.796e-06
-	wilcox.test(Map79$AvgCorrect_Sm_WN, mu = .25, alternative = "greater") #p-value = V = 253, p-value = 2.305e-06
-	wilcox.test(Map79$AvgCorrect_Med_WN, mu = .25, alternative = "greater") #p-value = V = 253, p-value = 3.329e-06
-	wilcox.test(Map79$AvgCorrect_Lrg_WN, mu = .25, alternative = "greater") #p-value = V = 253, p-value = 3.329e-06 
-	
+		
 #Tobit Models, resource: https://stats.idre.ucla.edu/r/dae/tobit-models/
-	HBE_long2$AgeGrp <- ifelse(Map_HBE$Age_Rounded < 7, "5-6", "7-9")
-	HBE_long2 <-  mutate(HBE_long2, SetSize = case_when(grepl("Sm", HBE_long2$name) ~ "Small", grepl("Med", HBE_long2$name) ~"Medium", grepl("Lrg", HBE_long2$name) ~"Large"))
-	HBE_long2$Set_Size <- as.factor(factor(as.character(HBE_long2$SetSize), levels=c("Small", "Medium", "Large"), exclude=""))
-	HBE_long2 <- mutate(HBE_long2, MapPair = case_when(grepl("QW", HBE_long2$name) ~ "Quantity-Word", grepl("QN", HBE_long2$name) ~"Quantity-Numeral", grepl("WN", HBE_long2$name) ~"Numeral-Word"))
-	HBE_long2$MapPair <- as.factor(factor(as.character(HBE_long2$MapPair), levels=c("Numeral-Word","Quantity-Numeral", "Quantity-Word"), exclude=""))
-	View(HBE_long2)
-	
-	#5-6 vs 7-9 YO model below produced Hauck-Donner effect in Age
-	summary(agegrps <- vglm(HBE_long2$Pair_Size ~ HBE_long2$Set_Size + HBE_long2$MapPair + HBE_long2$Age_Rounded, tobit(Lower=0, Upper = 1), data = HBE_long2))	
-	#5 vs 6 year olds
-	summary(agegrp56 <- vglm(HBE_short2_5$Pair_Size ~ HBE_short2_5$Set_Size + HBE_short2_5$MapPair + HBE_short2_5$AgeGrp, tobit(Lower=0, Upper = 1), data = HBE_short2_5))
-	HBE_short2_5$yhat <- fitted(agegrp56)[,1]
-	HBE_short2_5$rr <- resid(agegrp56, type = "response")
-	HBE_short2_5$rp <- resid(agegrp56, type = "pearson")[,1]
-	par(mfcol = c(2, 3))
-	with(HBE_short2_5, {
-	    plot(yhat, rr, main = "Fitted vs Residuals")
-	    qqnorm(rr)
-	    plot(yhat, rp, main = "Fitted vs Pearson Residuals")
-	    qqnorm(rp)
-	    plot(Pair_Size, rp, main = "Actual vs Pearson Residuals")
-	    plot(Pair_Size, yhat, main = "Actual vs Fitted")
-	})
-	r <- with(HBE_short2_5, cor(yhat, Pair_Size)) #0.46
-	r 
-	r^2 #0.21	
-	#5-year-olds only
-	summary(Map5_t <- vglm(Pair_Size ~ Set_Size + MapPair, tobit(Upper = 1), data = Map5))
-	summary(Map5_t_ref <- vglm(Pair_Size ~ Set_Size_refM + MapPair_refQW, tobit(Upper = 1), data = Map5))
-	#Checking model fit for 5 yo 
+#5-year-olds only
+	summary(Map5_t <- vglm(Pair_Size ~  MapPair, tobit(Upper = 1), data = Map5))
+	summary(Map5_t_ref <- vglm(Pair_Size ~ MapPair_refQW, tobit(Upper = 1), data = Map5))	
+	#Checking model fit
 	Map5$yhat <- fitted(Map5_t)[,1]
 	Map5$rr <- resid(Map5_t, type = "response")
 	Map5$rp <- resid(Map5_t, type = "pearson")[,1]
@@ -515,9 +390,9 @@ library(VGAM)
 	    plot(Pair_Size, rp, main = "Actual vs Pearson Residuals")
 	    plot(Pair_Size, yhat, main = "Actual vs Fitted")
 	})
-	r <- with(Map5, cor(yhat, Pair_Size)) #0.5339397
+	r <- with(Map5, cor(yhat, Pair_Size)) 
 	r 
-	r^2 #0.2850916
+	r^2 
 	#5 YO only, Looking at Map Pairs
 	summary(nw5_t <- vglm(nw_5_only$Pair_Size ~ nw_5_only$Set_Size, tobit(Lower=0, Upper = 1), data = nw_5_only)) 
 	summary(nw5_t_ref <- vglm(nw_5_only$Pair_Size ~ nw_5_only$Set_Size_refM, tobit(Lower=0, Upper = 1), data = nw_5_only)) 
@@ -574,11 +449,11 @@ library(VGAM)
 	r 
 	r^2 #0.2121937
 	
-	#6-year-olds only
+#6-year-olds only
 	Map6 <- subset(HBE_short2_5, HBE_short2_5$AgeGrp == "6-year-olds")
 	View(Map6)
-	summary(Map6_t <- vglm(Pair_Size ~ Set_Size + MapPair, tobit(Upper = 1), data = Map6))
-	summary(Map6_t_ref <- vglm(Pair_Size ~ Set_Size_refM + MapPair_refQW, tobit(Upper = 1), data = Map6))
+	summary(Map6_t <- vglm(Pair_Size ~  MapPair, tobit(Upper = 1), data = Map6))
+	summary(Map6_t_ref <- vglm(Pair_Size ~ MapPair_refQW, tobit(Upper = 1), data = Map6))
 	#Checking model fit for 6 yo 
 	Map6$yhat <- fitted(Map6_t)[,1]
 	Map6$rr <- resid(Map6_t, type = "response")
@@ -592,12 +467,11 @@ library(VGAM)
 	    plot(Pair_Size, rp, main = "Actual vs Pearson Residuals")
 	    plot(Pair_Size, yhat, main = "Actual vs Fitted")
 	})
-	r <- with(Map6, cor(yhat, Pair_Size)) #0.2381557
+	r <- with(Map6, cor(yhat, Pair_Size)) 
 	r 
-	r^2 #0.05671812
+	r^2 
 	#6 YO, Looking at Map Pairs	
 	summary(nw6_t <- vglm(nw_6_only$Pair_Size ~ nw_6_only$Set_Size, tobit(Lower=0, Upper = 1), data = nw_6_only)) 
-	#Numeral-Word does not run b/c AT CEILING
 	summary(qn6_t <- vglm(qn_6_only$Pair_Size ~ qn_6_only$Set_Size, tobit(Lower=0, Upper = 1), data = qn_6_only))
 	summary(qn6_t_ref <- vglm(qn_6_only$Pair_Size ~ qn_6_only$Set_Size_refM, tobit(Lower=0, Upper = 1), data = qn_6_only))
 	#Checking model fit for 6 yo QN
@@ -613,9 +487,9 @@ library(VGAM)
 	    plot(Pair_Size, rp, main = "Actual vs Pearson Residuals")
 	    plot(Pair_Size, yhat, main = "Actual vs Fitted")
 	})
-	r <- with(qn_6_only, cor(yhat, Pair_Size)) #0.3553709
+	r <- with(qn_6_only, cor(yhat, Pair_Size)) 
 	r 
-	r^2 #0.1262885
+	r^2 
 	summary(qw6_t <- vglm(qw_6_only$Pair_Size ~ qw_6_only$Set_Size, tobit(Lower=0, Upper = 1), data = qw_6_only))
 	summary(qw6_t_ref <- vglm(qw_6_only$Pair_Size ~ qw_6_only$Set_Size_refM, tobit(Lower=0, Upper = 1), data = qw_6_only))
 	#Checking model fit for 6 YO QW
@@ -631,13 +505,13 @@ library(VGAM)
 	    plot(Pair_Size, rp, main = "Actual vs Pearson Residuals")
 	    plot(Pair_Size, yhat, main = "Actual vs Fitted")
 	})
-	r <- with(qw_6_only, cor(yhat, Pair_Size)) #0.3160911
+	r <- with(qw_6_only, cor(yhat, Pair_Size)) 
 	r 
-	r^2 #0.0999136
-	
-	#7-9 year olds
-	summary(agegrp79 <- vglm(HBE_short2_7$Pair_Size ~ HBE_short2_7$Set_Size + HBE_short2_7$MapPair, tobit(Lower=0, Upper = 1), data = HBE_short2_7)) 
-	summary(agegrp79_ref <- vglm(HBE_short2_7$Pair_Size ~ HBE_short2_7$Set_Size_refL + HBE_short2_7$MapPair_refQN, tobit(Lower=0, Upper = 1), data = HBE_short2_7)) 
+	r^2 
+
+#7-9 year olds
+	summary(agegrp79 <- vglm(HBE_short2_7$Pair_Size ~ HBE_short2_7$MapPair, tobit(Lower=0, Upper = 1), data = HBE_short2_7)) 
+	summary(agegrp79_ref <- vglm(HBE_short2_7$Pair_Size ~ HBE_short2_7$MapPair_refQN, tobit(Lower=0, Upper = 1), data = HBE_short2_7)) 
 	#Checking model fit for 7-9 yo 
 	HBE_short2_7$yhat <- fitted(agegrp79)[,1]
 	HBE_short2_7$rr <- resid(agegrp79, type = "response")
@@ -651,9 +525,9 @@ library(VGAM)
 	    plot(Pair_Size, rp, main = "Actual vs Pearson Residuals")
 	    plot(Pair_Size, yhat, main = "Actual vs Fitted")
 	})
-	r <- with(HBE_short2_7, cor(yhat, Pair_Size)) #0.20
+	r <- with(HBE_short2_7, cor(yhat, Pair_Size))
 	r 
-	r^2 #0.04, very low! 
+	r^2 
 	#7-9 YO, MAPPING PAIRS
 	summary(nw7_t <- vglm(nw_7$Pair_Size ~ nw_7$Set_Size, tobit(Lower=0, Upper = 1), data = nw_7)) 
 	summary(nw7_t_ref <- vglm(nw_7$Pair_Size ~ nw_7$Set_Size_refL, tobit(Lower=0, Upper = 1), data = nw_7)) 
@@ -669,9 +543,9 @@ library(VGAM)
 	    plot(Pair_Size, rp, main = "Actual vs Pearson Residuals")
 	    plot(Pair_Size, yhat, main = "Actual vs Fitted")
 	})
-	r <- with(nw_7, cor(yhat, Pair_Size)) #0.09896551
+	r <- with(nw_7, cor(yhat, Pair_Size)) 
 	r 
-	r^2 #0.009794172	
+	r^2 
 	summary(qn7_t <- vglm(qn_7$Pair_Size ~ qn_7$Set_Size, tobit(Lower=0, Upper = 1), data = nw_7)) 
 	summary(qn7_t_ref <- vglm(qn_7$Pair_Size ~ qn_7$Set_Size_refL, tobit(Lower=0, Upper = 1), data = qn_7))
 	qn_7$yhat <- fitted(qn7_t)[,1]
@@ -686,9 +560,9 @@ library(VGAM)
 	    plot(Pair_Size, rp, main = "Actual vs Pearson Residuals")
 	    plot(Pair_Size, yhat, main = "Actual vs Fitted")
 	})
-	r <- with(qn_7, cor(yhat, Pair_Size)) #0.2488457
+	r <- with(qn_7, cor(yhat, Pair_Size)) 
 	r 
-	r^2 #0.06192416
+	r^2
 	summary(qw7_t <- vglm(qw_7$Pair_Size ~ qw_7$Set_Size, tobit(Lower=0, Upper = 1), data = qw_7)) 
 	summary(qw7_t_ref <- vglm(qw_7$Pair_Size ~ qw_7$Set_Size_refL, tobit(Lower=0, Upper = 1), data = qw_7)) 
 	qw_7$yhat <- fitted(qw7_t)[,1]
@@ -703,9 +577,9 @@ library(VGAM)
 	    plot(Pair_Size, rp, main = "Actual vs Pearson Residuals")
 	    plot(Pair_Size, yhat, main = "Actual vs Fitted")
 	})
-	r <- with(qw_7, cor(yhat, Pair_Size)) #0.1800552
+	r <- with(qw_7, cor(yhat, Pair_Size)) 
 	r 
-	r^2 #0.03241987
+	r^2 
 
 
 	
