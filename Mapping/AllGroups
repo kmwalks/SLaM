@@ -432,22 +432,23 @@ kruskal.test(Total_Inc_Study$SES ~ Total_Inc_Study$Timing, data = Total_Inc_Stud
 	    names(Map_short)[names(Map_short) == "Map_long2$Correct"] <- "Correct"
             View(Map_short)
 	    
-            #Running Mixed Effects Logistic Regression
-           MixReg <- glmer(Correct ~ Age_Rounded + SES + Set_Size + Map_Pair + Length_LanguageExposure.years. + Length_AuditoryExposure.years. + (1 | SUBJECT_ID), data = Map_short, family = binomial, control = glmerControl(optimizer ="bobyqa"), nAGQ = 10)
-           summary(MixReg)
-	   #Obtain Model Descriptives
-            se <- sqrt(diag(vcov(MixReg)))
-            (oddsmix <- cbind(Est = fixef(MixReg), LL = fixef(MixReg) - 1.96 * se, UL = fixef(MixReg) + 1.96 * se))
-            exp(oddsmix) #provides odds ratios
+            #Running Mixed Effects Logistic Regressions
+	    #Mixed Log Reg for Set Size, Map Pair, Timing, Modality
+	    MixReg_MT <- glmer(Correct ~ Set_Size + Map_Pair + Timing + Modality + (1 | SUBJECT_ID), data = Map_short, family = binomial, control = glmerControl(optimizer ="bobyqa"), nAGQ = 10)
+	    summary(MixReg_MT)
+	    #Obtain Model Descriptives
+            se <- sqrt(diag(vcov(MixReg_MT)))
+            (oddsmix_MT <- cbind(Est = fixef(MixReg_MT), LL = fixef(MixReg_MT) - 1.96 * se, UL = fixef(MixReg_MT) + 1.96 * se))
+            exp(oddsmix_MT) #provides odds ratios
 	    
 	    #References (change Set Size and Map Pair)
 	    Map_short$SetSize_refM <- as.factor(factor(as.character(Map_short$Set_Size), levels=c("Medium", "Small", "Large"), exclude=""))
 	    Map_short$MapPair_refQW <- as.factor(factor(as.character(Map_short$Map_Pair), levels=c("Quantity-Word","Numeral-Word","Quantity-Numeral"), exclude=""))
 	    View(Map_short)   
-	    MixReg_Ref <- glmer(Correct ~ Age_Rounded + SES + SetSize_refM + MapPair_refQW + Length_LanguageExposure.years. + Length_AuditoryExposure.years. + (1 | SUBJECT_ID), data = Map_short, family = binomial, control = glmerControl(optimizer ="bobyqa"), nAGQ = 10)
-	    summary(MixReg_Ref)
-	    se <- sqrt(diag(vcov(MixReg_Ref)))
-            (oddsmixref <- cbind(Est = fixef(MixReg_Ref), LL = fixef(MixReg_Ref) - 1.96 * se, UL = fixef(MixReg) + 1.96 * se))
+	    MixReg_MT_ref <- glmer(Correct ~ SetSize_refM + MapPair_refQW + Timing + Modality + (1 | SUBJECT_ID), data = Map_short, family = binomial, control = glmerControl(optimizer ="bobyqa"), nAGQ = 10)
+	    summary(MixReg_MT_ref)
+	    se <- sqrt(diag(vcov(MixReg_MT_Ref)))
+            (oddsmixref <- cbind(Est = fixef(MixReg_MT_Ref), LL = fixef(MixReg_Ref) - 1.96 * se, UL = fixef(MixReg_Ref) + 1.96 * se))
             exp(oddsmixref)
 
 #OVERALL
