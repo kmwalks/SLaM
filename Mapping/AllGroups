@@ -28,7 +28,7 @@ library(lme4)
 
 #Import Data 
       setwd("~/Desktop")   
-      Map <- read.csv("Mapping_Coding_KW_200414.csv", na.strings = "N/A")
+      Map <- read.csv("Mapping_Coding_KW_200427.csv", na.strings = "N/A")
       View(Map) #224 kids  
 
 ## BASIC DEMOGRAPHICS ## 
@@ -99,7 +99,6 @@ chisq.test(Table_IncStudy)
       
       Incorrect_SES <- subset(Total_Inc_Study, Total_Inc_Study$SES < 3) 
       nrow(Incorrect_SES) #NONE ARE INAPPROPRIATE
- 
       
 # SEX 
   sum(Total_Inc_Study$M.F=='Female') # 103
@@ -258,15 +257,17 @@ SES <- Total_Inc_Study$SES
       #4 GROUPS:SES
     ggplot(Total_Inc_Study, aes(x=Groups, y=SES, fill = Groups)) + geom_violin() + geom_boxplot(width = 0.2) + labs (x= "Experimental Groups", y = "SES") + stat_summary(fun.data = mean.n, geom = "text", fun.y = median) + stat_summary(fun.data = mean.n, geom= "text", fun.y=mean, color= "gainsboro") + theme(legend.position="none")
     #ENGLISH GROUPS HIGHER SES/"TOP HEAVY"
-    
-    #4 GROUPS: AGE OF LANGUAGE EXPOSURE
-      AgeLang <- Total_Inc_Study$Age.of.Exposure..mo..Language
-      ggplot(Total_Inc_Study, aes(x=Groups, y=AgeLang, fill = Groups)) + geom_violin() + geom_boxplot(width = 0.2) + labs (x= "Experimental Groups", y = "Age of Language Exposure (months)") + scale_fill_grey(start = 0.5, end = 0.9) + stat_summary(fun.data = mean.n, geom = "text", fun = median, vjust=-2) + stat_summary(fun.data = mean.n, geom= "text", fun=mean, color= "black", vjust=-2) + theme(legend.position = "none", axis.title.x = element_text(color="black", size=14, family = "Calibri"), axis.text.x = element_text(color="black", size=12, family = "Calibri"), axis.title.y = element_text(color="black", size=14, family = "Calibri"), axis.text.y = element_text(color="black", size=12, family = "Calibri"))
  
-#Timing of language exposure between two later groups, significantly different?
+	#4 groups: length auditory exposure
+	ggplot(Total_Inc_Study, aes(x=Groups, y=Length_AuditoryExposure.years., fill = Groups)) + geom_violin() + geom_boxplot(width = 0.2) + labs (x= "Experimental Groups", y = "Length of Auditory Exposure (years)") + stat_summary(fun.data = mean.n, geom = "text", fun.y = median) + stat_summary(fun.data = mean.n, geom= "text", fun.y=mean, color= "gainsboro") + theme(legend.position="none")
+
+#Length of language exposure between two later groups
+	LengthLang <- Total_Inc_Study$Length_LanguageExposure.years.
+	ggplot(Total_Inc_Study, aes(x=Timing, y=LengthLang, fill = Timing)) + geom_violin() + geom_boxplot(width = 0.2) + labs (x= "Language Timing", y = "Length of Language Exposure (years)") + scale_fill_grey(start = 0.5, end = 0.9) + stat_summary(fun.data = mean.n, geom = "text", fun = median, vjust=-2) + stat_summary(fun.data = mean.n, geom= "text", fun=mean, color= "black", vjust=-2) + theme(legend.position = "none", axis.title.x = element_text(color="black", size=14, family = "Calibri"), axis.text.x = element_text(color="black", size=12, family = "Calibri"), axis.title.y = element_text(color="black", size=14, family = "Calibri"), axis.text.y = element_text(color="black", size=12, family = "Calibri"))
+	#Significantly different? 
       #Unpaired two-sample t-test resource: http://www.sthda.com/english/wiki/unpaired-two-samples-t-test-in-r
-      t.test(EL$Age.of.Exposure..mo..Language,AL$Age.of.Exposure..mo..Language, paired = FALSE, alternative = "two.sided")
-      #Welch Two Sample t-test, t = -7.7154, df = 82.959, p-value = 2.398e-11 (significantly different!)
+     t.test(Early$Length_LanguageExposure.years., Later$Length_LanguageExposure.years., paired = FALSE, alternative = "two.sided")
+      #Welch Two Sample t-test, t = 13.791, df = 167.66, p-value < 2.2e-16 (significantly different!)
 
 # ANOVA for mean Age and mean SES between groups - is the avergae age or SES sig different between groups?
 #AGE#
@@ -401,17 +402,19 @@ kruskal.test(Total_Inc_Study$SES ~ Total_Inc_Study$Timing, data = Total_Inc_Stud
 
 #MIXED EFFECTS LOGISTIC REGRESSION
 	Map_long <- pivot_longer(data = Map_Inc, cols=c(ends_with("Answer")), names_to = c("Type"), values_to = "Quantity")
-	Map_long <- Map_long[,!grepl("^Item",names(Map_long))] # delete columns that contain “item” 
-	Map_long <- Map_long[, -c(20:71)]
-	View(Map_long) 
+	View(Map_long)
+	Map_long1 <- Map_long[,!grepl("^Item",names(Map_long))] # delete columns that contain “item” 
+	View(Map_long1)
 	Map_long2 <- pivot_longer(data = Map_Inc, cols=c(ends_with("Correct.")), names_to = c("Type2"), values_to = "Correct")
 	Map_long2 <- Map_long2[,!grepl("^Item",names(Map_long2))] # delete columns that contain “item” 
 	View(Map_long2)
 	Map_longest <- cbind(Map_long, Map_long2$Correct)
 	View(Map_longest)
-	Map_short <- Map_longest
+	Map_short <- Map_longest[,!grepl("^Item",names(Map_longest))] # delete columns that contain “item” 
 	View(Map_short)
-
+	names(Map_short)[names(Map_short) == "Map_long2$Correct"] <- "Correct"
+	View(Map_short)
+	
             # From Type column, create a new column (Map_Pair)
             #Create new column for which IF Map_short$Type contains “NW” or “WN”, assign value “Numeral-Word”
             Map_Pair <- c()
@@ -428,24 +431,24 @@ kruskal.test(Total_Inc_Study$SES ~ Total_Inc_Study$Timing, data = Total_Inc_Stud
             Map_short <- cbind(Map_short,Set_Size)
 	    names(Map_short)[names(Map_short) == "Map_long2$Correct"] <- "Correct"
             View(Map_short)
-
+	    
             #Running Mixed Effects Logistic Regression
-            MixReg <- glmer(Correct ~ Age_Rounded + SES + Set_Size + Map_Pair + Age.of.Exposure..mo..Language + (1 | SUBJECT_ID), data = Map_short, family = binomial, control = glmerControl(optimizer ="bobyqa"), nAGQ = 10)
-            summary(MixReg)
-            #Obtain Model Descriptives
+           MixReg <- glmer(Correct ~ Age_Rounded + SES + Set_Size + Map_Pair + Length_LanguageExposure.years. + Length_AuditoryExposure.years. + (1 | SUBJECT_ID), data = Map_short, family = binomial, control = glmerControl(optimizer ="bobyqa"), nAGQ = 10)
+           summary(MixReg)
+	   #Obtain Model Descriptives
             se <- sqrt(diag(vcov(MixReg)))
-            (tab <- cbind(Est = fixef(MixReg), LL = fixef(MixReg) - 1.96 * se, UL = fixef(MixReg) + 1.96 * se))
-            exp(tab) #provides odds ratios
+            (oddsmix <- cbind(Est = fixef(MixReg), LL = fixef(MixReg) - 1.96 * se, UL = fixef(MixReg) + 1.96 * se))
+            exp(oddsmix) #provides odds ratios
 	    
 	    #References (change Set Size and Map Pair)
 	    Map_short$SetSize_refM <- as.factor(factor(as.character(Map_short$Set_Size), levels=c("Medium", "Small", "Large"), exclude=""))
 	    Map_short$MapPair_refQW <- as.factor(factor(as.character(Map_short$Map_Pair), levels=c("Quantity-Word","Numeral-Word","Quantity-Numeral"), exclude=""))
-	    View(Map_short)
-	    MixReg_Ref <- glmer(Correct ~ Age_Rounded + SES + SetSize_refM + MapPair_refQW + Age.of.Exposure..mo..Language + (1 | SUBJECT_ID), data = Map_short, family = binomial, control = glmerControl(optimizer ="bobyqa"), nAGQ = 10)
-            summary(MixReg_Ref)
+	    View(Map_short)   
+	    MixReg_Ref <- glmer(Correct ~ Age_Rounded + SES + SetSize_refM + MapPair_refQW + Length_LanguageExposure.years. + Length_AuditoryExposure.years. + (1 | SUBJECT_ID), data = Map_short, family = binomial, control = glmerControl(optimizer ="bobyqa"), nAGQ = 10)
+	    summary(MixReg_Ref)
 	    se <- sqrt(diag(vcov(MixReg_Ref)))
-            (tab2 <- cbind(Est = fixef(MixReg_Ref), LL = fixef(MixReg_Ref) - 1.96 * se, UL = fixef(MixReg) + 1.96 * se))
-            exp(tab2)
+            (oddsmixref <- cbind(Est = fixef(MixReg_Ref), LL = fixef(MixReg_Ref) - 1.96 * se, UL = fixef(MixReg) + 1.96 * se))
+            exp(oddsmixref)
 
 #OVERALL
 #Create 4 group data frames
