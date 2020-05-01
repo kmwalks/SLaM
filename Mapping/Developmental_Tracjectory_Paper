@@ -192,6 +192,7 @@ library(VGAM)
       YO7 <- subset(Map_HBE2, Map_HBE2$AGEGRP =="7")
       YO8 <- subset(Map_HBE2, Map_HBE2$AGEGRP =="8")
       YO9 <- subset(Map_HBE2, Map_HBE2$AGEGRP =="9")
+      #Below are proportions! 
       t.test(YO5$AvgCorrect_Total, YO6$AvgCorrect_Total, paired = FALSE, alternative = "two.sided")  # 5 vs 6 not Different, t = -1.9814, df = 19.599, p-value = 0.06175
       t.test(YO5$AvgCorrect_Total, YO7$AvgCorrect_Total, paired = FALSE, alternative = "two.sided")  #5 vs 7 SIG DIFFERENT, t = -3.6593, df = 22.555, p-value = 0.001337
       t.test(YO5$AvgCorrect_Total, YO8$AvgCorrect_Total, paired = FALSE, alternative = "two.sided")  #5 vs 8 SIG DIFFERENT, t = -5.4696, df = 15.766, p-value = 5.417e-05
