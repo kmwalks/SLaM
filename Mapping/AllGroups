@@ -38,45 +38,41 @@ library(lme4)
 #FOR DEMOGRAPHICS OF ALL POSSIBLE KIDS INCLUDING FOR MAPPING 
       Total_Inc_Study <- subset(Map_Demo, Map_Demo$Including.in.Study == "Yes" & Map_Demo$Coded. == "Yes" & Map_Demo$Mapping_Include. == "Yes")
       View(Total_Inc_Study)
-      # 200 total kids included in study  
-      
+      # 199 total kids included in study 
+       
       ## Included OVERALL: Numbers of Kids Per Group ##
       EE_Inc <- subset(Total_Inc_Study, Total_Inc_Study$Group_4cat == "English Early")
       View(EE_Inc) #48
       EL_Inc <- subset(Total_Inc_Study, Total_Inc_Study$Group_4cat == "English Later")
       View(EL_Inc) #47
       AE_Inc <- subset(Total_Inc_Study, Total_Inc_Study$Group_4cat == "ASL Early")
-      View(AE_Inc) #50
+      View(AE_Inc) #49
       AL_Inc <- subset(Total_Inc_Study, Total_Inc_Study$Group_4cat == "ASL Later")
       View(AL_Inc) #55
       
       Total_Not_Inc_Study <- subset(Map_Demo, Map_Demo$Mapping_Include. == "No")
       nrow(Total_Not_Inc_Study)
       View(Total_Not_Inc_Study)
-      # 20 total kids not included in mapping analyses (if not included in study overall, not including in mapping)
+      # 21 total kids not included in mapping analyses (if not included in study overall, not including in mapping)
                      
-      Total_NotTested_NA <- subset(Map_Demo,  Map_Demo$Tested == "No" | Map_Demo$Tested == "Not Yet" | is.na(Map_Demo$Including.in.Study))
-      View(Total_NotTested_NA)
-      # 15 Not Tested 
-      
-      NotTested_Not_Inc <- subset(Total_Not_Inc_Study, Total_Not_Inc_Study$Tested == "No")
-      nrow(NotTested_Not_Inc)
-      #15 remaining kids listed as not included were not tested
+      Total_NotTested_NA <- subset(Map_Demo,  Map_Demo$Tested == "No" | Map_Demo$Tested == "Not Yet" | is.na(Map_Demo$Mapping_Include.))
+      # 15 kids not including in study were Not Tested 
+     
       
       Tested_Not_Inc <- subset(Total_Not_Inc_Study, Total_Not_Inc_Study$Tested == "Yes")
       View(Tested_Not_Inc)
-      # 5 kid out of 15 not included in study were tested
-      #3 had additional disabilities/suspected disabilities, 1 refused to participate, 1 due to technical difficulties (not filmed entirely)
+      # 6 kid out of 15 not included in study were tested
+      #3 had additional disabilities/suspected disabilities, 1 refused to participate, 1 due to technical difficulties (not filmed entirely), 1 Early ASL tested in ALL English, after trying ASL (could not communicate)
 
       ## Tested But Not Included: How many from each group? ## 
             EE_Not_Inc <- subset(Tested_Not_Inc, Tested_Not_Inc$Group_4cat == "English Early")
-            nrow(EE_Not_Inc) # 0 of 5 kids tested but not included are EE
+            nrow(EE_Not_Inc) # 0 of 6 kids tested but not included are EE
             EL_Not_Inc <- subset(Tested_Not_Inc, Tested_Not_Inc$Group_4cat == "English Later")
-            nrow(EL_Not_Inc) # 0 of 5 kids tested but not included are EL
+            nrow(EL_Not_Inc) # 0 of 6 kids tested but not included are EL
             AE_Not_Inc <- subset(Tested_Not_Inc, Tested_Not_Inc$Group_4cat == "ASL Early")
-            nrow(AE_Not_Inc)# 3 of 5 kids tested but not included are AE
+            nrow(AE_Not_Inc)# 4 of 6 kids tested but not included are AE
             AL_Not_Inc <- subset(Tested_Not_Inc, Tested_Not_Inc$Group_4cat == "ASL Later")
-            nrow(AL_Not_Inc) # 2 of 5 kids tested but not included are AL
+            nrow(AL_Not_Inc) # 2 of 6 kids tested but not included are AL
    
 
 ## Creating a Table/"Matrix": Included vs Not (& not tested) by Group ##
@@ -88,7 +84,7 @@ library(lme4)
 
 ## Chi-Square on Table/"Matrix": Does the status of including in study depend on which group kids were in?, aka Early ASL more likely to not be included? ##
 chisq.test(Table_IncStudy)
-# Test statistic is X-squared = 4.9604, df = 3, p-value = 0.1747, do not reject null, conclude that status of inclusion in study is not dependent on group 4 category
+# Test statistic is X-squared = 6.9145, df = 3, p-value = 0.07467, do not reject null, conclude that status of inclusion in study is not dependent on group 4 category
 
 # Find observations with missing Age and SES values
       sum(is.na(Total_Inc_Study$Age_Rounded) | Total_Inc_Study$Age_Rounded=="N/A")
@@ -102,15 +98,18 @@ chisq.test(Table_IncStudy)
       
 # SEX 
   sum(Total_Inc_Study$M.F=='Female') # 103
-  sum(Total_Inc_Study$M.F=='Male') # 97
+  sum(Total_Inc_Study$M.F=='Male') # 96
   sum(EE_Inc$M.F=='Female') # 25
   sum(EE_Inc$M.F=='Male') # 23
   sum(EL_Inc$M.F=='Female') # 27
   sum(EL_Inc$M.F=='Male') # 20
   sum(AE_Inc$M.F=='Female') # 28
-  sum(AE_Inc$M.F=='Male') # 22
+  sum(AE_Inc$M.F=='Male') # 21
   sum(AL_Inc$M.F=='Female') # 23
   sum(AL_Inc$M.F=='Male') #32
+  
+  
+ #EDITED UP TO HERE
 
 # AGE DESCRIPTIVE STATISTICS
 min(EE_Inc$Age_Rounded, na.rm=TRUE) # 4.8
@@ -194,7 +193,6 @@ aggregate(Age.of.Exposure..mo..Language ~ Group_4cat, data=Total_Inc_Study, mean
 aggregate(Age.of.Exposure..mo..Language ~ Group_4cat, data=Total_Inc_Study, sd)
 
 
-#EDITED UP TO HERE
 
 #CREATING TIMING/MODALITY DATA FRAMES
 #TIMING GROUPS
