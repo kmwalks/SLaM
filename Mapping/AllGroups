@@ -186,10 +186,6 @@ range(AE_Inc$SES, na.rm=TRUE) # 3 62
 range(AL_Inc$SES, na.rm=TRUE) # 3 63.5
 aggregate(SES ~ Group_4cat, data=Total_Inc_Study, range)
 
-describe(Total_Inc_Study$SES) #overall skewness 
-HBE <- subset(Total_Inc_Study, Total_Inc_Study$Group_4cat == "English Early") 
-describe(HBE$SES) # skewness of -2.01 (SE =1.8)
-
 #Age of Language Exposure
 aggregate(Age.of.Exposure..mo..Language ~ Group_4cat, data=Total_Inc_Study, min)
 aggregate(Age.of.Exposure..mo..Language ~ Group_4cat, data=Total_Inc_Study, max)
@@ -197,24 +193,8 @@ aggregate(Age.of.Exposure..mo..Language ~ Group_4cat, data=Total_Inc_Study, medi
 aggregate(Age.of.Exposure..mo..Language ~ Group_4cat, data=Total_Inc_Study, mean)
 aggregate(Age.of.Exposure..mo..Language ~ Group_4cat, data=Total_Inc_Study, sd)
 
-#Race
-sum(is.na(Total_Inc_Study$Race)) #16 N/As
-nrow(filter(Total_Inc_Study, Race == "White")) #1401
-nrow(filter(Total_Inc_Study, Race == "Black or African American")) #11
-nrow(filter(Total_Inc_Study, Race == "American Indian or Alaska Native")) #3
-nrow(filter(Total_Inc_Study, Race == "Asian")) #10
-nrow(filter(Total_Inc_Study, Race == "Native Hawaiian or Other Pacific Islander")) #0
-nrow(filter(Total_Inc_Study, Race == "Unsure")) #1
-nrow(filter(Total_Inc_Study, Race == "Mixed")) #6
-nrow(filter(Total_Inc_Study, Race == "Other")) #12
-nrow(filter(Total_Inc_Study, Race == "")) #0
 
-#Ethnicity
-nrow(filter(Total_Inc_Study, Ethnicity == "Not Hispanic or Latino")) #118
-nrow(filter(Total_Inc_Study, Ethnicity == "Hispanic or Latino")) #35
-nrow(filter(Total_Inc_Study, Ethnicity == "")) #0
-nrow(filter(Total_Inc_Study, Ethnicity == "Unsure")) #6
-sum(is.na(Total_Inc_Study$Ethnicity)) #41
+#EDITED UP TO HERE
 
 #CREATING TIMING/MODALITY DATA FRAMES
 #TIMING GROUPS
