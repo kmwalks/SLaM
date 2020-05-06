@@ -12,6 +12,7 @@ install.packages("ggpubr") #for density plots
 install.packages("dplyr")
 install.packages("tidyr")
 install.packages("lme4")
+install.packages("VGAM") #for tobit model 
 
 library(ggplot2) 
 library(MASS) 
@@ -25,6 +26,7 @@ library(ggpubr)
 library(dplyr)
 library(tidyr)
 library(lme4)
+library(VGAM)
 
 #Import Data 
       setwd("~/Desktop")   
@@ -376,7 +378,37 @@ kruskal.test(Total_Inc_Study$SES ~ Total_Inc_Study$Timing, data = Total_Inc_Stud
 
 ## MAPPING DATA FRAME ## 
   Map_Inc <- Total_Inc_Study #renaming for ease
-  View(Map_Inc) #200 kids
+  View(Map_Inc) 
+
+#Creating Data Frame for Tobit Models
+which(colnames(Map_Inc)=="AvgCorrect_Sm_QW") #313
+which(colnames(Map_Inc)=="AvgCorrect_Lrg_WN") #321
+Map_long <- pivot_longer(Map_Inc, cols = 313:321, values_to = "Pair_Size")
+View(Map_long)
+which(colnames(Map_long)=="Item1_QN_Answer") #22
+which(colnames(Map_long)=="Sum_Numeral.Word_Word.Numeral") #318
+Map_short <- Map_long[,-c(22:318)]
+View(Map_short)
+#Add Set Size Columns
+Map_short <-  mutate(Map_short, SetSize = case_when(grepl("Sm", Map_short$name) ~ "Small", grepl("Med", Map_short$name) ~"Medium", grepl("Lrg", Map_short$name) ~"Large"))
+Map_short$Set_Size <- as.factor(factor(as.character(Map_short$SetSize), levels=c("Small", "Medium", "Large"), exclude=""))
+Map_short$Set_Size_refM <- as.factor(factor(as.character(Map_short$SetSize), levels=c("Medium", "Small", "Large"), exclude=""))
+Map_short$Set_Size_refL <- as.factor(factor(as.character(Map_short$SetSize), levels=c("Large","Medium", "Small"), exclude=""))
+#Add Map Pair Columns
+Map_short <- mutate(Map_short, MapPair = case_when(grepl("QW", Map_short$name) ~ "Quantity-Word", grepl("QN", Map_short$name) ~"Quantity-Numeral", grepl("WN", Map_short$name) ~"Numeral-Word"))
+Map_short$MapPair <- as.factor(factor(as.character(Map_short$MapPair), levels=c("Numeral-Word","Quantity-Numeral", "Quantity-Word"), exclude=""))
+Map_short$MapPair_refQN <- as.factor(factor(as.character(Map_short$MapPair), levels=c("Quantity-Numeral", "Quantity-Word","Numeral-Word"), exclude=""))
+Map_short$MapPair_refQW <- as.factor(factor(as.character(Map_short$MapPair), levels=c("Quantity-Word","Numeral-Word","Quantity-Numeral"), exclude=""))
+View(Map_short)
+
+
+
+
+
+
+
+
+
 
 #MIXED EFFECTS LOGISTIC REGRESSION
 	Map_long <- pivot_longer(data = Map_Inc, cols=c(ends_with("Answer")), names_to = c("Type"), values_to = "Quantity")
