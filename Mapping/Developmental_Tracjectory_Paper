@@ -182,7 +182,9 @@ library(VGAM)
        se <- sqrt(diag(vcov(REG_Overall)))
        (odds <- cbind(Est = fixef(REG_Overall), LL = fixef(REG_Overall) - 1.96 * se, UL = fixef(REG_Overall) + 1.96 * se))
        exp(odds) #provides odds ratios
-        
+       REG_Compare <- glmer(Correct ~ 1 | SUBJECT_ID, data = HBE_short, family = binomial, control = glmerControl(optimizer ="bobyqa"), nAGQ = 10)
+       REG_Compare
+       
 #Age Group Decision
       AGEGRP <- Map_HBE %>% mutate(AGEGRP = case_when(Map_HBE$Age_Rounded >= 5  & Map_HBE$Age_Rounded < 6 ~ '5', Map_HBE$Age_Rounded >= 6  & Map_HBE$Age_Rounded < 7 ~ '6', Map_HBE$Age_Rounded >= 7  & Map_HBE$Age_Rounded < 8 ~ '7', Map_HBE$Age_Rounded >= 8  & Map_HBE$Age_Rounded < 9 ~ '8', Map_HBE$Age_Rounded >= 9  & Map_HBE$Age_Rounded < 10 ~ '9'))
       Map_HBE2 <- cbind(Map_HBE, AGEGRP)
