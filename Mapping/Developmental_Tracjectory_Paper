@@ -397,8 +397,8 @@ library(VGAM)
 	r 
 	r^2 
 	#5 YO only, Looking at Map Pairs
-	summary(nw5_t <- vglm(nw_5_only$Pair_Size ~ nw_5_only$Set_Size, tobit(Lower=0, Upper = 1), data = nw_5_only)) 
-	summary(nw5_t_ref <- vglm(nw_5_only$Pair_Size ~ nw_5_only$Set_Size_refM, tobit(Lower=0, Upper = 1), data = nw_5_only)) 
+	summary(nw5_t <- vglm(Pair_Size ~ Set_Size, tobit(Lower=0, Upper = 1), data = nw_5_only)) 
+	summary(nw5_t_ref <- vglm(Pair_Size ~ Set_Size_refM, tobit(Lower=0, Upper = 1), data = nw_5_only)) 
 	#Checking model fit for 5 yo NW
 	nw_5_only$yhat <- fitted(nw5_t)[,1]
 	nw_5_only$rr <- resid(nw5_t, type = "response")
@@ -412,11 +412,11 @@ library(VGAM)
 	    plot(Pair_Size, rp, main = "Actual vs Pearson Residuals")
 	    plot(Pair_Size, yhat, main = "Actual vs Fitted")
 	})
-	r <- with(nw_5_only, cor(yhat, Pair_Size)) #0.3517367
+	r <- with(nw_5_only, cor(yhat, Pair_Size)) 
 	r 
-	r^2 #0.1237187
-	summary(qn5_t <- vglm(qn_5_only$Pair_Size ~ qn_5_only$Set_Size, tobit(Lower=0, Upper = 1), data = qn_5_only))
-	summary(qn5_t_ref <- vglm(qn_5_only$Pair_Size ~ qn_5_only$Set_Size_refM, tobit(Lower=0, Upper = 1), data = qn_5_only))
+	r^2 
+	summary(qn5_t <- vglm(Pair_Size ~ Set_Size, tobit(Lower=0, Upper = 1), data = qn_5_only))
+	summary(qn5_t_ref <- vglm(Pair_Size ~ Set_Size_refM, tobit(Lower=0, Upper = 1), data = qn_5_only))
 	#Checking model fit for 5 yo QN
 	qn_5_only$yhat <- fitted(qn5_t)[,1]
 	qn_5_only$rr <- resid(qn5_t, type = "response")
@@ -430,11 +430,11 @@ library(VGAM)
 	    plot(Pair_Size, rp, main = "Actual vs Pearson Residuals")
 	    plot(Pair_Size, yhat, main = "Actual vs Fitted")
 	})
-	r <- with(qn_5_only, cor(yhat, Pair_Size)) #0.5310957
+	r <- with(qn_5_only, cor(yhat, Pair_Size)) 
 	r 
-	r^2 #0.2820626
-	summary(qw5_t <- vglm(qw_5_only$Pair_Size ~ qw_5_only$Set_Size, tobit(Lower=0, Upper = 1), data = qw_5_only))
-	summary(qw5_t_ref <- vglm(qw_5_only$Pair_Size ~ qw_5_only$Set_Size_refM, tobit(Lower=0, Upper = 1), data = qw_5_only))
+	r^2 
+	summary(qw5_t <- vglm(Pair_Size ~ Set_Size, tobit(Lower=0, Upper = 1), data = qw_5_only))
+	summary(qw5_t_ref <- vglm(Pair_Size ~ Set_Size_refM, tobit(Lower=0, Upper = 1), data = qw_5_only))
 	#Checking model fit for 5 yo QW
 	qw_5_only$yhat <- fitted(qw5_t)[,1]
 	qw_5_only$rr <- resid(qw5_t, type = "response")
@@ -448,9 +448,9 @@ library(VGAM)
 	    plot(Pair_Size, rp, main = "Actual vs Pearson Residuals")
 	    plot(Pair_Size, yhat, main = "Actual vs Fitted")
 	})
-	r <- with(qw_5_only, cor(yhat, Pair_Size)) #0.4606448
+	r <- with(qw_5_only, cor(yhat, Pair_Size))
 	r 
-	r^2 #0.2121937
+	r^2 
 	
 #6-year-olds only
 	Map6 <- subset(HBE_short2_5, HBE_short2_5$AgeGrp == "6-year-olds")
@@ -513,8 +513,8 @@ library(VGAM)
 	r^2 
 
 #7-9 year olds
-	summary(agegrp79 <- vglm(HBE_short2_7$Pair_Size ~ HBE_short2_7$MapPair, tobit(Lower=0, Upper = 1), data = HBE_short2_7)) 
-	summary(agegrp79_ref <- vglm(HBE_short2_7$Pair_Size ~ HBE_short2_7$MapPair_refQN, tobit(Lower=0, Upper = 1), data = HBE_short2_7)) 
+	summary(agegrp79 <- vglm(Pair_Size ~ MapPair, tobit(Lower=0, Upper = 1), data = HBE_short2_7)) 
+	summary(agegrp79_ref <- vglm(Pair_Size ~ MapPair_refQW, tobit(Lower=0, Upper = 1), data = HBE_short2_7)) 
 	#Checking model fit for 7-9 yo 
 	HBE_short2_7$yhat <- fitted(agegrp79)[,1]
 	HBE_short2_7$rr <- resid(agegrp79, type = "response")
@@ -583,10 +583,31 @@ library(VGAM)
 	r <- with(qw_7, cor(yhat, Pair_Size)) 
 	r 
 	r^2 
-
-
 	
 #SUPPLEMENTARY MATERIALS
+#Creating model figures for supplementary materials
+	#Resource: https://strengejacke.github.io/sjPlot/articles/tab_model_estimates.html
+	install.packages("sjPlot")
+	install.packages("sjmisc")
+	install.packages("sjlabelled")
+	library(sjPlot)
+	library(sjmisc)
+	library(sjlabelled)
+
+	#Figure with 3 Age x Map Pair Models, reference = Numeral-Word
+	tab_model(Map5_t, Map6_t, agegrp79, auto.label = FALSE, show.ci = FALSE) #TO CHECK VARIABLE NAMES TO ENSURE RENAMING ACCURATELY
+	tab_model(Map5_t, Map6_t, agegrp79, auto.label = FALSE, show.ci = FALSE, show.se = TRUE, show.stat = TRUE, show.est = TRUE, pred.labels = c("Intercept 1", "Intercept 2", "Quantity-Numeral", "Quantity-Word"), dv.labels = c("5-year-olds", "6-year-olds", "7 to 9-year-olds"), string.p = "P-Values", string.se = "Standard Errors", string.stat = "t-statistics")	
+	#Figure with 3 Age x Map Pair Models, reference = Quantity-Word
+	tab_model(Map5_t_ref, Map6_t_ref, agegrp79_ref, auto.label = FALSE, show.ci = FALSE) #TO CHECK VARIABLE NAMES TO ENSURE RENAMING ACCURATELY
+	tab_model(Map5_t_ref, Map6_t_ref, agegrp79_ref, auto.label = FALSE, show.ci = FALSE, show.se = TRUE, show.stat = TRUE, show.est = TRUE, pred.labels = c("Intercept 1", "Intercept 2", "Numeral-Word", "Quantity-Numeral"), dv.labels = c("5-year-olds", "6-year-olds", "7 to 9-year-olds"), string.p = "P-Values", string.se = "Standard Errors", string.stat = "t-statistics")
+
+	#Figure with 5-year-olds Mapping Pair x Set Size, reference = Small
+	tab_model(qn5_t, qw5_t, nw5_t, auto.label = FALSE, show.ci = FALSE) #TO CHECK VARIABLE NAMES TO ENSURE RENAMING ACCURATELY
+	tab_model(qn5_t, qw5_t, nw5_t, auto.label = FALSE, show.ci = FALSE, show.se = TRUE, show.stat = TRUE, show.est = TRUE, pred.labels = c("Intercept 1", "Intercept 2", "Medium", "Large"), dv.labels = c("Quantity-Numeral", "Quantity-Word", "Numeral-Word"), string.p = "P-Values", string.se = "Standard Errors", string.stat = "t-statistics")
+	#Figure with 5-year-olds Mapping Pair x Set Size, reference = Medium
+
+
+
 #Analyzing Mapping Types, our spreadsheet was set up prior to determining mapping type nomenclature. The mapping type names in these codes are opposite to the mapping type in our paper, i.e. numeral_word in coding is really what we refer to as word-to-numeral.
 	  # COMPARE each type to chance 
 	  wilcox.test(Map_HBE$AvgCorrect_Quantity.Numeral, mu = .25, alternative = "greater") #p-value = 4.642e-10
@@ -649,58 +670,9 @@ library(VGAM)
 	sm_QW_5<-wilcox.test(sm_Map5_type$sm_QW, sm_Map5_type$sm_WQ, paired = TRUE, exact=FALSE)
 	sm_QW_5 #V = 0, p-value = 0.1736	
 	
-#Creating model figures for supplementary materials. Models for 5 and 6 year olds. 6 models for 6 yos (numeral-word ones not run), 8 models for 5 yos. TOTAL = 14 models
-	#Resource: https://strengejacke.github.io/sjPlot/articles/tab_model_estimates.html
-	install.packages("sjPlot")
-	install.packages("sjmisc")
-	install.packages("sjlabelled")
 
-	library(sjPlot)
-	library(sjmisc)
-	library(sjlabelled)
-
-	#1. 5 yo (references small & numeral-word)
-	tab_model(Map5_t, auto.label = FALSE, show.ci = FALSE) #TO CHECK VARIABLE NAMES TO ENSURE RENAMING ACCURATELY
-	tab_model(Map5_t, auto.label = FALSE, show.ci = FALSE, show.se = TRUE, show.stat = TRUE, show.est = TRUE, pred.labels = c("Intercept 1", "Intercept 2", "Medium", "Large", "Quantity-Numeral", "Quantity-Word"), dv.labels = c("5-year-olds (References: Small & Numeral-Word)"), string.p = "P-Values", string.se = "Standard Errors", string.stat = "t-statistics")
-	#2. 5 yo (references medium & numeral-word)
-	tab_model(Map5_t_ref, auto.label = FALSE, show.ci = FALSE)
-	tab_model(Map5_t_ref, auto.label = FALSE, show.ci = FALSE, show.se = TRUE, show.stat = TRUE, show.est = TRUE, pred.labels = c("Intercept 1", "Intercept 2", "Small", "Large", "Quantity-Numeral", "Quantity-Word"), dv.labels = c("5-year-olds (References: Medium & Numeral-Word)"), string.p = "P-Values", string.se = "Standard Errors", string.stat = "t-statistics")
-	#3. 5 yo on Numeral-Word (reference small)
-	tab_model(nw5_t, auto.label = FALSE, show.ci = FALSE)
-	tab_model(nw5_t, auto.label = FALSE, show.ci = FALSE, show.se = TRUE, show.stat = TRUE, show.est = TRUE, pred.labels = c("Intercept 1", "Intercept 2", "Medium", "Large"), dv.labels = c("5-year-olds on Numeral-Word (reference: small)"), string.p = "P-Values", string.se = "Standard Errors", string.stat = "t-statistics")
-	4. 5 yo on Numeral-Word (reference medium)
-	tab_model(nw5_t_ref, auto.label = FALSE, show.ci = FALSE)
-	tab_model(nw5_t_ref, auto.label = FALSE, show.ci = FALSE, show.se = TRUE, show.stat = TRUE, show.est = TRUE, pred.labels = c("Intercept 1", "Intercept 2", "Small", "Large"), dv.labels = c("5-year-olds on Numeral-Word (reference: medium)"), string.p = "P-Values", string.se = "Standard Errors", string.stat = "t-statistics")
-	5. 5 yo on Quantity-Numeral (reference small) 
-	tab_model(qn5_t, auto.label = FALSE, show.ci = FALSE)
-	tab_model(qn5_t, auto.label = FALSE, show.ci = FALSE, show.se = TRUE, show.stat = TRUE, show.est = TRUE, pred.labels = c("Intercept 1", "Intercept 2", "Medium", "Large"), dv.labels = c("5-year-olds on Quantity-Numeral (reference: small)"), string.p = "P-Values", string.se = "Standard Errors", string.stat = "t-statistics")
-	#6. 5 yo on Quantity-Numeral (reference medium) 
-	tab_model(qn5_t_ref, auto.label = FALSE, show.ci = FALSE)
-	tab_model(qn5_t_ref, auto.label = FALSE, show.ci = FALSE, show.se = TRUE, show.stat = TRUE, show.est = TRUE, pred.labels = c("Intercept 1", "Intercept 2", "Small", "Large"), dv.labels = c("5-year-olds on Quantity-Numeral (reference: medium)"), string.p = "P-Values", string.se = "Standard Errors", string.stat = "t-statistics")
-	#7. 5 yo on Quantity-Word (reference small)
-	tab_model(qw5_t, auto.label = FALSE, show.ci = FALSE)
-	tab_model(qw5_t, auto.label = FALSE, show.ci = FALSE, show.se = TRUE, show.stat = TRUE, show.est = TRUE, pred.labels = c("Intercept 1", "Intercept 2", "Medium", "Large"), dv.labels = c("5-year-olds on Quantity-Word (reference: small)"), string.p = "P-Values", string.se = "Standard Errors", string.stat = "t-statistics")
-	#8. 5 yo on Quantity-Word (reference medium)
-	tab_model(qw5_t_ref, auto.label = FALSE, show.ci = FALSE)
-	tab_model(qw5_t_ref, auto.label = FALSE, show.ci = FALSE, show.se = TRUE, show.stat = TRUE, show.est = TRUE, pred.labels = c("Intercept 1", "Intercept 2", "Small", "Large"), dv.labels = c("5-year-olds on Quantity-Word (reference: medium)"), string.p = "P-Values", string.se = "Standard Errors", string.stat = "t-statistics")
 	
-	#9. 6 yo (references small and numeral-word)
-	tab_model(Map6_t, auto.label = FALSE, show.ci = FALSE)
-	tab_model(Map6_t, auto.label = FALSE, show.ci = FALSE, show.se = TRUE, show.stat = TRUE, show.est = TRUE, pred.labels = c("Intercept 1", "Intercept 2", "Medium", "Large", "Quantity-Numeral", "Quantity-Word"), dv.labels = c("6-year-olds (References: Small and Numeral-Word)"), string.p = "P-Values", string.se = "Standard Errors", string.stat = "t-statistics")
-	#10. 6 yo (references medium and numeral-word)
-	tab_model(Map6_t_ref, auto.label = FALSE, show.ci = FALSE)
-	tab_model(Map6_t_ref, auto.label = FALSE, show.ci = FALSE, show.se = TRUE, show.stat = TRUE, show.est = TRUE, pred.labels = c("Intercept 1", "Intercept 2", "Small", "Large", "Quantity-Numeral", "Quantity-Word"), dv.labels = c("6-year-olds (References: Medium and Numeral-Word)"), string.p = "P-Values", string.se = "Standard Errors", string.stat = "t-statistics")
-	#11. 6 yo on quantity-numeral (reference small)
-	tab_model(qn6_t, auto.label = FALSE, show.ci = FALSE)
-	tab_model(qn6_t, auto.label = FALSE, show.ci = FALSE, show.se = TRUE, show.stat = TRUE, show.est = TRUE, pred.labels = c("Intercept 1", "Intercept 2", "Medium", "Large"), dv.labels = c("6-year-olds on Quantity-Numeral (reference: small)"), string.p = "P-Values", string.se = "Standard Errors", string.stat = "t-statistics")
-	#12. 6 yo on quantity-numeral (reference medium)
-	tab_model(qn6_t_ref, auto.label = FALSE, show.ci = FALSE)
-	tab_model(qn6_t_ref, auto.label = FALSE, show.ci = FALSE, show.se = TRUE, show.stat = TRUE, show.est = TRUE, pred.labels = c("Intercept 1", "Intercept 2", "Small", "Large"), dv.labels = c("6-year-olds on Quantity-Numeral (reference: medium)"), string.p = "P-Values", string.se = "Standard Errors", string.stat = "t-statistics")
-	#13. 6 on on quantity-word (reference small)
-	tab_model(qw6_t, auto.label = FALSE, show.ci = FALSE)
-	tab_model(qw6_t, auto.label = FALSE, show.ci = FALSE, show.se = TRUE, show.stat = TRUE, show.est = TRUE, pred.labels = c("Intercept 1", "Intercept 2", "Medium", "Large"), dv.labels = c("6-year-olds on Quantity-Word (reference: small)"), string.p = "P-Values", string.se = "Standard Errors", string.stat = "t-statistics")
-	#14. 6 on on quantity-word (reference medium)
-	tab_model(qw6_t_ref, auto.label = FALSE, show.ci = FALSE)
-	tab_model(qw6_t_ref, auto.label = FALSE, show.ci = FALSE, show.se = TRUE, show.stat = TRUE, show.est = TRUE, pred.labels = c("Intercept 1", "Intercept 2", "Small", "Large"), dv.labels = c("6-year-olds on Quantity-Word (reference: medium)"), string.p = "P-Values", string.se = "Standard Errors", string.stat = "t-statistics")
+	
+	
 	
 	
