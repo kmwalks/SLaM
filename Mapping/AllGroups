@@ -99,102 +99,41 @@ chisq.test(Table_IncStudy)
       nrow(Incorrect_SES) #NONE ARE INAPPROPRIATE
       
 # SEX 
-  sum(Total_Inc_Study$M.F=='Female') # 103
-  sum(Total_Inc_Study$M.F=='Male') # 96
-  sum(EE_Inc$M.F=='Female') # 25
-  sum(EE_Inc$M.F=='Male') # 23
-  sum(EL_Inc$M.F=='Female') # 27
-  sum(EL_Inc$M.F=='Male') # 20
-  sum(AE_Inc$M.F=='Female') # 28
-  sum(AE_Inc$M.F=='Male') # 21
-  sum(AL_Inc$M.F=='Female') # 23
-  sum(AL_Inc$M.F=='Male') #32
+  sum(Total_Inc_Study$M.F=='Female')
+  sum(Total_Inc_Study$M.F=='Male') 
+  sum(EE_Inc$M.F=='Female') 
+  sum(EE_Inc$M.F=='Male') 
+  sum(EL_Inc$M.F=='Female') 
+  sum(EL_Inc$M.F=='Male') 
+  sum(AE_Inc$M.F=='Female') 
+  sum(AE_Inc$M.F=='Male') 
+  sum(AL_Inc$M.F=='Female') 
+  sum(AL_Inc$M.F=='Male') 
   
-  
- #EDITED UP TO HERE
 
 # AGE DESCRIPTIVE STATISTICS
-min(EE_Inc$Age_Rounded, na.rm=TRUE) # 4.8
-min(EL_Inc$Age_Rounded, na.rm=TRUE) #4.5
-min(AE_Inc$Age_Rounded, na.rm=TRUE) # 5.2
-min(AL_Inc$Age_Rounded, na.rm=TRUE) # 5.1
-aggregate(Age_Rounded ~ Group_4cat, data=Total_Inc_Study, min) #Creates a table in one 
-
-max(EE_Inc$Age_Rounded, na.rm=TRUE) # 9.7
-max(EL_Inc$Age_Rounded, na.rm=TRUE) # 9.8
-max(AE_Inc$Age_Rounded, na.rm=TRUE) # 9.9
-max(AL_Inc$Age_Rounded, na.rm=TRUE) # 9.8
-aggregate(Age_Rounded ~ Group_4cat, data=Total_Inc_Study, max) 
-
-median(EE_Inc$Age_Rounded, na.rm=TRUE) # 6.7
-median(EL_Inc$Age_Rounded, na.rm=TRUE) # 6.2
-median(AE_Inc$Age_Rounded, na.rm=TRUE) # 7.3
-median(AL_Inc$Age_Rounded, na.rm=TRUE) # 7.4
-aggregate(Age_Rounded ~ Group_4cat, data=Total_Inc_Study, median)
-
-mean(EE_Inc$Age_Rounded, na.rm=TRUE) # 6.87
-mean(EL_Inc$Age_Rounded, na.rm=TRUE) # 6.41
-mean(AE_Inc$Age_Rounded, na.rm=TRUE) # 7.43
-mean(AL_Inc$Age_Rounded, na.rm=TRUE) # 7.47
+mean(Total_Inc_Study$Age_Rounded, na.rm=TRUE) 
 aggregate(Age_Rounded ~ Group_4cat, data=Total_Inc_Study, mean)
-
-sd(EE_Inc$Age_Rounded, na.rm=TRUE) # 1.33
-sd(EL_Inc$Age_Rounded, na.rm=TRUE) # 1.33
-sd(AE_Inc$Age_Rounded, na.rm=TRUE) # 1.51
-sd(AL_Inc$Age_Rounded, na.rm=TRUE) # 1.46
+sd(Total_Inc_Study$Age_Rounded, na.rm=TRUE) 
 aggregate(Age_Rounded ~ Group_4cat, data=Total_Inc_Study, sd)
-
-range(EE_Inc$Age_Rounded, na.rm=TRUE) # 4.8 9.7
-range(EL_Inc$Age_Rounded, na.rm=TRUE) # 4.5 9.8
-range(AE_Inc$Age_Rounded, na.rm=TRUE) # 5.2 9.9
-range(AL_Inc$Age_Rounded, na.rm=TRUE) # 5.1 9.8
+range(Total_Inc_Study$Age_Rounded, na.rm=TRUE) 
 aggregate(Age_Rounded ~ Group_4cat, data=Total_Inc_Study, range)
 
 # SES DESCRIPTIVE STATISTICS
-min(EE_Inc$SES, na.rm=TRUE) # 17
-min(EL_Inc$SES, na.rm=TRUE) # 3
-min(AE_Inc$SES, na.rm=TRUE) # 3
-min(AL_Inc$SES, na.rm=TRUE) # 3
-aggregate(SES ~ Group_4cat, data=Total_Inc_Study, min)
-
-max(EE_Inc$SES, na.rm=TRUE) # 66
-max(EL_Inc$SES, na.rm=TRUE) # 66
-max(AE_Inc$SES, na.rm=TRUE) # 62
-max(AL_Inc$SES, na.rm=TRUE) # 63.5
-aggregate(SES ~ Group_4cat, data=Total_Inc_Study, max)
-
-median(EE_Inc$SES, na.rm=TRUE) # 61
-median(EL_Inc$SES, na.rm=TRUE) # 52.75
-median(AE_Inc$SES, na.rm=TRUE) # 49.50
-median(AL_Inc$SES, na.rm=TRUE) # 47
-aggregate(SES ~ Group_4cat, data=Total_Inc_Study, median)
-
-mean(EE_Inc$SES, na.rm=TRUE) # 56.25
-mean(EL_Inc$SES, na.rm=TRUE) # 48.25
-mean(AE_Inc$SES, na.rm=TRUE) # 43.85
-mean(AL_Inc$SES, na.rm=TRUE) # 42.38
+mean(Total_Inc_Study$SES, na.rm=TRUE) 
 aggregate(SES ~ Group_4cat, data=Total_Inc_Study, mean)
-
-sd(EE_Inc$SES, na.rm=TRUE) # 12.32
-sd(EL_Inc$SES, na.rm=TRUE) # 13.21
-sd(AE_Inc$SES, na.rm=TRUE) # 14.59
-sd(AL_Inc$SES, na.rm=TRUE) # 15.97
+sd(Total_Inc_Study$SES, na.rm=TRUE) 
 aggregate(SES ~ Group_4cat, data=Total_Inc_Study, sd)
-
-range(EE_Inc$SES, na.rm=TRUE) # 17 66
-range(EL_Inc$SES, na.rm=TRUE) # 3 66
-range(AE_Inc$SES, na.rm=TRUE) # 3 62
-range(AL_Inc$SES, na.rm=TRUE) # 3 63.5
+range(Total_Inc_Study$SES, na.rm=TRUE) 
 aggregate(SES ~ Group_4cat, data=Total_Inc_Study, range)
 
 #Age of Language Exposure
-aggregate(Age.of.Exposure..mo..Language ~ Group_4cat, data=Total_Inc_Study, min)
-aggregate(Age.of.Exposure..mo..Language ~ Group_4cat, data=Total_Inc_Study, max)
-aggregate(Age.of.Exposure..mo..Language ~ Group_4cat, data=Total_Inc_Study, median)
+mean(Total_Inc_Study$Age.of.Exposure..mo..Language, na.rm=TRUE) 
 aggregate(Age.of.Exposure..mo..Language ~ Group_4cat, data=Total_Inc_Study, mean)
+sd(Total_Inc_Study$Age.of.Exposure..mo..Language, na.rm=TRUE) 
 aggregate(Age.of.Exposure..mo..Language ~ Group_4cat, data=Total_Inc_Study, sd)
-
-
+range(Total_Inc_Study$Age.of.Exposure..mo..Language, na.rm=TRUE) 
+aggregate(Age.of.Exposure..mo..Language ~ Group_4cat, data=Total_Inc_Study, range)
 
 #CREATING TIMING/MODALITY DATA FRAMES
 #TIMING GROUPS
@@ -225,153 +164,6 @@ SES <- Total_Inc_Study$SES
       # MODALITY: SES
       ggplot(Total_Inc_Study, aes(x=ModalityGrp, y=SES)) + geom_violin() + labs(x="Language Modality", y="SES")
       #ENGLISH MORE "TOP HEAVY" FOR SES 
- 
-## GROUP VIOLIN PLOTS ## 
-      Groups <- Total_Inc_Study$Group_4cat
-      map.n <- function(x){return(c(y = median(x)*1.05, label = length(x))) }
-      mean.n <- function(x){return(c(y= median(x)*0.97, label = round(mean(x), 2)))}   
-     #4 GROUPS:AGE
-      ggplot(Total_Inc_Study, aes(x=Groups, y=Age, fill = Groups)) + geom_violin() + geom_boxplot(width = 0.2) + labs (x= "Experimental Groups", y = "Age (years)") + stat_summary(fun.data = mean.n, geom = "text", fun.y = median) + stat_summary(fun.data = mean.n, geom= "text", fun.y=mean, color= "gainsboro") + theme(legend.position="none") 
-      #Very similar across groups!
-
-      #4 GROUPS:SES
-    ggplot(Total_Inc_Study, aes(x=Groups, y=SES, fill = Groups)) + geom_violin() + geom_boxplot(width = 0.2) + labs (x= "Experimental Groups", y = "SES") + stat_summary(fun.data = mean.n, geom = "text", fun.y = median) + stat_summary(fun.data = mean.n, geom= "text", fun.y=mean, color= "gainsboro") + theme(legend.position="none")
-    #ENGLISH GROUPS HIGHER SES/"TOP HEAVY"
- 
-	#4 groups: length auditory exposure
-	ggplot(Total_Inc_Study, aes(x=Groups, y=Length_AuditoryExposure.years., fill = Groups)) + geom_violin() + geom_boxplot(width = 0.2) + labs (x= "Experimental Groups", y = "Length of Auditory Exposure (years)") + stat_summary(fun.data = mean.n, geom = "text", fun.y = median) + stat_summary(fun.data = mean.n, geom= "text", fun.y=mean, color= "gainsboro") + theme(legend.position="none")
-
-#Length of language exposure between two later groups
-	LengthLang <- Total_Inc_Study$Length_LanguageExposure.years.
-	ggplot(Total_Inc_Study, aes(x=Timing, y=LengthLang, fill = Timing)) + geom_violin() + geom_boxplot(width = 0.2) + labs (x= "Language Timing", y = "Length of Language Exposure (years)") + scale_fill_grey(start = 0.5, end = 0.9) + stat_summary(fun.data = mean.n, geom = "text", fun = median, vjust=-2) + stat_summary(fun.data = mean.n, geom= "text", fun=mean, color= "black", vjust=-2) + theme(legend.position = "none", axis.title.x = element_text(color="black", size=14, family = "Calibri"), axis.text.x = element_text(color="black", size=12, family = "Calibri"), axis.title.y = element_text(color="black", size=14, family = "Calibri"), axis.text.y = element_text(color="black", size=12, family = "Calibri"))
-	#Significantly different? 
-      #Unpaired two-sample t-test resource: http://www.sthda.com/english/wiki/unpaired-two-samples-t-test-in-r
-     t.test(Early$Length_LanguageExposure.years., Later$Length_LanguageExposure.years., paired = FALSE, alternative = "two.sided")
-      #Welch Two Sample t-test, t = 13.791, df = 167.66, p-value < 2.2e-16 (significantly different!)
-
-# ANOVA for mean Age and mean SES between groups - is the avergae age or SES sig different between groups?
-#AGE#
-      # mean Age
-      # Ho : mu1=...=mu4
-      # Ha : mu2=...≠...mu4
-      # alpha level: 0.05     
-# RUN THAT ANOVA 
-Age_ANOVA <- aov(Total_Inc_Study$Age_Rounded ~ Total_Inc_Study$Group_4cat)
-summary(Age_ANOVA) #p= 0.000379 #NOT EQUAL BETWEEN GROUPS!
-      # If > 0.5, conclude that population means for Age are equal between groups
-      # If <0.05, reject null, conclude that population means for Age are not equal between groups, which ones differ?
-            #Post-Hoc
-                  par(ask=TRUE)
-                  opar <- par(no.readonly=TRUE) 
-                  TukeyHSD(Age_ANOVA)
-                  par(las=1) 
-                  par(mar=c(5,8,4,2)) 
-                  plot(TukeyHSD(Age_ANOVA))
-                  par(opar)
-
-# Assumptions to be able to USE ANOVA  
-      #1. Normality   - NOT PASS
-      qqPlot(Age_ANOVA) #qq plot: scatterplot of observed vs expected normality and want linear line 
-      Age_residuals <- residuals(Age_ANOVA) #residual: all data's mean then overall mean subtracted from each data point (indiv-datasetmean)
-      shapiro.test(Age_residuals) #do not reject null, assume normality aka bell curve? WANT THAT HIGH P = normally distributed
-      #W = 0.95929, p-value = 1.66e-05, NOT NORMALLY DISTRIBUTED!
-      ggdensity(Total_Inc_Study$Age_Rounded, main = "Density plot of AGE", xlab = "Age (years)") #NOT A BELL CURVE!
-      #BY GROUPS:
-      shapiro.test(EE_Inc$Age_Rounded) #p-value = 0.02365<0.05, reject null, can't assume normality
-      shapiro.test(AE_Inc$Age_Rounded)#p-value = 0.005251<0.05, reject null, can't assume normality
-      shapiro.test(EL_Inc$Age_Rounded)#p-value = 0.002507<0.05, reject null, can't assume normality
-      shapiro.test(AL_Inc$Age_Rounded)#p-value = 0.009083<0.05, reject null, can't assume normality
-
-      #2. Homeogeneity of Variances Between Groups    -PASS
-      bartlett.test(Total_Inc_Study$Age_Rounded, Total_Inc_Study$Group_4cat) 
-      #Bartlett's K-squared = 1.2209, df = 3, p-value = 0.748, HAVE HOMOGENEITY
-            # IF p > 0.5 WANT THAT HIGH P! = HOMOGENEITY ACHIEVED
-            # IF p<0.05, reject the null hypothesis, do not assume variances are equal, is the variance for each of the groups similar? 
-      plot(Age_ANOVA,1) #x-axis all indiv group means and for each group mean has observations and how spread from group mean, want bands to have same spread aka start and end points 
-      #PLOT LOOKS GOOD, SIMILAR SPREAD
-     
-      #BY GROUPS:
-      bartlett.test(Age_Rounded ~ Group_4cat, data=Total_Inc_Study) #p-value = 0.748
-      leveneTest(Age_Rounded ~ Group_4cat, data=Total_Inc_Study) #p-value = 0.4146
-
-# IF SHAPIRO AND BARLETT ARE >.O5 YAH GOOD, IF NOT: LEVENE AS BACKUP FOR BARLETT, IF STILL NAH, NON-PARAMETRIC METHOD NEEDS TO BE USED / NOT ANOVA 
-      # Violated variances assumption, re-run using kruskal-wallis test (non-parametric)
-      # IF ASSUMPTIONS DO NOT HOLD, USE KRUSKAL NON-PARAMATRIC TEST/PAIRWISE.WILCOX.TEST FOR POST-HOC)
-      kruskal.test(Total_Inc_Study$Age_Rounded ~ Group_4cat, data = Total_Inc_Study)
-      #Kruskal-Wallis chi-squared = 17.831, df = 3, p-value = 0.0004767
-      pairwise.wilcox.test(Total_Inc_Study$Age_Rounded, Total_Inc_Study$Group_4cat, p.adjust.method="none", paired = FALSE)
-
-*********************************
-#SES#
-            # mean SES
-            # Ho : mu1=...=mu4
-            # Ha : mu2=...≠...mu4
-            # alpha level: 0.05
-            # Assumptions
-
-# All samples drawn independently
-SES_ANOVA <- aov(Total_Inc_Study$SES ~ Total_Inc_Study$Group_4cat)
-summary(SES_ANOVA) # p = 6.02e-06 #SES MEANS ARE NOT EQUAL BETWEEN GROUPS
-      # p=IF>0.05, do not reject null, conclude that population means for SES are equal between groups
-
-      #If different, perform Post-Hoc: 
-      par(ask=TRUE)
-      opar <- par(no.readonly=TRUE) 
-      TukeyHSD(SES_ANOVA)
-      par(las=1) 
-      par(mar=c(5,8,4,2)) 
-      plot(TukeyHSD(SES_ANOVA))
-      par(opar)
-
-      #1. Normality  - FAIL
-      qqPlot(SES_ANOVA)
-      SES_residuals <- residuals(SES_ANOVA) 
-      shapiro.test(SES_residuals) #p-value = 1.021e-11 #NOT NORMALLY DISTRIBUTED
-      ggdensity(Total_Inc_Study$SES, main = "Density plot of SES", xlab = "SES") #RIGHT SKEWED
-      #BY GROUPS: #ALSO ALL < 0.05
-            shapiro.test(EE_Inc$SES)
-            shapiro.test(EL_Inc$SES) 
-            shapiro.test(AE_Inc$SES) 
-            shapiro.test(AL_Inc$SES) 
-  
-      #2. Homeogeneity of Variances Between Groups - PASS
-      bartlett.test(Total_Inc_Study$SES, Total_Inc_Study$Group_4cat) # p >0.05, do not reject the null hypothesis, assume variances are equal
-      plot(SES_ANOVA,1) #x-axis all indiv group means and for each group mean has observations and how spread from group mean, want bands to have same spread aka start and end points 
-      
-      bartlett.test(SES ~ Group_4cat, data=Total_Inc_Study) # p-value = 0.2997
-      
-      leveneTest(SES ~ Group_4cat, data=Total_Inc_Study) #p-value = 0.05584
-
-# IF FAIL ABOVE ASSUMPTIONS, SWITCH TO NON-PARAMETRIC TEST # 
-kruskal.test(SES ~ Group_4cat, data = Total_Inc_Study)
-pairwise.wilcox.test(Total_Inc_Study$SES,Total_Inc_Study$Group_4cat,p.adjust.method="none")
-
-*************************************************************************************
-#Modality
-Age_M_ANOVA <- aov(Total_Inc_Study$Age_Rounded ~ Total_Inc_Study$Modality)
-summary(Age_M_ANOVA)  #p=7.01e-05 (not equal!)
-Age_M_residuals <- residuals(Age_M_ANOVA)
-shapiro.test(Age_M_residuals) #Shapiro-Wilk normality test = W = 0.95778, p-value = 1.147e-05
-kruskal.test(Total_Inc_Study$Age_Rounded ~ Total_Inc_Study$Modality, data = Total_Inc_Study) #p-value = 0.0001087
-
-SES_M_ANOVA <- aov(Total_Inc_Study$SES ~ Total_Inc_Study$Modality)
-summary(SES_M_ANOVA)  #p=1.24e-05 (not equal)
-SES_M_residuals <- residuals(SES_M_ANOVA)
-shapiro.test(SES_M_residuals)  #Shapiro-Wilk normality test = W = 0.88351, p-value = 5.155e-11
-
-#Timing
-Age_T_ANOVA <- aov(Total_Inc_Study$Age_Rounded ~ Total_Inc_Study$Timing)
-summary(Age_T_ANOVA) #p = 0.398, NO DIFFERENCE!
-Age_T_residuals <- residuals(Age_T_ANOVA) 
-shapiro.test(Age_T_residuals) #Shapiro-Wilk normality test = W = 0.94401, p-value = 5.201e-07
-kruskal.test(Total_Inc_Study$Age_Rounded ~ Total_Inc_Study$Timing, data = Total_Inc_Study) 
-
-SES_T_ANOVA <- aov(Total_Inc_Study$SES ~ Total_Inc_Study$Timing)
-summary(SES_T_ANOVA)  #p = 0.0213, different
-SES_T_residuals <- residuals(SES_T_ANOVA)
-shapiro.test(SES_T_residuals) #Shapiro-Wilk normality test = W = 0.86037, p-value = 3.031e-12
-kruskal.test(Total_Inc_Study$SES ~ Total_Inc_Study$Timing, data = Total_Inc_Study) #p-value = 0.001756
-
 
 *************************************************************************************
 #Analysis
@@ -379,6 +171,80 @@ kruskal.test(Total_Inc_Study$SES ~ Total_Inc_Study$Timing, data = Total_Inc_Stud
 ## MAPPING DATA FRAME ## 
   Map_Inc <- Total_Inc_Study #renaming for ease
   View(Map_Inc) 
+  
+#MIXED EFFECTS LOGISTIC REGRESSION
+	Map_long <- pivot_longer(data = Map_Inc, cols=c(ends_with("Answer")), names_to = c("Type"), values_to = "Quantity")
+	View(Map_long)
+	Map_long1 <- Map_long[,!grepl("^Item",names(Map_long))] # delete columns that contain “item” 
+	View(Map_long1)
+	Map_long2 <- pivot_longer(data = Map_Inc, cols=c(ends_with("Correct.")), names_to = c("Type2"), values_to = "Correct")
+	Map_long2 <- Map_long2[,!grepl("^Item",names(Map_long2))] # delete columns that contain “item” 
+	View(Map_long2)
+	Map_longest <- cbind(Map_long, Map_long2$Correct)
+	View(Map_longest)
+	Map_short <- Map_longest[,!grepl("^Item",names(Map_longest))] # delete columns that contain “item” 
+	View(Map_short)
+	names(Map_short)[names(Map_short) == "Map_long2$Correct"] <- "Correct"
+	View(Map_short)
+	
+            # From Type column, create a new column (Map_Pair)
+            #Create new column for which IF Map_short$Type contains “NW” or “WN”, assign value “Numeral-Word”
+            Map_Pair <- c()
+            for(i in 1:10149)
+            Map_Pair[i] <- ifelse(grepl("NW", Map_short$Type[i]), "Numeral-Word", ifelse(grepl("WN", Map_short$Type[i]), "Numeral-Word", ifelse(grepl("QN", Map_short$Type[i]), "Quantity-Numeral", ifelse(grepl("NQ", Map_short$Type[i]), "Quantity-Numeral", ifelse(grepl("QW", Map_short$Type[i]), "Quantity-Word", ifelse(grepl("WQ", Map_short$Type[i]), "Quantity-Word","bananas"))))))
+            Map_short <- cbind(Map_short, Map_Pair)
+            View(Map_short)
+
+            #From Quantity column, create Small, Med, Large
+            Set_Size <- c()
+            Set_Size <- case_when(Map_short$Quantity <= 3 ~ 'Small',
+                                  Map_short$Quantity > 3 & Map_short$Quantity<= 5 ~ 'Medium',
+                                  Map_short$Quantity > 5 ~ 'Large')
+            Map_short <- cbind(Map_short,Set_Size)
+	    names(Map_short)[names(Map_short) == "Map_long2$Correct"] <- "Correct"
+            View(Map_short)
+	    Map_short$SetSize_refM <- as.factor(factor(as.character(Map_short$Set_Size), levels=c("Medium", "Small", "Large"), exclude=""))
+	    Map_short$MapPair_refQW <- as.factor(factor(as.character(Map_short$Map_Pair), levels=c("Quantity-Word","Numeral-Word","Quantity-Numeral"), exclude=""))
+	    View(Map_short)   
+	    
+            #Running Mixed Effects Logistic Regressions
+	    #Mixed Log Reg for Set Size, Map Pair, Timing, Modality
+	    MixReg_MT <- glmer(Correct ~ Age_Rounded + SES + Set_Size + Map_Pair + Timing + Modality + (1 | SUBJECT_ID), data = Map_short, family = binomial, control = glmerControl(optimizer ="bobyqa"), nAGQ = 10) #AIC 5114
+	    summary(MixReg_MT)
+	  
+	    #References (changed Set Size and Map Pair)
+	    MixReg_MT_ref <- glmer(Correct ~ Age_Rounded + SES + SetSize_refM + MapPair_refQW + Timing + Modality + (1 | SUBJECT_ID), data = Map_short, family = binomial, control = glmerControl(optimizer ="bobyqa"), nAGQ = 10)
+	    summary(MixReg_MT_ref)
+	    
+	    #Resource: https://strengejacke.github.io/sjPlot/articles/tab_model_estimates.html
+		install.packages("sjPlot")
+		install.packages("sjmisc")
+		install.packages("sjlabelled")
+		library(sjPlot)
+		library(sjmisc)
+		library(sjlabelled)
+	    
+	    tab_model(MixReg_MT, auto.label = FALSE, show.ci = FALSE) #TO CHECK VARIABLE NAMES TO ENSURE RENAMING ACCURATELY    
+	    tab_model(MixReg_MT, auto.label = FALSE, show.icc = FALSE, show.se = TRUE, show.ci = FALSE, show.re.var = FALSE, show.stat = TRUE, pred.labels = c("Intercept", "Age", "SES", "Medium", "Small", "Quantity-Numeral", "Quantity-Word", "Timing (Later)", "Modality (English)"), dv.labels = c("References: Large and Numeral-Word"), string.p = "P-Values", string.se = "Standard Errors", string.stat = "t Statistic") #Edit to look pretty in Word
+	   tab_model(MixReg_MT_ref, auto.label = FALSE, show.ci = FALSE) #TO CHECK VARIABLE NAMES TO ENSURE RENAMING ACCURATELY 
+	   tab_model(MixReg_MT_ref, auto.label = FALSE, show.icc = FALSE, show.se = TRUE, show.ci = FALSE, show.re.var = FALSE, show.stat = TRUE, pred.labels = c("Intercept", "Age", "SES", "Small", "Large", "Numeral-Word", "Quantity-Numeral", "Timing (Later)", "Modality (English)"), dv.labels = c("References: Medium and Quantity-Word"), string.p = "P-Values", string.se = "Standard Errors", string.stat = "t Statistic") #Edit to look pretty in Word
+
+	#Why is Modality significant here and no where else?, Pearson's Chi-squared tests on binary outcome 
+	chisq.test(Map_short$Correct, Map_short$Group_4cat) #X-squared = 118.65, df = 3, p-value < 2.2e-16
+	table(Map_short$Correct, Map_short$Group_4cat) #ASL Later has substantially more 0s than other groups, inproportionate 
+	
+	ASL_log <- subset(Map_short, Map_short$Modality == "ASL")
+	English_log <- subset(Map_short, Map_short$Modality == "English")
+	chisq.test(ASL_log$Correct, ASL_log$Timing)  #X-squared = 93.661, df = 1, p-value < 2.2e-16, ASL Early and ASL Later differ
+	chisq.test(English_log$Correct, English_log$Timing) #X-squared = 19.511, df = 1, p-value = 1e-05, English Early and English later differ 
+
+  
+  
+  
+  
+  
+  
+  
 
 #Creating Data Frame for Tobit Models
 which(colnames(Map_Inc)=="AvgCorrect_Sm_QW") #313
@@ -406,191 +272,17 @@ View(Map_short)
 
 
 
+#OVERALL EDIT BELOW TO NOT BE FOR THE GROUPS! include a range of overall? 
+#Overall Performance compared to chance
+wilcox.test(EE$AvgCorrect_Total, mu = .25, alternative = "greater")
 
-
-
-
-#MIXED EFFECTS LOGISTIC REGRESSION
-	Map_long <- pivot_longer(data = Map_Inc, cols=c(ends_with("Answer")), names_to = c("Type"), values_to = "Quantity")
-	View(Map_long)
-	Map_long1 <- Map_long[,!grepl("^Item",names(Map_long))] # delete columns that contain “item” 
-	View(Map_long1)
-	Map_long2 <- pivot_longer(data = Map_Inc, cols=c(ends_with("Correct.")), names_to = c("Type2"), values_to = "Correct")
-	Map_long2 <- Map_long2[,!grepl("^Item",names(Map_long2))] # delete columns that contain “item” 
-	View(Map_long2)
-	Map_longest <- cbind(Map_long, Map_long2$Correct)
-	View(Map_longest)
-	Map_short <- Map_longest[,!grepl("^Item",names(Map_longest))] # delete columns that contain “item” 
-	View(Map_short)
-	names(Map_short)[names(Map_short) == "Map_long2$Correct"] <- "Correct"
-	View(Map_short)
-	
-            # From Type column, create a new column (Map_Pair)
-            #Create new column for which IF Map_short$Type contains “NW” or “WN”, assign value “Numeral-Word”
-            Map_Pair <- c()
-            for(i in 1:10200)
-            Map_Pair[i] <- ifelse(grepl("NW", Map_short$Type[i]), "Numeral-Word", ifelse(grepl("WN", Map_short$Type[i]), "Numeral-Word", ifelse(grepl("QN", Map_short$Type[i]), "Quantity-Numeral", ifelse(grepl("NQ", Map_short$Type[i]), "Quantity-Numeral", ifelse(grepl("QW", Map_short$Type[i]), "Quantity-Word", ifelse(grepl("WQ", Map_short$Type[i]), "Quantity-Word","bananas"))))))
-            Map_short <- cbind(Map_short, Map_Pair)
-            View(Map_short)
-
-            #From Quantity column, create Small, Med, Large
-            Set_Size <- c()
-            Set_Size <- case_when(Map_short$Quantity <= 3 ~ 'Small',
-                                  Map_short$Quantity > 3 & Map_short$Quantity<= 5 ~ 'Medium',
-                                  Map_short$Quantity > 5 ~ 'Large')
-            Map_short <- cbind(Map_short,Set_Size)
-	    names(Map_short)[names(Map_short) == "Map_long2$Correct"] <- "Correct"
-            View(Map_short)
-	    
-            #Running Mixed Effects Logistic Regressions
-	    #Mixed Log Reg for Set Size, Map Pair, Timing, Modality
-	    MixReg_MT <- glmer(Correct ~ Set_Size + Map_Pair + Timing + Modality + (1 | SUBJECT_ID), data = Map_short, family = binomial, control = glmerControl(optimizer ="bobyqa"), nAGQ = 10)
-	    summary(MixReg_MT)
-	    #Obtain Model Descriptives
-            se <- sqrt(diag(vcov(MixReg_MT)))
-            (oddsmix_MT <- cbind(Est = fixef(MixReg_MT), LL = fixef(MixReg_MT) - 1.96 * se, UL = fixef(MixReg_MT) + 1.96 * se))
-            exp(oddsmix_MT) #provides odds ratios
-	    
-	    #References (change Set Size and Map Pair)
-	    Map_short$SetSize_refM <- as.factor(factor(as.character(Map_short$Set_Size), levels=c("Medium", "Small", "Large"), exclude=""))
-	    Map_short$MapPair_refQW <- as.factor(factor(as.character(Map_short$Map_Pair), levels=c("Quantity-Word","Numeral-Word","Quantity-Numeral"), exclude=""))
-	    View(Map_short)   
-	    MixReg_MT_ref <- glmer(Correct ~ SetSize_refM + MapPair_refQW + Timing + Modality + (1 | SUBJECT_ID), data = Map_short, family = binomial, control = glmerControl(optimizer ="bobyqa"), nAGQ = 10)
-	    summary(MixReg_MT_ref)
-	    se <- sqrt(diag(vcov(MixReg_MT_Ref)))
-            (oddsmixref <- cbind(Est = fixef(MixReg_MT_Ref), LL = fixef(MixReg_Ref) - 1.96 * se, UL = fixef(MixReg_Ref) + 1.96 * se))
-            exp(oddsmixref)
-
-#OVERALL
-#Create 4 group data frames
-EE <- subset(Map_Inc, Map_Inc$Group_4cat == "English Early")
-EL <- subset(Map_Inc, Map_Inc$Group_4cat == "English Later")
-AE <- subset(Map_Inc, Map_Inc$Group_4cat == "ASL Early")
-AL <- subset(Map_Inc, Map_Inc$Group_4cat == "ASL Later")
-
-#Overall Performance compared to chance for each group, all p < 0.001
-wilcox.test(EE$AvgCorrect_Total, mu = .25, alternative = "greater") #V = 1176, p-value = 7.702e-10
-wilcox.test(EL$AvgCorrect_Total, mu = .25, alternative = "greater") #V = 1128, p-value = 1.178e-09
-wilcox.test(AE$AvgCorrect_Total, mu = .25, alternative = "greater") #V = 1275, p-value = 3.419e-10
-wilcox.test(AL$AvgCorrect_Total, mu = .25, alternative = "greater") #V = 1485, p-value = 7.906e-11
-
-#Performance at Ceiling per group
+#Performance at Ceiling 
 EE_Ceil <- EE$SumCorrectTotal_All
 EE_All <- 51 #ceiling performance 
 Var_EE <- length(which(EE_Ceil>= EE_All)) #number of observations equal to ceiling 
 N <- nrow(EE) #number of total observations
 (Var_EE/N)*100 #18.75% at ceiling
 
-EL_Ceil <- EL$SumCorrectTotal_All
-EL_All <- 51 #ceiling performance 
-Var_EL <- length(which(EL_Ceil>= EL_All)) #number of observations equal to ceiling 
-N <- nrow(EL) #number of total observations
-(Var_EL/N)*100 #12.77% at ceiling
-
-AE_Ceil <- AE$SumCorrectTotal_All
-AE_All <- 51 #ceiling performance 
-Var_AE <- length(which(AE_Ceil>= AE_All)) #number of observations equal to ceiling 
-N <- nrow(AE) #number of total observations
-(Var_AE/N)*100 #26% at ceiling
-
-AL_Ceil <- AL$SumCorrectTotal_All
-AL_All <- 51 #ceiling performance 
-Var_AL <- length(which(AL_Ceil>= AL_All)) #number of observations equal to ceiling 
-N <- nrow(AL) #number of total observations
-(Var_AL/N)*100 #20% at ceiling
-
-
-#ANOVAS, Overall Performance
-#Create Shortened Variables
-M_SumTotalCorr <- Map_Inc$SumCorrectTotal_All
-M_Age <- Map_Inc$Age_Rounded
-M_SES <- Map_Inc$SES
-M_Grps <- Map_Inc$Group_4cat
-M_Tim <- Map_Inc$Timing
-M_Mod <- Map_Inc$Modality
-M_Lang <- Map_Inc$Age.of.Exposure..mo..Language
-map.n <- function(x){return(c(y = median(x)*1.05, label = length(x))) }
-mean.n <- function(x){return(c(y= median(x)*0.97, label = round(mean(x), 2)))}   
-
-      #4 Groups
-      aov_grps<- aov(Map_Inc$AvgCorrect_Total ~ Map_Inc$Group_4cat)
-      summary(aov_grps)  #p-value = 0.0053, df = 3, f = 4.366
-      tuk_grps<- TukeyHSD(aov_grps)
-      tuk_grps
-      mean(EE$AvgCorrect_Total) #0.92
-      mean(EL$AvgCorrect_Total) #0.88
-      mean(AE$AvgCorrect_Total) #0.92
-      mean(AL$AvgCorrect_Total) #0.85
-      ggplot(Map_Inc, aes(x=M_Grps, y=M_SumTotalCorr, fill = M_Grps)) + geom_violin() + geom_boxplot(width = 0.2) + labs (x= "Experimental Groups", y = "Total Correct (out of 51)") + scale_fill_grey(start = 0.5, end = 0.9) + stat_summary(fun.data = mean.n, geom = "text", fun = median) + stat_summary(fun.data = mean.n, geom= "text", fun=mean, color= "black") + theme(legend.position = "none", axis.title.x = element_text(color="black", size=14, family = "Calibri"), axis.text.x = element_text(color="black", size=12, family = "Calibri"), axis.title.y = element_text(color="black", size=14, family = "Calibri"), axis.text.y = element_text(color="black", size=12, family = "Calibri"))
-
-     #Modality
-      aov_mod<- aov(Map_Inc$AvgCorrect_Total ~ Map_Inc$Modality)
-      summary(aov_mod) #p = 0.46, df = 1, f = 0.548 #Not differ by modality!
-      ASL <- subset(Map_Inc, Map_Inc$Modality == "ASL")
-      View(ASL)
-      mean(ASL$AvgCorrect_Total) #0.88
-      English <- subset(Map_Inc, Map_Inc$Modality == "English")
-      View(English)
-      mean(English$AvgCorrect_Total) #0.90
-      ggplot(Map_Inc, aes(x=M_Mod, y=M_SumTotalCorr, fill = M_Mod)) + geom_violin() + geom_boxplot(width = 0.2) + labs (x= "Language Modality", y = "Total Correct (out of 51)") + scale_fill_grey(start = 0.5, end = 0.9) + stat_summary(fun.data = mean.n, geom = "text", fun = median) + stat_summary(fun.data = mean.n, geom= "text", fun=mean, color= "black") + theme(legend.position = "none", axis.title.x = element_text(color="black", size=14, family = "Calibri"), axis.text.x = element_text(color="black", size=12, family = "Calibri"), axis.title.y = element_text(color="black", size=14, family = "Calibri"), axis.text.y = element_text(color="black", size=12, family = "Calibri"))
-
-      #Timing
-      aov_tim<- aov(Map_Inc$AvgCorrect_Total ~ Map_Inc$Timing)
-      summary(aov_tim) #p = 0.000856, df = 1, f = 11.46 #differ by timing! 
-      Early <- subset(Map_Inc, Map_Inc$Timing == "Early")
-      View (Early)
-      mean(Early$AvgCorrect_Total) #0.92
-      Later <- subset(Map_Inc, Map_Inc$Timing == "Later")
-      View (Later)
-      mean(Later$AvgCorrect_Total) #0.86
-      ggplot(Map_Inc, aes(x=M_Tim, y=M_SumTotalCorr, fill = M_Tim)) + geom_violin() + geom_boxplot(width = 0.2) + labs (x= "Language Timing", y = "Total Correct (out of 51)") + scale_fill_grey(start = 0.5, end = 0.9) + stat_summary(fun.data = mean.n, geom = "text", fun = median) + stat_summary(fun.data = mean.n, geom= "text", fun=mean, color= "black") + theme(legend.position = "none", axis.title.x = element_text(color="black", size=14, family = "Calibri"), axis.text.x = element_text(color="black", size=12, family = "Calibri"), axis.title.y = element_text(color="black", size=14, family = "Calibri"), axis.text.y = element_text(color="black", size=12, family = "Calibri"))
-
-# BREAKING DOWN BY MAPPING PAIRS
-QW <- Map_Inc$Sum_Quantity.Word_Word.Quantity
-QN <- Map_Inc$Sum_Quantity.Numeral_Numeral.Quantity
-NW <- Map_Inc$Sum_Numeral.Word_Word.Numeral
-Map_Inc <- data.frame(Map_Inc,QW, QN, NW)
-View(Map_Inc)
-
-      #Experimental Groups by Mapping Pairs
-      BoxDF <- data.frame(QW,QN,NW,Map_Inc$Group_4cat)
-      View(BoxDF)
-      groups.data <- melt(BoxDF, id.vars='Map_Inc.Group_4cat')
-      View(groups.data)
-      groups.data$Map_Inc.Group_4cat <- factor(groups.data$Map_Inc.Group_4cat, levels = c("English Early", "ASL Early", "English Later", "ASL Later")) #order we want to present data
-      groups_map <- ggplot(groups.data, aes(variable, value, fill=Map_Inc.Group_4cat)) + geom_boxplot() + labs(x="Map Pairs", y="Accuracy (out of 17)", fill = "Experimental Groups") + scale_y_continuous (breaks=c(7,8,9,10,11,12,13,14,15,16,17), limits = c(7,17), expand = c(0,0)) + scale_x_discrete(limits=c("QN","QW","NW"), expand = c(.2,0),labels = c("Quantity-Numeral", "Quantity-Word", "Numeral-Word")) + scale_fill_grey(start = 0.5, end = 0.9) + theme(plot.title = element_text(color="black", size=14, family = "Calibri"), axis.title.x = element_text(color="black", size=14, family = "Calibri"), axis.text.x = element_text(color="black", size=12, family = "Calibri"), axis.title.y = element_text(color="black", size=14, family = "Calibri"), axis.text.y = element_text(color="black", size=12, family = "Calibri"), legend.title = element_text(color="black", size=14, family = "Calibri"), legend.text = element_text(color="black", size=14, family = "Calibri"))
-      groups_map
-     
-      All_NW <- subset(groups.data, groups.data$variable == "NW")
-      View(All_NW)
-      aov_grpsNW<- aov(All_NW$value ~ All_NW$Map_Inc.Group_4cat)
-      summary(aov_grpsNW) #p = 0.508, df = 3, f = 0.777  #NW performance DOES NOT DIFFER by 4 groups
-      mean(EE$Sum_Numeral.Word_Word.Numeral) #16.44
-      mean(AE$Sum_Numeral.Word_Word.Numeral) #16.32
-      mean(EL$Sum_Numeral.Word_Word.Numeral) #16.23
-      mean(AL$Sum_Numeral.Word_Word.Numeral) #15.95
-      
-      All_QW <- subset(groups.data, groups.data$variable == "QW")
-      View(All_QW)
-      aov_grpsQW<- aov(All_QW$value ~ All_QW$Map_Inc.Group_4cat)
-      summary(aov_grpsQW) #p =0.00785, df = 3, f = 4.067, #QW performance DIFFERS by 4 groups
-      tuk_grpsQW<- TukeyHSD(aov_grpsQW)
-      tuk_grpsQW
-      mean(EE$Sum_Quantity.Word_Word.Quantity) #14.90
-      mean(AE$Sum_Quantity.Word_Word.Quantity) #15.16
-      mean(EL$Sum_Quantity.Word_Word.Quantity) #14.04
-      mean(AL$Sum_Quantity.Word_Word.Quantity) #13.55
-
-      All_QN <- subset(groups.data, groups.data$variable == "QN")
-      View(All_QN)
-      aov_grpsQN<- aov(All_QN$value ~ All_QN$Map_Inc.Group_4cat)
-      summary(aov_grpsQN) #p =0.00279, df = 3, f = 4.855, QN performance DIFFERS by 4 groups
-      tuk_grpsQN<- TukeyHSD(aov_grpsQN)
-      tuk_grpsQN
-      mean(EE$Sum_Quantity.Numeral_Numeral.Quantity) #15.40
-      mean(AE$Sum_Quantity.Numeral_Numeral.Quantity) #15.66
-      mean(EL$Sum_Quantity.Numeral_Numeral.Quantity) #14.49
-      mean(AL$Sum_Quantity.Numeral_Numeral.Quantity) #13.74
 
       #TIMING by Mapping Pairs      
       BoxDF_Timing <- data.frame(QW,QN,NW,Map_Inc$Timing)
@@ -649,25 +341,6 @@ View(Map_Inc)
       summary(aov_modQN) #p = 0.488, df = 1, f =  0.482, QN DOES NOT DIFFER by modality
       mean(ASL$Sum_Quantity.Numeral_Numeral.Quantity) #14.66
       mean(English$Sum_Quantity.Numeral_Numeral.Quantity) #14.95
-
-
-#Mixed Effects Logistic Regressions testing timing and modality
-	MixReg_MT <- glmer(Correct ~ Modality + Timing + (1 | SUBJECT_ID), data = Map_short, family = binomial, control = glmerControl(optimizer ="bobyqa"), nAGQ = 10)
-	summary(MixReg_MT)
-	NW_reg <- subset(Map_short, Map_short$Map_Pair == "Numeral-Word")
-	View(NW_reg)
-	MixReg_MT_NW <- glmer(Correct ~ Modality + Timing + (1 | SUBJECT_ID), data = NW_reg, family = binomial, control = glmerControl(optimizer ="bobyqa"), nAGQ = 10)
-	summary(MixReg_MT_NW)
-
-	QW_reg <- subset(Map_short, Map_short$Map_Pair == "Quantity-Word")
-	View(QW_reg)
-	MixReg_MT_QW <- glmer(Correct ~ Modality + Timing + (1 | SUBJECT_ID), data = QW_reg, family = binomial, control = glmerControl(optimizer ="bobyqa"), nAGQ = 10)
-	summary(MixReg_MT_QW)
-
-	QN_reg <- subset(Map_short, Map_short$Map_Pair == "Quantity-Numeral")
-	View(QN_reg)
-	MixReg_MT_QN <- glmer(Correct ~ Modality + Timing + (1 | SUBJECT_ID), data = QN_reg, family = binomial, control = glmerControl(optimizer ="bobyqa"), nAGQ = 10)
-	summary(MixReg_MT_QN)
 
 
 #AGE SCATTERPLOTS
