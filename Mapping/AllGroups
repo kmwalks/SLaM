@@ -259,21 +259,3 @@ N <- nrow(Map_Inc) #number of total observations
 (Var/N)*100 #.      % at ceiling
 
 
-
-#AGE SCATTERPLOTS
-#Scatterplots of Overall Performance by Timing
-ggplot(Map_Inc, aes(x=Age_Rounded, y=AvgCorrect_Total)) + geom_point(aes(shape=Timing, colour=Timing), position=jitter, size=2) + geom_smooth(aes(colour=Timing, fill=Timing), method="loess", show.legend = FALSE) + labs(x="Age (years)", y="Overall Proportion Correct") + scale_shape_manual(name="Timing of \nLanguage Exposure", labels=c("Early", "Later"), values=c(17, 15)) + scale_color_manual(name="Timing of \nLanguage Exposure", labels=c("Early", "Later"), values=c("red","blue")) + theme(text = element_text(size=16, family="Calibri")) + coord_cartesian(xlim = c(5, 10), ylim= c(0.4,1)) + scale_y_continuous(breaks=c(0.5, 0.6, 0.7, 0.8, 0.9, 1)) + scale_x_continuous(breaks=c(5, 6, 7, 8, 9))
-
-#Scatterplots of Overall Performance by Modality
-ggplot(Map_Inc, aes(x=Age_Rounded, y=AvgCorrect_Total)) + geom_point(aes(shape=Modality, colour=Modality), position=jitter, size=2) + geom_smooth(aes(colour=Modality, fill=Modality), method="loess", show.legend = FALSE) + labs(x="Age (years)", y="Overall Proportion Correct") + scale_shape_manual(name="Language Modality", labels=c("ASL", "English"), values=c(17, 15)) + scale_color_manual(name="Language Modality", labels=c("ASL", "English"), values=c("red","blue")) + theme(text = element_text(size=16, family="Calibri")) + coord_cartesian(xlim = c(5, 10), ylim= c(0.4,1)) + scale_y_continuous(breaks=c(0.5, 0.6, 0.7, 0.8, 0.9, 1)) + scale_x_continuous(breaks=c(5, 6, 7, 8, 9))
-
-
-#Scatterplot by age with data for QW and QN only (b/c sig)
-P_QW <- Map_Inc$AvgCorrect_Quantity.Word_Word.Quantity
-P_QN <- Map_Inc$AvgCorrect_Quantity.Numeral_Numeral.Quantity
-AgeTim <- data.frame(P_QW,P_QN,Map_Inc$Timing, Map_Inc$Age_Rounded)
-View(AgeTim)
-agetim.data <- melt(AgeTim, id.vars=c("Map_Inc.Timing", "Map_Inc.Age_Rounded"))
-View(agetim.data)
-ggplot(agetim.data, aes(x=Map_Inc.Age_Rounded, y=value)) + geom_point(aes(shape=Map_Inc.Timing, colour=Map_Inc.Timing), position=jitter, size=2) + geom_smooth(aes(colour=Map_Inc.Timing, fill=Map_Inc.Timing), method="loess", show.legend = FALSE) + labs(x="Age (years)", y="Proportion Correct") + scale_shape_manual(name="Timing of \nLanguage Exposure", labels=c("Early", "Later"), values=c(17, 15)) + scale_color_manual(name="Timing of \nLanguage Exposure", labels=c("Early", "Later"), values=c("red","blue")) + theme(text = element_text(size=16, family="Calibri")) + coord_cartesian(xlim = c(5, 10), ylim= c(0.4,1)) + scale_y_continuous(breaks=c(0.5, 0.6, 0.7, 0.8, 0.9, 1)) + scale_x_continuous(breaks=c(5, 6, 7, 8, 9))
-
