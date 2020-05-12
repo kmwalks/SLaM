@@ -239,11 +239,32 @@ SES <- Total_Inc_Study$SES
 	chisq.test(ASL_log$Correct, ASL_log$Timing)  #X-squared = 93.661, df = 1, p-value < 2.2e-16, ASL Early and ASL Later differ
 	chisq.test(English_log$Correct, English_log$Timing) #X-squared = 19.511, df = 1, p-value = 1e-05, English Early and English later differ 
 
+#TOBIT MODELS
+	#Create Dataframe
+	which(colnames(Map_Inc)=="AvgCorrect_Sm_QW") #313
+	which(colnames(Map_Inc)=="AvgCorrect_Lrg_WN") #321
+	T_long <- pivot_longer(Map_Inc, cols = 313:321, values_to = "AvgCorr")
+  	View(T_long)
+	which(colnames(T_long)=="Item1_QN_Answer") #22
+	which(colnames(T_long)=="Sum_Numeral.Word_Word.Numeral") #318
+	T_short <- T_long[,-c(22:318)]
+  	View(T_long)
+	#Add Set Size Columns
+	T_short <-  mutate(T_short, SetSize = case_when(grepl("Sm", T_short$name) ~ "Small", grepl("Med", T_short$name) ~"Medium", grepl("Lrg", T_short$name) ~"Large"))
+	T_short$Set_Size <- as.factor(factor(as.character(T_short$SetSize), levels=c("Small", "Medium", "Large"), exclude=""))
+	T_short$Set_Size_refM <- as.factor(factor(as.character(T_short$SetSize), levels=c("Medium", "Small", "Large"), exclude=""))
+	#Add Map Pair Columns
+	T_short <- mutate(T_short, MapPair = case_when(grepl("QW", T_short$name) ~ "Quantity-Word", grepl("QN", T_short$name) ~"Quantity-Numeral", grepl("WN", T_short$name) ~"Numeral-Word"))
+	T_short$MapPair <- as.factor(factor(as.character(T_short$MapPair), levels=c("Numeral-Word","Quantity-Numeral", "Quantity-Word"), exclude=""))
+	T_short$MapPair_refQW <- as.factor(factor(as.character(T_short$MapPair), levels=c("Quantity-Word","Numeral-Word","Quantity-Numeral"), exclude=""))
+	View(T_short)
   
   
-  
-  
-  
+
+
+
+
+
 
 ### EDITED UP TO HERE ###
 #OVERALL EDIT BELOW TO NOT BE FOR THE GROUPS! include a range of overall? 
