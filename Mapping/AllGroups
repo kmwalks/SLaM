@@ -259,24 +259,40 @@ SES <- Total_Inc_Study$SES
 	T_short$MapPair_refQW <- as.factor(factor(as.character(T_short$MapPair), levels=c("Quantity-Word","Numeral-Word","Quantity-Numeral"), exclude=""))
 	View(T_short)
   
-  
+#TOBIT MODELS
+#Overall Results
+	summary(Map_t<- vglm(AvgCorr ~  Modality + Timing + Set_Size + MapPair, tobit(Upper = 1), data = T_short))
+	summary(Map_t_ref<- vglm(AvgCorr ~  Modality + Timing + Set_Size_refM + MapPair_refQW, tobit(Upper = 1), data = T_short))
+
+	#Checking model fit
+	T_short$yhat <- fitted(Map_t)[,1]
+	T_short$rr <- resid(Map_t, type = "response")
+	T_short$rp <- resid(Map_t, type = "pearson")[,1]
+	par(mfcol = c(2, 3))
+	with(T_short, {
+	    plot(yhat, rr, main = "Fitted vs Residuals")
+	    qqnorm(rr)
+	    plot(yhat, rp, main = "Fitted vs Pearson Residuals")
+	    qqnorm(rp)
+	    plot(AvgCorr, rp, main = "Actual vs Pearson Residuals")
+	    plot(AvgCorr, yhat, main = "Actual vs Fitted")
+	})
+	r <- with(T_short, cor(yhat, AvgCorr)) 
+	r 
+	r^2 #13%
+
+	#Creating HTML tables
+	tab_model(Map_t, auto.label = FALSE, show.ci = FALSE) #TO CHECK VARIABLE NAMES TO ENSURE RENAMING ACCURATELY
+	tab_model(Map_t_ref, auto.label = FALSE, show.ci = FALSE) #TO CHECK VARIABLE NAMES TO ENSURE RENAMING ACCURATELY
+
+	tab_model(Map_t, auto.label = FALSE, show.ci = FALSE, show.se = TRUE, show.stat = TRUE, show.est = TRUE, pred.labels = c("Intercept 1", "Intercept 2", "Modality (English)", "Timing (Later)", "Medium", "Large", "Quantity-Numeral", "Quantity-Word"), dv.labels = c("Tobit Model: Overall Results (References: Small & Numeral-Word)"), string.p = "P-Values", string.se = "Standard Errors", string.stat = "t-statistics") #Then edit in word to add R squared value
+
+	tab_model(Map_t_ref, auto.label = FALSE, show.ci = FALSE, show.se = TRUE, show.stat = TRUE, show.est = TRUE, pred.labels = c("Intercept 1", "Intercept 2", "Modality (English)", "Timing (Later)", "Small", "Large", "Numeral-Word", "Quantity-Numeral"), dv.labels = c("Tobit Model: Overall Results (References: Medium & Quantity-Word)"), string.p = "P-Values", string.se = "Standard Errors", string.stat = "t-statistics") #Then edit in word to add R squared value
 
 
 
 
 
 
-### EDITED UP TO HERE ###
-#OVERALL EDIT BELOW TO NOT BE FOR THE GROUPS! include a range of overall? 
-
-#Overall Performance compared to chance
-wilcox.test(Map_Inc$AvgCorrect_Total, mu = .25, alternative = "greater")
-
-#Performance at Ceiling 
-Ceil <- Map_Inc$SumCorrectTotal_All
-All <- 51 #ceiling performance 
-Var <- length(which(Ceil>= All)) #number of observations equal to ceiling 
-N <- nrow(Map_Inc) #number of total observations
-(Var/N)*100 #.      % at ceiling
 
 
