@@ -284,12 +284,39 @@ SES <- Total_Inc_Study$SES
 	#Creating HTML tables
 	tab_model(Map_t, auto.label = FALSE, show.ci = FALSE) #TO CHECK VARIABLE NAMES TO ENSURE RENAMING ACCURATELY
 	tab_model(Map_t_ref, auto.label = FALSE, show.ci = FALSE) #TO CHECK VARIABLE NAMES TO ENSURE RENAMING ACCURATELY
-
 	tab_model(Map_t, auto.label = FALSE, show.ci = FALSE, show.se = TRUE, show.stat = TRUE, show.est = TRUE, pred.labels = c("Intercept 1", "Intercept 2", "Modality (English)", "Timing (Later)", "Medium", "Large", "Quantity-Numeral", "Quantity-Word"), dv.labels = c("Tobit Model: Overall Results (References: Small & Numeral-Word)"), string.p = "P-Values", string.se = "Standard Errors", string.stat = "t-statistics") #Then edit in word to add R squared value
-
 	tab_model(Map_t_ref, auto.label = FALSE, show.ci = FALSE, show.se = TRUE, show.stat = TRUE, show.est = TRUE, pred.labels = c("Intercept 1", "Intercept 2", "Modality (English)", "Timing (Later)", "Small", "Large", "Numeral-Word", "Quantity-Numeral"), dv.labels = c("Tobit Model: Overall Results (References: Medium & Quantity-Word)"), string.p = "P-Values", string.se = "Standard Errors", string.stat = "t-statistics") #Then edit in word to add R squared value
+#BY MAPPING PAIRS 
+	QW <- subset(T_short, T_short$MapPair == "Quantity-Word")
+	View(QW)
+	QN <- subset(T_short, T_short$MapPair == "Quantity-Numeral")
+	View(QN)
+	NW <- subset(T_short, T_short$MapPair == "Numeral-Word")
+	View(NW)
+	summary(QW_t<- vglm(AvgCorr ~  Modality + Timing + Set_Size, tobit(Upper = 1), data = QW))
+	summary(QN_t<- vglm(AvgCorr ~  Modality + Timing + Set_Size, tobit(Upper = 1), data = QN))
+	summary(NW_t<- vglm(AvgCorr ~  Modality + Timing + Set_Size, tobit(Upper = 1), data = NW))
+	
+#Visualizations
+	map.n <- function(x){return(c(y = median(x)*1.05, label = length(x))) }
+	mean.n <- function(x){return(c(y= median(x)*0.97, label = round(mean(x), 2)))} 
+	#Overall performance: Proportion Correct by Modality (boxplot/violin)
+	ggplot(Map_Inc, aes(x=Modality, y=AvgCorrect_Total, fill = Modality)) + geom_violin() + geom_boxplot(width = 0.2) + labs (x= "Language Modality", y = "Proportion Correct") + scale_fill_grey(start = 0.5, end = 0.9) + stat_summary(fun.data = mean.n, geom = "text", fun = median) + stat_summary(fun.data = mean.n, geom= "text", fun=mean, color= "black") + scale_y_continuous (breaks=c(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1), limits = c(0,1), expand = c(0,0))  + theme(legend.position = "none", axis.title.x = element_text(color="black", size=14, family = "Calibri"), axis.text.x = element_text(color="black", size=12, family = "Calibri"), axis.title.y = element_text(color="black", size=14, family = "Calibri"), axis.text.y = element_text(color="black", size=12, family = "Calibri"))
+	#Overall performance: Proportion Correct by Timing (boxplot/violin)
+	ggplot(Map_Inc, aes(x=Timing, y=AvgCorrect_Total, fill = Timing)) + geom_violin() + geom_boxplot(width = 0.2) + labs (x= "Language Timing", y = "Proportion Correct") + scale_fill_grey(start = 0.5, end = 0.9) + stat_summary(fun.data = mean.n, geom = "text", fun = median) + stat_summary(fun.data = mean.n, geom= "text", fun=mean, color= "black") + scale_y_continuous (breaks=c(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1), limits = c(0,1), expand = c(0,0))  + theme(legend.position = "none", axis.title.x = element_text(color="black", size=14, family = "Calibri"), axis.text.x = element_text(color="black", size=12, family = "Calibri"), axis.title.y = element_text(color="black", size=14, family = "Calibri"), axis.text.y = element_text(color="black", size=12, family = "Calibri"))
 
-
+	#Mapping Performance by Map Pairs
+	QW <- Map_Inc$Sum_Quantity.Word_Word.Quantity
+	QN <- Map_Inc$Sum_Quantity.Numeral_Numeral.Quantity
+	NW <- Map_Inc$Sum_Numeral.Word_Word.Numeral
+	Map_Inc <- data.frame(Map_Inc,QW, QN, NW)
+	View(Map_Inc)
+		#By TIMING
+		timing_map <- ggplot(T_short, aes(MapPair, AvgCorr, fill=Timing)) + geom_boxplot() + labs(x="Mapping Pairs", y="Proportion Correct", fill = "Timing") + scale_y_continuous (breaks=c(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1), limits = c(0,1), expand = c(0,0)) + scale_fill_grey(start = 0.5, end = 0.9) + theme(plot.title = element_text(color="black", size=14, family = "Calibri"), axis.title.x = element_text(color="black", size=14, family = "Calibri"), axis.text.x = element_text(color="black", size=12, family = "Calibri"), axis.title.y = element_text(color="black", size=14, family = "Calibri"), axis.text.y = element_text(color="black", size=12, family = "Calibri"), legend.title = element_text(color="black", size=14, family = "Calibri"), legend.text = element_text(color="black", size=14, family = "Calibri"))
+		timing_map
+		#By MODALITY
+		modality_map <- ggplot(T_short, aes(MapPair, AvgCorr, fill=Modality)) + geom_boxplot() + labs(x="Mapping Pairs", y="Proportion Correct", fill = "Modality") + scale_y_continuous (breaks=c(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1), limits = c(0,1), expand = c(0,0)) + scale_fill_grey(start = 0.5, end = 0.9) + theme(plot.title = element_text(color="black", size=14, family = "Calibri"), axis.title.x = element_text(color="black", size=14, family = "Calibri"), axis.text.x = element_text(color="black", size=12, family = "Calibri"), axis.title.y = element_text(color="black", size=14, family = "Calibri"), axis.text.y = element_text(color="black", size=12, family = "Calibri"), legend.title = element_text(color="black", size=14, family = "Calibri"), legend.text = element_text(color="black", size=14, family = "Calibri"))
+		modality_map
 
 
 
