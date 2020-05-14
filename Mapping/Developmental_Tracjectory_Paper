@@ -378,8 +378,8 @@ library(VGAM)
 		
 #Tobit Models, resource: https://stats.idre.ucla.edu/r/dae/tobit-models/
 #5-year-olds only
-	summary(Map5_t <- vglm(Pair_Size ~  MapPair, tobit(Upper = 1), data = Map5))
-	summary(Map5_t_ref <- vglm(Pair_Size ~ MapPair_refQW, tobit(Upper = 1), data = Map5))	
+	summary(Map5_t <- vglm(Pair_Size ~  SES + MapPair, tobit(Upper = 1), data = Map5))
+	summary(Map5_t_ref <- vglm(Pair_Size ~ SES + MapPair_refQW, tobit(Upper = 1), data = Map5))	
 	#Checking model fit
 	Map5$yhat <- fitted(Map5_t)[,1]
 	Map5$rr <- resid(Map5_t, type = "response")
@@ -395,10 +395,10 @@ library(VGAM)
 	})
 	r <- with(Map5, cor(yhat, Pair_Size)) 
 	r 
-	r^2 
+	r^2 #0.1455489
 	#5 YO only, Looking at Map Pairs
-	summary(nw5_t <- vglm(Pair_Size ~ Set_Size, tobit(Lower=0, Upper = 1), data = nw_5_only)) 
-	summary(nw5_t_ref <- vglm(Pair_Size ~ Set_Size_refM, tobit(Lower=0, Upper = 1), data = nw_5_only)) 
+	summary(nw5_t <- vglm(Pair_Size ~ SES + Set_Size, tobit(Lower=0, Upper = 1), data = nw_5_only)) 
+	summary(nw5_t_ref <- vglm(Pair_Size ~ SES + Set_Size_refM, tobit(Lower=0, Upper = 1), data = nw_5_only)) 
 	#Checking model fit for 5 yo NW
 	nw_5_only$yhat <- fitted(nw5_t)[,1]
 	nw_5_only$rr <- resid(nw5_t, type = "response")
@@ -414,9 +414,9 @@ library(VGAM)
 	})
 	r <- with(nw_5_only, cor(yhat, Pair_Size)) 
 	r 
-	r^2 
-	summary(qn5_t <- vglm(Pair_Size ~ Set_Size, tobit(Lower=0, Upper = 1), data = qn_5_only))
-	summary(qn5_t_ref <- vglm(Pair_Size ~ Set_Size_refM, tobit(Lower=0, Upper = 1), data = qn_5_only))
+	r^2 #0.1864142
+	summary(qn5_t <- vglm(Pair_Size ~ SES + Set_Size, tobit(Lower=0, Upper = 1), data = qn_5_only))
+	summary(qn5_t_ref <- vglm(Pair_Size ~ SES + Set_Size_refM, tobit(Lower=0, Upper = 1), data = qn_5_only))
 	#Checking model fit for 5 yo QN
 	qn_5_only$yhat <- fitted(qn5_t)[,1]
 	qn_5_only$rr <- resid(qn5_t, type = "response")
@@ -432,9 +432,9 @@ library(VGAM)
 	})
 	r <- with(qn_5_only, cor(yhat, Pair_Size)) 
 	r 
-	r^2 
-	summary(qw5_t <- vglm(Pair_Size ~ Set_Size, tobit(Lower=0, Upper = 1), data = qw_5_only))
-	summary(qw5_t_ref <- vglm(Pair_Size ~ Set_Size_refM, tobit(Lower=0, Upper = 1), data = qw_5_only))
+	r^2 #0.3219129
+	summary(qw5_t <- vglm(Pair_Size ~ SES + Set_Size, tobit(Lower=0, Upper = 1), data = qw_5_only))
+	summary(qw5_t_ref <- vglm(Pair_Size ~ SES + Set_Size_refM, tobit(Lower=0, Upper = 1), data = qw_5_only))
 	#Checking model fit for 5 yo QW
 	qw_5_only$yhat <- fitted(qw5_t)[,1]
 	qw_5_only$rr <- resid(qw5_t, type = "response")
@@ -450,13 +450,13 @@ library(VGAM)
 	})
 	r <- with(qw_5_only, cor(yhat, Pair_Size))
 	r 
-	r^2 
+	r^2 #0.2223241
 	
 #6-year-olds only
 	Map6 <- subset(HBE_short2_5, HBE_short2_5$AgeGrp == "6-year-olds")
 	View(Map6)
-	summary(Map6_t <- vglm(Pair_Size ~  MapPair, tobit(Upper = 1), data = Map6))
-	summary(Map6_t_ref <- vglm(Pair_Size ~ MapPair_refQW, tobit(Upper = 1), data = Map6))
+	summary(Map6_t <- vglm(Pair_Size ~  SES + MapPair, tobit(Upper = 1), data = Map6))
+	summary(Map6_t_ref <- vglm(Pair_Size ~ SES + MapPair_refQW, tobit(Upper = 1), data = Map6))
 	#Checking model fit for 6 yo 
 	Map6$yhat <- fitted(Map6_t)[,1]
 	Map6$rr <- resid(Map6_t, type = "response")
@@ -472,11 +472,11 @@ library(VGAM)
 	})
 	r <- with(Map6, cor(yhat, Pair_Size)) 
 	r 
-	r^2 
+	r^2 #0.1720359
 	#6 YO, Looking at Map Pairs	
-	summary(nw6_t <- vglm(Pair_Size ~ Set_Size, tobit(Lower=0, Upper = 1), data = nw_6_only)) #DOES NOT RUN, @ CEILING
-	summary(qn6_t <- vglm(Pair_Size ~ Set_Size, tobit(Lower=0, Upper = 1), data = qn_6_only))
-	summary(qn6_t_ref <- vglm(Pair_Size ~ Set_Size_refM, tobit(Lower=0, Upper = 1), data = qn_6_only))
+	summary(nw6_t <- vglm(Pair_Size ~ SES + Set_Size, tobit(Lower=0, Upper = 1), data = nw_6_only)) #DOES NOT RUN, @ CEILING
+	summary(qn6_t <- vglm(Pair_Size ~ SES + Set_Size, tobit(Lower=0, Upper = 1), data = qn_6_only))
+	summary(qn6_t_ref <- vglm(Pair_Size ~ SES + Set_Size_refM, tobit(Lower=0, Upper = 1), data = qn_6_only))
 	#Checking model fit for 6 yo QN
 	qn_6_only$yhat <- fitted(qn6_t)[,1]
 	qn_6_only$rr <- resid(qn6_t, type = "response")
@@ -492,9 +492,9 @@ library(VGAM)
 	})
 	r <- with(qn_6_only, cor(yhat, Pair_Size)) 
 	r 
-	r^2 
-	summary(qw6_t <- vglm(Pair_Size ~ Set_Size, tobit(Lower=0, Upper = 1), data = qw_6_only))
-	summary(qw6_t_ref <- vglm(Pair_Size ~ Set_Size_refM, tobit(Lower=0, Upper = 1), data = qw_6_only))
+	r^2 #0.2349921
+	summary(qw6_t <- vglm(Pair_Size ~ SES + Set_Size, tobit(Lower=0, Upper = 1), data = qw_6_only))
+	summary(qw6_t_ref <- vglm(Pair_Size ~ SES + Set_Size_refM, tobit(Lower=0, Upper = 1), data = qw_6_only))
 	#Checking model fit for 6 YO QW
 	qw_6_only$yhat <- fitted(qw6_t)[,1]
 	qw_6_only$rr <- resid(qw6_t, type = "response")
@@ -510,11 +510,11 @@ library(VGAM)
 	})
 	r <- with(qw_6_only, cor(yhat, Pair_Size)) 
 	r 
-	r^2 
+	r^2 #0.2215429
 
 #7-9 year olds
-	summary(agegrp79 <- vglm(Pair_Size ~ MapPair, tobit(Lower=0, Upper = 1), data = HBE_short2_7)) 
-	summary(agegrp79_ref <- vglm(Pair_Size ~ MapPair_refQW, tobit(Lower=0, Upper = 1), data = HBE_short2_7)) 
+	summary(agegrp79 <- vglm(Pair_Size ~ SES + MapPair, tobit(Lower=0, Upper = 1), data = HBE_short2_7)) 
+	summary(agegrp79_ref <- vglm(Pair_Size ~ SES + MapPair_refQW, tobit(Lower=0, Upper = 1), data = HBE_short2_7)) 
 	#Checking model fit for 7-9 yo 
 	HBE_short2_7$yhat <- fitted(agegrp79)[,1]
 	HBE_short2_7$rr <- resid(agegrp79, type = "response")
@@ -530,10 +530,10 @@ library(VGAM)
 	})
 	r <- with(HBE_short2_7, cor(yhat, Pair_Size))
 	r 
-	r^2 
+	r^2 #0.1304551
 	#7-9 YO, MAPPING PAIRS
-	summary(nw7_t <- vglm(Pair_Size ~ Set_Size, tobit(Lower=0, Upper = 1), data = nw_7)) 
-	summary(nw7_t_ref <- vglm(Pair_Size ~ Set_Size_refM, tobit(Lower=0, Upper = 1), data = nw_7)) 
+	summary(nw7_t <- vglm(Pair_Size ~ SES + Set_Size, tobit(Lower=0, Upper = 1), data = nw_7)) 
+	summary(nw7_t_ref <- vglm(Pair_Size ~ SES + Set_Size_refM, tobit(Lower=0, Upper = 1), data = nw_7)) 
 	nw_7$yhat <- fitted(nw7_t)[,1]
 	nw_7$rr <- resid(nw7_t, type = "response")
 	nw_7$rp <- resid(nw7_t, type = "pearson")[,1]
@@ -548,9 +548,9 @@ library(VGAM)
 	})
 	r <- with(nw_7, cor(yhat, Pair_Size)) 
 	r 
-	r^2 
-	summary(qn7_t <- vglm(Pair_Size ~ Set_Size, tobit(Lower=0, Upper = 1), data = qn_7)) 
-	summary(qn7_t_ref <- vglm(Pair_Size ~ Set_Size_refM, tobit(Lower=0, Upper = 1), data = qn_7))
+	r^2 #0.3534858
+	summary(qn7_t <- vglm(Pair_Size ~ SES + Set_Size, tobit(Lower=0, Upper = 1), data = qn_7)) 
+	summary(qn7_t_ref <- vglm(Pair_Size ~ SES + Set_Size_refM, tobit(Lower=0, Upper = 1), data = qn_7))
 	qn_7$yhat <- fitted(qn7_t)[,1]
 	qn_7$rr <- resid(qn7_t, type = "response")
 	qn_7$rp <- resid(qn7_t, type = "pearson")[,1]
@@ -565,9 +565,9 @@ library(VGAM)
 	})
 	r <- with(qn_7, cor(yhat, Pair_Size)) 
 	r 
-	r^2
-	summary(qw7_t <- vglm(Pair_Size ~ Set_Size, tobit(Lower=0, Upper = 1), data = qw_7)) 
-	summary(qw7_t_ref <- vglm(Pair_Size ~ Set_Size_refM, tobit(Lower=0, Upper = 1), data = qw_7)) 
+	r^2 #0.06297179
+	summary(qw7_t <- vglm(Pair_Size ~ SES + Set_Size, tobit(Lower=0, Upper = 1), data = qw_7)) 
+	summary(qw7_t_ref <- vglm(Pair_Size ~ SES + Set_Size_refM, tobit(Lower=0, Upper = 1), data = qw_7)) 
 	qw_7$yhat <- fitted(qw7_t)[,1]
 	qw_7$rr <- resid(qw7_t, type = "response")
 	qw_7$rp <- resid(qw7_t, type = "pearson")[,1]
@@ -582,7 +582,7 @@ library(VGAM)
 	})
 	r <- with(qw_7, cor(yhat, Pair_Size)) 
 	r 
-	r^2 
+	r^2 #0.1676238
 	
 #SUPPLEMENTARY MATERIALS
 #Creating model figures for supplementary materials
@@ -596,31 +596,31 @@ library(VGAM)
 
 	#Figure with 3 Age x Map Pair Models, reference = Small
 	tab_model(Map5_t, Map6_t, agegrp79, auto.label = FALSE, show.ci = FALSE) #TO CHECK VARIABLE NAMES TO ENSURE RENAMING ACCURATELY
-	tab_model(Map5_t, Map6_t, agegrp79, auto.label = FALSE, show.ci = FALSE, show.se = TRUE, show.stat = TRUE, show.est = TRUE, pred.labels = c("Intercept 1", "Intercept 2", "Quantity-Numeral", "Quantity-Word"), dv.labels = c("5-year-olds", "6-year-olds", "7 to 9-year-olds"), string.p = "P-Values", string.se = "Standard Errors", string.stat = "t-statistics")	
+	tab_model(Map5_t, Map6_t, agegrp79, auto.label = FALSE, show.ci = FALSE, show.se = TRUE, show.stat = TRUE, show.est = TRUE, pred.labels = c("Intercept 1", "Intercept 2", "SES", "Quantity-Numeral", "Quantity-Word"), dv.labels = c("5-year-olds", "6-year-olds", "7 to 9-year-olds"), string.p = "P-Values", string.se = "Standard Errors", string.stat = "t-statistics")	
 	#Figure with 3 Age x Map Pair Models, reference = Medium
 	tab_model(Map5_t_ref, Map6_t_ref, agegrp79_ref, auto.label = FALSE, show.ci = FALSE) #TO CHECK VARIABLE NAMES TO ENSURE RENAMING ACCURATELY
-	tab_model(Map5_t_ref, Map6_t_ref, agegrp79_ref, auto.label = FALSE, show.ci = FALSE, show.se = TRUE, show.stat = TRUE, show.est = TRUE, pred.labels = c("Intercept 1", "Intercept 2", "Numeral-Word", "Quantity-Numeral"), dv.labels = c("5-year-olds", "6-year-olds", "7 to 9-year-olds"), string.p = "P-Values", string.se = "Standard Errors", string.stat = "t-statistics")
+	tab_model(Map5_t_ref, Map6_t_ref, agegrp79_ref, auto.label = FALSE, show.ci = FALSE, show.se = TRUE, show.stat = TRUE, show.est = TRUE, pred.labels = c("Intercept 1", "Intercept 2", "SES", "Numeral-Word", "Quantity-Numeral"), dv.labels = c("5-year-olds", "6-year-olds", "7 to 9-year-olds"), string.p = "P-Values", string.se = "Standard Errors", string.stat = "t-statistics")
 
 	#Figure with 5-year-olds Mapping Pair x Set Size, reference = Small
 	tab_model(qn5_t, qw5_t, nw5_t, auto.label = FALSE, show.ci = FALSE) #TO CHECK VARIABLE NAMES TO ENSURE RENAMING ACCURATELY
-	tab_model(qn5_t, qw5_t, nw5_t, auto.label = FALSE, show.ci = FALSE, show.se = TRUE, show.stat = TRUE, show.est = TRUE, pred.labels = c("Intercept 1", "Intercept 2", "Medium", "Large"), dv.labels = c("Quantity-Numeral", "Quantity-Word", "Numeral-Word"), string.p = "P-Values", string.se = "Standard Errors", string.stat = "t-statistics")
+	tab_model(qn5_t, qw5_t, nw5_t, auto.label = FALSE, show.ci = FALSE, show.se = TRUE, show.stat = TRUE, show.est = TRUE, pred.labels = c("Intercept 1", "Intercept 2", "SES", "Medium", "Large"), dv.labels = c("Quantity-Numeral", "Quantity-Word", "Numeral-Word"), string.p = "P-Values", string.se = "Standard Errors", string.stat = "t-statistics")
 	#Figure with 5-year-olds Mapping Pair x Set Size, reference = Medium
 	tab_model(qn5_t_ref, qw5_t_ref, nw5_t_ref, auto.label = FALSE, show.ci = FALSE) #TO CHECK VARIABLE NAMES TO ENSURE RENAMING ACCURATELY
-	tab_model(qn5_t_ref, qw5_t_ref, nw5_t_ref, auto.label = FALSE, show.ci = FALSE, show.se = TRUE, show.stat = TRUE, show.est = TRUE, pred.labels = c("Intercept 1", "Intercept 2", "Small", "Large"), dv.labels = c("Quantity-Numeral", "Quantity-Word", "Numeral-Word"), string.p = "P-Values", string.se = "Standard Errors", string.stat = "t-statistics")
+	tab_model(qn5_t_ref, qw5_t_ref, nw5_t_ref, auto.label = FALSE, show.ci = FALSE, show.se = TRUE, show.stat = TRUE, show.est = TRUE, pred.labels = c("Intercept 1", "Intercept 2", "SES", "Small", "Large"), dv.labels = c("Quantity-Numeral", "Quantity-Word", "Numeral-Word"), string.p = "P-Values", string.se = "Standard Errors", string.stat = "t-statistics")
 	
 	#Figure with 6-year-olds Mapping Pair x Set Size, Reference= Small (Numeral-Word does not run)
 	tab_model(qn6_t,  qw6_t, auto.label = FALSE, show.ci = FALSE) #TO CHECK VARIABLE NAMES TO ENSURE RENAMING ACCURATELY
-	tab_model(qn6_t,  qw6_t, auto.label = FALSE, show.ci = FALSE, show.se = TRUE, show.stat = TRUE, show.est = TRUE, pred.labels = c("Intercept 1", "Intercept 2", "Medium", "Large"), dv.labels = c("Quantity-Numeral", "Quantity-Word"), string.p = "P-Values", string.se = "Standard Errors", string.stat = "t-statistics")
+	tab_model(qn6_t,  qw6_t, auto.label = FALSE, show.ci = FALSE, show.se = TRUE, show.stat = TRUE, show.est = TRUE, pred.labels = c("Intercept 1", "Intercept 2", "SES", "Medium", "Large"), dv.labels = c("Quantity-Numeral", "Quantity-Word"), string.p = "P-Values", string.se = "Standard Errors", string.stat = "t-statistics")
 	#Figure with 6-year-olds Mapping Pair x Set Size, Reference= Medium (Numeral-Word does not run)
 	tab_model(qn6_t_ref, qw6_t_ref, auto.label = FALSE, show.ci = FALSE) #TO CHECK VARIABLE NAMES TO ENSURE RENAMING ACCURATELY
-	tab_model(qn6_t_ref, qw6_t_ref, auto.label = FALSE, show.ci = FALSE, show.se = TRUE, show.stat = TRUE, show.est = TRUE, pred.labels = c("Intercept 1", "Intercept 2", "Small", "Large"), dv.labels = c("Quantity-Numeral", "Quantity-Word"), string.p = "P-Values", string.se = "Standard Errors", string.stat = "t-statistics")
+	tab_model(qn6_t_ref, qw6_t_ref, auto.label = FALSE, show.ci = FALSE, show.se = TRUE, show.stat = TRUE, show.est = TRUE, pred.labels = c("Intercept 1", "Intercept 2", "SES", "Small", "Large"), dv.labels = c("Quantity-Numeral", "Quantity-Word"), string.p = "P-Values", string.se = "Standard Errors", string.stat = "t-statistics")
 	
 	#Figure with 7-9 year-olds Mapping Pair x Set Size, Reference= Small 
 	tab_model(qn7_t, qw7_t, nw7_t, auto.label = FALSE, show.ci = FALSE) #TO CHECK VARIABLE NAMES TO ENSURE RENAMING ACCURATELY
-	tab_model(qn7_t, qw7_t, nw7_t, auto.label = FALSE, show.ci = FALSE, show.se = TRUE, show.stat = TRUE, show.est = TRUE, pred.labels = c("Intercept 1", "Intercept 2", "Medium", "Large"), dv.labels = c("Quantity-Numeral", "Quantity-Word", "Numeral-Word"), string.p = "P-Values", string.se = "Standard Errors", string.stat = "t-statistics")
+	tab_model(qn7_t, qw7_t, nw7_t, auto.label = FALSE, show.ci = FALSE, show.se = TRUE, show.stat = TRUE, show.est = TRUE, pred.labels = c("Intercept 1", "Intercept 2", "SES", "Medium", "Large"), dv.labels = c("Quantity-Numeral", "Quantity-Word", "Numeral-Word"), string.p = "P-Values", string.se = "Standard Errors", string.stat = "t-statistics")
 	#Figure with 7-9 year-olds Mapping Pair x Set Size, Reference= Medium
 	tab_model(qn7_t_ref, qw7_t_ref, nw7_t_ref, auto.label = FALSE, show.ci = FALSE) #TO CHECK VARIABLE NAMES TO ENSURE RENAMING ACCURATELY
-	tab_model(qn7_t, qw7_t, nw7_t, auto.label = FALSE, show.ci = FALSE, show.se = TRUE, show.stat = TRUE, show.est = TRUE, pred.labels = c("Intercept 1", "Intercept 2", "Small", "Large"), dv.labels = c("Quantity-Numeral", "Quantity-Word", "Numeral-Word"), string.p = "P-Values", string.se = "Standard Errors", string.stat = "t-statistics")
+	tab_model(qn7_t, qw7_t, nw7_t, auto.label = FALSE, show.ci = FALSE, show.se = TRUE, show.stat = TRUE, show.est = TRUE, pred.labels = c("Intercept 1", "Intercept 2", "SES", "Small", "Large"), dv.labels = c("Quantity-Numeral", "Quantity-Word", "Numeral-Word"), string.p = "P-Values", string.se = "Standard Errors", string.stat = "t-statistics")
 
 
 #Analyzing Mapping Types/Asymmetries?
