@@ -620,7 +620,7 @@ library(VGAM)
 	tab_model(qn7_t, qw7_t, nw7_t, auto.label = FALSE, show.ci = FALSE, show.se = TRUE, show.stat = TRUE, show.est = TRUE, pred.labels = c("Intercept 1", "Intercept 2", "SES", "Medium", "Large"), dv.labels = c("Quantity-Numeral", "Quantity-Word", "Numeral-Word"), string.p = "P-Values", string.se = "Standard Errors", string.stat = "t-statistics")
 	#Figure with 7-9 year-olds Mapping Pair x Set Size, Reference= Medium
 	tab_model(qn7_t_ref, qw7_t_ref, nw7_t_ref, auto.label = FALSE, show.ci = FALSE) #TO CHECK VARIABLE NAMES TO ENSURE RENAMING ACCURATELY
-	tab_model(qn7_t, qw7_t, nw7_t, auto.label = FALSE, show.ci = FALSE, show.se = TRUE, show.stat = TRUE, show.est = TRUE, pred.labels = c("Intercept 1", "Intercept 2", "SES", "Small", "Large"), dv.labels = c("Quantity-Numeral", "Quantity-Word", "Numeral-Word"), string.p = "P-Values", string.se = "Standard Errors", string.stat = "t-statistics")
+	tab_model(qn7_t_ref, qw7_t_ref, nw7_t_ref, auto.label = FALSE, show.ci = FALSE, show.se = TRUE, show.stat = TRUE, show.est = TRUE, pred.labels = c("Intercept 1", "Intercept 2", "SES", "Small", "Large"), dv.labels = c("Quantity-Numeral", "Quantity-Word", "Numeral-Word"), string.p = "P-Values", string.se = "Standard Errors", string.stat = "t-statistics")
 
 
 #Analyzing Mapping Types/Asymmetries?
