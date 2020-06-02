@@ -196,7 +196,7 @@ SES <- Total_Inc_Study$SES
 	#Overall Results (ages 5-9) results in Hauck-Donner effect for Age because ceiling effect
 	summary(Map_t<- vglm(AvgCorr ~  Age_Rounded + SES + Modality + Timing + Set_Size + MapPair, tobit(Upper = 1), data = T_short))
 	
-	# ADD A FIGURE HERE THAT SHOWS CEILING EFFECT FOR 9 YEAR OLDS! SCATTERPLOTS?
+	# ADD A FIGURE HERE THAT SHOWS CEILING EFFECT FOR 9 YEAR OLDS! SCATTERPLOTS? at ceiling regardless of timing and modality? SHOW THAT!
 	
 	
 	#Subsetted data to only 5-8 year olds no longer any Hauck-Donner effects
