@@ -30,7 +30,7 @@ library(VGAM)
 
 #Import Data 
       setwd("~/Desktop")   
-      Map <- read.csv("Mapping_Coding_KW_200427.csv", na.strings = "N/A")
+      Map <- read.csv("Mapping_Coding_CH_200528.csv", na.strings = "N/A")
       View(Map) #224 kids  
 
 ## BASIC DEMOGRAPHICS ## 
