@@ -173,7 +173,7 @@ SES <- Total_Inc_Study$SES
   Map_Inc <- Total_Inc_Study #renaming for ease
   View(Map_Inc) 
 
-#TOBIT MODELS
+#TOBIT MODELS, resource: https://stats.idre.ucla.edu/r/dae/tobit-models/
 	#Create Dataframe
 	which(colnames(Map_Inc)=="AvgCorrect_Sm_QW") #313
 	which(colnames(Map_Inc)=="AvgCorrect_Lrg_WN") #321
@@ -203,43 +203,32 @@ SES <- Total_Inc_Study$SES
 	Map_58 <- subset(T_short, T_short$Age_Rounded <=8)
 	View(Map_58)
 	#Without a Modality:Timing interaction, Modality is significant. 
-	summary(Map_t_58_noI<- vglm(AvgCorr ~  Age_Rounded + SES + Modality + Timing + Set_Size + MapPair, tobit(Upper = 1), data = Map_58))
+	summary(Map_58_noI<- vglm(AvgCorr ~  Age_Rounded + SES + Modality + Timing + Set_Size + MapPair, tobit(Upper = 1), data = Map_58))
 	#Including Modality:Timing interaction makes the effect of modality disappear
-	summary(Map_t_58<- vglm(AvgCorr ~  Age_Rounded + SES + Modality + Timing + Set_Size + MapPair + Modality:Timing, tobit(Upper = 1), data = Map_58))
-
-
-
-
-
-	# NEED TO LOAD THINGS BEFORE CHECKING MODEL FIT! 
-
-	#Checking model fit
-	Map_58$yhat <- fitted(Map_t_58)[,1]
-	Map_58$rr <- resid(Map_t_58, type = "response")
-	Map_58$rp <- resid(Map_t_58, type = "pearson")[,1]
-	par(mfcol = c(2, 3))
-	with(Map_58, {
-	    plot(yhat, rr, main = "Fitted vs Residuals")
-	    qqnorm(rr)
-	    plot(yhat, rp, main = "Fitted vs Pearson Residuals")
-	    qqnorm(rp)
-	    plot(AvgCorr, rp, main = "Actual vs Pearson Residuals")
-	    plot(AvgCorr, yhat, main = "Actual vs Fitted")
-	})
-	r <- with(Map_58, cor(yhat, AvgCorr)) 
-	r 
-	r^2 
+	summary(Map_58_I<- vglm(AvgCorr ~  Age_Rounded + SES + Modality + Timing + Set_Size + MapPair + Modality:Timing, tobit(Upper = 1), data = Map_58))
+	
+	# NEED TO CHECK MODEL FIT, CODE FROM TOBIT RESOURCE NOT WORKING...AND WILL NEED TO EDIT TOBIT TABLES TO INCLUDE R SQUARED!
 	
 	
 	
 	
-# CURRENTLY HERE
 
-	#Creating HTML tables
-	tab_model(Map_t, auto.label = FALSE, show.ci = FALSE) #TO CHECK VARIABLE NAMES TO ENSURE RENAMING ACCURATELY
-	tab_model(Map_t_ref, auto.label = FALSE, show.ci = FALSE) #TO CHECK VARIABLE NAMES TO ENSURE RENAMING ACCURATELY
-	tab_model(Map_t, auto.label = FALSE, show.ci = FALSE, show.se = TRUE, show.stat = TRUE, show.est = TRUE, pred.labels = c("Intercept 1", "Intercept 2", "Modality (English)", "Timing (Later)", "Medium", "Large", "Quantity-Numeral", "Quantity-Word"), dv.labels = c("Tobit Model: Overall Results (References: Small & Numeral-Word)"), string.p = "P-Values", string.se = "Standard Errors", string.stat = "t-statistics") #Then edit in word to add R squared value
-	tab_model(Map_t_ref, auto.label = FALSE, show.ci = FALSE, show.se = TRUE, show.stat = TRUE, show.est = TRUE, pred.labels = c("Intercept 1", "Intercept 2", "Modality (English)", "Timing (Later)", "Small", "Large", "Numeral-Word", "Quantity-Numeral"), dv.labels = c("Tobit Model: Overall Results (References: Medium & Quantity-Word)"), string.p = "P-Values", string.se = "Standard Errors", string.stat = "t-statistics") #Then edit in word to add R squared value
+
+	#Creating HTML tables, Resource: https://strengejacke.github.io/sjPlot/articles/tab_model_estimates.html
+	install.packages("sjPlot")
+	install.packages("sjmisc")
+	install.packages("sjlabelled")
+	library(sjPlot)
+	library(sjmisc)
+	library(sjlabelled)
+	
+	tab_model(Map_58_I, auto.label = FALSE, show.ci = FALSE) #TO CHECK VARIABLE NAMES TO ENSURE RENAMING ACCURATELY
+	tab_model(Map_58_I, auto.label = FALSE, show.ci = FALSE, show.se = TRUE, show.stat = TRUE, show.est = TRUE, pred.labels = c("Intercept 1", "Intercept 2","Age", "SES", "Modality (English)", "Timing (Later)", "Medium", "Large", "Quantity-Numeral", "Quantity-Word", "Modality (English):Timing (Later)"), dv.labels = c("Reference groups: Small and Numeral-Word"), string.p = "P-Values", string.se = "Standard Errors", string.stat = "t-statistics") #Then edit in word to add R squared value
+
+	# THEN REPEAT WITH OTHER REFERENCES! NEED TO DO A MODEL WITH REFERENCES! 
+
+
+
 #BY MAPPING PAIRS 
 	QW <- subset(T_short, T_short$MapPair == "Quantity-Word")
 	View(QW)
