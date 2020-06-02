@@ -34,7 +34,7 @@ library(gridExtra)
 
 #Import Data 
       setwd("~/Desktop")   
-      Map <- read.csv("Mapping_Coding_CH_200528.csv", na.strings = "N/A")
+      Map <- read.csv("Mapping_Coding_KW_200602.csv", na.strings = "N/A")
       View(Map) #224 kids  
 
 ## BASIC DEMOGRAPHICS ## 
@@ -171,14 +171,14 @@ SES <- Total_Inc_Study$SES
 
 #TOBIT MODELS, resource: https://stats.idre.ucla.edu/r/dae/tobit-models/
 	#Create Dataframe
-	which(colnames(Map_Inc)=="AvgCorrect_Sm_QW") #313
-	which(colnames(Map_Inc)=="AvgCorrect_Lrg_WN") #321
-	T_long <- pivot_longer(Map_Inc, cols = 313:321, values_to = "AvgCorr")
+	which(colnames(Map_Inc)=="AvgCorrect_Sm_QW") #315
+	which(colnames(Map_Inc)=="AvgCorrect_Lrg_WN") #323
+	T_long <- pivot_longer(Map_Inc, cols = 315:323, values_to = "AvgCorr")
   	View(T_long)
-	which(colnames(T_long)=="Item1_QN_Answer") #22
-	which(colnames(T_long)=="Sum_Numeral.Word_Word.Numeral") #318
-	T_short <- T_long[,-c(22:318)]
-  	View(T_long)
+	which(colnames(T_long)=="Item1_QN_Answer") #24
+	which(colnames(T_long)=="Sum_Numeral.Word_Word.Numeral") #320
+	T_short <- T_long[,-c(24:320)]
+	View(T_short)
 	#Add Set Size Columns
 	T_short <-  mutate(T_short, SetSize = case_when(grepl("Sm", T_short$name) ~ "Small", grepl("Med", T_short$name) ~"Medium", grepl("Lrg", T_short$name) ~"Large"))
 	T_short$Set_Size <- as.factor(factor(as.character(T_short$SetSize), levels=c("Small", "Medium", "Large"), exclude=""))
@@ -254,8 +254,9 @@ SES <- Total_Inc_Study$SES
 	# LEADS INTO EXAMINING CONTINUOUS VS 2 GROUP CATEGORIZATION:
 	
 	# DO SIMILIAR TOBIT MODELS BUT WITH AGE OF LANGUAGE EXPOSURE/AGE OF AUDITORY EXPOSURE
-	
-	summary(Map_58_Age_I<- vglm(AvgCorr ~  Age_Rounded + SES + Modality + Timing + Set_Size + MapPair + Modality:Timing, tobit(Upper = 1), data = Map_58)) #CHANGE THIS TO CONTINUOUS VARIABLES, CHECK WITH AND WITHOUT INTERACTION!
+	summary(Map_58_Age_I<- vglm(AvgCorr ~  Age_Rounded + SES + Age.of.Exposure..mo..Language + Auditory_ageexposure..mo. + Set_Size + MapPair, tobit(Upper = 1), data = Map_58))
+	# DO I NEED TO DO AN INTERACTION FOR ABOVE MODEL AS WELL? NOT SHOWING AUDITORY MATTERS, BUT IS SHOWING LANGUAGE DOES
+	# I THINK COMPARE MODEL FITS BETWEEN NO INTERACTION AND AN INTERACTION! SAME FOR TIMING/MODALITY AND THEN COMPARE FINAL MODELS OF 2 CATS AND CONTINUOUS! 
 	
 	
 	#Creating HTML tables, Resource: https://strengejacke.github.io/sjPlot/articles/tab_model_estimates.html
