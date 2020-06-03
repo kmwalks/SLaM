@@ -364,10 +364,12 @@ sum(is.na(Total_Inc_Study$Auditory_ageexposure..mo.) | Total_Inc_Study$Auditory_
 	summary(QN_58_I_ref<- vglm(AvgCorr ~  Age_Rounded + SES + Modality + Timing + Set_Size_refM + Modality:Timing, tobit(Upper = 1), data = QN_58))
 	
 	
-	#CREATE A TABLE THAT COMBINES THE 3 MAPPING PAIRS AND THEN ANOTHER FOR THE REFERENCE MODELS! 
-	#GET PSEDUO R SQUARE VALUES! 
+	tab_model(QW_58_I, QN_58_I, auto.label = FALSE, show.ci = FALSE) #TO CHECK VARIABLE NAMES TO ENSURE RENAMING ACCURATELY
+	tab_model(QW_58_I, QN_58_I, auto.label = FALSE, show.ci = FALSE, show.se = TRUE, show.stat = TRUE, show.est = TRUE, pred.labels = c("Intercept 1", "Intercept 2","Age", "SES", "Modality (English)", "Timing (Later)", "Medium", "Large", "Modality (English) x Timing (Later)"), dv.labels = c("Quantity-Word", "Quantity-Numeral"), string.p = "p-Value", string.se = "Standard Error", string.stat = "t-statistic")
+	tab_model(QW_58_I_ref, QN_58_I_ref, auto.label = FALSE, show.ci = FALSE) #TO CHECK VARIABLE NAMES TO ENSURE RENAMING ACCURATELY
+	tab_model(QW_58_I_ref, QN_58_I_ref, auto.label = FALSE, show.ci = FALSE, show.se = TRUE, show.stat = TRUE, show.est = TRUE, pred.labels = c("Intercept 1", "Intercept 2","Age", "SES", "Modality (English)", "Timing (Later)", "Small", "Large", "Modality (English) x Timing (Later)"), dv.labels = c("Quantity-Word", "Quantity-Numeral"), string.p = "p-Value", string.se = "Standard Error", string.stat = "t-statistic")
 	
-	#HAUCK DONNER IN AGE FOR NUMERAL-WORD MODELS! HOW TO PROCEED?
+	#HAUCK DONNER IN AGE FOR NUMERAL-WORD MODELS!
 	summary(NW_58_I<- vglm(AvgCorr ~  Age_Rounded + SES + Modality + Timing + Set_Size + Modality:Timing, tobit(Upper = 1), data = NW_58))
 	summary(NW_58_I<- vglm(AvgCorr ~  Age_Rounded + SES + Modality + Timing + Set_Size_refM + Modality:Timing, tobit(Upper = 1), data = NW_58))
 	
