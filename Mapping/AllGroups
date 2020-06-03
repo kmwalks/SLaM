@@ -238,7 +238,7 @@ sum(is.na(Total_Inc_Study$Auditory_ageexposure..mo.) | Total_Inc_Study$Auditory_
 	mean(Early$AvgCorrect_Total) #0.9230928
 	mean(Later$AvgCorrect_Total) #0.8606863
 	
-	d <- ggplot(data=Map_Inc, mapping = aes(x= Modality, y=AvgCorrect_Total)) + geom_boxplot() + geom_dotplot(mapping=aes(fill=Modality, color=Modality), dotsize = .8, method = "dotdensity", binaxis = "y", stackdir = "center") + theme(legend.position="top", text = element_text(size=14), axis.title.x=element_blank()) + ylab("Proportion Correct") + scale_fill_manual(name = "Language Modality", breaks=c("English", "ASL"), values=c("tan2", "forestgreen"), labels=c("English (95)", "ASL (104)")) + scale_color_manual(name = "Language Modality", breaks=c("English", "ASL"), values=c("tan2", "forestgreen"), labels=c("English (95)", "ASL (104)"))+ stat_summary(fun=mean, geom="point", shape=18, size=5, color="black") 
+	d <- ggplot(data=Map_Inc, mapping = aes(x= Modality, y=AvgCorrect_Total)) + geom_boxplot() + geom_dotplot(mapping=aes(fill=Modality, color=Modality), dotsize = .8, method = "dotdensity", binaxis = "y", stackdir = "center") + theme(legend.position="top", text = element_text(size=14), axis.title.x=element_blank()) + ylab("Proportion Correct") + scale_fill_manual(name = "Language Modality", breaks=c("ASL", "English"), values=c("tan2", "forestgreen"), labels=c("ASL (104)", "English (95)")) + scale_color_manual(name = "Language Modality", breaks=c("ASL", "English"), values=c("tan2", "forestgreen"), labels=c("ASL (104)", "English (95)"))+ stat_summary(fun=mean, geom="point", shape=18, size=5, color="black") 
 	d
 	mean(English$AvgCorrect_Total) #0.8963158
 	mean(ASL$AvgCorrect_Total) #0.8863462
