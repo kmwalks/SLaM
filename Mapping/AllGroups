@@ -232,6 +232,8 @@ sum(is.na(Total_Inc_Study$Auditory_ageexposure..mo.) | Total_Inc_Study$Auditory_
 	
 	b <- ggplot(data = Map_Inc, mapping = aes(x=Age_Rounded, y=AvgCorrect_Total, shape = Modality, color = Modality)) + geom_point() + geom_smooth(method="loess") + labs(x="Age (years)", y="Proportion Correct") + theme(legend.position = "top", text = element_text(size=14)) + coord_cartesian(xlim = c(5, 9), ylim= c(0,1)) + scale_y_continuous(breaks=c(0, 0.2, 0.4, 0.6, 0.8, 1)) + scale_x_continuous(breaks=c(5, 6, 7, 8, 9)) + scale_shape_manual(name="Language Modality", values=c(16, 17), labels=c("English (95)", "ASL (104)")) + scale_color_manual(name="Language Modality", values=c("tan2", "forestgreen"), labels=c("English (95)", "ASL (104)"))
 	b
+	
+	grid.arrange(a,b,nrow=1)
 
 #TOBIT MODELS, resource: https://stats.idre.ucla.edu/r/dae/tobit-models/
 	#Create Dataframe
@@ -320,6 +322,8 @@ sum(is.na(Total_Inc_Study$Auditory_ageexposure..mo.) | Total_Inc_Study$Auditory_
 	c
 	d <- ggplot(data=Map_Inc, mapping = aes(x= Modality, y=AvgCorrect_Total)) + geom_boxplot() + geom_dotplot(mapping=aes(fill=Modality, color=Modality), dotsize = .8, method = "dotdensity", binaxis = "y", stackdir = "center") + theme(legend.position="top", text = element_text(size=14), axis.title.x=element_blank()) + ylab("Proportion Correct") + scale_fill_manual(name = "Language Modality", breaks=c("ASL", "English"), values=c("tan2", "forestgreen"), labels=c("ASL (83)", "English (90)")) + scale_color_manual(name = "Language Modality", breaks=c("ASL", "English"), values=c("tan2", "forestgreen"), labels=c("ASL (83)", "English (90)"))+ stat_summary(fun=mean, geom="point", shape=18, size=5, color="black") 
 	d
+	
+	grid.arrange(c,d,nrow=1)
 
 	# LEADS INTO EXAMINING CONTINUOUS VS 2 GROUP CATEGORIZATION WITH TOBIT MODELS:
 	
@@ -344,6 +348,7 @@ sum(is.na(Total_Inc_Study$Auditory_ageexposure..mo.) | Total_Inc_Study$Auditory_
 	e
 	f <- ggplot(data = Map_Inc_58, mapping = aes(x=Auditory_ageexposure..mo., y=AvgCorrect_Total)) + geom_point() + geom_smooth(method="loess") + labs(x="Age of Auditory Exposure (months)", y="Proportion Correct") + theme(legend.position = "top", text = element_text(size=14)) + coord_cartesian(xlim = c(0, 125), ylim= c(0,1)) + scale_y_continuous(breaks=c(0, 0.2, 0.4, 0.6, 0.8, 1)) + scale_x_continuous(breaks=c(0, 25, 50, 75, 100, 125))
 	f
+	grid.arrange(e,f,nrow=1)
 	
 	#Comparing model fits of discrete vs continuous variables
 	#0.28 for modality/timing versus 0.36 for age auditory/language exposure
@@ -404,6 +409,7 @@ sum(is.na(Total_Inc_Study$Auditory_ageexposure..mo.) | Total_Inc_Study$Auditory_
 	timing_map
 	modality_map <- ggplot(Map_58, aes(MapPair, AvgCorr, fill=Modality)) + geom_boxplot() + labs(x="Mapping Pairs", y="Proportion Correct", fill = "Modality") + scale_y_continuous (breaks=c(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1), limits = c(0,1), expand = c(0,0)) + theme(legend.position="top", plot.title = element_text(color="black", size=14), axis.title.x = element_text(color="black", size=14), axis.text.x = element_text(color="black", size=12), axis.title.y = element_text(color="black", size=14), axis.text.y = element_text(color="black", size=12), legend.title = element_text(color="black", size=14), legend.text = element_text(color="black", size=14)) + scale_fill_manual(name = "Language Modality", breaks=c("ASL", "English"), values=c("tan2", "forestgreen"), labels=c("ASL (83)", "English (90)")) + scale_color_manual(name = "Language Modality", breaks=c("ASL", "English"), values=c("tan2", "forestgreen"), labels=c("ASL (83)", "English (90)"))  
 	modality_map
+	grid.arrange(timing_map, modality_map, nrow=1)
 
 
 # SET SIZE VISUALIZATIONS?????
