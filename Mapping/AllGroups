@@ -137,6 +137,7 @@ sd(Total_Inc_Study$Age.of.Exposure..mo..Language, na.rm=TRUE)
 aggregate(Age.of.Exposure..mo..Language ~ Group_4cat, data=Total_Inc_Study, sd)
 range(Total_Inc_Study$Age.of.Exposure..mo..Language, na.rm=TRUE) 
 aggregate(Age.of.Exposure..mo..Language ~ Group_4cat, data=Total_Inc_Study, range)
+sum(is.na(Total_Inc_Study$Age.of.Exposure..mo..Language) | Total_Inc_Study$Age.of.Exposure..mo..Language=="N/A") # missing 11
 
 #Age of Auditory Exposure
 mean(Total_Inc_Study$Auditory_ageexposure..mo., na.rm=TRUE) 
@@ -145,6 +146,7 @@ sd(Total_Inc_Study$Auditory_ageexposure..mo., na.rm=TRUE)
 aggregate(Auditory_ageexposure..mo. ~ Group_4cat, data=Total_Inc_Study, sd)
 range(Total_Inc_Study$Auditory_ageexposure..mo., na.rm=TRUE) 
 aggregate(Auditory_ageexposure..mo. ~ Group_4cat, data=Total_Inc_Study, range)
+sum(is.na(Total_Inc_Study$Auditory_ageexposure..mo.) | Total_Inc_Study$Auditory_ageexposure..mo.=="N/A") # missing 23 
 
 
 --------------------------------------------------------------------------------------------------------------------
