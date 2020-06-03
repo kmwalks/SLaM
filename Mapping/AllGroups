@@ -376,6 +376,25 @@ sum(is.na(Total_Inc_Study$Auditory_ageexposure..mo.) | Total_Inc_Study$Auditory_
 	tab_model(QW_58_I_ref, QN_58_I_ref, auto.label = FALSE, show.ci = FALSE) #TO CHECK VARIABLE NAMES TO ENSURE RENAMING ACCURATELY
 	tab_model(QW_58_I_ref, QN_58_I_ref, auto.label = FALSE, show.ci = FALSE, show.se = TRUE, show.stat = TRUE, show.est = TRUE, pred.labels = c("Intercept 1", "Intercept 2","Age", "SES", "Modality (English)", "Timing (Later)", "Small", "Large", "Modality (English) x Timing (Later)"), dv.labels = c("Quantity-Word", "Quantity-Numeral"), string.p = "p-Value", string.se = "Standard Error", string.stat = "t-statistic")
 	
+	Early_QW_58 <- subset(QW_58, QW_58$Timing == "Early")
+	mean(Early_QW_58$AvgCorr) #0.87
+	Later_QW_58 <- subset(QW_58, QW_58$Timing == "Later")
+	mean(Later_QW_58$AvgCorr) #0.78
+	English_QW_58 <- subset(QW_58, QW_58$Modality == "English")
+	mean(English_QW_58$AvgCorr) #0.83
+	ASL_QW_58 <- subset(QW_58, QW_58$Modality == "ASL")
+	mean(ASL_QW_58$AvgCorr) #0.81
+	
+	Early_QN_58 <- subset(QN_58, QN_58$Timing == "Early")
+	mean(Early_QN_58$AvgCorr) #0.90
+	Later_QN_58 <- subset(QN_58, QN_58$Timing == "Later")
+	mean(Later_QN_58$AvgCorr) #0.81
+	English_QN_58 <- subset(QN_58, QN_58$Modality == "English")
+	mean(English_QN_58$AvgCorr) #0.88
+	ASL_QN_58 <- subset(QN_58, QN_58$Modality == "ASL")
+	mean(ASL_QN_58$AvgCorr) #0.83
+
+
 	#HAUCK DONNER IN AGE FOR NUMERAL-WORD MODELS!
 	summary(NW_58_I<- vglm(AvgCorr ~  Age_Rounded + SES + Modality + Timing + Set_Size + Modality:Timing, tobit(Upper = 1), data = NW_58))
 	summary(NW_58_I<- vglm(AvgCorr ~  Age_Rounded + SES + Modality + Timing + Set_Size_refM + Modality:Timing, tobit(Upper = 1), data = NW_58))
