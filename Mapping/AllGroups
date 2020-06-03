@@ -148,6 +148,38 @@ range(Total_Inc_Study$Auditory_ageexposure..mo., na.rm=TRUE)
 aggregate(Auditory_ageexposure..mo. ~ Group_4cat, data=Total_Inc_Study, range)
 sum(is.na(Total_Inc_Study$Auditory_ageexposure..mo.) | Total_Inc_Study$Auditory_ageexposure..mo.=="N/A") # missing 23 
 
+# Does Age, SES, language exposure, and auditory exposure differ between the groups?
+	#Checked if normally distributed before using ANOVAs with a simple density plot
+        age_density <- ggplot(Total_Inc_Study, aes(x=Age_Rounded)) + geom_density() 
+	age_density #right skewed
+      	SES_density <- ggplot(Total_Inc_Study, aes(x=SES)) + geom_density() 
+	SES_density #left skewed
+	langexp_density <- ggplot(Total_Inc_Study, aes(x=Age.of.Exposure..mo..Language)) + geom_density() 
+	langexp_density #right skewed
+	audexp_density <- ggplot(Total_Inc_Study, aes(x=Auditory_ageexposure..mo.)) + geom_density() 
+	audexp_density #right skewed
+
+# Since our data was not normally distributed for the above demographics, we ran nonparametric Kruskall-Wallis tests
+	#http://www.sthda.com/english/wiki/kruskal-wallis-test-in-r (best for when have > 2 groups)
+      kruskal.test(Total_Inc_Study$Age_Rounded ~ Group_4cat, data = Total_Inc_Study)
+      #Kruskal-Wallis chi-squared = 18.307, df = 3, p-value = 0.0003801
+      pairwise.wilcox.test(Total_Inc_Study$Age_Rounded, Total_Inc_Study$Group_4cat, p.adjust.method="none", paired = FALSE)
+      #EE vs AE (p = 0.05), AE vs EL (p<0.001), EE vs AL (p=0.05), EL vs AL (p<0.001). Not significant: AE vs AL and EE vs EL
+      
+      kruskal.test(Total_Inc_Study$SES ~ Group_4cat, data = Total_Inc_Study)
+      #Kruskal-Wallis chi-squared = 40.67, df = 3, p-value = 7.684e-09
+      pairwise.wilcox.test(Total_Inc_Study$SES, Total_Inc_Study$Group_4cat, p.adjust.method="none", paired = FALSE)
+      #EE vs AE (p < 0.001), EE vs AL (p<0.001), EE vs EL (p<0.001). Not significant: AE vs AL, AE vs EL, AL vs EL
+      
+      kruskal.test(Total_Inc_Study$Age.of.Exposure..mo..Language ~ Group_4cat, data = Total_Inc_Study)
+      #Kruskal-Wallis chi-squared = 172.35, df = 3, p-value < 2.2e-16
+      pairwise.wilcox.test(Total_Inc_Study$Age.of.Exposure..mo..Language, Total_Inc_Study$Group_4cat, p.adjust.method="none", paired = FALSE)
+      #Siginificant differences (p<0.001) b/w all groups who do not have 0s
+      
+      kruskal.test(Total_Inc_Study$Auditory_ageexposure..mo. ~ Group_4cat, data = Total_Inc_Study)
+      #Kruskal-Wallis chi-squared = 122.47, df = 3, p-value < 2.2e-16
+      pairwise.wilcox.test(Total_Inc_Study$Auditory_ageexposure..mo., Total_Inc_Study$Group_4cat, p.adjust.method="none", paired = FALSE)
+      #Significant differences (p<0.0001) b/w all groups who do not have 0s EXPECT for AL vs EL (p=0.06)
 
 --------------------------------------------------------------------------------------------------------------------
 
