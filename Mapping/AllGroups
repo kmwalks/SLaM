@@ -32,6 +32,15 @@ library(lme4)
 library(VGAM)
 library(gridExtra)
 
+
+	#Creating HTML tables, Resource: https://strengejacke.github.io/sjPlot/articles/tab_model_estimates.html
+	install.packages("sjPlot")
+	install.packages("sjmisc")
+	install.packages("sjlabelled")
+	library(sjPlot)
+	library(sjmisc)
+	library(sjlabelled)
+
 #Import Data 
       setwd("~/Desktop")   
       Map <- read.csv("Mapping_Coding_KW_200602.csv", na.strings = "N/A")
@@ -238,19 +247,14 @@ sum(is.na(Total_Inc_Study$Auditory_ageexposure..mo.) | Total_Inc_Study$Auditory_
   
 	#Overall Results (ages 5-9) results in Hauck-Donner effect for Age because ceiling effect
 	summary(Map_t<- vglm(AvgCorr ~  Age_Rounded + SES + Modality + Timing + Set_Size + MapPair, tobit(Upper = 1), data = T_short))
-	
-	# Reference scatterplots for kids > 9! 
-	
-	#BELOW # AT CEILING ALSO SUPPORTS THAT
-	Map_Inc_9 <- subset(Map_Inc, Map_Inc$Age_Rounded >=9)
-	wilcox.test(Map_Inc_9$AvgCorrect_Total, mu = .25, alternative = "greater") #V = 528, p-value = 3.199e-07 compared to chance (0.25) using Wilcoxon signed rank test 
 
-	#9-year-olds’ Performance at Ceiling 
-	Ceil <- Map_Inc_9$SumCorrectTotal_All
-	All <- 51 #ceiling performance 
-	Var <- length(which(Ceil>= All)) #number of observations equal to ceiling 
-	N <- nrow(Map_Inc_9) #number of total observations
-	(Var/N)*100 #41% of 9-year-olds performed at ceiling (answered all 51 trials correctly)
+		#9-year-olds’ Performance at Ceiling 
+		Map_Inc_9 <- subset(Map_Inc, Map_Inc$Age_Rounded >=9)
+		Ceil <- Map_Inc_9$SumCorrectTotal_All
+		All <- 51 #ceiling performance 
+		Var <- length(which(Ceil>= All)) #number of observations equal to ceiling 
+		N <- nrow(Map_Inc_9) #number of total observations
+		(Var/N)*100 #41% of 9-year-olds performed at ceiling (answered all 51 trials correctly)
 
 	
 	#Subsetted data to only 5-8 year olds no longer any Hauck-Donner effects
@@ -258,18 +262,26 @@ sum(is.na(Total_Inc_Study$Auditory_ageexposure..mo.) | Total_Inc_Study$Auditory_
 	View(Map_58)
 	#Without a Modality:Timing interaction, Modality is significant. 
 	summary(Map_58_noI<- vglm(AvgCorr ~  Age_Rounded + SES + Modality + Timing + Set_Size + MapPair, tobit(Upper = 1), data = Map_58))
+		
+	#Is Modality significant or is timing driving this difference?
+	#Previously thought could use AL being exposed to language later than EL as reason for modality being sig...unsure though
+	
+	 wilcox.test(AL_Inc$AvgCorrect_Total, EL_Inc$AvgCorrect_Total, alternative = "two.sided") 
+	 #W = 1257.5, p-value = 0.816
+	 wilcox.test(AE_Inc$AvgCorrect_Total, EE_Inc$AvgCorrect_Total, alternative = "two.sided") 
+	 #W = 1301.5, p-value = 0.3619
+	 
+	
 	#Including Modality:Timing interaction makes the effect of modality disappear
 	summary(Map_58_I<- vglm(AvgCorr ~  Age_Rounded + SES + Modality + Timing + Set_Size + MapPair + Modality:Timing, tobit(Upper = 1), data = Map_58))
 	summary(Map_58_I_ref<- vglm(AvgCorr ~  Age_Rounded + SES + Modality + Timing + Set_Size_refM + MapPair_refQW + Modality:Timing, tobit(Upper = 1), data = Map_58))
 	
 	# NEED TO CHECK MODEL FIT, CODE FROM TOBIT RESOURCE NOT WORKING...AND WILL NEED TO EDIT TOBIT TABLES TO INCLUDE R SQUARED!
 	
-	#Why Modality no longer significant?: ASL later driving this, they are later exposed to language compared to English later (suggesting later exposed kids driving modality effect overall see in above model). CONFIRMED WITH BELOW T-TEST:
-	
-	t.test(AL_Inc$AvgCorrect_Total, EL_Inc$AvgCorrect_Total, paired = FALSE, alternative = "two.sided")
-	#Welch Two Sample t-test: t = -1.0775, df = 94.26, p-value = 0.284, 0.85 for AL vs 0.88 for EL
-	
-	# REFER BACK TO DESCRIPTIVE STATS FOR AGE OF LANG EXPOSURE
+	tab_model(Map_58_I, auto.label = FALSE, show.ci = FALSE) #TO CHECK VARIABLE NAMES TO ENSURE RENAMING ACCURATELY
+	tab_model(Map_58_I, auto.label = FALSE, show.ci = FALSE, show.se = TRUE, show.stat = TRUE, show.est = TRUE, pred.labels = c("Intercept 1", "Intercept 2","Age", "SES", "Modality (English)", "Timing (Later)", "Medium", "Large", "Quantity-Numeral", "Quantity-Word", "Modality (English) x Timing (Later)"), dv.labels = c("Reference groups: Small and Numeral-Word"), string.p = "p-Value", string.se = "Standard Error", string.stat = "t-statistic") #Then edit in word to add R squared value
+	tab_model(Map_58_I_ref, auto.label = FALSE, show.ci = FALSE) #TO CHECK VARIABLE NAMES TO ENSURE RENAMING ACCURATELY
+	tab_model(Map_58_I_ref, auto.label = FALSE, show.ci = FALSE, show.se = TRUE, show.stat = TRUE, show.est = TRUE, pred.labels = c("Intercept 1", "Intercept 2","Age", "SES", "Modality (English)", "Timing (Later)", "Small", "Large", "Numeral-Word", "Quantity-Numeral", "Modality (English) x Timing (Later)"), dv.labels = c("Reference groups: Medium and Quantity-Word"), string.p = "p-Value", string.se = "Standard Error", string.stat = "t-statistic") #Then edit in word to add R squared value
 
 	
 	
@@ -299,19 +311,6 @@ sum(is.na(Total_Inc_Study$Auditory_ageexposure..mo.) | Total_Inc_Study$Auditory_
 	# DO I NEED TO DO AN INTERACTION FOR ABOVE MODEL AS WELL? NOT SHOWING AUDITORY MATTERS, BUT IS SHOWING LANGUAGE DOES
 	# I THINK COMPARE MODEL FITS BETWEEN NO INTERACTION AND AN INTERACTION! SAME FOR TIMING/MODALITY AND THEN COMPARE FINAL MODELS OF 2 CATS AND CONTINUOUS! 
 	
-	
-	#Creating HTML tables, Resource: https://strengejacke.github.io/sjPlot/articles/tab_model_estimates.html
-	install.packages("sjPlot")
-	install.packages("sjmisc")
-	install.packages("sjlabelled")
-	library(sjPlot)
-	library(sjmisc)
-	library(sjlabelled)
-	
-	tab_model(Map_58_I, auto.label = FALSE, show.ci = FALSE) #TO CHECK VARIABLE NAMES TO ENSURE RENAMING ACCURATELY
-	tab_model(Map_58_I, auto.label = FALSE, show.ci = FALSE, show.se = TRUE, show.stat = TRUE, show.est = TRUE, pred.labels = c("Intercept 1", "Intercept 2","Age", "SES", "Modality (English)", "Timing (Later)", "Medium", "Large", "Quantity-Numeral", "Quantity-Word", "Modality (English):Timing (Later)"), dv.labels = c("Reference groups: Small and Numeral-Word"), string.p = "p-Value", string.se = "Standard Error", string.stat = "t-statistic") #Then edit in word to add R squared value
-	tab_model(Map_58_I_ref, auto.label = FALSE, show.ci = FALSE) #TO CHECK VARIABLE NAMES TO ENSURE RENAMING ACCURATELY
-	tab_model(Map_58_I_ref, auto.label = FALSE, show.ci = FALSE, show.se = TRUE, show.stat = TRUE, show.est = TRUE, pred.labels = c("Intercept 1", "Intercept 2","Age", "SES", "Modality (English)", "Timing (Later)", "Small", "Large", "Numeral-Word", "Quantity-Numeral", "Modality (English):Timing (Later)"), dv.labels = c("Reference groups: Medium and Quantity-Word"), string.p = "p-Value", string.se = "Standard Error", string.stat = "t-statistic") #Then edit in word to add R squared value
 
 	
 	#BY MAPPING PAIRS 
