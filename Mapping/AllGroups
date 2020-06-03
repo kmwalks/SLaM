@@ -350,7 +350,7 @@ sum(is.na(Total_Inc_Study$Auditory_ageexposure..mo.) | Total_Inc_Study$Auditory_
 	
 	
 	
-	#BY MAPPING PAIRS 
+	#TOBIT MODELS FOR MAPPING PAIRS 
 	QW_58 <- subset(Map_58, Map_58$MapPair == "Quantity-Word")
 	View(QW_58)
 	QN_58 <- subset(Map_58, Map_58$MapPair == "Quantity-Numeral")
@@ -363,29 +363,19 @@ sum(is.na(Total_Inc_Study$Auditory_ageexposure..mo.) | Total_Inc_Study$Auditory_
 	summary(QN_58_I<- vglm(AvgCorr ~  Age_Rounded + SES + Modality + Timing + Set_Size + Modality:Timing, tobit(Upper = 1), data = QN_58))
 	summary(QN_58_I_ref<- vglm(AvgCorr ~  Age_Rounded + SES + Modality + Timing + Set_Size_refM + Modality:Timing, tobit(Upper = 1), data = QN_58))
 	
-	#HAUCK DONNER IN AGE FOR NUMERAL-WORD MODELS! HOW TO PROCEED?
 	
+	#CREATE A TABLE THAT COMBINES THE 3 MAPPING PAIRS AND THEN ANOTHER FOR THE REFERENCE MODELS! 
+	#GET PSEDUO R SQUARE VALUES! 
+	
+	#HAUCK DONNER IN AGE FOR NUMERAL-WORD MODELS! HOW TO PROCEED?
 	summary(NW_58_I<- vglm(AvgCorr ~  Age_Rounded + SES + Modality + Timing + Set_Size + Modality:Timing, tobit(Upper = 1), data = NW_58))
 	summary(NW_58_I<- vglm(AvgCorr ~  Age_Rounded + SES + Modality + Timing + Set_Size_refM + Modality:Timing, tobit(Upper = 1), data = NW_58))
 	
-
-
-
-# HAVE NOT CHANGED TO MAKE BELOW CODES WORK YET! CHECK PACKAGES FOR OTHER MAPER TO MAKE SURE HAVE ALL HERE! 
-
-	#Mapping Performance by Map Pairs
-	QW <- Map_Inc$Sum_Quantity.Word_Word.Quantity
-	QN <- Map_Inc$Sum_Quantity.Numeral_Numeral.Quantity
-	NW <- Map_Inc$Sum_Numeral.Word_Word.Numeral
-	Map_Inc <- data.frame(Map_Inc,QW,QN,NW)
-	View(Map_Inc)
-		#By TIMING
-		timing_map <- ggplot(T_short, aes(MapPair, AvgCorr, fill=Timing)) + geom_boxplot() + labs(x="Mapping Pairs", y="Proportion Correct", fill = "Timing") + scale_y_continuous (breaks=c(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1), limits = c(0,1), expand = c(0,0)) + scale_fill_grey(start = 0.5, end = 0.9) + theme(plot.title = element_text(color="black", size=14, family = "Calibri"), axis.title.x = element_text(color="black", size=14, family = "Calibri"), axis.text.x = element_text(color="black", size=12, family = "Calibri"), axis.title.y = element_text(color="black", size=14, family = "Calibri"), axis.text.y = element_text(color="black", size=12, family = "Calibri"), legend.title = element_text(color="black", size=14, family = "Calibri"), legend.text = element_text(color="black", size=14, family = "Calibri"))
-		timing_map
-		#By MODALITY
-		modality_map <- ggplot(T_short, aes(MapPair, AvgCorr, fill=Modality)) + geom_boxplot() + labs(x="Mapping Pairs", y="Proportion Correct", fill = "Modality") + scale_y_continuous (breaks=c(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1), limits = c(0,1), expand = c(0,0)) + scale_fill_grey(start = 0.5, end = 0.9) + theme(plot.title = element_text(color="black", size=14, family = "Calibri"), axis.title.x = element_text(color="black", size=14, family = "Calibri"), axis.text.x = element_text(color="black", size=12, family = "Calibri"), axis.title.y = element_text(color="black", size=14, family = "Calibri"), axis.text.y = element_text(color="black", size=12, family = "Calibri"), legend.title = element_text(color="black", size=14, family = "Calibri"), legend.text = element_text(color="black", size=14, family = "Calibri"))
-		modality_map
-
+	#Mapping Pair Visualizations
+	timing_map <- ggplot(Map_58, aes(MapPair, AvgCorr, fill=Timing)) + geom_boxplot() + labs(x="Mapping Pairs", y="Proportion Correct", fill = "Timing") + scale_y_continuous (breaks=c(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1), limits = c(0,1), expand = c(0,0)) + theme(legend.position="top", plot.title = element_text(color="black", size=14), axis.title.x = element_text(color="black", size=14), axis.text.x = element_text(color="black", size=12), axis.title.y = element_text(color="black", size=14), axis.text.y = element_text(color="black", size=12), legend.title = element_text(color="black", size=14), legend.text = element_text(color="black", size=14)) + scale_fill_manual(name = "Language Timing", breaks=c("Early", "Later"), values=c("deepskyblue3", "firebrick3"), labels=c("Early (83)", "Later (90)")) + scale_color_manual(name = "Language Timing", breaks=c("Early", "Later"), values=c("deepskyblue3", "firebrick3"), labels=c("Early (83)", "Later (90)"))
+	timing_map
+	modality_map <- ggplot(Map_58, aes(MapPair, AvgCorr, fill=Modality)) + geom_boxplot() + labs(x="Mapping Pairs", y="Proportion Correct", fill = "Modality") + scale_y_continuous (breaks=c(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1), limits = c(0,1), expand = c(0,0)) + theme(legend.position="top", plot.title = element_text(color="black", size=14), axis.title.x = element_text(color="black", size=14), axis.text.x = element_text(color="black", size=12), axis.title.y = element_text(color="black", size=14), axis.text.y = element_text(color="black", size=12), legend.title = element_text(color="black", size=14), legend.text = element_text(color="black", size=14)) + scale_fill_manual(name = "Language Modality", breaks=c("ASL", "English"), values=c("tan2", "forestgreen"), labels=c("ASL (83)", "English (90)")) + scale_color_manual(name = "Language Modality", breaks=c("ASL", "English"), values=c("tan2", "forestgreen"), labels=c("ASL (83)", "English (90)"))  
+	modality_map
 
 
 # SET SIZE VISUALIZATIONS?????
