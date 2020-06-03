@@ -171,6 +171,33 @@ sum(is.na(Total_Inc_Study$Auditory_ageexposure..mo.) | Total_Inc_Study$Auditory_
       pairwise.wilcox.test(Total_Inc_Study$SES, Total_Inc_Study$Group_4cat, p.adjust.method="none", paired = FALSE)
       #EE vs AE (p < 0.001), EE vs AL (p<0.001), EE vs EL (p<0.001). Not significant: AE vs AL, AE vs EL, AL vs EL
       
+      
+      #But we really care about Modality/Timing for Age/SES, so ran Mann-Whitney/Wilcoxon rank sum tests
+      #http://www.sthda.com/english/wiki/unpaired-two-samples-wilcoxon-test-in-r
+      
+      	#CREATING TIMING/MODALITY DATA FRAMES
+	#TIMING GROUPS
+	Early <- subset(Total_Inc_Study, Total_Inc_Study$Timing == "Early")
+	Later <- subset(Total_Inc_Study, Total_Inc_Study$Timing == "Later")
+	#MODALITY GROUPS
+	ASL <- subset(Total_Inc_Study, Total_Inc_Study$Modality == "ASL")
+	English <- subset(Total_Inc_Study, Total_Inc_Study$Modality == "English")
+      
+      
+      #Why important to include SES in models! 
+      wilcox.test(Early$SES, Later$SES, alternative = "two.sided") #W = 5725.5, p-value = 0.001363
+      wilcox.test(English$SES, ASL$SES, alternative = "two.sided") #W = 6362.5, p-value = 1.04e-06
+      #Means for SES: 
+      #NEED TO FILL IN MEANS ABOVE! 
+      
+      #Age is good b/c no difference in timing & only in modality (but found modality to not matter)
+      wilcox.test(Early$Age_Rounded, Later$Age_Rounded, alternative = "two.sided") #W = 5366, p-value = 0.3026
+      wilcox.test(English$Age_Rounded, ASL$Age_Rounded, alternative = "two.sided") #W = 3345, p-value = 8.47e-05
+      #Means for Age: English (M=6.6), ASL (M=7.5), Early (M=7.2), Later (M=7.0)
+      
+      
+      # HOW SHOULD WE ADDRESS BELOW FINDINGS? PAIR THESE WITH TOBIT MODELS WITH THESE VARIABLES?
+      
       kruskal.test(Total_Inc_Study$Age.of.Exposure..mo..Language ~ Group_4cat, data = Total_Inc_Study)
       #Kruskal-Wallis chi-squared = 172.35, df = 3, p-value < 2.2e-16
       pairwise.wilcox.test(Total_Inc_Study$Age.of.Exposure..mo..Language, Total_Inc_Study$Group_4cat, p.adjust.method="none", paired = FALSE)
@@ -188,18 +215,6 @@ sum(is.na(Total_Inc_Study$Auditory_ageexposure..mo.) | Total_Inc_Study$Auditory_
 ## MAPPING DATA FRAME ## 
   Map_Inc <- Total_Inc_Study #renaming for ease
   View(Map_Inc) 
-  
-	#CREATING TIMING/MODALITY DATA FRAMES
-	#TIMING GROUPS
-	Early <- subset(Map_Inc, Map_Inc$Timing == "Early")
-	Later <- subset(Map_Inc, Map_Inc$Timing == "Later")
-	#MODALITY GROUPS
-	ASL <- subset(Map_Inc, Map_Inc$Modality == "ASL")
-	English <- subset(Map_Inc, Map_Inc$Modality == "English")
-
-	#VARIABLE SHORTCUTS#  
-	Age <- Map_Inc$Age_Rounded
-	SES <- Map_Inc$SES
 
 #TOBIT MODELS, resource: https://stats.idre.ucla.edu/r/dae/tobit-models/
 	#Create Dataframe
