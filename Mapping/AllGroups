@@ -326,12 +326,18 @@ sum(is.na(Total_Inc_Study$Auditory_ageexposure..mo.) | Total_Inc_Study$Auditory_
 	# DO SIMILIAR TOBIT MODELS BUT WITH AGE OF LANGUAGE EXPOSURE/AGE OF AUDITORY EXPOSURE
 	summary(Map_58_Age_noI<- vglm(AvgCorr ~  Age_Rounded + SES + Age.of.Exposure..mo..Language + Auditory_ageexposure..mo. + Set_Size + MapPair, tobit(Upper = 1), data = Map_58))
 	#-500.6164  
-	print(pseudo_R2_I <- 1 - (-500.6164  / -774.0106)) # 0.35
+	print(pseudo_R2_I <- 1 - (-500.6164  / -774.0106)) # R-squared: 0.35
 	summary(Map_58_Age_I<- vglm(AvgCorr ~  Age_Rounded + SES + Age.of.Exposure..mo..Language + Auditory_ageexposure..mo. + Set_Size + MapPair + Age.of.Exposure..mo..Language: Auditory_ageexposure..mo., tobit(Upper = 1), data = Map_58))
 	#-495.3131
-	print(pseudo_R2_I <- 1 - (-495.3131  / -774.0106)) # 0.36
+	print(pseudo_R2_I <- 1 - (-495.3131  / -774.0106)) # R-squared: 0.36
+	summary(Map_58_Age_I_ref<- vglm(AvgCorr ~  Age_Rounded + SES + Age.of.Exposure..mo..Language + Auditory_ageexposure..mo. + Set_Size_refM + MapPair_refQW + Age.of.Exposure..mo..Language: Auditory_ageexposure..mo., tobit(Upper = 1), data = Map_58))
 	
 	# USE MODEL WITH INTERACTION B/C INTERACTION SIG AND IMPROVES MODEL FIT
+	
+	tab_model(Map_58_Age_I, auto.label = FALSE, show.ci = FALSE) #TO CHECK VARIABLE NAMES TO ENSURE RENAMING ACCURATELY
+	tab_model(Map_58_Age_I, auto.label = FALSE, show.ci = FALSE, show.se = TRUE, show.stat = TRUE, show.est = TRUE, pred.labels = c("Intercept 1", "Intercept 2","Age", "SES", "Age of Language Exposure", "Age of Auditory Exposure", "Medium", "Large", "Quantity-Numeral", "Quantity-Word", "Age of Language Exposure x Age of Auditory Exposure"), dv.labels = c("Reference groups: Small and Numeral-Word"), string.p = "p-Value", string.se = "Standard Error", string.stat = "t-statistic") #Then edit in word to add R squared value
+	tab_model(Map_58_Age_I_ref, auto.label = FALSE, show.ci = FALSE) #TO CHECK VARIABLE NAMES TO ENSURE RENAMING ACCURATELY
+	tab_model(Map_58_Age_I_ref, auto.label = FALSE, show.ci = FALSE, show.se = TRUE, show.stat = TRUE, show.est = TRUE, pred.labels = c("Intercept 1", "Intercept 2","Age", "SES", "Age of Language Exposure", "Age of Auditory Exposure", "Small", "Large", "Numeral-Word", "Quantity-Numeral", "Age of Language Exposure x Age of Auditory Exposure"), dv.labels = c("Reference groups: Medium and Quantity-Word"), string.p = "p-Value", string.se = "Standard Error", string.stat = "t-statistic") #Then edit in word to add R squared value
 	
 	#Scatterplots of age of exposures by prop correct
 	e <- ggplot(data = Map_Inc_58, mapping = aes(x=Age.of.Exposure..mo..Language, y=AvgCorrect_Total)) + geom_point() + geom_smooth(method="loess") + labs(x="Age of Language Exposure (months)", y="Proportion Correct") + theme(legend.position = "top", text = element_text(size=14)) + coord_cartesian(xlim = c(0, 100), ylim= c(0,1)) + scale_y_continuous(breaks=c(0, 0.2, 0.4, 0.6, 0.8, 1)) + scale_x_continuous(breaks=c(0, 25, 50, 75, 100))
