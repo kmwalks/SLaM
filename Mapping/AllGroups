@@ -359,10 +359,17 @@ sum(is.na(Total_Inc_Study$Auditory_ageexposure..mo.) | Total_Inc_Study$Auditory_
 	View(NW_58)
 	
 	summary(QW_58_I<- vglm(AvgCorr ~  Age_Rounded + SES + Modality + Timing + Set_Size + Modality:Timing, tobit(Upper = 1), data = QW_58))
+	#Log likelihood: -189.4989 
 	summary(QW_58_I_ref<- vglm(AvgCorr ~  Age_Rounded + SES + Modality + Timing + Set_Size_refM + Modality:Timing, tobit(Upper = 1), data = QW_58))
 	summary(QN_58_I<- vglm(AvgCorr ~  Age_Rounded + SES + Modality + Timing + Set_Size + Modality:Timing, tobit(Upper = 1), data = QN_58))
+	#Log likelihood: -193.3709
 	summary(QN_58_I_ref<- vglm(AvgCorr ~  Age_Rounded + SES + Modality + Timing + Set_Size_refM + Modality:Timing, tobit(Upper = 1), data = QN_58))
 	
+	#Calculate model fit
+	summary(QW_58_null<- vglm(AvgCorr ~  1, tobit(Upper = 1.0), data = QW_58)) #Log likelihood: -259.8835
+	summary(QN_58_null<- vglm(AvgCorr ~  1, tobit(Upper = 1.0), data = QN_58)) #Log likelihood: -274.5746
+	print(pseudo_R2_QW <- 1 - (-189.4989 / -259.8835)) #Quantity-Word R-squared: 0.27
+	print(pseudo_R2_QN <- 1 - (-193.3709 / -274.5746)) #Quantity-Numeral R-squared: 0.30
 	
 	tab_model(QW_58_I, QN_58_I, auto.label = FALSE, show.ci = FALSE) #TO CHECK VARIABLE NAMES TO ENSURE RENAMING ACCURATELY
 	tab_model(QW_58_I, QN_58_I, auto.label = FALSE, show.ci = FALSE, show.se = TRUE, show.stat = TRUE, show.est = TRUE, pred.labels = c("Intercept 1", "Intercept 2","Age", "SES", "Modality (English)", "Timing (Later)", "Medium", "Large", "Modality (English) x Timing (Later)"), dv.labels = c("Quantity-Word", "Quantity-Numeral"), string.p = "p-Value", string.se = "Standard Error", string.stat = "t-statistic")
