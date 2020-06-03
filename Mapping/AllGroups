@@ -130,36 +130,22 @@ aggregate(SES ~ Group_4cat, data=Total_Inc_Study, sd)
 range(Total_Inc_Study$SES, na.rm=TRUE) 
 aggregate(SES ~ Group_4cat, data=Total_Inc_Study, range)
 
-#Demographic Visualizations
-#CREATING TIMING/MODALITY DATA FRAMES
-#TIMING GROUPS
-Early <- subset(Total_Inc_Study, Total_Inc_Study$Timing == "Early")
-Later <- subset(Total_Inc_Study, Total_Inc_Study$Timing == "Later")
-#MODALITY GROUPS
-ASL <- subset(Total_Inc_Study, Total_Inc_Study$Modality == "ASL")
-English <- subset(Total_Inc_Study, Total_Inc_Study$Modality == "English")
+#Age of Language Exposure
+mean(Total_Inc_Study$Age.of.Exposure..mo..Language, na.rm=TRUE) 
+aggregate(Age.of.Exposure..mo..Language ~ Group_4cat, data=Total_Inc_Study, mean)
+sd(Total_Inc_Study$Age.of.Exposure..mo..Language, na.rm=TRUE) 
+aggregate(Age.of.Exposure..mo..Language ~ Group_4cat, data=Total_Inc_Study, sd)
+range(Total_Inc_Study$Age.of.Exposure..mo..Language, na.rm=TRUE) 
+aggregate(Age.of.Exposure..mo..Language ~ Group_4cat, data=Total_Inc_Study, range)
 
-#VARIABLE SHORTCUTS#  
-Age <- Total_Inc_Study$Age_Rounded
-SES <- Total_Inc_Study$SES
+#Age of Auditory Exposure
+mean(Total_Inc_Study$Auditory_ageexposure..mo., na.rm=TRUE) 
+aggregate(Auditory_ageexposure..mo. ~ Group_4cat, data=Total_Inc_Study, mean)
+sd(Total_Inc_Study$Auditory_ageexposure..mo., na.rm=TRUE) 
+aggregate(Auditory_ageexposure..mo. ~ Group_4cat, data=Total_Inc_Study, sd)
+range(Total_Inc_Study$Auditory_ageexposure..mo., na.rm=TRUE) 
+aggregate(Auditory_ageexposure..mo. ~ Group_4cat, data=Total_Inc_Study, range)
 
-## TIMING VIOLIN PLOTS ## 
-      TimeGrp <- Total_Inc_Study$Timing
-      # TIMING: AGE 
-      ggplot(Total_Inc_Study, aes(x=TimeGrp, y=Age)) + geom_violin() + labs(x="Language Timing", y="Age(years)") 
-      #VISUALLY VERY SIMILAR DISTRIBUTIONS
-      # TIMING: SES
-      ggplot(Total_Inc_Study, aes(x=TimeGrp, y=SES)) + geom_violin() + labs(x="Language Timing", y="SES") 
-      #VISUALLY VERY SIMILAR DISTRIBUTIONS
-
-## MODALITY VIOLIN PLOTS ##
-      ModalityGrp <- Total_Inc_Study$Modality
-      # MODALITY: AGE
-      ggplot(Total_Inc_Study, aes(x=ModalityGrp, y=Age)) + geom_violin() + labs(x="Language Modality", y="Age(years)")
-      #ASL HAS MORE EVEN AGE DISTRIBUTION, ENGLISH HAS < OLDER KIDS
-      # MODALITY: SES
-      ggplot(Total_Inc_Study, aes(x=ModalityGrp, y=SES)) + geom_violin() + labs(x="Language Modality", y="SES")
-      #ENGLISH MORE "TOP HEAVY" FOR SES 
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -168,6 +154,18 @@ SES <- Total_Inc_Study$SES
 ## MAPPING DATA FRAME ## 
   Map_Inc <- Total_Inc_Study #renaming for ease
   View(Map_Inc) 
+  
+	#CREATING TIMING/MODALITY DATA FRAMES
+	#TIMING GROUPS
+	Early <- subset(Map_Inc, Map_Inc$Timing == "Early")
+	Later <- subset(Map_Inc, Map_Inc$Timing == "Later")
+	#MODALITY GROUPS
+	ASL <- subset(Map_Inc, Map_Inc$Modality == "ASL")
+	English <- subset(Map_Inc, Map_Inc$Modality == "English")
+
+	#VARIABLE SHORTCUTS#  
+	Age <- Map_Inc$Age_Rounded
+	SES <- Map_Inc$SES
 
 #TOBIT MODELS, resource: https://stats.idre.ucla.edu/r/dae/tobit-models/
 	#Create Dataframe
@@ -222,14 +220,8 @@ SES <- Total_Inc_Study$SES
 	t.test(AL_Inc$AvgCorrect_Total, EL_Inc$AvgCorrect_Total, paired = FALSE, alternative = "two.sided")
 	#Welch Two Sample t-test: t = -1.0775, df = 94.26, p-value = 0.284, 0.85 for AL vs 0.88 for EL
 	
-	# ADD DESCRIPTIVE STATS FOR AGE OF LANG EXPOSURE
-	#Age of Language Exposure
-	mean(Total_Inc_Study$Age.of.Exposure..mo..Language, na.rm=TRUE) 
-	aggregate(Age.of.Exposure..mo..Language ~ Group_4cat, data=Total_Inc_Study, mean)
-	sd(Total_Inc_Study$Age.of.Exposure..mo..Language, na.rm=TRUE) 
-	aggregate(Age.of.Exposure..mo..Language ~ Group_4cat, data=Total_Inc_Study, sd)
-	range(Total_Inc_Study$Age.of.Exposure..mo..Language, na.rm=TRUE) 
-	aggregate(Age.of.Exposure..mo..Language ~ Group_4cat, data=Total_Inc_Study, range)
+	# REFER BACK TO DESCRIPTIVE STATS FOR AGE OF LANG EXPOSURE
+
 	
 	
 	
@@ -318,6 +310,25 @@ SES <- Total_Inc_Study$SES
 *************************************************************************************
 
 # OLD CODES BELOW # 
+
+#Demographic Visualizations
+## TIMING VIOLIN PLOTS ## 
+      TimeGrp <- Total_Inc_Study$Timing
+      # TIMING: AGE 
+      ggplot(Total_Inc_Study, aes(x=TimeGrp, y=Age)) + geom_violin() + labs(x="Language Timing", y="Age(years)") 
+      #VISUALLY VERY SIMILAR DISTRIBUTIONS
+      # TIMING: SES
+      ggplot(Total_Inc_Study, aes(x=TimeGrp, y=SES)) + geom_violin() + labs(x="Language Timing", y="SES") 
+      #VISUALLY VERY SIMILAR DISTRIBUTIONS
+
+## MODALITY VIOLIN PLOTS ##
+      ModalityGrp <- Total_Inc_Study$Modality
+      # MODALITY: AGE
+      ggplot(Total_Inc_Study, aes(x=ModalityGrp, y=Age)) + geom_violin() + labs(x="Language Modality", y="Age(years)")
+      #ASL HAS MORE EVEN AGE DISTRIBUTION, ENGLISH HAS < OLDER KIDS
+      # MODALITY: SES
+      ggplot(Total_Inc_Study, aes(x=ModalityGrp, y=SES)) + geom_violin() + labs(x="Language Modality", y="SES")
+      #ENGLISH MORE "TOP HEAVY" FOR SES 
 
 
 #MIXED EFFECTS LOGISTIC REGRESSION
