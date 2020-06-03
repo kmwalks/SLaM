@@ -226,22 +226,12 @@ sum(is.na(Total_Inc_Study$Auditory_ageexposure..mo.) | Total_Inc_Study$Auditory_
   View(Map_Inc) 
   
  # Modality/Timing Overall Visualizations
+
 	a <- ggplot(data = Map_Inc, mapping = aes(x=Age_Rounded, y=AvgCorrect_Total, shape = Timing, color = Timing)) + geom_point() + geom_smooth(method="loess") + labs(x="Age (years)", y="Proportion Correct") + theme(legend.position = "top", text = element_text(size=14)) + coord_cartesian(xlim = c(5, 9), ylim= c(0,1)) + scale_y_continuous(breaks=c(0, 0.2, 0.4, 0.6, 0.8, 1)) + scale_x_continuous(breaks=c(5, 6, 7, 8, 9)) + scale_shape_manual(name="Language Timing", values=c(16, 17), labels=c("Early (97)", "Later (102)")) + scale_color_manual(name="Language Timing", values=c("deepskyblue3", "firebrick3"), labels=c("Early (97)", "Later (102)"))
 	a
 	
 	b <- ggplot(data = Map_Inc, mapping = aes(x=Age_Rounded, y=AvgCorrect_Total, shape = Modality, color = Modality)) + geom_point() + geom_smooth(method="loess") + labs(x="Age (years)", y="Proportion Correct") + theme(legend.position = "top", text = element_text(size=14)) + coord_cartesian(xlim = c(5, 9), ylim= c(0,1)) + scale_y_continuous(breaks=c(0, 0.2, 0.4, 0.6, 0.8, 1)) + scale_x_continuous(breaks=c(5, 6, 7, 8, 9)) + scale_shape_manual(name="Language Modality", values=c(16, 17), labels=c("English (95)", "ASL (104)")) + scale_color_manual(name="Language Modality", values=c("tan2", "forestgreen"), labels=c("English (95)", "ASL (104)"))
 	b
-
-	#Beeswarm Boxplots
-	c <- ggplot(data=Map_Inc, mapping = aes(x= Timing, y=AvgCorrect_Total)) + geom_boxplot() + geom_dotplot(mapping=aes(fill=Timing, color=Timing), dotsize = .8, method = "dotdensity", binaxis = "y", stackdir = "center") + theme(legend.position="top", text = element_text(size=14), axis.title.x=element_blank()) + ylab("Proportion Correct") + scale_fill_manual(name = "Language Timing", breaks=c("Early", "Later"), values=c("deepskyblue3", "firebrick3"), labels=c("Early (97)", "Later (102)")) + scale_color_manual(name = "Language Timing", breaks=c("Early", "Later"), values=c("deepskyblue3", "firebrick3"), labels=c("Early (97)", "Later (102)"))+ stat_summary(fun=mean, geom="point", shape=18, size=5, color="black") 
-	c
-	mean(Early$AvgCorrect_Total) #0.9230928
-	mean(Later$AvgCorrect_Total) #0.8606863
-	
-	d <- ggplot(data=Map_Inc, mapping = aes(x= Modality, y=AvgCorrect_Total)) + geom_boxplot() + geom_dotplot(mapping=aes(fill=Modality, color=Modality), dotsize = .8, method = "dotdensity", binaxis = "y", stackdir = "center") + theme(legend.position="top", text = element_text(size=14), axis.title.x=element_blank()) + ylab("Proportion Correct") + scale_fill_manual(name = "Language Modality", breaks=c("ASL", "English"), values=c("tan2", "forestgreen"), labels=c("ASL (104)", "English (95)")) + scale_color_manual(name = "Language Modality", breaks=c("ASL", "English"), values=c("tan2", "forestgreen"), labels=c("ASL (104)", "English (95)"))+ stat_summary(fun=mean, geom="point", shape=18, size=5, color="black") 
-	d
-	mean(English$AvgCorrect_Total) #0.8963158
-	mean(ASL$AvgCorrect_Total) #0.8863462
 
 #TOBIT MODELS, resource: https://stats.idre.ucla.edu/r/dae/tobit-models/
 	#Create Dataframe
@@ -280,7 +270,12 @@ sum(is.na(Total_Inc_Study$Auditory_ageexposure..mo.) | Total_Inc_Study$Auditory_
 	View(Map_58)
 	#Without a Modality:Timing interaction, Modality is significant. 
 	summary(Map_58_noI<- vglm(AvgCorr ~  Age_Rounded + SES + Modality + Timing + Set_Size + MapPair, tobit(Upper = 1), data = Map_58))
-		
+	#Log likelihood: -561.6852
+	#Calculate model fit, https://www.stata.com/support/faqs/statistics/pseudo-r2/
+	summary(Map_58_null<- vglm(AvgCorr ~  1, tobit(Upper = 1.0), data = Map_58)) 
+	#Log likelihood: -774.0106
+	print(pseudo_R2_noI <- 1 - (-561.6852 / -774.0106)) #0.27
+	
 	#Is Modality significant or is timing driving this difference?
 	#Previously thought could use AL being exposed to language later than EL as reason for modality being sig...unsure though
 	
@@ -293,22 +288,9 @@ sum(is.na(Total_Inc_Study$Auditory_ageexposure..mo.) | Total_Inc_Study$Auditory_
 	#Including Modality:Timing interaction makes the effect of modality disappear
 	summary(Map_58_I<- vglm(AvgCorr ~  Age_Rounded + SES + Modality + Timing + Set_Size + MapPair + Modality:Timing, tobit(Upper = 1), data = Map_58))
 	summary(Map_58_I_ref<- vglm(AvgCorr ~  Age_Rounded + SES + Modality + Timing + Set_Size_refM + MapPair_refQW + Modality:Timing, tobit(Upper = 1), data = Map_58))
-	
-	# NEED TO CHECK MODEL FIT, CODE FROM TOBIT RESOURCE NOT WORKING...AND WILL NEED TO EDIT TOBIT TABLES TO INCLUDE R SQUARED!
-	
-	#CANNOT GET BELOW MODEL FIT CODE TO WORK, says diff # of rows b/w data frame and model...
-	Map_58$yhat <- fitted(Map_58_I)[,1]
-	Map_58$rr <- resid(Map_58_I, type = "response")
-	Map_58$rp <- resid(Map_58_I, type = "pearson")[,1]
-	par(mfcol = c(2, 3))
-	with(Map_58, {
-	    plot(yhat, rr, main = "Fitted vs Residuals")
-	    qqnorm(rr)
-	    plot(yhat, rp, main = "Fitted vs Pearson Residuals")
-	    qqnorm(rp)
-	    plot(AvgCorr, rp, main = "Actual vs Pearson Residuals")
-	    plot(AvgCorr, yhat, main = "Actual vs Fitted")
-	})
+	#Log likelihood: -555.0348
+	#Checking model fit
+	print(pseudo_R2_I <- 1 - (-555.0348 / -774.0106)) # 0.28
 	
 	
 	tab_model(Map_58_I, auto.label = FALSE, show.ci = FALSE) #TO CHECK VARIABLE NAMES TO ENSURE RENAMING ACCURATELY
@@ -316,15 +298,43 @@ sum(is.na(Total_Inc_Study$Auditory_ageexposure..mo.) | Total_Inc_Study$Auditory_
 	tab_model(Map_58_I_ref, auto.label = FALSE, show.ci = FALSE) #TO CHECK VARIABLE NAMES TO ENSURE RENAMING ACCURATELY
 	tab_model(Map_58_I_ref, auto.label = FALSE, show.ci = FALSE, show.se = TRUE, show.stat = TRUE, show.est = TRUE, pred.labels = c("Intercept 1", "Intercept 2","Age", "SES", "Modality (English)", "Timing (Later)", "Small", "Large", "Numeral-Word", "Quantity-Numeral", "Modality (English) x Timing (Later)"), dv.labels = c("Reference groups: Medium and Quantity-Word"), string.p = "p-Value", string.se = "Standard Error", string.stat = "t-statistic") #Then edit in word to add R squared value
 
+	#Modality/Timing visualizations for ages 5-8
+	Map_Inc_58 <- subset(Map_Inc, Map_Inc$Age_Rounded <=9) 
+	View(Map_Inc_58)
+	nrow(Map_Inc_58) #173 rows
+	Early_58 <- (subset(Map_Inc_58, Map_Inc_58$Timing == "Early")) 
+	nrow(Early_58) #83 rows
+	mean(Early_58$AvgCorrect_Total) #0.91
+	Later_58 <- (subset(Map_Inc_58, Map_Inc_58$Timing == "Later")) 
+	nrow(Later_58) #90 rows
+	mean(Later_58$AvgCorrect_Total) #0.85
+	English_58 <- (subset(Map_Inc_58, Map_Inc_58$Modality == "English")) 
+	nrow(English_58) #90 rows
+	mean(English_58$AvgCorrect_Total) #0.89
+	ASL_58 <- (subset(Map_Inc_58, Map_Inc_58$Modality == "ASL")) 
+	nrow(ASL_58) #83 rows
+	mean(ASL_58$AvgCorrect_Total) #0.87
+	
+	#Beeswarm Boxplots
+	c <- ggplot(data=Map_Inc_58, mapping = aes(x= Timing, y=AvgCorrect_Total)) + geom_boxplot() + geom_dotplot(mapping=aes(fill=Timing, color=Timing), dotsize = .8, method = "dotdensity", binaxis = "y", stackdir = "center") + theme(legend.position="top", text = element_text(size=14), axis.title.x=element_blank()) + ylab("Proportion Correct") + scale_fill_manual(name = "Language Timing", breaks=c("Early", "Later"), values=c("deepskyblue3", "firebrick3"), labels=c("Early (83)", "Later (90)")) + scale_color_manual(name = "Language Timing", breaks=c("Early", "Later"), values=c("deepskyblue3", "firebrick3"), labels=c("Early (83)", "Later (90)"))+ stat_summary(fun=mean, geom="point", shape=18, size=5, color="black") 
+	c
+	d <- ggplot(data=Map_Inc, mapping = aes(x= Modality, y=AvgCorrect_Total)) + geom_boxplot() + geom_dotplot(mapping=aes(fill=Modality, color=Modality), dotsize = .8, method = "dotdensity", binaxis = "y", stackdir = "center") + theme(legend.position="top", text = element_text(size=14), axis.title.x=element_blank()) + ylab("Proportion Correct") + scale_fill_manual(name = "Language Modality", breaks=c("ASL", "English"), values=c("tan2", "forestgreen"), labels=c("ASL (83)", "English (90)")) + scale_color_manual(name = "Language Modality", breaks=c("ASL", "English"), values=c("tan2", "forestgreen"), labels=c("ASL (83)", "English (90)"))+ stat_summary(fun=mean, geom="point", shape=18, size=5, color="black") 
+	d
 
 	# LEADS INTO EXAMINING CONTINUOUS VS 2 GROUP CATEGORIZATION WITH TOBIT MODELS:
 	
 	# DO SIMILIAR TOBIT MODELS BUT WITH AGE OF LANGUAGE EXPOSURE/AGE OF AUDITORY EXPOSURE
-	summary(Map_58_Age_I<- vglm(AvgCorr ~  Age_Rounded + SES + Age.of.Exposure..mo..Language + Auditory_ageexposure..mo. + Set_Size + MapPair, tobit(Upper = 1), data = Map_58))
-	# DO I NEED TO DO AN INTERACTION FOR ABOVE MODEL AS WELL? NOT SHOWING AUDITORY MATTERS, BUT IS SHOWING LANGUAGE DOES
-	# I THINK COMPARE MODEL FITS BETWEEN NO INTERACTION AND AN INTERACTION! SAME FOR TIMING/MODALITY AND THEN COMPARE FINAL MODELS OF 2 CATS AND CONTINUOUS! 
+	summary(Map_58_Age_noI<- vglm(AvgCorr ~  Age_Rounded + SES + Age.of.Exposure..mo..Language + Auditory_ageexposure..mo. + Set_Size + MapPair, tobit(Upper = 1), data = Map_58))
+	#-500.6164  
+	print(pseudo_R2_I <- 1 - (-500.6164  / -774.0106)) # 0.35
+	summary(Map_58_Age_I<- vglm(AvgCorr ~  Age_Rounded + SES + Age.of.Exposure..mo..Language + Auditory_ageexposure..mo. + Set_Size + MapPair + Age.of.Exposure..mo..Language: Auditory_ageexposure..mo., tobit(Upper = 1), data = Map_58))
+	#-495.3131
+	print(pseudo_R2_I <- 1 - (-495.3131  / -774.0106)) # 0.36
 	
-
+	# USE MODEL WITH INTERACTION B/C INTERACTION SIG AND IMPROVES MODEL FIT
+	
+	#Comparing model fits of discrete vs continuous variables
+	#0.28 for modality/timing versus 0.36 for age auditory/language exposure
 	
 	#BY MAPPING PAIRS 
 	QW_58 <- subset(Map_58, Map_58$MapPair == "Quantity-Word")
