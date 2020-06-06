@@ -160,10 +160,24 @@ sum(is.na(Total_Inc_Study$Auditory_ageexposure..mo.) | Total_Inc_Study$Auditory_
 #Analysis
 
 ## MAPPING DATA FRAME ## 
-  Map_Inc <- Total_Inc_Study #renamed for ease
+  Map_Inc <- Total_Inc_Study #rename for ease
   View(Map_Inc) 
   
- # Modality/Timing Overall Visualizations
+# Create Timing & Modality Data Frames
+	Early <- subset(Map_Inc, Map_Inc$Timing == "Early")
+	Later <- subset(Map_Inc, Map_Inc$Timing == "Later")
+	ASL <- subset(Map_Inc, Map_Inc$Modality == "ASL")
+	English <- subset(Map_Inc, Map_Inc$Modality == "English")
+  
+#General Analyses
+wilcox.test(Map_Inc$AvgCorrect_Total, mu = .25, alternative = "greater") #V = 19701, p-value < 2.2e-16
+wilcox.test(Early$AvgCorrect_Total, mu = .25, alternative = "greater") #V = 4753, p-value < 2.2e-16
+wilcox.test(Later$AvgCorrect_Total, mu = .25, alternative = "greater") #V = 5151, p-value < 2.2e-16
+wilcox.test(ASL$AvgCorrect_Total, mu = .25, alternative = "greater") #V = 5356, p-value < 2.2e-16
+wilcox.test(English$AvgCorrect_Total, mu = .25, alternative = "greater") #V = 4560, p-value < 2.2e-16
+
+
+# Modality/Timing Overall Visualizations
 
 	a <- ggplot(data = Map_Inc, mapping = aes(x=Age_Rounded, y=AvgCorrect_Total, shape = Timing, color = Timing)) + geom_point() + geom_smooth(method="loess") + labs(x="Age (years)", y="Proportion Correct") + theme(legend.position = "top", text = element_text(size=14)) + coord_cartesian(xlim = c(5, 9), ylim= c(0,1)) + scale_y_continuous(breaks=c(0, 0.2, 0.4, 0.6, 0.8, 1)) + scale_x_continuous(breaks=c(5, 6, 7, 8, 9)) + scale_shape_manual(name="Language Timing", values=c(16, 17), labels=c("Early (97)", "Later (102)")) + scale_color_manual(name="Language Timing", values=c("deepskyblue3", "firebrick3"), labels=c("Early (97)", "Later (102)"))
 	a
@@ -215,14 +229,6 @@ sum(is.na(Total_Inc_Study$Auditory_ageexposure..mo.) | Total_Inc_Study$Auditory_
 	summary(Map_58_null<- vglm(AvgCorr ~  1, tobit(Upper = 1.0), data = Map_58)) 
 	#Log likelihood: -774.0106
 	print(pseudo_R2_noI <- 1 - (-561.6852 / -774.0106)) #0.27
-	
-	#Is Modality significant or is timing driving this difference?
-	#Previously thought could use AL being exposed to language later than EL as reason for modality being sig...unsure though
-	
-	 wilcox.test(AL_Inc$AvgCorrect_Total, EL_Inc$AvgCorrect_Total, alternative = "two.sided") 
-	 #W = 1257.5, p-value = 0.816
-	 wilcox.test(AE_Inc$AvgCorrect_Total, EE_Inc$AvgCorrect_Total, alternative = "two.sided") 
-	 #W = 1301.5, p-value = 0.3619
 	 
 	
 	#Including Modality:Timing interaction makes the effect of modality disappear
