@@ -219,6 +219,9 @@ wilcox.test(English$AvgCorrect_Total, mu = .25, alternative = "greater") #V = 45
 	#Subsetted data to only 5-8 year olds no longer any Hauck-Donner effects
 	Map_58 <- subset(T_short, T_short$Age_Rounded <=8)
 	View(Map_58)
+	
+	# DO WE NEED TO INCLUDE THE MODEL WITHOUT THE INTERACTION?
+	
 	#Without a Modality:Timing interaction, Modality is significant. 
 	summary(Map_58_noI<- vglm(AvgCorr ~  Age_Rounded + SES + Modality + Timing + Set_Size + MapPair, tobit(Upper = 1), data = Map_58))
 	#Log likelihood: -561.6852
