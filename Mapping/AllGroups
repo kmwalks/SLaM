@@ -15,6 +15,9 @@ install.packages("tidyr")
 install.packages("lme4")
 install.packages("VGAM") #for tobit model 
 install.packages("gridExtra") 
+install.packages("sjPlot")
+install.packages("sjmisc")
+install.packages("sjlabelled")
 
 library(ggplot2) 
 library(beeswarm)
@@ -31,15 +34,10 @@ library(tidyr)
 library(lme4)
 library(VGAM)
 library(gridExtra)
-
-
-	#Creating HTML tables, Resource: https://strengejacke.github.io/sjPlot/articles/tab_model_estimates.html
-	install.packages("sjPlot")
-	install.packages("sjmisc")
-	install.packages("sjlabelled")
-	library(sjPlot)
-	library(sjmisc)
-	library(sjlabelled)
+library(sjPlot)
+library(sjmisc)
+library(sjlabelled)
+	
 
 #Import Data 
       setwd("~/Desktop")   
@@ -157,72 +155,12 @@ range(Total_Inc_Study$Auditory_ageexposure..mo., na.rm=TRUE)
 aggregate(Auditory_ageexposure..mo. ~ Group_4cat, data=Total_Inc_Study, range)
 sum(is.na(Total_Inc_Study$Auditory_ageexposure..mo.) | Total_Inc_Study$Auditory_ageexposure..mo.=="N/A") # missing 23 
 
-# Does Age, SES, language exposure, and auditory exposure differ between the groups?
-	#Checked if normally distributed before using ANOVAs with a simple density plot
-        age_density <- ggplot(Total_Inc_Study, aes(x=Age_Rounded)) + geom_density() 
-	age_density #right skewed
-      	SES_density <- ggplot(Total_Inc_Study, aes(x=SES)) + geom_density() 
-	SES_density #left skewed
-	langexp_density <- ggplot(Total_Inc_Study, aes(x=Age.of.Exposure..mo..Language)) + geom_density() 
-	langexp_density #right skewed
-	audexp_density <- ggplot(Total_Inc_Study, aes(x=Auditory_ageexposure..mo.)) + geom_density() 
-	audexp_density #right skewed
-
-# Since our data was not normally distributed for the above demographics, we ran nonparametric Kruskall-Wallis tests
-	#http://www.sthda.com/english/wiki/kruskal-wallis-test-in-r (best for when have > 2 groups)
-      kruskal.test(Total_Inc_Study$Age_Rounded ~ Group_4cat, data = Total_Inc_Study)
-      #Kruskal-Wallis chi-squared = 18.307, df = 3, p-value = 0.0003801
-      pairwise.wilcox.test(Total_Inc_Study$Age_Rounded, Total_Inc_Study$Group_4cat, p.adjust.method="none", paired = FALSE)
-      #EE vs AE (p = 0.05), AE vs EL (p<0.001), EE vs AL (p=0.05), EL vs AL (p<0.001). Not significant: AE vs AL and EE vs EL
-      
-      kruskal.test(Total_Inc_Study$SES ~ Group_4cat, data = Total_Inc_Study)
-      #Kruskal-Wallis chi-squared = 40.67, df = 3, p-value = 7.684e-09
-      pairwise.wilcox.test(Total_Inc_Study$SES, Total_Inc_Study$Group_4cat, p.adjust.method="none", paired = FALSE)
-      #EE vs AE (p < 0.001), EE vs AL (p<0.001), EE vs EL (p<0.001). Not significant: AE vs AL, AE vs EL, AL vs EL
-      
-      
-      #But we really care about Modality/Timing for Age/SES, so ran Mann-Whitney/Wilcoxon rank sum tests
-      #http://www.sthda.com/english/wiki/unpaired-two-samples-wilcoxon-test-in-r
-      
-      	#CREATING TIMING/MODALITY DATA FRAMES
-	#TIMING GROUPS
-	Early <- subset(Total_Inc_Study, Total_Inc_Study$Timing == "Early")
-	Later <- subset(Total_Inc_Study, Total_Inc_Study$Timing == "Later")
-	#MODALITY GROUPS
-	ASL <- subset(Total_Inc_Study, Total_Inc_Study$Modality == "ASL")
-	English <- subset(Total_Inc_Study, Total_Inc_Study$Modality == "English")
-      
-      
-      #Why important to include SES in models! 
-      wilcox.test(Early$SES, Later$SES, alternative = "two.sided") #W = 5725.5, p-value = 0.001363
-      wilcox.test(English$SES, ASL$SES, alternative = "two.sided") #W = 6362.5, p-value = 1.04e-06
-      #Means for SES: 
-      #NEED TO FILL IN MEANS ABOVE! 
-      
-      #Age is good b/c no difference in timing & only in modality (but found modality to not matter)
-      wilcox.test(Early$Age_Rounded, Later$Age_Rounded, alternative = "two.sided") #W = 5366, p-value = 0.3026
-      wilcox.test(English$Age_Rounded, ASL$Age_Rounded, alternative = "two.sided") #W = 3345, p-value = 8.47e-05
-      #Means for Age: English (M=6.6), ASL (M=7.5), Early (M=7.2), Later (M=7.0)
-      
-      
-      # HOW SHOULD WE ADDRESS BELOW FINDINGS? PAIR THESE WITH TOBIT MODELS WITH THESE VARIABLES?
-      
-      kruskal.test(Total_Inc_Study$Age.of.Exposure..mo..Language ~ Group_4cat, data = Total_Inc_Study)
-      #Kruskal-Wallis chi-squared = 172.35, df = 3, p-value < 2.2e-16
-      pairwise.wilcox.test(Total_Inc_Study$Age.of.Exposure..mo..Language, Total_Inc_Study$Group_4cat, p.adjust.method="none", paired = FALSE)
-      #Siginificant differences (p<0.001) b/w all groups who do not have 0s
-      
-      kruskal.test(Total_Inc_Study$Auditory_ageexposure..mo. ~ Group_4cat, data = Total_Inc_Study)
-      #Kruskal-Wallis chi-squared = 122.47, df = 3, p-value < 2.2e-16
-      pairwise.wilcox.test(Total_Inc_Study$Auditory_ageexposure..mo., Total_Inc_Study$Group_4cat, p.adjust.method="none", paired = FALSE)
-      #Significant differences (p<0.0001) b/w all groups who do not have 0s EXPECT for AL vs EL (p=0.06)
-
 --------------------------------------------------------------------------------------------------------------------
 
 #Analysis
 
 ## MAPPING DATA FRAME ## 
-  Map_Inc <- Total_Inc_Study #renaming for ease
+  Map_Inc <- Total_Inc_Study #renamed for ease
   View(Map_Inc) 
   
  # Modality/Timing Overall Visualizations
@@ -294,7 +232,7 @@ sum(is.na(Total_Inc_Study$Auditory_ageexposure..mo.) | Total_Inc_Study$Auditory_
 	#Checking model fit
 	print(pseudo_R2_I <- 1 - (-555.0348 / -774.0106)) # 0.28
 	
-	
+	#Creating HTML tables, Resource: https://strengejacke.github.io/sjPlot/articles/tab_model_estimates.html
 	tab_model(Map_58_I, auto.label = FALSE, show.ci = FALSE) #TO CHECK VARIABLE NAMES TO ENSURE RENAMING ACCURATELY
 	tab_model(Map_58_I, auto.label = FALSE, show.ci = FALSE, show.se = TRUE, show.stat = TRUE, show.est = TRUE, pred.labels = c("Intercept 1", "Intercept 2","Age", "SES", "Modality (English)", "Timing (Later)", "Medium", "Large", "Quantity-Numeral", "Quantity-Word", "Modality (English) x Timing (Later)"), dv.labels = c("Reference groups: Small and Numeral-Word"), string.p = "p-Value", string.se = "Standard Error", string.stat = "t-statistic") #Then edit in word to add R squared value
 	tab_model(Map_58_I_ref, auto.label = FALSE, show.ci = FALSE) #TO CHECK VARIABLE NAMES TO ENSURE RENAMING ACCURATELY
@@ -419,104 +357,3 @@ qw_ss_box <- ggplot(QW_58, aes(Set_Size, AvgCorr, fill=Timing)) + geom_boxplot()
 
 grid.arrange(qn_ss_box, qw_ss_box, nrow=1)
 
-
-
-*************************************************************************************
-
-# OLD CODES BELOW # 
-
-#Demographic Visualizations
-## TIMING VIOLIN PLOTS ## 
-      TimeGrp <- Total_Inc_Study$Timing
-      # TIMING: AGE 
-      ggplot(Total_Inc_Study, aes(x=TimeGrp, y=Age)) + geom_violin() + labs(x="Language Timing", y="Age(years)") 
-      #VISUALLY VERY SIMILAR DISTRIBUTIONS
-      # TIMING: SES
-      ggplot(Total_Inc_Study, aes(x=TimeGrp, y=SES)) + geom_violin() + labs(x="Language Timing", y="SES") 
-      #VISUALLY VERY SIMILAR DISTRIBUTIONS
-
-## MODALITY VIOLIN PLOTS ##
-      ModalityGrp <- Total_Inc_Study$Modality
-      # MODALITY: AGE
-      ggplot(Total_Inc_Study, aes(x=ModalityGrp, y=Age)) + geom_violin() + labs(x="Language Modality", y="Age(years)")
-      #ASL HAS MORE EVEN AGE DISTRIBUTION, ENGLISH HAS < OLDER KIDS
-      # MODALITY: SES
-      ggplot(Total_Inc_Study, aes(x=ModalityGrp, y=SES)) + geom_violin() + labs(x="Language Modality", y="SES")
-      #ENGLISH MORE "TOP HEAVY" FOR SES 
-
-
-#MIXED EFFECTS LOGISTIC REGRESSION
-	Map_long <- pivot_longer(data = Map_Inc, cols=c(ends_with("Answer")), names_to = c("Type"), values_to = "Quantity")
-	View(Map_long)
-	Map_long1 <- Map_long[,!grepl("^Item",names(Map_long))] # delete columns that contain “item” 
-	View(Map_long1)
-	Map_long2 <- pivot_longer(data = Map_Inc, cols=c(ends_with("Correct.")), names_to = c("Type2"), values_to = "Correct")
-	Map_long2 <- Map_long2[,!grepl("^Item",names(Map_long2))] # delete columns that contain “item” 
-	View(Map_long2)
-	Map_longest <- cbind(Map_long, Map_long2$Correct)
-	View(Map_longest)
-	Map_short <- Map_longest[,!grepl("^Item",names(Map_longest))] # delete columns that contain “item” 
-	View(Map_short)
-	names(Map_short)[names(Map_short) == "Map_long2$Correct"] <- "Correct"
-	View(Map_short)
-	
-            # From Type column, create a new column (Map_Pair)
-            #Create new column for which IF Map_short$Type contains “NW” or “WN”, assign value “Numeral-Word”
-            Map_Pair <- c()
-            for(i in 1:10149)
-            Map_Pair[i] <- ifelse(grepl("NW", Map_short$Type[i]), "Numeral-Word", ifelse(grepl("WN", Map_short$Type[i]), "Numeral-Word", ifelse(grepl("QN", Map_short$Type[i]), "Quantity-Numeral", ifelse(grepl("NQ", Map_short$Type[i]), "Quantity-Numeral", ifelse(grepl("QW", Map_short$Type[i]), "Quantity-Word", ifelse(grepl("WQ", Map_short$Type[i]), "Quantity-Word","bananas"))))))
-            Map_short <- cbind(Map_short, Map_Pair)
-            View(Map_short)
-
-            #From Quantity column, create Small, Med, Large
-            Set_Size <- c()
-            Set_Size <- case_when(Map_short$Quantity <= 3 ~ 'Small',
-                                  Map_short$Quantity > 3 & Map_short$Quantity<= 5 ~ 'Medium',
-                                  Map_short$Quantity > 5 ~ 'Large')
-            Map_short <- cbind(Map_short,Set_Size)
-	    names(Map_short)[names(Map_short) == "Map_long2$Correct"] <- "Correct"
-            View(Map_short)
-	    Map_short$SetSize_refM <- as.factor(factor(as.character(Map_short$Set_Size), levels=c("Medium", "Small", "Large"), exclude=""))
-	    Map_short$MapPair_refQW <- as.factor(factor(as.character(Map_short$Map_Pair), levels=c("Quantity-Word","Numeral-Word","Quantity-Numeral"), exclude=""))
-	    View(Map_short)   
-	    
-#Running Mixed Effects Logistic Regressions
-	    #Mixed Log Reg for Set Size, Map Pair, Timing, Modality
-	    MixReg_MT <- glmer(Correct ~ Age_Rounded + SES + Set_Size + Map_Pair + Timing + Modality + (1 | SUBJECT_ID), data = Map_short, family = binomial, control = glmerControl(optimizer ="bobyqa"), nAGQ = 10) #AIC 5114
-	    summary(MixReg_MT)
-	  
-	    #References (changed Set Size and Map Pair)
-	    MixReg_MT_ref <- glmer(Correct ~ Age_Rounded + SES + SetSize_refM + MapPair_refQW + Timing + Modality + (1 | SUBJECT_ID), data = Map_short, family = binomial, control = glmerControl(optimizer ="bobyqa"), nAGQ = 10)
-	    summary(MixReg_MT_ref)
-	    
-	    #Creating HTML Tables
-	    #Resource: https://strengejacke.github.io/sjPlot/articles/tab_model_estimates.html
-		install.packages("sjPlot")
-		install.packages("sjmisc")
-		install.packages("sjlabelled")
-		library(sjPlot)
-		library(sjmisc)
-		library(sjlabelled)
-	    
-	   tab_model(MixReg_MT, auto.label = FALSE, show.ci = FALSE) #TO CHECK VARIABLE NAMES TO ENSURE RENAMING ACCURATELY    
-	   tab_model(MixReg_MT, auto.label = FALSE, show.icc = FALSE, show.se = TRUE, show.ci = FALSE, show.re.var = FALSE, show.stat = TRUE, pred.labels = c("Intercept", "Age", "SES", "Medium", "Small", "Quantity-Numeral", "Quantity-Word", "Timing (Later)", "Modality (English)"), dv.labels = c("References: Large and Numeral-Word"), string.p = "P-Values", string.se = "Standard Errors", string.stat = "t Statistic") #Edit to look pretty in Word
-	   tab_model(MixReg_MT_ref, auto.label = FALSE, show.ci = FALSE) #TO CHECK VARIABLE NAMES TO ENSURE RENAMING ACCURATELY 
-	   tab_model(MixReg_MT_ref, auto.label = FALSE, show.icc = FALSE, show.se = TRUE, show.ci = FALSE, show.re.var = FALSE, show.stat = TRUE, pred.labels = c("Intercept", "Age", "SES", "Small", "Large", "Numeral-Word", "Quantity-Numeral", "Timing (Later)", "Modality (English)"), dv.labels = c("References: Medium and Quantity-Word"), string.p = "P-Values", string.se = "Standard Errors", string.stat = "t Statistic") #Edit to look pretty in Word
-
-	#Why is Modality significant here and no where else?, Pearson's Chi-squared tests on binary outcome 
-	chisq.test(Map_short$Correct, Map_short$Group_4cat) #X-squared = 118.65, df = 3, p-value < 2.2e-16
-	table(Map_short$Correct, Map_short$Group_4cat) #ASL Later has substantially more 0s than other groups, inproportionate 
-	
-	ASL_log <- subset(Map_short, Map_short$Modality == "ASL")
-	English_log <- subset(Map_short, Map_short$Modality == "English")
-	chisq.test(ASL_log$Correct, ASL_log$Timing)  #X-squared = 93.661, df = 1, p-value < 2.2e-16, ASL Early and ASL Later differ
-	chisq.test(English_log$Correct, English_log$Timing) #X-squared = 19.511, df = 1, p-value = 1e-05, English Early and English later differ 
-
-
-	#BOXPLOTS/VIOLINS
-	map.n <- function(x){return(c(y = median(x)*1.05, label = length(x))) }
-	mean.n <- function(x){return(c(y= median(x)*0.97, label = round(mean(x), 2)))} 
-	#Overall performance: Proportion Correct by Modality (boxplot/violin)
-	ggplot(Map_Inc, aes(x=Modality, y=AvgCorrect_Total, fill = Modality)) + geom_violin() + geom_boxplot(width = 0.2) + labs (x= "Language Modality", y = "Proportion Correct") + scale_fill_grey(start = 0.5, end = 0.9) + stat_summary(fun.data = mean.n, geom = "text", fun = median) + stat_summary(fun.data = mean.n, geom= "text", fun=mean, color= "black") + scale_y_continuous (breaks=c(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1), limits = c(0,1), expand = c(0,0))  + theme(legend.position = "none", axis.title.x = element_text(color="black", size=14, family = "Calibri"), axis.text.x = element_text(color="black", size=12, family = "Calibri"), axis.title.y = element_text(color="black", size=14, family = "Calibri"), axis.text.y = element_text(color="black", size=12, family = "Calibri"))
-	#Overall performance: Proportion Correct by Timing (boxplot/violin)
-	ggplot(Map_Inc, aes(x=Timing, y=AvgCorrect_Total, fill = Timing)) + geom_violin() + geom_boxplot(width = 0.2) + labs (x= "Language Timing", y = "Proportion Correct") + scale_fill_grey(start = 0.5, end = 0.9) + stat_summary(fun.data = mean.n, geom = "text", fun = median) + stat_summary(fun.data = mean.n, geom= "text", fun=mean, color= "black") + scale_y_continuous (breaks=c(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1), limits = c(0,1), expand = c(0,0))  + theme(legend.position = "none", axis.title.x = element_text(color="black", size=14, family = "Calibri"), axis.text.x = element_text(color="black", size=12, family = "Calibri"), axis.title.y = element_text(color="black", size=14, family = "Calibri"), axis.text.y = element_text(color="black", size=12, family = "Calibri"))
