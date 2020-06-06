@@ -184,16 +184,6 @@ wilcox.test(English$AvgCorrect_Total, mu = .25, alternative = "greater") #V = 45
 		(Var/N_O)*100 # 42.2%
 
 
-# Modality/Timing Overall Visualizations
-
-	a <- ggplot(data = Map_Inc, mapping = aes(x=Age_Rounded, y=AvgCorrect_Total, shape = Timing, color = Timing)) + geom_point() + geom_smooth(method="loess") + labs(x="Age (years)", y="Proportion Correct") + theme(legend.position = "top", text = element_text(size=14)) + coord_cartesian(xlim = c(5, 9), ylim= c(0,1)) + scale_y_continuous(breaks=c(0, 0.2, 0.4, 0.6, 0.8, 1)) + scale_x_continuous(breaks=c(5, 6, 7, 8, 9)) + scale_shape_manual(name="Language Timing", values=c(16, 17), labels=c("Early (97)", "Later (102)")) + scale_color_manual(name="Language Timing", values=c("deepskyblue3", "firebrick3"), labels=c("Early (97)", "Later (102)"))
-	a
-	
-	b <- ggplot(data = Map_Inc, mapping = aes(x=Age_Rounded, y=AvgCorrect_Total, shape = Modality, color = Modality)) + geom_point() + geom_smooth(method="loess") + labs(x="Age (years)", y="Proportion Correct") + theme(legend.position = "top", text = element_text(size=14)) + coord_cartesian(xlim = c(5, 9), ylim= c(0,1)) + scale_y_continuous(breaks=c(0, 0.2, 0.4, 0.6, 0.8, 1)) + scale_x_continuous(breaks=c(5, 6, 7, 8, 9)) + scale_shape_manual(name="Language Modality", values=c(16, 17), labels=c("English (95)", "ASL (104)")) + scale_color_manual(name="Language Modality", values=c("tan2", "forestgreen"), labels=c("English (95)", "ASL (104)"))
-	b
-	
-	grid.arrange(a,b,nrow=1)
-
 #TOBIT MODELS, resource: https://stats.idre.ucla.edu/r/dae/tobit-models/
 	#Create Dataframe
 	which(colnames(Map_Inc)=="AvgCorrect_Sm_QW") #315
@@ -214,8 +204,8 @@ wilcox.test(English$AvgCorrect_Total, mu = .25, alternative = "greater") #V = 45
 	T_short$MapPair_refQW <- as.factor(factor(as.character(T_short$MapPair), levels=c("Quantity-Word","Numeral-Word","Quantity-Numeral"), exclude=""))
 	View(T_short)
   
-	#Overall Results (ages 5-9) results in Hauck-Donner effect for Age because ceiling effect
-	summary(Map_t<- vglm(AvgCorr ~  Age_Rounded + SES + Modality + Timing + Set_Size + MapPair, tobit(Upper = 1), data = T_short))
+	#Overall Results (ages 5-9) resulted in Hauck-Donner effect for Age because ceiling effect
+	summary(Map_t<- vglm(AvgCorr ~  Age_Rounded + SES + Modality + Timing + Set_Size + MapPair + Timing:Modality, tobit(Upper = 1), data = T_short))
 
 		#9-year-olds’ Performance at Ceiling 
 		Map_Inc_9 <- subset(Map_Inc, Map_Inc$Age_Rounded >=9)
@@ -268,6 +258,7 @@ wilcox.test(English$AvgCorrect_Total, mu = .25, alternative = "greater") #V = 45
 	nrow(ASL_58) #83 rows
 	mean(ASL_58$AvgCorrect_Total) #0.87
 	
+	
 	#Beeswarm Boxplots
 	c <- ggplot(data=Map_Inc_58, mapping = aes(x= Timing, y=AvgCorrect_Total)) + geom_boxplot() + geom_dotplot(mapping=aes(fill=Timing, color=Timing), dotsize = .8, method = "dotdensity", binaxis = "y", stackdir = "center") + theme(legend.position="top", text = element_text(size=14), axis.title.x=element_blank()) + ylab("Proportion Correct") + scale_fill_manual(name = "Language Timing", breaks=c("Early", "Later"), values=c("deepskyblue3", "firebrick3"), labels=c("Early (83)", "Later (90)")) + scale_color_manual(name = "Language Timing", breaks=c("Early", "Later"), values=c("deepskyblue3", "firebrick3"), labels=c("Early (83)", "Later (90)"))+ stat_summary(fun=mean, geom="point", shape=18, size=5, color="black") 
 	c
@@ -275,6 +266,22 @@ wilcox.test(English$AvgCorrect_Total, mu = .25, alternative = "greater") #V = 45
 	d
 	
 	grid.arrange(c,d,nrow=1)
+	
+	
+	# REDO BELOW SCATTERPLOTS FOR 5-8 AGE RANGE!
+	
+	# Modality/Timing Overall Visualizations
+
+	a <- ggplot(data = Map_Inc, mapping = aes(x=Age_Rounded, y=AvgCorrect_Total, shape = Timing, color = Timing)) + geom_point() + geom_smooth(method="loess") + labs(x="Age (years)", y="Proportion Correct") + theme(legend.position = "top", text = element_text(size=14)) + coord_cartesian(xlim = c(5, 9), ylim= c(0,1)) + scale_y_continuous(breaks=c(0, 0.2, 0.4, 0.6, 0.8, 1)) + scale_x_continuous(breaks=c(5, 6, 7, 8, 9)) + scale_shape_manual(name="Language Timing", values=c(16, 17), labels=c("Early (97)", "Later (102)")) + scale_color_manual(name="Language Timing", values=c("deepskyblue3", "firebrick3"), labels=c("Early (97)", "Later (102)"))
+	a
+	
+	b <- ggplot(data = Map_Inc, mapping = aes(x=Age_Rounded, y=AvgCorrect_Total, shape = Modality, color = Modality)) + geom_point() + geom_smooth(method="loess") + labs(x="Age (years)", y="Proportion Correct") + theme(legend.position = "top", text = element_text(size=14)) + coord_cartesian(xlim = c(5, 9), ylim= c(0,1)) + scale_y_continuous(breaks=c(0, 0.2, 0.4, 0.6, 0.8, 1)) + scale_x_continuous(breaks=c(5, 6, 7, 8, 9)) + scale_shape_manual(name="Language Modality", values=c(16, 17), labels=c("English (95)", "ASL (104)")) + scale_color_manual(name="Language Modality", values=c("tan2", "forestgreen"), labels=c("English (95)", "ASL (104)"))
+	b
+	
+	grid.arrange(a,b,nrow=1)
+	
+	
+	
 
 	# LEADS INTO EXAMINING CONTINUOUS VS 2 GROUP CATEGORIZATION WITH TOBIT MODELS:
 	
