@@ -176,6 +176,13 @@ wilcox.test(Later$AvgCorrect_Total, mu = .25, alternative = "greater") #V = 5151
 wilcox.test(ASL$AvgCorrect_Total, mu = .25, alternative = "greater") #V = 5356, p-value < 2.2e-16
 wilcox.test(English$AvgCorrect_Total, mu = .25, alternative = "greater") #V = 4560, p-value < 2.2e-16
 
+	#Overall Performance at or near Ceiling (>= 95%)
+		Ceil <- Map_Inc$AvgCorrect_Total
+		All <- .9 #ceiling performance 
+		Var <- length(which(Ceil>= All)) #number of observations equal to ceiling 
+		N_O <- nrow(Map_Inc) #number of total observations
+		(Var/N_O)*100 # 42.2%
+
 
 # Modality/Timing Overall Visualizations
 
